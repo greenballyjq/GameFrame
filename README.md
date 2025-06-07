@@ -17,19 +17,47 @@
 你需要：
 - 一台电脑 (Windows/Mac/Linux都可以)
 - 安装好Git (不知道怎么装？[点击这里学习安装Git](https://git-scm.com/book/zh/v2/起步-安装-Git))
+- 安装图形化Git工具: [SourceTree](https://www.sourcetreeapp.com/) 或 [Git GUI](https://git-scm.com/downloads/guis)
 - 安装好Unity (我们的游戏开发软件)
 
 ## 小白三步走
 
 ### 第一步：获取代码
 
-1. 在你的电脑上创建一个名为`workspace`的文件夹
+1. 账号申请
+   - 请联系Eva申请Git仓库访问账号
+   - 获取账号和密码后才能访问和下载代码
+
+2. 在你的电脑上创建一个名为`workspace`的文件夹
    - Windows用户：在C盘根目录创建 (C:\workspace)
    - Mac/Linux用户：在你的用户目录创建 (~/workspace)
 
-2. 下载项目代码 (项目地址)
-   - GameFrame框架: http://182.254.155.12:5080/game/GameFrame.git
-   - 游戏项目（抓大鹅）: http://182.254.155.12:5080/game/GooseClient.git
+3. 下载并安装SourceTree或其他Git GUI工具
+   - SourceTree下载地址: https://www.sourcetreeapp.com/
+   - 其他Git GUI工具: https://git-scm.com/downloads/guis
+
+4. 使用Git工具克隆代码（可选择以下任一方式）
+   - 方式一：使用SourceTree克隆代码
+     - 打开SourceTree，点击"克隆/新建"
+     - 输入项目URL及你的账号密码:
+       - GameFrame框架: http://182.254.155.12:5080/game/GameFrame.git
+       - 游戏项目（抓大鹅）: http://182.254.155.12:5080/game/GooseClient.git
+     - 分别为两个项目设置目标路径（推荐放在你创建的workspace文件夹中）
+     - 点击"克隆"按钮
+   
+   - 方式二：使用Git GUI工具克隆代码
+     - 打开Git GUI，点击"Clone Repository"
+     - 输入项目URL及你的账号密码:
+       - GameFrame框架: http://182.254.155.12:5080/game/GameFrame.git
+       - 游戏项目（抓大鹅）: http://182.254.155.12:5080/game/GooseClient.git
+     - 选择目标文件夹（推荐放在你创建的workspace文件夹中）
+     - 点击"Clone"按钮
+
+5. 确保切换到main分支
+   - 在Git工具中，找到并切换到"main"分支
+   - SourceTree用户：在左侧分支列表中，找到并双击"main"分支
+   - Git GUI用户：在"Branch"菜单中，选择"Checkout"，然后选择"main"分支
+   - 确认当前分支已经是"main"
 
 ### 第二步：连接框架和游戏
 
@@ -55,14 +83,6 @@
 
 > **智能功能**: 脚本会自动查找游戏项目中的Assets文件夹，你只需提供游戏项目的根目录即可。
 
-#### 目录智能检测
-
-脚本会自动在以下位置查找Assets文件夹：
-- 项目根目录下的`Assets`文件夹
-- 项目根目录下的`client/Assets`文件夹
-- 项目根目录下任何一级子目录中的`Assets`文件夹
-
-> 重要提示：框架路径会自动设置，你只需提供游戏项目的根目录，脚本会自动找到Assets文件夹。
 
 ### 关于项目打包
 
@@ -83,6 +103,27 @@
    - Mac/Linux: `~/workspace/goosecatcher/GooseClient/client`
 4. 点击"打开"
 5. 使用推荐的Unity版本打开项目
+
+## 连接成功后的样子
+
+当你成功连接GameFrame框架和游戏项目后，你会在Unity项目的Assets文件夹中看到GameFrame文件夹。具体结构如下：
+
+```
+游戏项目
+└── client
+    └── Assets
+        ├── GameFrame (这是链接到框架的文件夹)
+        │   ├── Scripts
+        │   ├── Prefabs
+        │   ├── Resources
+        │   └── ...其他框架文件
+        ├── Game (游戏特有的资源)
+        ├── Scenes
+        ├── Resources
+        └── ...其他游戏文件
+```
+
+在Unity编辑器中，GameFrame文件夹会显示在Assets下，你可以像访问普通文件夹一样访问和使用其中的资源。这些文件实际上存储在你的GameFrame框架目录中，修改后会自动影响所有使用该框架的游戏项目。
 
 ## 常见问题
 
@@ -111,6 +152,10 @@
 **答**：
 1. 确保连接脚本成功运行了
 2. 在Unity中，按Ctrl+R (Windows) 或 Cmd+R (Mac) 刷新资源
+
+### 问：如何验证GameFrame框架连接成功？
+**答**：
+打开Unity编辑器，在Project面板中展开Assets文件夹，你应该能看到一个名为GameFrame的文件夹。如果能看到并能展开它，说明连接成功。
 
 ## 恭喜你！
 
