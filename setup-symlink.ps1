@@ -1,31 +1,31 @@
 # 检查管理员权限
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Warning "请以管理员身份运行此脚本！"
+    Write-Warning "Please run this script as Administrator!"
     exit
 }
 
 # 显示帮助信息
 function Show-Help {
-    Write-Host "用法: $($MyInvocation.MyCommand.Name) [OPTIONS]"
-    Write-Host "创建从GameFrame项目到游戏项目的符号链接"
+    Write-Host "Usage: $($MyInvocation.MyCommand.Name) [OPTIONS]"
+    Write-Host "Create symlink from GameFrame project to game project"
     Write-Host ""
-    Write-Host "选项:"
-    Write-Host "  -FrameworkPath <path>   指定GameFrame框架项目路径 (可选)"
-    Write-Host "                          (通常是GameFrame仓库中的client/Assets/GameFramework目录)"
-    Write-Host "                          (默认为脚本所在目录下的client\Assets\GameFramework)"
-    Write-Host "  -ClientPath <path>      指定游戏客户端项目根目录 (必填)"
-    Write-Host "                          (脚本会自动查找此目录下的Assets文件夹)"
-    Write-Host "  -Help                   显示此帮助信息"
+    Write-Host "Options:"
+    Write-Host "  -FrameworkPath <path>   Specify GameFrame framework path (optional)"
+    Write-Host "                          (Usually the client\Assets\GameFramework directory in GameFrame repo)"
+    Write-Host "                          (Default is client\Assets\GameFramework in the script directory)"
+    Write-Host "  -ClientPath <path>      Specify game client project root directory (required)"
+    Write-Host "                          (Script will automatically find Assets folder)"
+    Write-Host "  -Help                   Show this help information"
     Write-Host ""
-    Write-Host "目录关系说明:"
-    Write-Host "  - FrameworkPath: 源目录，即GameFrame框架源码所在位置"
-    Write-Host "  - ClientPath: 目标目录，脚本将在此目录下的Assets中创建指向FrameworkPath的GameFramework符号链接"
+    Write-Host "Directory Relationship:"
+    Write-Host "  - FrameworkPath: Source directory, where GameFrame framework code is located"
+    Write-Host "  - ClientPath: Target directory, script will create GameFramework symlink in the Assets folder"
     Write-Host ""
-    Write-Host "示例:"
+    Write-Host "Examples:"
     Write-Host "  $($MyInvocation.MyCommand.Name) -ClientPath ..\MyGame"
     Write-Host "  $($MyInvocation.MyCommand.Name) -ClientPath ..\GooseCatcherClient"
     Write-Host ""
-    Write-Host "注意: 如果不提供参数，脚本将在运行时交互式提示您输入"
+    Write-Host "Note: If no parameters are provided, script will prompt for input interactively"
 }
 
 # 查找Assets目录的函数
@@ -87,13 +87,13 @@ if (-not $FrameworkPath) {
 
 # 如果未提供客户端路径，交互式提示用户输入
 if (-not $ClientPath) {
-    Write-Host "请输入游戏客户端项目目录 (脚本会自动查找此目录下的Assets文件夹)"
-    Write-Host "示例: ..\GooseCatcherClient"
-    $ClientPath = Read-Host "客户端项目目录"
+    Write-Host "Please enter game client project directory (script will find Assets folder automatically)"
+    Write-Host "Example: ..\GooseCatcherClient"
+    $ClientPath = Read-Host "Client project directory"
     
     # 如果用户仍未提供路径，提示错误
     if (-not $ClientPath) {
-        Write-Error "错误: 必须提供游戏客户端路径"
+        Write-Error "Error: Must provide game client path"
         exit 1
     }
 }
@@ -111,40 +111,40 @@ if (-not [System.IO.Path]::IsPathRooted($ClientPath)) {
 $CLIENT_ASSETS_PATH = Find-AssetsDirectory -BaseDir $ClientPath
 
 if (-not $CLIENT_ASSETS_PATH) {
-    Write-Error "错误: 在 $ClientPath 目录下未找到Assets文件夹"
-    Write-Host "目录结构应为："
-    Write-Host "- $ClientPath\Assets 或"
-    Write-Host "- $ClientPath\client\Assets 或"
-    Write-Host "- $ClientPath\子目录\Assets"
+    Write-Error "Error: Could not find Assets folder in $ClientPath"
+    Write-Host "Directory structure should be:"
+    Write-Host "- $ClientPath\Assets or"
+    Write-Host "- $ClientPath\client\Assets or"
+    Write-Host "- $ClientPath\subdirectory\Assets"
     exit 1
 }
 
-Write-Host "使用以下路径:"
-Write-Host "- 框架路径: $FrameworkPath (自动设置)"
-Write-Host "- 客户端项目目录: $ClientPath"
-Write-Host "- 找到的Assets目录: $CLIENT_ASSETS_PATH"
+Write-Host "Using the following paths:"
+Write-Host "- Framework Path: $FrameworkPath (auto-configured)"
+Write-Host "- Client Project Directory: $ClientPath"
+Write-Host "- Assets Directory Found: $CLIENT_ASSETS_PATH"
 
 # 确认操作
-$CONFIRM = Read-Host "是否继续? (y/n)"
+$CONFIRM = Read-Host "Continue? (y/n)"
 if ($CONFIRM -ne "y") {
-    Write-Host "操作已取消"
+    Write-Host "Operation cancelled"
     exit 0
 }
 
 # 确保框架源目录存在
 if (-NOT (Test-Path -Path $FrameworkPath)) {
-    Write-Error "错误: GameFramework 框架源目录不存在: $FrameworkPath"
-    Write-Host "请检查目录是否存在，或使用 -FrameworkPath 参数指定正确的框架路径"
+    Write-Error "Error: GameFramework source directory does not exist: $FrameworkPath"
+    Write-Host "Please check if the directory exists or use -FrameworkPath to specify the correct path"
     exit 1
 }
 
 # 确保客户端Assets目录存在
 if (-NOT (Test-Path -Path $CLIENT_ASSETS_PATH)) {
-    Write-Warning "游戏客户端Assets目录不存在: $CLIENT_ASSETS_PATH"
-    $CREATE_DIR = Read-Host "是否要创建此目录? (y/n)"
+    Write-Warning "Game client Assets directory does not exist: $CLIENT_ASSETS_PATH"
+    $CREATE_DIR = Read-Host "Create this directory? (y/n)"
     if ($CREATE_DIR -eq "y") {
         New-Item -ItemType Directory -Path $CLIENT_ASSETS_PATH -Force
-        Write-Host "已创建目录: $CLIENT_ASSETS_PATH"
+        Write-Host "Directory created: $CLIENT_ASSETS_PATH"
     }
     else {
         exit 1
@@ -154,13 +154,13 @@ if (-NOT (Test-Path -Path $CLIENT_ASSETS_PATH)) {
 # 移除现有的 GameFramework 目录（如果存在）
 $CLIENT_FRAMEWORK_PATH = Join-Path -Path $CLIENT_ASSETS_PATH -ChildPath "GameFramework"
 if (Test-Path -Path $CLIENT_FRAMEWORK_PATH) {
-    Write-Host "移除现有的 GameFramework 目录或链接..."
+    Write-Host "Removing existing GameFramework directory or link..."
     Remove-Item -Recurse -Force $CLIENT_FRAMEWORK_PATH
 }
 
 # 创建符号链接
-Write-Host "创建符号链接..."
+Write-Host "Creating symbolic link..."
 New-Item -ItemType SymbolicLink -Path $CLIENT_FRAMEWORK_PATH -Target $FrameworkPath
 
-Write-Host "完成！现在 $CLIENT_FRAMEWORK_PATH 指向 $FrameworkPath"
-Write-Host "当您修改 GameFramework 框架项目时，更改将自动反映在游戏客户端项目中" 
+Write-Host "Done! Now $CLIENT_FRAMEWORK_PATH points to $FrameworkPath"
+Write-Host "When you modify the GameFramework, changes will automatically be reflected in the game client project" 
