@@ -24,6 +24,18 @@ show_help() {
     echo "注意: 如果不提供参数，脚本将在运行时交互式提示您输入"
 }
 
+# 清理路径函数 - 去除首尾的单引号或双引号
+clean_path() {
+    local path="$1"
+    # 去除首尾的单引号
+    path="${path#\'}"
+    path="${path%\'}"
+    # 去除首尾的双引号
+    path="${path#\"}"
+    path="${path%\"}"
+    echo "$path"
+}
+
 # 查找Assets目录的函数
 find_assets_directory() {
     local base_dir="$1"
@@ -51,8 +63,29 @@ find_assets_directory() {
 # 初始化变量
 WORKSPACE_DIR="$(pwd)"
 CLIENT_PATH=""
+
+# 自动检测框架路径的函数
+detect_framework_path() {
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local possible_paths=(
+        "$script_dir/client/Assets/GameFramework"
+        "$WORKSPACE_DIR/GameFrame/client/Assets/GameFramework"
+        "$script_dir/../GameFrame/client/Assets/GameFramework"
+    )
+    
+    for path in "${possible_paths[@]}"; do
+        if [ -d "$path" ]; then
+            echo "$path"
+            return
+        fi
+    done
+    
+    # 如果都找不到，返回默认路径
+    echo "$script_dir/client/Assets/GameFramework"
+}
+
 # 设置默认框架路径
-DEFAULT_FRAMEWORK_PATH="$WORKSPACE_DIR/client/Assets/GameFramework"
+DEFAULT_FRAMEWORK_PATH="$(detect_framework_path)"
 FRAMEWORK_PATH="$DEFAULT_FRAMEWORK_PATH"
 
 # 解析命令行参数
@@ -60,12 +93,12 @@ while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
         -f|--framework-path)
-            FRAMEWORK_PATH="$2"
+            FRAMEWORK_PATH="$(clean_path "$2")"
             shift # 跳过参数名
             shift # 跳过参数值
             ;;
         -c|--client-path)
-            CLIENT_PATH="$2"
+            CLIENT_PATH="$(clean_path "$2")"
             shift # 跳过参数名
             shift # 跳过参数值
             ;;
@@ -86,6 +119,9 @@ if [ -z "$CLIENT_PATH" ]; then
     echo "请输入游戏客户端项目目录 (脚本会自动查找此目录下的Assets文件夹)"
     echo "示例: ../GooseCatcherClient"
     read -p "客户端项目目录: " CLIENT_PATH
+    
+    # 清理用户输入的路径
+    CLIENT_PATH="$(clean_path "$CLIENT_PATH")"
     
     # 如果用户仍未提供路径，提示错误
     if [ -z "$CLIENT_PATH" ]; then

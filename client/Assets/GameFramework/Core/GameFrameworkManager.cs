@@ -48,7 +48,7 @@ namespace GameFramework.Core
 
             // 注册各个管理器
             RegisterManager<ResourceManager>();
-            RegisterManager<ConfigManager>();
+            // ConfigManager 由业务层独立管理，框架不注册
             RegisterManager<PlatformManager>();
             RegisterManager<EventManager>();
             RegisterManager<UIManager>();

@@ -36,8 +36,6 @@ namespace GameFramework.Core
         // 资源管理器
         private ResourceManager _resourceManager;
         
-        // 配置管理器
-        private ConfigManager _configManager;
         
         private void Awake()
         {
@@ -83,7 +81,6 @@ namespace GameFramework.Core
             // 获取各个管理器
             _platformManager = _frameworkManager.GetManager<PlatformManager>();
             _resourceManager = _frameworkManager.GetManager<ResourceManager>();
-            _configManager = _frameworkManager.GetManager<ConfigManager>();
             
             // 初始化UI
             if (_updatePanel != null)
@@ -115,7 +112,8 @@ namespace GameFramework.Core
             }
             
             // 加载配置表
-            await _configManager.LoadTablesAsync();
+
+            //await _configManager.LoadTablesAsync();
             
             // 加载游戏启动场景
             _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
@@ -302,7 +300,6 @@ namespace GameFramework.Core
             if (success)
             {
                 // 继续游戏初始化流程
-                await _configManager.LoadTablesAsync();
                 _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
                 _isInitialized = true;
                 Debug.Log("[GameLauncher] 游戏初始化完成");
