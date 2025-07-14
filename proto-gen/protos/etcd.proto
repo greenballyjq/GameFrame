@@ -1,0 +1,11 @@
+syntax = "proto3";
+package etcd;
+
+message Server {
+    string name = 1;
+    string address = 2;
+}
+
+message ServerList {
+    repeated Server servers = 1;
+}

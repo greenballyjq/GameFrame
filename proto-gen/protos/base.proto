@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message PlayerBase{
+    uint64 createtime = 1; //建号时间戳
+    uint64 offtime = 2; //离线时间戳
+    uint64 gametime = 3; //累积游戏时间(毫秒)
+}
+
+message C2S_Base {
+}
+
+message S2C_Base {
+    PlayerBase player_base = 1;
+}

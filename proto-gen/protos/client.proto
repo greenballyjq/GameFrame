@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+message ClientData {
+    bytes data = 1;
+}
+
+message C2S_ClientData {
+}
+
+message S2C_ClientData {
+    bytes data = 1;
+}
+
+message C2S_UploadClientData {
+    bytes data = 1;
+}

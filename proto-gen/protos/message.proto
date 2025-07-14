@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "opcode.proto";
+import "login.proto";
+import "ping.proto";
+import "base.proto";
+import "client.proto";
+import "item.proto";
+
+message C2S_Message {
+    uint64 session = 1; //会话ID, 服务器返回请求会带上该会话ID,不可为0
+    oneof msg {
+        C2S_Login login = 2;
+        C2S_Logout logout = 3;
+        C2S_Ping ping = 4;
+        C2S_Base base = 5;
+        C2S_ClientData client_data = 6;
+        C2S_UploadClientData upload_client_data = 7;
+        C2S_Item item = 8;
+    }
+}
+
+message S2C_Message {
+    uint64 session = 1; //回应请求会话ID,0表示服务器推送
+    oneof msg {
+        S2C_OPCode code = 2; //通用操作码
+        S2C_Login login = 3;
+        S2C_Logout logout = 4;
+        S2C_Ping ping = 5;
+        S2C_Base base = 6;
+        S2C_ClientData client_data = 7;
+        S2C_Item item = 8;
+    }
+}

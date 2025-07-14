@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message C2S_Login {
+    string account = 1; //账号
+};
+
+message S2C_Login {
+};
+
+message C2S_Logout {
+}
+
+message S2C_Logout {
+}
