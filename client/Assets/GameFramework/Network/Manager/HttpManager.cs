@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Manager;
 using GameFramework.Utility;
+using GameFramework.Network.Protocol;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,7 +28,7 @@ public class HttpManager : IManager
     private string _baseUrl = "";
     
     // Protobuf管理器引用
-    private ProtobufManager _protobufManager;
+    private GameFramework.Network.Protocol.ProtobufManager _protobufManager;
     
     // 握手管理器引用
     private HandshakeManager _handshakeManager;
@@ -44,7 +45,7 @@ public class HttpManager : IManager
         _defaultHeaders.Add("Content-Type", "application/json");
         
         // 获取Protobuf管理器引用
-        _protobufManager = GameFrameworkManager.Instance.GetManager<ProtobufManager>();
+        _protobufManager = GameFrameworkManager.Instance.GetManager<GameFramework.Network.Protocol.ProtobufManager>();
         
         // 获取握手管理器引用
         _handshakeManager = GameFrameworkManager.Instance.GetManager<HandshakeManager>();
@@ -326,8 +327,8 @@ public class HttpManager : IManager
         Dictionary<string, string> headers = null, 
         float timeout = DEFAULT_TIMEOUT, 
         int retryCount = DEFAULT_RETRY_COUNT)
-        where TRequest : Google.Protobuf.IMessage<TRequest>
-        where TResponse : Google.Protobuf.IMessage<TResponse>, new()
+        where TRequest : class
+        where TResponse : class, new()
     {
         if (_protobufManager == null)
         {
@@ -405,8 +406,8 @@ public class HttpManager : IManager
         Dictionary<string, string> headers = null, 
         float timeout = DEFAULT_TIMEOUT, 
         int retryCount = DEFAULT_RETRY_COUNT)
-        where TRequest : Google.Protobuf.IMessage<TRequest>
-        where TResponse : Google.Protobuf.IMessage<TResponse>, new()
+        where TRequest : class
+        where TResponse : class, new()
     {
         if (_protobufManager == null)
         {
@@ -564,8 +565,8 @@ public class HttpManager : IManager
         string url, 
         TRequest request, 
         float timeout = DEFAULT_TIMEOUT)
-        where TRequest : Google.Protobuf.IMessage<TRequest>
-        where TResponse : Google.Protobuf.IMessage<TResponse>, new()
+        where TRequest : class
+        where TResponse : class, new()
     {
         if (_handshakeManager == null)
         {
@@ -775,7 +776,7 @@ public class HttpResponse
 /// Protobuf HTTP响应
 /// </summary>
 /// <typeparam name="T">响应数据类型</typeparam>
-public class ProtobufResponse<T> where T : Google.Protobuf.IMessage<T>, new()
+public class ProtobufResponse<T> where T : class, new()
 {
     // 请求是否成功
     public bool Success { get; set; } = false;

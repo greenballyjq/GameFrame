@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.IO;
 using GameFramework.Core;
+using ProtoBuf;
 using UnityEngine;
-using Google.Protobuf;
 
-
+namespace GameFramework.Network.Protocol
+{
     /// <summary>
-    /// Protobuf管理器 - 处理Protobuf序列化和反序列化
+    /// Protobuf管理器 - 处理Protobuf序列化和反序列化 (protobuf-net版本)
     /// </summary>
     public class ProtobufManager : IManager
     {
@@ -26,7 +26,7 @@ using Google.Protobuf;
         /// </summary>
         public void Init()
         {
-            Debug.Log("[ProtobufManager] 初始化Protobuf管理器");
+            Debug.Log("[ProtobufManager] 初始化Protobuf管理器 (protobuf-net版本)");
             
             // 注册所有协议类型
             RegisterProtocolTypes();
@@ -52,11 +52,11 @@ using Google.Protobuf;
         }
         
         /// <summary>
-        /// 注册协议类型
+        /// 注册协议类型 (protobuf-net版本)
         /// </summary>
         /// <typeparam name="T">协议类型</typeparam>
         /// <param name="protocolId">协议ID</param>
-        public void RegisterProtocol<T>(int protocolId) where T : IMessage<T>, new()
+        public void RegisterProtocol<T>(int protocolId) where T : class, new()
         {
             Type type = typeof(T);
             
@@ -83,12 +83,12 @@ using Google.Protobuf;
         }
         
         /// <summary>
-        /// 序列化消息
+        /// 序列化消息 (protobuf-net版本)
         /// </summary>
         /// <typeparam name="T">消息类型</typeparam>
         /// <param name="message">消息对象</param>
         /// <returns>序列化后的字节数组</returns>
-        public byte[] Serialize<T>(T message) where T : IMessage<T>
+        public byte[] Serialize<T>(T message) where T : class
         {
             if (message == null)
             {
@@ -97,7 +97,11 @@ using Google.Protobuf;
             
             try
             {
-                return message.ToByteArray();
+                using (var stream = new MemoryStream())
+                {
+                    Serializer.Serialize(stream, message);
+                    return stream.ToArray();
+                }
             }
             catch (Exception e)
             {
@@ -107,12 +111,12 @@ using Google.Protobuf;
         }
         
         /// <summary>
-        /// 反序列化消息
+        /// 反序列化消息 (protobuf-net版本)
         /// </summary>
         /// <typeparam name="T">消息类型</typeparam>
         /// <param name="data">字节数组</param>
         /// <returns>反序列化后的消息对象</returns>
-        public T Deserialize<T>(byte[] data) where T : IMessage<T>, new()
+        public T Deserialize<T>(byte[] data) where T : class
         {
             if (data == null || data.Length == 0)
             {
@@ -121,9 +125,10 @@ using Google.Protobuf;
             
             try
             {
-                T message = new T();
-                message.MergeFrom(data);
-                return message;
+                using (var stream = new MemoryStream(data))
+                {
+                    return Serializer.Deserialize<T>(stream);
+                }
             }
             catch (Exception e)
             {
@@ -176,7 +181,7 @@ using Google.Protobuf;
         /// </summary>
         /// <typeparam name="T">协议类型</typeparam>
         /// <returns>协议ID</returns>
-        public int GetProtocolId<T>() where T : IMessage<T>
+        public int GetProtocolId<T>() where T : class
         {
             return GetProtocolId(typeof(T));
         }
@@ -197,7 +202,7 @@ using Google.Protobuf;
         /// <typeparam name="T">消息类型</typeparam>
         /// <param name="message">消息对象</param>
         /// <returns>协议包</returns>
-        public byte[] CreateProtocolPacket<T>(T message) where T : IMessage<T>
+        public byte[] CreateProtocolPacket<T>(T message) where T : class
         {
             if (message == null)
             {
@@ -274,16 +279,22 @@ using Google.Protobuf;
         /// </summary>
         private void RegisterProtocolTypes()
         {
-            Debug.Log("[ProtobufManager] 注册协议类型");
+            Debug.Log("[ProtobufManager] 注册协议类型 (protobuf-net版本)");
             
-            // 这里可以自动注册所有协议类型
-            // 或者手动注册常用的协议类型
-            
-            // 示例：注册基础协议
-            // RegisterProtocol<C2S_Login>(1001);
-            // RegisterProtocol<S2C_Login>(1002);
-            // RegisterProtocol<C2S_Ping>(1003);
-            // RegisterProtocol<S2C_Ping>(1004);
+            // 注册新的protobuf-net协议
+            try
+            {
+                // 注册基础协议
+                RegisterProtocol<GameFramework.Network.Protocol.PlayerBase>(1001);
+                RegisterProtocol<GameFramework.Network.Protocol.C2S_Message>(1002);
+                RegisterProtocol<GameFramework.Network.Protocol.S2C_Message>(1003);
+                
+                Debug.Log("[ProtobufManager] protobuf-net协议类型注册完成");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ProtobufManager] 注册协议类型失败: {e.Message}");
+            }
         }
     }
     
@@ -297,16 +308,20 @@ using Google.Protobuf;
     }
     
     /// <summary>
-    /// 协议序列化器实现
+    /// 协议序列化器实现 (protobuf-net版本)
     /// </summary>
     /// <typeparam name="T">协议类型</typeparam>
-    public class ProtocolSerializer<T> : IProtocolSerializer where T : IMessage<T>, new()
+    public class ProtocolSerializer<T> : IProtocolSerializer where T : class, new()
     {
         public byte[] Serialize(object message)
         {
             if (message is T protocolMessage)
             {
-                return protocolMessage.ToByteArray();
+                using (var stream = new MemoryStream())
+                {
+                    Serializer.Serialize(stream, protocolMessage);
+                    return stream.ToArray();
+                }
             }
             
             throw new ArgumentException($"消息类型不匹配，期望 {typeof(T).Name}");
@@ -316,9 +331,10 @@ using Google.Protobuf;
         {
             try
             {
-                T message = new T();
-                message.MergeFrom(data);
-                return message;
+                using (var stream = new MemoryStream(data))
+                {
+                    return Serializer.Deserialize<T>(stream);
+                }
             }
             catch (Exception e)
             {
@@ -336,3 +352,4 @@ using Google.Protobuf;
         public byte[] Data { get; set; }
         public object Message { get; set; }
     }
+}

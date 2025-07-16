@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using GameFramework.Core;
+using GameFramework.Network.Protocol;
 using UnityEngine;
-using Google.Protobuf;
 
 
     /// <summary>
@@ -158,8 +158,8 @@ using Google.Protobuf;
             string endpoint, 
             TRequest request, 
             float timeout = 10f)
-            where TRequest : class, IMessage<TRequest>
-            where TResponse : class, IMessage<TResponse>, new()
+            where TRequest : class
+            where TResponse : class, new()
         {
             if (!IsConnected)
             {

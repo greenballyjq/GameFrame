@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Core;
-
+using GameFramework.Network.Protocol;
 
 /// <summary>
 /// 游戏框架管理器 - 框架核心入口 
