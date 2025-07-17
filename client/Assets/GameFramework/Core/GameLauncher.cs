@@ -157,7 +157,7 @@ namespace GameFramework.Core
             
             // 尝试获取最新版本
             UpdateStatus("正在检查资源更新...");
-            string latestVersion = await _resourceManager.RequestPackageVersion();
+            string latestVersion = _resourceManager.RequestPackageVersion();
             
             if (!string.IsNullOrEmpty(latestVersion))
             {

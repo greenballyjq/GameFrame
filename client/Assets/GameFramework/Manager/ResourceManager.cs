@@ -173,7 +173,7 @@ public class ResourceManager : IManager
     /// <summary>
     /// 请求资源包版本 (Task版本，向后兼容)
     /// </summary>
-    public async Task<string> RequestPackageVersion(string packageName = DefaultPackageName, int timeout = 30)
+    public string RequestPackageVersion(string packageName = DefaultPackageName, int timeout = 30)
     {
         var package = GetPackage(packageName);
         if (package == null)

@@ -1,355 +1,304 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using GameFramework.Core;
-using ProtoBuf;
-using UnityEngine;
+using System.Threading.Tasks;
+using Google.Protobuf;
+using GameFramework.Network.Protocol;
 
-namespace GameFramework.Network.Protocol
+namespace GameFramework.Network
 {
     /// <summary>
-    /// Protobuf管理器 - 处理Protobuf序列化和反序列化 (protobuf-net版本)
+    /// Google Protobuf 消息管理器
+    /// 负责处理 protobuf 序列化和反序列化，以及消息的创建
     /// </summary>
-    public class ProtobufManager : IManager
+    public static class ProtobufManager
     {
-        // 协议类型映射表
-        private Dictionary<int, Type> _protocolTypes = new Dictionary<int, Type>();
-        
-        // 协议ID映射表
-        private Dictionary<Type, int> _protocolIds = new Dictionary<Type, int>();
-        
-        // 协议序列化器缓存
-        private Dictionary<Type, IProtocolSerializer> _serializers = new Dictionary<Type, IProtocolSerializer>();
-        
         /// <summary>
-        /// 初始化
+        /// 序列化 C2S 消息
         /// </summary>
-        public void Init()
-        {
-            Debug.Log("[ProtobufManager] 初始化Protobuf管理器 (protobuf-net版本)");
-            
-            // 注册所有协议类型
-            RegisterProtocolTypes();
-        }
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        public void Update()
-        {
-            // 无需每帧更新
-        }
-
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Release()
-        {
-            Debug.Log("[ProtobufManager] 释放Protobuf管理器");
-            _protocolTypes.Clear();
-            _protocolIds.Clear();
-            _serializers.Clear();
-        }
-        
-        /// <summary>
-        /// 注册协议类型 (protobuf-net版本)
-        /// </summary>
-        /// <typeparam name="T">协议类型</typeparam>
-        /// <param name="protocolId">协议ID</param>
-        public void RegisterProtocol<T>(int protocolId) where T : class, new()
-        {
-            Type type = typeof(T);
-            
-            if (_protocolTypes.ContainsKey(protocolId))
-            {
-                Debug.LogWarning($"[ProtobufManager] 协议ID {protocolId} 已注册，类型：{_protocolTypes[protocolId].Name}");
-                return;
-            }
-            
-            if (_protocolIds.ContainsKey(type))
-            {
-                Debug.LogWarning($"[ProtobufManager] 协议类型 {type.Name} 已注册，ID：{_protocolIds[type]}");
-                return;
-            }
-            
-            _protocolTypes[protocolId] = type;
-            _protocolIds[type] = protocolId;
-            
-            // 创建序列化器
-            var serializer = new ProtocolSerializer<T>();
-            _serializers[type] = serializer;
-            
-            Debug.Log($"[ProtobufManager] 注册协议：{type.Name} -> ID:{protocolId}");
-        }
-        
-        /// <summary>
-        /// 序列化消息 (protobuf-net版本)
-        /// </summary>
-        /// <typeparam name="T">消息类型</typeparam>
-        /// <param name="message">消息对象</param>
+        /// <param name="message">要序列化的消息</param>
         /// <returns>序列化后的字节数组</returns>
-        public byte[] Serialize<T>(T message) where T : class
+        public static byte[] SerializeC2SMessage(C2S_Message message)
         {
             if (message == null)
-            {
                 throw new ArgumentNullException(nameof(message));
-            }
-            
-            try
-            {
-                using (var stream = new MemoryStream())
-                {
-                    Serializer.Serialize(stream, message);
-                    return stream.ToArray();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ProtobufManager] 序列化消息失败：{e.Message}");
-                throw;
-            }
+                
+            return message.ToByteArray();
         }
         
         /// <summary>
-        /// 反序列化消息 (protobuf-net版本)
+        /// 序列化 S2C 消息
         /// </summary>
-        /// <typeparam name="T">消息类型</typeparam>
+        /// <param name="message">要序列化的消息</param>
+        /// <returns>序列化后的字节数组</returns>
+        public static byte[] SerializeS2CMessage(S2C_Message message)
+        {
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+                
+            return message.ToByteArray();
+        }
+        
+        /// <summary>
+        /// 反序列化 C2S 消息
+        /// </summary>
         /// <param name="data">字节数组</param>
-        /// <returns>反序列化后的消息对象</returns>
-        public T Deserialize<T>(byte[] data) where T : class
+        /// <returns>反序列化后的消息</returns>
+        public static C2S_Message DeserializeC2SMessage(byte[] data)
         {
             if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("数据不能为空");
-            }
-            
-            try
-            {
-                using (var stream = new MemoryStream(data))
-                {
-                    return Serializer.Deserialize<T>(stream);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ProtobufManager] 反序列化消息失败：{e.Message}");
-                throw;
-            }
+                throw new ArgumentException("Data cannot be null or empty", nameof(data));
+                
+            return C2S_Message.Parser.ParseFrom(data);
         }
         
         /// <summary>
-        /// 根据协议ID反序列化消息
+        /// 反序列化 S2C 消息
         /// </summary>
-        /// <param name="protocolId">协议ID</param>
         /// <param name="data">字节数组</param>
-        /// <returns>反序列化后的消息对象</returns>
-        public object Deserialize(int protocolId, byte[] data)
+        /// <returns>反序列化后的消息</returns>
+        public static S2C_Message DeserializeS2CMessage(byte[] data)
         {
-            if (!_protocolTypes.TryGetValue(protocolId, out Type type))
-            {
-                throw new ArgumentException($"未注册的协议ID：{protocolId}");
-            }
-            
-            if (!_serializers.TryGetValue(type, out IProtocolSerializer serializer))
-            {
-                throw new InvalidOperationException($"协议类型 {type.Name} 的序列化器未找到");
-            }
-            
-            try
-            {
-                return serializer.Deserialize(data);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ProtobufManager] 反序列化协议ID {protocolId} 失败：{e.Message}");
-                throw;
-            }
+            if (data == null || data.Length == 0)
+                throw new ArgumentException("Data cannot be null or empty", nameof(data));
+                
+            return S2C_Message.Parser.ParseFrom(data);
         }
         
         /// <summary>
-        /// 获取协议ID
+        /// 创建包含 Ping 的 C2S 消息
         /// </summary>
-        /// <param name="type">协议类型</param>
-        /// <returns>协议ID</returns>
-        public int GetProtocolId(Type type)
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreatePingMessage(ulong sessionId = 0)
         {
-            return _protocolIds.TryGetValue(type, out int id) ? id : -1;
+            return new C2S_Message
+            {
+                Session = sessionId,
+                Ping = new global::C2S_Ping()
+            };
         }
         
         /// <summary>
-        /// 获取协议ID
+        /// 创建包含 Login 的 C2S 消息
         /// </summary>
-        /// <typeparam name="T">协议类型</typeparam>
-        /// <returns>协议ID</returns>
-        public int GetProtocolId<T>() where T : class
+        /// <param name="account">账户</param>
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateLoginMessage(string account, ulong sessionId = 0)
         {
-            return GetProtocolId(typeof(T));
+            return new C2S_Message
+            {
+                Session = sessionId,
+                Login = new global::C2S_Login
+                {
+                    Account = account
+                }
+            };
         }
         
         /// <summary>
-        /// 获取协议类型
+        /// 创建包含 Base 的 C2S 消息
         /// </summary>
-        /// <param name="protocolId">协议ID</param>
-        /// <returns>协议类型</returns>
-        public Type GetProtocolType(int protocolId)
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateBaseMessage(ulong sessionId = 0)
         {
-            return _protocolTypes.TryGetValue(protocolId, out Type type) ? type : null;
+            return new C2S_Message
+            {
+                Session = sessionId,
+                Base = new global::C2S_Base()
+            };
         }
         
         /// <summary>
-        /// 创建协议包
+        /// 创建包含 Logout 的 C2S 消息
         /// </summary>
-        /// <typeparam name="T">消息类型</typeparam>
-        /// <param name="message">消息对象</param>
-        /// <returns>协议包</returns>
-        public byte[] CreateProtocolPacket<T>(T message) where T : class
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateLogoutMessage(ulong sessionId = 0)
+        {
+            return new C2S_Message
+            {
+                Session = sessionId,
+                Logout = new global::C2S_Logout()
+            };
+        }
+        
+        /// <summary>
+        /// 创建包含 ClientData 的 C2S 消息
+        /// </summary>
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateClientDataMessage(ulong sessionId = 0)
+        {
+            return new C2S_Message
+            {
+                Session = sessionId,
+                ClientData = new global::C2S_ClientData()
+            };
+        }
+        
+        /// <summary>
+        /// 创建包含 UploadClientData 的 C2S 消息
+        /// </summary>
+        /// <param name="data">客户端数据</param>
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateUploadClientDataMessage(byte[] data, ulong sessionId = 0)
+        {
+            return new C2S_Message
+            {
+                Session = sessionId,
+                UploadClientData = new global::C2S_UploadClientData
+                {
+                    Data = ByteString.CopyFrom(data ?? new byte[0])
+                }
+            };
+        }
+        
+        /// <summary>
+        /// 创建包含 Item 的 C2S 消息
+        /// </summary>
+        /// <param name="sessionId">会话ID</param>
+        /// <returns>C2S_Message</returns>
+        public static C2S_Message CreateItemMessage(ulong sessionId = 0)
+        {
+            return new C2S_Message
+            {
+                Session = sessionId,
+                Item = new global::C2S_Item()
+            };
+        }
+        
+        // 适配器方法：兼容原有的 global 命名空间调用
+        
+        /// <summary>
+        /// 适配器：序列化全局 C2S_Message（兼容 Scripts 层调用）
+        /// </summary>
+        /// <param name="message">全局命名空间的消息</param>
+        /// <returns>序列化后的字节数组</returns>
+        public static byte[] Serialize(global::C2S_Message message)
         {
             if (message == null)
-            {
                 throw new ArgumentNullException(nameof(message));
-            }
-            
-            int protocolId = GetProtocolId<T>();
-            if (protocolId == -1)
-            {
-                throw new InvalidOperationException($"协议类型 {typeof(T).Name} 未注册");
-            }
-            
-            byte[] messageData = Serialize(message);
-            
-            // 创建协议包：[协议ID(4字节)] + [数据长度(4字节)] + [消息数据]
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream))
-            {
-                writer.Write(protocolId);
-                writer.Write(messageData.Length);
-                writer.Write(messageData);
                 
-                return stream.ToArray();
-            }
+            return message.ToByteArray();
         }
         
         /// <summary>
-        /// 解析协议包
+        /// 适配器：序列化全局 S2C_Message（兼容 Scripts 层调用）
         /// </summary>
-        /// <param name="packet">协议包数据</param>
-        /// <returns>协议包信息</returns>
-        public ProtocolPacket ParseProtocolPacket(byte[] packet)
+        /// <param name="message">全局命名空间的消息</param>
+        /// <returns>序列化后的字节数组</returns>
+        public static byte[] Serialize(global::S2C_Message message)
         {
-            if (packet == null || packet.Length < 8) // 至少需要8字节（协议ID + 数据长度）
-            {
-                throw new ArgumentException("协议包数据无效");
-            }
-            
-            try
-            {
-                using (var stream = new MemoryStream(packet))
-                using (var reader = new BinaryReader(stream))
-                {
-                    int protocolId = reader.ReadInt32();
-                    int dataLength = reader.ReadInt32();
-                    
-                    if (dataLength < 0 || dataLength > packet.Length - 8)
-                    {
-                        throw new ArgumentException($"协议包数据长度无效：{dataLength}");
-                    }
-                    
-                    byte[] messageData = reader.ReadBytes(dataLength);
-                    
-                    // 反序列化消息
-                    object message = Deserialize(protocolId, messageData);
-                    
-                    return new ProtocolPacket
-                    {
-                        ProtocolId = protocolId,
-                        Data = messageData,
-                        Message = message
-                    };
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ProtobufManager] 解析协议包失败：{e.Message}");
-                throw;
-            }
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+                
+            return message.ToByteArray();
         }
         
         /// <summary>
-        /// 注册所有协议类型
+        /// 适配器：反序列化为全局 C2S_Message（兼容 Scripts 层调用）
         /// </summary>
-        private void RegisterProtocolTypes()
+        /// <param name="data">字节数组</param>
+        /// <returns>反序列化后的消息</returns>
+        public static global::C2S_Message DeserializeToGlobalC2S(byte[] data)
         {
-            Debug.Log("[ProtobufManager] 注册协议类型 (protobuf-net版本)");
-            
-            // 注册新的protobuf-net协议
-            try
-            {
-                // 注册基础协议
-                RegisterProtocol<GameFramework.Network.Protocol.PlayerBase>(1001);
-                RegisterProtocol<GameFramework.Network.Protocol.C2S_Message>(1002);
-                RegisterProtocol<GameFramework.Network.Protocol.S2C_Message>(1003);
+            if (data == null || data.Length == 0)
+                throw new ArgumentException("Data cannot be null or empty", nameof(data));
                 
-                Debug.Log("[ProtobufManager] protobuf-net协议类型注册完成");
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ProtobufManager] 注册协议类型失败: {e.Message}");
-            }
-        }
-    }
-    
-    /// <summary>
-    /// 协议序列化器接口
-    /// </summary>
-    public interface IProtocolSerializer
-    {
-        byte[] Serialize(object message);
-        object Deserialize(byte[] data);
-    }
-    
-    /// <summary>
-    /// 协议序列化器实现 (protobuf-net版本)
-    /// </summary>
-    /// <typeparam name="T">协议类型</typeparam>
-    public class ProtocolSerializer<T> : IProtocolSerializer where T : class, new()
-    {
-        public byte[] Serialize(object message)
-        {
-            if (message is T protocolMessage)
-            {
-                using (var stream = new MemoryStream())
-                {
-                    Serializer.Serialize(stream, protocolMessage);
-                    return stream.ToArray();
-                }
-            }
-            
-            throw new ArgumentException($"消息类型不匹配，期望 {typeof(T).Name}");
+            return global::C2S_Message.Parser.ParseFrom(data);
         }
         
-        public object Deserialize(byte[] data)
+        /// <summary>
+        /// 适配器：反序列化为全局 S2C_Message（兼容 Scripts 层调用）
+        /// </summary>
+        /// <param name="data">字节数组</param>
+        /// <returns>反序列化后的消息</returns>
+        public static global::S2C_Message DeserializeToGlobalS2C(byte[] data)
         {
-            try
-            {
-                using (var stream = new MemoryStream(data))
-                {
-                    return Serializer.Deserialize<T>(stream);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new InvalidOperationException($"反序列化 {typeof(T).Name} 失败：{e.Message}", e);
-            }
+            if (data == null || data.Length == 0)
+                throw new ArgumentException("Data cannot be null or empty", nameof(data));
+                
+            return global::S2C_Message.Parser.ParseFrom(data);
         }
-    }
-    
-    /// <summary>
-    /// 协议包信息
-    /// </summary>
-    public class ProtocolPacket
-    {
-        public int ProtocolId { get; set; }
-        public byte[] Data { get; set; }
-        public object Message { get; set; }
+        
+        /// <summary>
+        /// 通用序列化方法
+        /// </summary>
+        /// <typeparam name="T">实现 IMessage 的类型</typeparam>
+        /// <param name="message">要序列化的消息</param>
+        /// <returns>序列化后的字节数组</returns>
+        public static byte[] Serialize<T>(T message) where T : IMessage<T>
+        {
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+                
+            return message.ToByteArray();
+        }
+        
+        /// <summary>
+        /// 通用反序列化方法
+        /// </summary>
+        /// <typeparam name="T">实现 IMessage 的类型</typeparam>
+        /// <param name="data">字节数组</param>
+        /// <param name="parser">消息解析器</param>
+        /// <returns>反序列化后的消息</returns>
+        public static T Deserialize<T>(byte[] data, MessageParser<T> parser) where T : IMessage<T>
+        {
+            if (data == null || data.Length == 0)
+                throw new ArgumentException("Data cannot be null or empty", nameof(data));
+                
+            if (parser == null)
+                throw new ArgumentNullException(nameof(parser));
+                
+            return parser.ParseFrom(data);
+        }
+        
+        /// <summary>
+        /// 异步序列化方法
+        /// </summary>
+        /// <typeparam name="T">实现 IMessage 的类型</typeparam>
+        /// <param name="message">要序列化的消息</param>
+        /// <returns>序列化后的字节数组</returns>
+        public static async Task<byte[]> SerializeAsync<T>(T message) where T : IMessage<T>
+        {
+            return await Task.Run(() => Serialize(message));
+        }
+        
+        /// <summary>
+        /// 异步反序列化方法
+        /// </summary>
+        /// <typeparam name="T">实现 IMessage 的类型</typeparam>
+        /// <param name="data">字节数组</param>
+        /// <param name="parser">消息解析器</param>
+        /// <returns>反序列化后的消息</returns>
+        public static async Task<T> DeserializeAsync<T>(byte[] data, MessageParser<T> parser) where T : IMessage<T>
+        {
+            return await Task.Run(() => Deserialize(data, parser));
+        }
+        
+        /// <summary>
+        /// 检查消息是否有效
+        /// </summary>
+        /// <param name="message">要检查的消息</param>
+        /// <returns>是否有效</returns>
+        public static bool IsValidMessage<T>(T message) where T : IMessage<T>
+        {
+            return message != null;
+        }
+        
+        /// <summary>
+        /// 获取消息大小
+        /// </summary>
+        /// <param name="message">要计算大小的消息</param>
+        /// <returns>消息大小</returns>
+        public static int GetMessageSize<T>(T message) where T : IMessage<T>
+        {
+            if (message == null)
+                return 0;
+                
+            return message.CalculateSize();
+        }
     }
 }

@@ -78,10 +78,10 @@ public class ResourceUpdateManager : MonoBehaviour
         }
         
         // 2. 获取最新版本
-        var versionTask = _resourceManager.RequestPackageVersion(packageName);
-        yield return new WaitUntil(() => versionTask.IsCompleted);
+        //var versionTask = _resourceManager.RequestPackageVersion(packageName);
+        //yield return new WaitUntil(() => versionTask.IsCompleted);
         
-        string packageVersion = versionTask.Result;
+        string packageVersion = _resourceManager.RequestPackageVersion(packageName);
         if (string.IsNullOrEmpty(packageVersion))
         {
             Debug.LogWarning("[ResourceUpdateManager] 获取最新版本失败，将使用内置版本");
@@ -189,10 +189,10 @@ public class ResourceUpdateManager : MonoBehaviour
         // 2. 获取最新版本（如果尚未获取）
         if (string.IsNullOrEmpty(package.GetPackageVersion()))
         {
-            var versionTask = _resourceManager.RequestPackageVersion(packageName);
-            yield return new WaitUntil(() => versionTask.IsCompleted);
+            //var versionTask = _resourceManager.RequestPackageVersion(packageName);
+            //yield return new WaitUntil(() => versionTask.IsCompleted);
             
-            string packageVersion = versionTask.Result;
+            string packageVersion = _resourceManager.RequestPackageVersion(packageName);
             if (string.IsNullOrEmpty(packageVersion))
             {
                 Debug.LogWarning("[ResourceUpdateManager] 获取最新版本失败，将使用内置版本");

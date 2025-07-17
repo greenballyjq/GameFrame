@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Core;
-using GameFramework.Network.Protocol;
+using GameFramework.Network;
 
 /// <summary>
 /// 游戏框架管理器 - 框架核心入口 
@@ -55,8 +55,6 @@ public class GameFrameworkManager : MonoBehaviour
             
         // 注册网络相关管理器
         RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能
-        RegisterManager<ProtobufManager>();      // 注册Protobuf管理器
-        RegisterManager<HandshakeManager>();     // 注册握手管理器
         RegisterManager<ServerClient>();         // 注册服务器客户端
             
         // 初始化各个管理器

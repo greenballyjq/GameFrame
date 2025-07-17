@@ -1,29 +1,33 @@
 using System;
 using System.Threading.Tasks;
 using GameFramework.Core;
-using GameFramework.Network.Protocol;
 using UnityEngine;
 
-
+namespace GameFramework.Network
+{
     /// <summary>
-    /// 服务器客户端 - 封装完整的服务器通讯流程
+    /// 服务器客户端管理器 - 作为统一的服务器通信出口
+    /// 使用 Google Protobuf 协议进行通信
     /// </summary>
     public class ServerClient : IManager
     {
-        // 服务器URL
-        private string _serverUrl;
+        private HttpManager httpManager;
+        private string serverUrl = "http://localhost:8080";
+        private bool isConnected = false;
         
-        // HTTP管理器引用
-        private HttpManager _httpManager;
+        /// <summary>
+        /// 是否已连接到服务器
+        /// </summary>
+        public bool IsConnected => isConnected;
         
-        // 握手管理器引用
-        private HandshakeManager _handshakeManager;
-        
-        // 连接状态
-        public bool IsConnected { get; private set; } = false;
-        
-        // 连接事件
-        public event Action<bool> OnConnectionChanged;
+        /// <summary>
+        /// 服务器URL
+        /// </summary>
+        public string ServerUrl 
+        { 
+            get => serverUrl; 
+            set => serverUrl = value; 
+        }
         
         /// <summary>
         /// 初始化
@@ -32,344 +36,263 @@ using UnityEngine;
         {
             Debug.Log("[ServerClient] 初始化服务器客户端");
             
-            // 获取管理器引用
-            _httpManager = GameFrameworkManager.Instance.GetManager<HttpManager>();
-            _handshakeManager = GameFrameworkManager.Instance.GetManager<HandshakeManager>();
+            // 初始化HTTP管理器
+            httpManager = new HttpManager();
+            httpManager.Init();
             
-            IsConnected = false;
+            // 设置服务器URL
+            httpManager.SetBaseUrl(serverUrl);
+            
+            Debug.Log($"[ServerClient] 服务器地址设置为：{serverUrl}");
         }
-
+        
         /// <summary>
         /// 更新
         /// </summary>
         public void Update()
         {
-            // 无需每帧更新
+            httpManager?.Update();
         }
-
+        
         /// <summary>
         /// 释放
         /// </summary>
         public void Release()
         {
             Debug.Log("[ServerClient] 释放服务器客户端");
-            
-            if (IsConnected)
-            {
-                Disconnect();
-            }
+            httpManager?.Release();
+            isConnected = false;
         }
         
         /// <summary>
         /// 连接到服务器
         /// </summary>
-        /// <param name="serverUrl">服务器URL</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>连接结果</returns>
-        public async Task<ServerConnectionResult> ConnectAsync(string serverUrl, float timeout = 30f)
+        /// <returns>是否连接成功</returns>
+        public async Task<bool> ConnectAsync()
         {
-            if (IsConnected)
-            {
-                Debug.LogWarning("[ServerClient] 已连接到服务器");
-                return new ServerConnectionResult { Success = true, Message = "已连接" };
-            }
-            
-            if (_httpManager == null || _handshakeManager == null)
-            {
-                Debug.LogError("[ServerClient] 管理器未初始化");
-                return new ServerConnectionResult { Success = false, Message = "管理器未初始化" };
-            }
-            
             try
             {
-                Debug.Log($"[ServerClient] 开始连接服务器: {serverUrl}");
+                Debug.Log("[ServerClient] 开始连接服务器...");
                 
-                _serverUrl = serverUrl;
+                // 发送Ping测试连接
+                var pingMessage = ProtobufManager.CreatePingMessage();
+                var pingResult = await SendMessageAsync(pingMessage);
                 
-                // 执行握手流程
-                ServerHandshakeResult handshakeResult = await _httpManager.PerformHandshakeAsync(serverUrl, timeout);
-                
-                if (handshakeResult.Success)
+                if (pingResult != null)
                 {
-                    IsConnected = true;
-                    Debug.Log("[ServerClient] 成功连接到服务器");
-                    OnConnectionChanged?.Invoke(true);
-                    
-                    return new ServerConnectionResult 
-                    { 
-                        Success = true, 
-                        Message = "连接成功",
-                        SharedSecret = handshakeResult.SharedSecret
-                    };
+                    isConnected = true;
+                    Debug.Log("[ServerClient] 服务器连接成功");
+                    return true;
                 }
                 else
                 {
-                    Debug.LogError($"[ServerClient] 连接失败: {handshakeResult.Error}");
-                    return new ServerConnectionResult 
-                    { 
-                        Success = false, 
-                        Message = $"连接失败: {handshakeResult.Error}"
-                    };
+                    isConnected = false;
+                    Debug.LogWarning("[ServerClient] 服务器连接失败 - Ping无响应");
+                    return false;
                 }
             }
             catch (Exception e)
             {
-                Debug.LogError($"[ServerClient] 连接异常: {e.Message}");
-                return new ServerConnectionResult 
-                { 
-                    Success = false, 
-                    Message = $"连接异常: {e.Message}"
-                };
+                isConnected = false;
+                Debug.LogError($"[ServerClient] 服务器连接失败：{e.Message}");
+                return false;
             }
         }
         
         /// <summary>
-        /// 断开连接
+        /// 断开与服务器的连接
         /// </summary>
         public void Disconnect()
         {
-            if (!IsConnected)
-            {
-                Debug.LogWarning("[ServerClient] 未连接到服务器");
-                return;
-            }
-            
-            Debug.Log("[ServerClient] 断开服务器连接");
-            
-            IsConnected = false;
-            _serverUrl = null;
-            
-            // 重置握手状态
-            _handshakeManager?.Reset();
-            
-            OnConnectionChanged?.Invoke(false);
+            isConnected = false;
+            Debug.Log("[ServerClient] 已断开服务器连接");
         }
         
         /// <summary>
-        /// 发送Protobuf消息
+        /// 发送C2S消息到服务器
         /// </summary>
-        /// <typeparam name="TRequest">请求消息类型</typeparam>
-        /// <typeparam name="TResponse">响应消息类型</typeparam>
-        /// <param name="endpoint">API端点</param>
-        /// <param name="request">请求消息</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>响应结果</returns>
-        public async Task<ServerMessageResult<TResponse>> SendMessageAsync<TRequest, TResponse>(
-            string endpoint, 
-            TRequest request, 
-            float timeout = 10f)
-            where TRequest : class
-            where TResponse : class, new()
+        /// <param name="message">要发送的消息</param>
+        /// <returns>服务器响应的S2C消息</returns>
+        public async Task<S2C_Message> SendMessageAsync(C2S_Message message)
         {
-            if (!IsConnected)
+            if (message == null)
             {
-                Debug.LogError("[ServerClient] 未连接到服务器");
-                return new ServerMessageResult<TResponse> 
-                { 
-                    Success = false, 
-                    Error = "未连接到服务器" 
-                };
-            }
-            
-            if (_httpManager == null)
-            {
-                Debug.LogError("[ServerClient] HTTP管理器未初始化");
-                return new ServerMessageResult<TResponse> 
-                { 
-                    Success = false, 
-                    Error = "HTTP管理器未初始化" 
-                };
+                throw new ArgumentNullException(nameof(message));
             }
             
             try
             {
-                string url = _serverUrl + "/" + endpoint.TrimStart('/');
+                Debug.Log($"[ServerClient] 发送消息：Session={message.Session}, Type={message.MsgCase}");
                 
-                EncryptedServerResponse<TResponse> response = await _httpManager.SendEncryptedProtobufAsync<TRequest, TResponse>(
-                    url, request, timeout);
+                // 使用GameFramework的ProtobufManager序列化
+                var requestData = ProtobufManager.SerializeC2SMessage(message);
                 
-                if (response.Success)
+                // 通过HTTP发送
+                var responseData = await httpManager.SendProtobufAsync(requestData);
+                
+                if (responseData != null && responseData.Length > 0)
                 {
-                    return new ServerMessageResult<TResponse>
-                    {
-                        Success = true,
-                        Data = response.Data,
-                        StatusCode = response.StatusCode
-                    };
+                    // 反序列化响应
+                    var response = ProtobufManager.DeserializeS2CMessage(responseData);
+                    Debug.Log($"[ServerClient] 收到响应：Session={response.Session}, Type={response.MsgCase}");
+                    return response;
                 }
                 else
                 {
-                    return new ServerMessageResult<TResponse>
-                    {
-                        Success = false,
-                        Error = response.Error,
-                        StatusCode = response.StatusCode
-                    };
+                    Debug.LogWarning("[ServerClient] 服务器响应为空");
+                    return null;
                 }
             }
             catch (Exception e)
             {
-                Debug.LogError($"[ServerClient] 发送消息异常: {e.Message}");
-                return new ServerMessageResult<TResponse>
-                {
-                    Success = false,
-                    Error = $"发送消息异常: {e.Message}"
-                };
+                Debug.LogError($"[ServerClient] 发送消息失败：{e.Message}");
+                throw;
             }
         }
         
         /// <summary>
-        /// 发送文本消息
+        /// 发送JSON消息到服务器（用于兼容或调试）
         /// </summary>
-        /// <param name="endpoint">API端点</param>
-        /// <param name="message">文本消息</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>响应结果</returns>
-        public async Task<ServerMessageResult<string>> SendTextMessageAsync(
-            string endpoint, 
-            string message, 
-            float timeout = 10f)
+        /// <param name="jsonData">JSON字符串</param>
+        /// <returns>服务器响应的JSON字符串</returns>
+        public async Task<string> SendJsonAsync(string jsonData)
         {
-            if (!IsConnected)
+            if (string.IsNullOrEmpty(jsonData))
             {
-                Debug.LogError("[ServerClient] 未连接到服务器");
-                return new ServerMessageResult<string> 
-                { 
-                    Success = false, 
-                    Error = "未连接到服务器" 
-                };
-            }
-            
-            if (_httpManager == null)
-            {
-                Debug.LogError("[ServerClient] HTTP管理器未初始化");
-                return new ServerMessageResult<string> 
-                { 
-                    Success = false, 
-                    Error = "HTTP管理器未初始化" 
-                };
+                throw new ArgumentException("JSON数据不能为空", nameof(jsonData));
             }
             
             try
             {
-                string url = _serverUrl + "/" + endpoint.TrimStart('/');
+                Debug.Log($"[ServerClient] 发送JSON消息：{jsonData}");
                 
-                EncryptedServerResponse<string> response = await _httpManager.SendEncryptedTextAsync(
-                    url, message, timeout);
+                var response = await httpManager.SendJsonAsync(jsonData);
                 
-                if (response.Success)
-                {
-                    return new ServerMessageResult<string>
-                    {
-                        Success = true,
-                        Data = response.Data,
-                        StatusCode = response.StatusCode
-                    };
-                }
-                else
-                {
-                    return new ServerMessageResult<string>
-                    {
-                        Success = false,
-                        Error = response.Error,
-                        StatusCode = response.StatusCode
-                    };
-                }
+                Debug.Log($"[ServerClient] 收到JSON响应：{response}");
+                return response;
             }
             catch (Exception e)
             {
-                Debug.LogError($"[ServerClient] 发送文本消息异常: {e.Message}");
-                return new ServerMessageResult<string>
-                {
-                    Success = false,
-                    Error = $"发送文本消息异常: {e.Message}"
-                };
+                Debug.LogError($"[ServerClient] 发送JSON消息失败：{e.Message}");
+                throw;
             }
         }
         
         /// <summary>
-        /// 登录到服务器
+        /// 发送登录请求
         /// </summary>
-        /// <param name="loginRequest">登录请求</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>登录结果</returns>
-        public async Task<ServerMessageResult<S2C_Login>> LoginAsync(C2S_Login loginRequest, float timeout = 10f)
+        /// <param name="account">账户名</param>
+        /// <returns>登录响应</returns>
+        public async Task<S2C_Message> LoginAsync(string account)
         {
-            return await SendMessageAsync<C2S_Login, S2C_Login>("login", loginRequest, timeout);
+            if (string.IsNullOrEmpty(account))
+            {
+                throw new ArgumentException("账户名不能为空", nameof(account));
+            }
+            
+            Debug.Log($"[ServerClient] 发送登录请求：{account}");
+            
+            var loginMessage = ProtobufManager.CreateLoginMessage(account);
+            return await SendMessageAsync(loginMessage);
         }
         
         /// <summary>
-        /// 登出服务器
+        /// 发送Ping请求
         /// </summary>
-        /// <param name="logoutRequest">登出请求</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>登出结果</returns>
-        public async Task<ServerMessageResult<S2C_Logout>> LogoutAsync(C2S_Logout logoutRequest, float timeout = 10f)
+        /// <returns>Ping响应</returns>
+        public async Task<S2C_Message> PingAsync()
         {
-            return await SendMessageAsync<C2S_Logout, S2C_Logout>("logout", logoutRequest, timeout);
+            Debug.Log("[ServerClient] 发送Ping请求");
+            
+            var pingMessage = ProtobufManager.CreatePingMessage();
+            return await SendMessageAsync(pingMessage);
         }
         
         /// <summary>
-        /// 发送Ping消息
+        /// 请求客户端数据
         /// </summary>
-        /// <param name="pingRequest">Ping请求</param>
-        /// <param name="timeout">超时时间</param>
-        /// <returns>Ping结果</returns>
-        public async Task<ServerMessageResult<S2C_Ping>> PingAsync(C2S_Ping pingRequest, float timeout = 5f)
+        /// <returns>客户端数据响应</returns>
+        public async Task<S2C_Message> RequestClientDataAsync()
         {
-            return await SendMessageAsync<C2S_Ping, S2C_Ping>("ping", pingRequest, timeout);
+            Debug.Log("[ServerClient] 请求客户端数据");
+            
+            var message = ProtobufManager.CreateClientDataMessage();
+            return await SendMessageAsync(message);
         }
         
         /// <summary>
-        /// 获取服务器URL
+        /// 上传客户端数据
         /// </summary>
-        /// <returns>服务器URL</returns>
-        public string GetServerUrl()
+        /// <param name="data">要上传的数据</param>
+        /// <returns>上传响应</returns>
+        public async Task<S2C_Message> UploadClientDataAsync(byte[] data)
         {
-            return _serverUrl;
+            Debug.Log($"[ServerClient] 上传客户端数据，大小：{data?.Length ?? 0}字节");
+            
+            var message = ProtobufManager.CreateUploadClientDataMessage(data);
+            return await SendMessageAsync(message);
         }
         
         /// <summary>
-        /// 检查连接状态
+        /// 请求基础数据
         /// </summary>
-        /// <returns>是否连接</returns>
-        public bool CheckConnection()
+        /// <returns>基础数据响应</returns>
+        public async Task<S2C_Message> RequestBaseDataAsync()
         {
-            return IsConnected && _handshakeManager != null && _handshakeManager.IsHandshakeCompleted;
+            Debug.Log("[ServerClient] 请求基础数据");
+            
+            var message = ProtobufManager.CreateBaseMessage();
+            return await SendMessageAsync(message);
+        }
+        
+        /// <summary>
+        /// 请求道具数据
+        /// </summary>
+        /// <returns>道具数据响应</returns>
+        public async Task<S2C_Message> RequestItemDataAsync()
+        {
+            Debug.Log("[ServerClient] 请求道具数据");
+            
+            var message = ProtobufManager.CreateItemMessage();
+            return await SendMessageAsync(message);
+        }
+        
+        /// <summary>
+        /// 发送登出请求
+        /// </summary>
+        /// <returns>登出响应</returns>
+        public async Task<S2C_Message> LogoutAsync()
+        {
+            Debug.Log("[ServerClient] 发送登出请求");
+            
+            var logoutMessage = ProtobufManager.CreateLogoutMessage();
+            return await SendMessageAsync(logoutMessage);
+        }
+        
+        /// <summary>
+        /// 设置服务器地址
+        /// </summary>
+        /// <param name="url">服务器URL</param>
+        public void SetServerUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                throw new ArgumentException("服务器URL不能为空", nameof(url));
+            }
+            
+            serverUrl = url;
+            httpManager?.SetBaseUrl(url);
+            Debug.Log($"[ServerClient] 服务器地址已更新为：{url}");
+        }
+        
+        /// <summary>
+        /// 获取连接状态信息
+        /// </summary>
+        /// <returns>连接状态描述</returns>
+        public string GetConnectionStatus()
+        {
+            return $"连接状态：{(isConnected ? "已连接" : "未连接")}，服务器：{serverUrl}";
         }
     }
-    
-    /// <summary>
-    /// 服务器连接结果
-    /// </summary>
-    public class ServerConnectionResult
-    {
-        // 连接是否成功
-        public bool Success { get; set; } = false;
-        
-        // 结果消息
-        public string Message { get; set; } = "";
-        
-        // 共享密钥
-        public byte[] SharedSecret { get; set; } = null;
-    }
-    
-    /// <summary>
-    /// 服务器消息结果
-    /// </summary>
-    /// <typeparam name="T">响应数据类型</typeparam>
-    public class ServerMessageResult<T>
-    {
-        // 请求是否成功
-        public bool Success { get; set; } = false;
-        
-        // 错误信息
-        public string Error { get; set; } = "";
-        
-        // 状态码
-        public int StatusCode { get; set; } = 0;
-        
-        // 响应数据
-        public T Data { get; set; } = default(T);
-    }
+}
 
