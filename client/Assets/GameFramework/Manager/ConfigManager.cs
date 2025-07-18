@@ -91,7 +91,7 @@ namespace GameFramework.Manager
             _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
 #elif UNITY_STANDALONE_WIN
             _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID || UNITY_WEBGL
             List<ByteBuf> byteBuffs = new List<ByteBuf>();
             foreach (var tableName in TableNames)
             {
