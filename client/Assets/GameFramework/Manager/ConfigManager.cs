@@ -87,29 +87,49 @@ namespace GameFramework.Manager
         /// </summary>
         public virtual async Task LoadTablesAsync()
         {
-#if UNITY_EDITOR
-            _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
-#elif UNITY_STANDALONE_WIN
-            _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
-#elif UNITY_ANDROID || UNITY_WEBGL
-            List<ByteBuf> byteBuffs = new List<ByteBuf>();
+// #if UNITY_EDITOR
+//             _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
+// #elif UNITY_ANDROID || UNITY_WEBGL || UNITY_EDITOR
+            Debug.Log($"[{GetType().Name}] UNITY_WEBGL || UNITY_WEBGL 加载配置表: {ConfigPath}");
+            // List<ByteBuf> byteBuffs = new List<ByteBuf>();
+            // foreach (var tableName in TableNames)
+            // {
+            //     UnityWebRequest request = UnityWebRequest.Get($"{ConfigPath}/{tableName}.bytes");
+            //     await request.SendWebRequest();
+                
+            //     if (request.result != UnityWebRequest.Result.Success)
+            //     {
+            //         Debug.LogError($"[{GetType().Name}] 加载配置表失败: {tableName}, 错误: {request.error}");
+            //         continue;
+            //     }
+                
+            //     byteBuffs.Add(new ByteBuf(request.downloadHandler.data));
+            // }
+
+             List<ByteBuf> byteBuffs = new List<ByteBuf>();
+
             foreach (var tableName in TableNames)
             {
-                UnityWebRequest request = UnityWebRequest.Get($"{ConfigPath}/{tableName}.bytes");
-                await request.SendWebRequest();
+                // 注意：Resources.Load 不需要扩展名
+                TextAsset textAsset = Resources.Load<TextAsset>($"Bundle/Raw/Configs/bytes/{tableName}");
                 
-                if (request.result != UnityWebRequest.Result.Success)
+                if (textAsset == null)
                 {
-                    Debug.LogError($"[{GetType().Name}] 加载配置表失败: {tableName}, 错误: {request.error}");
+                    Debug.LogError($"[{GetType().Name}] 配置加载失败：未找到资源 Bundle/Raw/Configs/bytes/{tableName}");
                     continue;
                 }
-                
-                byteBuffs.Add(new ByteBuf(request.downloadHandler.data));
+
+                byteBuffs.Add(new ByteBuf(textAsset.bytes));
             }
 
             int index = 0;
             _tables = new cfg.Tables(_ => byteBuffs[index++]);
-#endif
+
+            await UniTask.Yield(); // 保持异步接口一致性
+
+            // int index = 0;
+            // _tables = new cfg.Tables(_ => byteBuffs[index++]);
+// #endif
         }
 
         /// <summary>
