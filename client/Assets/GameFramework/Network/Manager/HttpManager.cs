@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using GameFramework.Core;
-using GameFramework.Network;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -116,27 +115,7 @@ public class HttpManager : IManager
         return await GetAsync(url, null, timeout, DEFAULT_RETRY_COUNT);
     }
     
-    /// <summary>
-    /// 发送POST请求（JSON数据）
-    /// </summary>
-    /// <param name="url">请求URL</param>
-    /// <param name="jsonData">JSON数据</param>
-    /// <param name="headers">自定义请求头</param>
-    /// <param name="timeout">超时时间</param>
-    /// <param name="retryCount">重试次数</param>
-    /// <returns>HTTP响应</returns>
-    public async Task<HttpResponse> PostAsync(string url, string jsonData, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
-    {
-        string fullUrl = GetFullUrl(url);
-        
-        UnityWebRequest request = new UnityWebRequest(fullUrl, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        
-        return await SendRequestAsync(request, headers, timeout, retryCount);
-    }
-    
+
     /// <summary>
     /// 发送POST请求（字节数据）
     /// </summary>
@@ -157,81 +136,7 @@ public class HttpManager : IManager
         return await SendRequestAsync(request, headers, timeout, retryCount);
     }
     
-    /// <summary>
-    /// 发送C2S消息并接收S2C消息
-    /// </summary>
-    /// <param name="url">请求URL</param>
-    /// <param name="request">请求消息</param>
-    /// <param name="timeout">超时时间</param>
-    /// <returns>S2C消息响应</returns>
-    public async Task<ProtobufResponse<S2C_Message>> SendC2SMessageAsync(
-        string url, 
-        C2S_Message request, 
-        float timeout = DEFAULT_TIMEOUT)
-    {
-        var protobufResponse = new ProtobufResponse<S2C_Message>
-        {
-            Success = false,
-            Error = "未知错误"
-        };
-
-
-
-        try
-        {
-            // 序列化请求消息
-            byte[] requestData = ProtobufManager.Serialize(request);
-            if (requestData == null)
-            {
-                protobufResponse.Error = "请求消息序列化失败";
-                return protobufResponse;
-            }
-
-            // 发送HTTP请求
-            var headers = new Dictionary<string, string>
-            {
-                { "Content-Type", "application/x-protobuf" }
-            };
-            
-            HttpResponse httpResponse = await PostAsync(url, requestData, headers, timeout);
-            
-            protobufResponse.StatusCode = httpResponse.StatusCode;
-            
-            if (!httpResponse.Success)
-            {
-                protobufResponse.Error = $"HTTP请求失败: {httpResponse.Error}";
-                return protobufResponse;
-            }
-
-            // 反序列化响应消息
-            if (httpResponse.Bytes != null && httpResponse.Bytes.Length > 0)
-            {
-                S2C_Message responseMessage = ProtobufManager.DeserializeS2CMessage(httpResponse.Bytes);
-                if (responseMessage != null)
-                {
-                    protobufResponse.Success = true;
-                    protobufResponse.Data = responseMessage;
-                    protobufResponse.RawData = httpResponse.Bytes;
-                    protobufResponse.Error = "";
-                }
-                else
-                {
-                    protobufResponse.Error = "响应消息反序列化失败";
-                }
-            }
-            else
-            {
-                protobufResponse.Error = "服务器响应数据为空";
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[HttpManager] 发送Protobuf消息异常: {e.Message}");
-            protobufResponse.Error = $"发送Protobuf消息异常: {e.Message}";
-        }
-
-        return protobufResponse;
-    }
+   
     
     /// <summary>
     /// 发送 Protobuf 数据并返回 Protobuf 响应
@@ -239,7 +144,7 @@ public class HttpManager : IManager
     /// <param name="requestData">要发送的protobuf字节数组</param>
     /// <param name="endpoint">API端点（可选，默认为 /api/message）</param>
     /// <returns>服务器响应的protobuf字节数组</returns>
-    public async Task<byte[]> SendProtobufAsync(byte[] requestData, string endpoint = "/api/message")
+    private async Task<byte[]> SendProtobufAsync(byte[] requestData, string endpoint = "/api/message")
     {
         if (requestData == null || requestData.Length == 0)
         {
