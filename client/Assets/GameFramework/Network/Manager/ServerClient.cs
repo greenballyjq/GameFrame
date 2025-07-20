@@ -1,5 +1,5 @@
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
 using Google.Protobuf;
@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace GameFramework.Network
 {
+
     /// <summary>
     /// 服务器客户端管理器 - 作为统一的服务器通信出口
     /// 使用 Google Protobuf 协议进行通信
@@ -16,7 +17,8 @@ namespace GameFramework.Network
         private HttpManager httpManager;
         private string serverUrl = "http://43.143.53.219:9999";
         private bool isConnected = false;
-        
+        private Dictionary<Type, Func<S2C_Message, IMessage>> MessageAccessors;
+        private Dictionary<Type, Action<C2S_Message, IMessage>> MessageSetters;
         /// <summary>
         /// 是否已连接到服务器
         /// </summary>
@@ -65,44 +67,64 @@ namespace GameFramework.Network
             httpManager?.Release();
             isConnected = false;
         }
-        
-       
-        
+
+
+
+
         /// <summary>
         /// 发送C2S消息到服务器
         /// </summary>
         /// <param name="message">要发送的消息</param>
         /// <param name="endpoint">API端点</param>
         /// <returns>服务器响应的S2C消息</returns>
-        public async Task<T> PostMessageAsync<T>(IMessage message, string endpoint) where T : IMessage<T>, new()
+        public async Task<T> PostMessageAsync<T>(IMessage message) where T : IMessage<T>, new()
         {
-            try
-            {
-                byte[] bodyRaw = message.ToByteArray();
-                var responseData = await httpManager.PostAsync(endpoint, bodyRaw);
+            //try
+            //{
+                var postMessage = new C2S_Message();
+                postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); ;
+                var messageType = message.GetType();
+                if (MessageSetters.TryGetValue(messageType, out var handler))
+                {
+                   handler(postMessage, message);
+                }
+                Debug.LogError($"ok postMessage {postMessage}");
+                byte[] bodyRaw = postMessage.ToByteArray();
+                var responseData = await httpManager.PostAsync(bodyRaw);
                 if (responseData != null && responseData.Bytes.Length > 0)
                 {
+                  
                     // 反序列化响应
-                    var parser = new MessageParser<T>(() => new T());
-                    T result = parser.ParseFrom(responseData.Bytes);
-                    return result;
+                    S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
+
+                    Debug.LogError($"S2C_Message内容：{wrapper}");
+
+                    if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
+                    {
+                        return (T)accessor(wrapper);
+
+                    }
+
+                    throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
+
+
                 }
                 else
                 {
                     throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
                 }
 
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[ServerClient] 发送消息失败：{e.Message}");
-                throw;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Debug.LogError($"[ServerClient] 发送消息失败：{e.Message}");
+            //    throw;
+            //}
 
         }
 
 
-        public async Task<T> GetMessageAsync<T>(String endpoint) where T : IMessage<T>, new()
+        public async Task<T> GetMessageAsync<T>(String endpoint = "") where T : IMessage<T>, new()
         {
             try
             {
@@ -142,7 +164,13 @@ namespace GameFramework.Network
             httpManager?.SetBaseUrl(url);
             Debug.Log($"[ServerClient] 服务器地址已更新为：{url}");
         }
-       
+
+
+        public void SetMessageHandler(Dictionary<Type, Action<C2S_Message, IMessage>> messageSetters, Dictionary<Type, Func<S2C_Message, IMessage>> messageAccessors)
+        {
+            MessageSetters = messageSetters;
+            MessageAccessors = messageAccessors;
+        }
     }
 }
 

@@ -125,132 +125,22 @@ public class HttpManager : IManager
     /// <param name="timeout">超时时间</param>
     /// <param name="retryCount">重试次数</param>
     /// <returns>HTTP响应</returns>
-    public async Task<HttpResponse> PostAsync(string url, byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
+    public async Task<HttpResponse> PostAsync(byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
     {
-        string fullUrl = GetFullUrl(url);
+        string fullUrl = GetFullUrl("");
         
         UnityWebRequest request = new UnityWebRequest(fullUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(data);
+        request.uploadHandler.contentType = "application/x-protobuf";
         request.downloadHandler = new DownloadHandlerBuffer();
-        
+        request.SetRequestHeader("Content-Type", "application/x-protobuf");
+        request.SetRequestHeader("Accept", "application/x-protobuf");
         return await SendRequestAsync(request, headers, timeout, retryCount);
     }
     
    
     
-    /// <summary>
-    /// 发送 Protobuf 数据并返回 Protobuf 响应
-    /// </summary>
-    /// <param name="requestData">要发送的protobuf字节数组</param>
-    /// <param name="endpoint">API端点（可选，默认为 /api/message）</param>
-    /// <returns>服务器响应的protobuf字节数组</returns>
-    private async Task<byte[]> SendProtobufAsync(byte[] requestData, string endpoint = "/api/message")
-    {
-        if (requestData == null || requestData.Length == 0)
-        {
-            throw new ArgumentException("请求数据不能为空", nameof(requestData));
-        }
 
-        try
-        {
-            string url = _baseUrl + endpoint;
-            Debug.Log($"[HttpManager] 发送Protobuf数据到：{url}，大小：{requestData.Length}字节");
-
-            using (var request = UnityWebRequest.PostWwwForm(url, ""))
-            {
-                // 设置protobuf内容
-                var uploadHandler = new UploadHandlerRaw(requestData);
-                uploadHandler.contentType = "application/x-protobuf";
-                request.uploadHandler = uploadHandler;
-
-                // 设置下载处理器
-                request.downloadHandler = new DownloadHandlerBuffer();
-
-                // 设置请求头
-                request.SetRequestHeader("Content-Type", "application/x-protobuf");
-                request.SetRequestHeader("Accept", "application/x-protobuf");
-
-                // 发送请求
-                var operation = request.SendWebRequest();
-                
-                // 等待完成
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
-
-                // 检查结果
-                if (request.result == UnityWebRequest.Result.Success)
-                {
-                    var responseData = request.downloadHandler.data;
-                    Debug.Log($"[HttpManager] 收到Protobuf响应，大小：{responseData?.Length ?? 0}字节");
-                    return responseData;
-                }
-                else
-                {
-                    var error = $"HTTP错误：{request.responseCode} - {request.error}";
-                    Debug.LogError($"[HttpManager] {error}");
-                    throw new Exception(error);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[HttpManager] 发送Protobuf请求失败：{e.Message}");
-            throw;
-        }
-    }
-
-    /// <summary>
-    /// 发送JSON数据并返回JSON响应
-    /// </summary>
-    /// <param name="jsonData">JSON字符串</param>
-    /// <param name="endpoint">API端点（可选，默认为 /api/json）</param>
-    /// <returns>服务器响应的JSON字符串</returns>
-    public async Task<string> SendJsonAsync(string jsonData, string endpoint = "/api/json")
-    {
-        if (string.IsNullOrEmpty(jsonData))
-        {
-            throw new ArgumentException("JSON数据不能为空", nameof(jsonData));
-        }
-
-        try
-        {
-            string url = _baseUrl + endpoint;
-            Debug.Log($"[HttpManager] 发送JSON数据到：{url}");
-
-            using (var request = UnityWebRequest.Post(url, jsonData, "application/json"))
-            {
-                // 发送请求
-                var operation = request.SendWebRequest();
-                
-                // 等待完成
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
-
-                // 检查结果
-                if (request.result == UnityWebRequest.Result.Success)
-                {
-                    var responseText = request.downloadHandler.text;
-                    Debug.Log($"[HttpManager] 收到JSON响应：{responseText}");
-                    return responseText;
-                }
-                else
-                {
-                    var error = $"HTTP错误：{request.responseCode} - {request.error}";
-                    Debug.LogError($"[HttpManager] {error}");
-                    throw new Exception(error);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[HttpManager] 发送JSON请求失败：{e.Message}");
-            throw;
-        }
-    }
     
     /// <summary>
     /// 获取完整URL
@@ -259,9 +149,8 @@ public class HttpManager : IManager
     {
         if (string.IsNullOrEmpty(url))
         {
-            throw new ArgumentException("URL不能为空");
+            return _baseUrl;
         }
-        
         // 如果URL已经是完整的，直接返回
         if (url.StartsWith("http://") || url.StartsWith("https://"))
         {
@@ -285,8 +174,8 @@ public class HttpManager : IManager
     {
         var response = new HttpResponse();
         
-        try
-        {
+        //try
+        //{
             // 设置超时
             request.timeout = (int)timeout;
             
@@ -312,7 +201,7 @@ public class HttpManager : IManager
             {
                 await Task.Yield();
             }
-            
+          
             // 处理响应
             response.StatusCode = (int)request.responseCode;
             
@@ -328,32 +217,34 @@ public class HttpManager : IManager
                 response.Error = $"{request.error} (状态码: {request.responseCode})";
                 
                 // 如果有重试次数，尝试重试
-                if (retryCount > 0)
-                {
-                    Debug.LogWarning($"[HttpManager] 请求失败，尝试重试。剩余重试次数: {retryCount}");
-                    request.Dispose();
+                //if (retryCount > 0)
+                //{
+                //    Debug.LogWarning($"[HttpManager] 请求失败，尝试重试。剩余重试次数: {retryCount}");
+                //    request.Dispose();
                     
-                    // 重新创建请求并重试
-                    return await SendRequestAsync(
-                        request, 
-                        headers, 
-                        timeout, 
-                        retryCount - 1
-                    );
-                }
+                //    // 重新创建请求并重试
+                //    return await SendRequestAsync(
+                //        request, 
+                //        headers, 
+                //        timeout, 
+                //        retryCount - 1
+                //    );
+                //}
             }
-        }
-        catch (Exception e)
-        {
-            response.Success = false;
-            response.Error = $"网络请求异常: {e.Message}";
-            Debug.LogError($"[HttpManager] 网络请求异常: {e.Message}");
-        }
-        finally
-        {
-            request?.Dispose();
-        }
-        
+
+            Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
+        //}
+        //catch (Exception e)
+        //{
+        //    response.Success = false;
+        //    response.Error = $"网络请求异常: {e.Message}";
+        //    Debug.LogError($"[HttpManager] 网络请求异常: {e.Message}");
+        //}
+        //finally
+        //{
+        //    request?.Dispose();
+        //}
+
         return response;
     }
 }
