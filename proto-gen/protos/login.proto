@@ -1,10 +1,22 @@
 syntax = "proto3";
 
+message WeChat {
+    string code = 1;    //客户端通过 wx.login 获取
+}
+
+message TikTok {
+}
+
 message C2S_Login {
-    string account = 1; //账号
+    string phone = 1; //手机账号(盘古平台)
+    oneof platform {
+        WeChat wechat = 2; //微信
+        TikTok tiktok = 3; //抖音
+    }
 };
 
 message S2C_Login {
+    string token = 1;  //用户令牌，后续通信必须放在 header 的 "Authorization" 中
 };
 
 message C2S_Logout {

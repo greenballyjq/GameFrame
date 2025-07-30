@@ -4,6 +4,7 @@ package etcd;
 message Server {
     string name = 1;
     string address = 2;
+    string login_address= 3;
 }
 
 message ServerList {

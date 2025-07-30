@@ -22,14 +22,18 @@ public static partial class LoginReflection {
   static LoginReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgtsb2dpbi5wcm90byIcCglDMlNfTG9naW4SDwoHYWNjb3VudBgBIAEoCSIL",
-          "CglTMkNfTG9naW4iDAoKQzJTX0xvZ291dCIMCgpTMkNfTG9nb3V0YgZwcm90",
-          "bzM="));
+          "Cgtsb2dpbi5wcm90byIWCgZXZUNoYXQSDAoEY29kZRgBIAEoCSIICgZUaWtU",
+          "b2siXAoJQzJTX0xvZ2luEg0KBXBob25lGAEgASgJEhkKBndlY2hhdBgCIAEo",
+          "CzIHLldlQ2hhdEgAEhkKBnRpa3RvaxgDIAEoCzIHLlRpa1Rva0gAQgoKCHBs",
+          "YXRmb3JtIhoKCVMyQ19Mb2dpbhINCgV0b2tlbhgBIAEoCSIMCgpDMlNfTG9n",
+          "b3V0IgwKClMyQ19Mb2dvdXRiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Login), global::C2S_Login.Parser, new[]{ "Account" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Login), global::S2C_Login.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::WeChat), global::WeChat.Parser, new[]{ "Code" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::TikTok), global::TikTok.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Login), global::C2S_Login.Parser, new[]{ "Phone", "Wechat", "Tiktok" }, new[]{ "Platform" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Login), global::S2C_Login.Parser, new[]{ "Token" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Logout), global::C2S_Logout.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Logout), global::S2C_Logout.Parser, null, null, null, null, null)
         }));
@@ -38,6 +42,350 @@ public static partial class LoginReflection {
 
 }
 #region Messages
+public sealed partial class WeChat : pb::IMessage<WeChat>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<WeChat> _parser = new pb::MessageParser<WeChat>(() => new WeChat());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<WeChat> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::LoginReflection.Descriptor.MessageTypes[0]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public WeChat() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public WeChat(WeChat other) : this() {
+    code_ = other.code_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public WeChat Clone() {
+    return new WeChat(this);
+  }
+
+  /// <summary>Field number for the "code" field.</summary>
+  public const int CodeFieldNumber = 1;
+  private string code_ = "";
+  /// <summary>
+  ///客户端通过 wx.login 获取
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Code {
+    get { return code_; }
+    set {
+      code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as WeChat);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(WeChat other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Code != other.Code) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Code.Length != 0) hash ^= Code.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Code.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Code);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Code.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Code);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Code.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Code);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(WeChat other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Code.Length != 0) {
+      Code = other.Code;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Code = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Code = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+public sealed partial class TikTok : pb::IMessage<TikTok>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<TikTok> _parser = new pb::MessageParser<TikTok>(() => new TikTok());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<TikTok> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::LoginReflection.Descriptor.MessageTypes[1]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TikTok() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TikTok(TikTok other) : this() {
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TikTok Clone() {
+    return new TikTok(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as TikTok);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(TikTok other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(TikTok other) {
+    if (other == null) {
+      return;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+      }
+    }
+  }
+  #endif
+
+}
+
 public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -52,7 +400,7 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[0]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -72,7 +420,16 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public C2S_Login(C2S_Login other) : this() {
-    account_ = other.account_;
+    phone_ = other.phone_;
+    switch (other.PlatformCase) {
+      case PlatformOneofCase.Wechat:
+        Wechat = other.Wechat.Clone();
+        break;
+      case PlatformOneofCase.Tiktok:
+        Tiktok = other.Tiktok.Clone();
+        break;
+    }
+
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -82,19 +439,70 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     return new C2S_Login(this);
   }
 
-  /// <summary>Field number for the "account" field.</summary>
-  public const int AccountFieldNumber = 1;
-  private string account_ = "";
+  /// <summary>Field number for the "phone" field.</summary>
+  public const int PhoneFieldNumber = 1;
+  private string phone_ = "";
   /// <summary>
-  ///账号
+  ///手机账号(盘古平台)
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string Account {
-    get { return account_; }
+  public string Phone {
+    get { return phone_; }
     set {
-      account_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
+  }
+
+  /// <summary>Field number for the "wechat" field.</summary>
+  public const int WechatFieldNumber = 2;
+  /// <summary>
+  ///微信
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::WeChat Wechat {
+    get { return platformCase_ == PlatformOneofCase.Wechat ? (global::WeChat) platform_ : null; }
+    set {
+      platform_ = value;
+      platformCase_ = value == null ? PlatformOneofCase.None : PlatformOneofCase.Wechat;
+    }
+  }
+
+  /// <summary>Field number for the "tiktok" field.</summary>
+  public const int TiktokFieldNumber = 3;
+  /// <summary>
+  ///抖音
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::TikTok Tiktok {
+    get { return platformCase_ == PlatformOneofCase.Tiktok ? (global::TikTok) platform_ : null; }
+    set {
+      platform_ = value;
+      platformCase_ = value == null ? PlatformOneofCase.None : PlatformOneofCase.Tiktok;
+    }
+  }
+
+  private object platform_;
+  /// <summary>Enum of possible cases for the "platform" oneof.</summary>
+  public enum PlatformOneofCase {
+    None = 0,
+    Wechat = 2,
+    Tiktok = 3,
+  }
+  private PlatformOneofCase platformCase_ = PlatformOneofCase.None;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlatformOneofCase PlatformCase {
+    get { return platformCase_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void ClearPlatform() {
+    platformCase_ = PlatformOneofCase.None;
+    platform_ = null;
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -112,7 +520,10 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Account != other.Account) return false;
+    if (Phone != other.Phone) return false;
+    if (!object.Equals(Wechat, other.Wechat)) return false;
+    if (!object.Equals(Tiktok, other.Tiktok)) return false;
+    if (PlatformCase != other.PlatformCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -120,7 +531,10 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (Account.Length != 0) hash ^= Account.GetHashCode();
+    if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+    if (platformCase_ == PlatformOneofCase.Wechat) hash ^= Wechat.GetHashCode();
+    if (platformCase_ == PlatformOneofCase.Tiktok) hash ^= Tiktok.GetHashCode();
+    hash ^= (int) platformCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -139,9 +553,17 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (Account.Length != 0) {
+    if (Phone.Length != 0) {
       output.WriteRawTag(10);
-      output.WriteString(Account);
+      output.WriteString(Phone);
+    }
+    if (platformCase_ == PlatformOneofCase.Wechat) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Wechat);
+    }
+    if (platformCase_ == PlatformOneofCase.Tiktok) {
+      output.WriteRawTag(26);
+      output.WriteMessage(Tiktok);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -153,9 +575,17 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Account.Length != 0) {
+    if (Phone.Length != 0) {
       output.WriteRawTag(10);
-      output.WriteString(Account);
+      output.WriteString(Phone);
+    }
+    if (platformCase_ == PlatformOneofCase.Wechat) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Wechat);
+    }
+    if (platformCase_ == PlatformOneofCase.Tiktok) {
+      output.WriteRawTag(26);
+      output.WriteMessage(Tiktok);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -167,8 +597,14 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (Account.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Account);
+    if (Phone.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+    }
+    if (platformCase_ == PlatformOneofCase.Wechat) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Wechat);
+    }
+    if (platformCase_ == PlatformOneofCase.Tiktok) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tiktok);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -182,9 +618,24 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     if (other == null) {
       return;
     }
-    if (other.Account.Length != 0) {
-      Account = other.Account;
+    if (other.Phone.Length != 0) {
+      Phone = other.Phone;
     }
+    switch (other.PlatformCase) {
+      case PlatformOneofCase.Wechat:
+        if (Wechat == null) {
+          Wechat = new global::WeChat();
+        }
+        Wechat.MergeFrom(other.Wechat);
+        break;
+      case PlatformOneofCase.Tiktok:
+        if (Tiktok == null) {
+          Tiktok = new global::TikTok();
+        }
+        Tiktok.MergeFrom(other.Tiktok);
+        break;
+    }
+
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -201,7 +652,25 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          Account = input.ReadString();
+          Phone = input.ReadString();
+          break;
+        }
+        case 18: {
+          global::WeChat subBuilder = new global::WeChat();
+          if (platformCase_ == PlatformOneofCase.Wechat) {
+            subBuilder.MergeFrom(Wechat);
+          }
+          input.ReadMessage(subBuilder);
+          Wechat = subBuilder;
+          break;
+        }
+        case 26: {
+          global::TikTok subBuilder = new global::TikTok();
+          if (platformCase_ == PlatformOneofCase.Tiktok) {
+            subBuilder.MergeFrom(Tiktok);
+          }
+          input.ReadMessage(subBuilder);
+          Tiktok = subBuilder;
           break;
         }
       }
@@ -220,7 +689,25 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          Account = input.ReadString();
+          Phone = input.ReadString();
+          break;
+        }
+        case 18: {
+          global::WeChat subBuilder = new global::WeChat();
+          if (platformCase_ == PlatformOneofCase.Wechat) {
+            subBuilder.MergeFrom(Wechat);
+          }
+          input.ReadMessage(subBuilder);
+          Wechat = subBuilder;
+          break;
+        }
+        case 26: {
+          global::TikTok subBuilder = new global::TikTok();
+          if (platformCase_ == PlatformOneofCase.Tiktok) {
+            subBuilder.MergeFrom(Tiktok);
+          }
+          input.ReadMessage(subBuilder);
+          Tiktok = subBuilder;
           break;
         }
       }
@@ -244,7 +731,7 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[1]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -264,6 +751,7 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2C_Login(S2C_Login other) : this() {
+    token_ = other.token_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -271,6 +759,21 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2C_Login Clone() {
     return new S2C_Login(this);
+  }
+
+  /// <summary>Field number for the "token" field.</summary>
+  public const int TokenFieldNumber = 1;
+  private string token_ = "";
+  /// <summary>
+  ///用户令牌，后续通信必须放在 header 的 "Authorization" 中
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Token {
+    get { return token_; }
+    set {
+      token_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -288,6 +791,7 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (Token != other.Token) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -295,6 +799,7 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (Token.Length != 0) hash ^= Token.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -313,6 +818,10 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (Token.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Token);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -323,6 +832,10 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Token.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Token);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -333,6 +846,9 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (Token.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -344,6 +860,9 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   public void MergeFrom(S2C_Login other) {
     if (other == null) {
       return;
+    }
+    if (other.Token.Length != 0) {
+      Token = other.Token;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -360,6 +879,10 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
+        case 10: {
+          Token = input.ReadString();
+          break;
+        }
       }
     }
   #endif
@@ -375,6 +898,10 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
+        case 10: {
+          Token = input.ReadString();
+          break;
+        }
       }
     }
   }
@@ -396,7 +923,7 @@ public sealed partial class C2S_Logout : pb::IMessage<C2S_Logout>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[2]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -548,7 +1075,7 @@ public sealed partial class S2C_Logout : pb::IMessage<S2C_Logout>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[3]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
