@@ -82,7 +82,7 @@ namespace GameFramework.Network
             //try
             //{
                 var postMessage = new C2S_Message();
-                postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); ;
+                postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 var messageType = message.GetType();
                 if (MessageSetters.TryGetValue(messageType, out var handler))
                 {

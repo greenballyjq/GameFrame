@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
 
@@ -16,6 +17,7 @@ namespace GameFramework.Core
         
         // 是否已初始化
         private bool _isInitialized = false;
+        public bool IsInitialized => _isInitialized;
         
         // 游戏配置
         [SerializeField] private GameConfig _gameConfig;
@@ -111,10 +113,6 @@ namespace GameFramework.Core
                 return;
             }
             
-            // 加载配置表
-
-            //await _configManager.LoadTablesAsync();
-            
             // 加载游戏启动场景
             _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
             
@@ -123,6 +121,8 @@ namespace GameFramework.Core
             
             Debug.Log("[GameLauncher] 游戏初始化完成");
         }
+        
+        
         
         /// <summary>
         /// 初始化资源系统
@@ -157,7 +157,10 @@ namespace GameFramework.Core
             
             // 尝试获取最新版本
             UpdateStatus("正在检查资源更新...");
-            string latestVersion = _resourceManager.RequestPackageVersion();
+            string latestVersion = await _resourceManager.RequestPackageVersionAsync();
+            // string latestVersion = _resourceManager.RequestPackageVersion();
+            
+            Debug.Log($"[ResourceManager] LatestVersion: {latestVersion}");
             
             if (!string.IsNullOrEmpty(latestVersion))
             {
@@ -167,7 +170,7 @@ namespace GameFramework.Core
                 if (success)
                 {
                     // 保存版本号，用于弱网环境
-                    PlayerPrefs.SetString("LastSuccessVersion", latestVersion);
+                    UnityEngine.PlayerPrefs.SetString("LastSuccessVersion", latestVersion);
                     
                     // 创建下载器
                     var downloader = _resourceManager.CreateResourceDownloader();
@@ -198,7 +201,7 @@ namespace GameFramework.Core
                 {
                     // 更新资源清单失败，尝试使用本地版本
                     UpdateStatus("更新资源清单失败，尝试使用本地版本");
-                    string localVersion = PlayerPrefs.GetString("LastSuccessVersion", "");
+                    string localVersion = UnityEngine.PlayerPrefs.GetString("LastSuccessVersion", "");
                     if (!string.IsNullOrEmpty(localVersion))
                     {
                         bool localSuccess = await _resourceManager.UpdatePackageManifestAsync(localVersion);
@@ -216,7 +219,7 @@ namespace GameFramework.Core
             {
                 // 网络异常，尝试使用本地版本
                 UpdateStatus("网络连接异常，尝试使用本地版本");
-                string localVersion = PlayerPrefs.GetString("LastSuccessVersion", "");
+                string localVersion = UnityEngine.PlayerPrefs.GetString("LastSuccessVersion", "");
                 if (!string.IsNullOrEmpty(localVersion))
                 {
                     bool localSuccess = await _resourceManager.UpdatePackageManifestAsync(localVersion);

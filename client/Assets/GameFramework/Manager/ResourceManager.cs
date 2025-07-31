@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
@@ -43,7 +44,8 @@ public class ResourceManager : IManager
         #endif
         
         // 创建默认资源包
-        CreatePackage(DefaultPackageName);
+        var defaultPackage = CreatePackage(DefaultPackageName);
+        YooAssets.SetDefaultPackage(defaultPackage);
     }
 
 
@@ -111,8 +113,12 @@ public class ResourceManager : IManager
         
         if (_playMode == EPlayMode.EditorSimulateMode)
         {
-            //var buildResult = EditorSimulateModeHelper.SimulateBuild("DefaultPackage");
-            var packageRoot = "C:/GameProject/Bundles/Android/DefaultPackage/Simulate"; //安卓平台
+            var buildResult = EditorSimulateModeHelper.SimulateBuild("DefaultPackage");
+            // Debug.Log($"[ResourceManager] Build result packageRoot: {buildResult.PackageRootDirectory}");
+            // var packageRoot = Path.Combine(Application.dataPath, "../", "Bundles/WebGL/DefaultPackage"); //安卓平台
+            // var packageRoot = "D:/WorkSpace/GooseClient/client/Bundles/WebGL/DefaultPackage";
+            var packageRoot = buildResult.PackageRootDirectory;
+            Debug.Log($"[ResourceManager] PackageRoot : {packageRoot}");
             var editorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
   
             var editorInitParameters = new EditorSimulateModeParameters();
@@ -181,7 +187,23 @@ public class ResourceManager : IManager
             Debug.LogError($"[ResourceManager] 请求资源包版本失败: 资源包 {packageName} 不存在");
             return null;
         }
+        
         return package.GetPackageVersion();
+    }
+
+    public async Task<string> RequestPackageVersionAsync(string packageName = DefaultPackageName, int timeout = 30)
+    {
+        var package = GetPackage(packageName);
+        if (package == null)
+        {
+            Debug.LogError($"[ResourceManager] 请求资源包版本失败: 资源包 {packageName} 不存在");
+            return null;
+        }
+        
+        var op = package.RequestPackageVersionAsync();
+        await op;
+
+        return op.PackageVersion;
     }
     
     /// <summary>
@@ -209,14 +231,18 @@ public class ResourceManager : IManager
     /// </summary>
     public async Task<bool> UpdatePackageManifestAsync(string packageVersion, string packageName = DefaultPackageName)
     {
+        Debug.Log($"[ResourceManager] UpdatePackageManifestAsync packageVersion: {packageVersion}");
         var package = GetPackage(packageName);
         if (package == null)
         {
             Debug.LogError($"[ResourceManager] 更新资源包清单失败: 资源包 {packageName} 不存在");
             return false;
         }
-        
+
+        // var op = package.RequestPackageVersionAsync();
+        // await op;
         var operation = package.UpdatePackageManifestAsync(packageVersion);
+        // var operation = package.UpdatePackageManifestAsync(op.PackageVersion);
         await operation.ToUniTask();
         
         Debug.Log($"[ResourceManager] 资源包清单更新状态: {operation.Status}, {(operation.Status == EOperationStatus.Succeed ? "成功" : $"失败: {operation.Error}")}");
