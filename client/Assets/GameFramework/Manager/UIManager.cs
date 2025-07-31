@@ -105,6 +105,9 @@ public class UIManager : IManager
             layerCanvas.overrideSorting = true;
             layerCanvas.sortingOrder = 100 + (int)layer * 10;
             
+            // 添加GraphicRaycaster组件
+            layerObj.AddComponent<GraphicRaycaster>();
+            
             _layerParents.Add(layer, layerObj.transform);
         }
         
