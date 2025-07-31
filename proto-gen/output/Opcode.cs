@@ -22,12 +22,14 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8q6AEKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
-          "Eg0KCU9QX0ZhaWxlZBABEhUKEU9QXzNrcF9Ob3RfRW5vdWdoEGUSGQoVT1Bf",
-          "U3RhbWluYV9Ob3RfRW5vdWdoEGYSFgoST1BfSXRlbV9Ob3RfRW5vdWdoEGcS",
-          "HQoYT1BfTG9naW5fSW52YWxpZF9BY2NvdW50EOkHEhoKFU9QX0xvZ291dF9P",
-          "dGhlcl9Mb2dpbhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIeChlPUF9M",
-          "b2dvdXRfU2VydmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
+          "CgxvcGNvZGUucHJvdG8quQIKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
+          "Eg0KCU9QX0ZhaWxlZBABEhYKEk9QX1Nlc3Npb25fRXhwaXJlZBACEhwKGE9Q",
+          "X1Nlc3Npb25fVG9rZW5fSW52YWxpZBADEhUKEU9QXzNrcF9Ob3RfRW5vdWdo",
+          "EGUSGQoVT1BfU3RhbWluYV9Ob3RfRW5vdWdoEGYSFgoST1BfSXRlbV9Ob3Rf",
+          "RW5vdWdoEGcSHQoYT1BfTG9naW5fSW52YWxpZF9BY2NvdW50EOkHEhkKFE9Q",
+          "X0xvZ2luX0F1dGhfZmFpbGVkEOoHEhoKFU9QX0xvZ291dF9PdGhlcl9Mb2dp",
+          "bhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIeChlPUF9Mb2dvdXRfU2Vy",
+          "dmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2C_OPCode), }, null, null));
@@ -46,6 +48,14 @@ public enum S2C_OPCode {
   /// </summary>
   [pbr::OriginalName("OP_Failed")] OpFailed = 1,
   /// <summary>
+  ///会话过期,需重新登陆
+  /// </summary>
+  [pbr::OriginalName("OP_Session_Expired")] OpSessionExpired = 2,
+  /// <summary>
+  ///会话令牌无效
+  /// </summary>
+  [pbr::OriginalName("OP_Session_Token_Invalid")] OpSessionTokenInvalid = 3,
+  /// <summary>
   ///金币不足
   /// </summary>
   [pbr::OriginalName("OP_3kp_Not_Enough")] Op3KpNotEnough = 101,
@@ -58,9 +68,13 @@ public enum S2C_OPCode {
   /// </summary>
   [pbr::OriginalName("OP_Item_Not_Enough")] OpItemNotEnough = 103,
   /// <summary>
-  ///无效账号
+  ///无效账号(手机号方式)
   /// </summary>
   [pbr::OriginalName("OP_Login_Invalid_Account")] OpLoginInvalidAccount = 1001,
+  /// <summary>
+  ///平台认证失败
+  /// </summary>
+  [pbr::OriginalName("OP_Login_Auth_failed")] OpLoginAuthFailed = 1002,
   /// <summary>
   ///顶号
   /// </summary>

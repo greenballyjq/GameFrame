@@ -24,13 +24,13 @@ namespace Etcd {
     static EtcdReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpldGNkLnByb3RvEgRldGNkIicKBlNlcnZlchIMCgRuYW1lGAEgASgJEg8K",
-            "B2FkZHJlc3MYAiABKAkiKwoKU2VydmVyTGlzdBIdCgdzZXJ2ZXJzGAEgAygL",
-            "MgwuZXRjZC5TZXJ2ZXJiBnByb3RvMw=="));
+            "CgpldGNkLnByb3RvEgRldGNkIj4KBlNlcnZlchIMCgRuYW1lGAEgASgJEg8K",
+            "B2FkZHJlc3MYAiABKAkSFQoNbG9naW5fYWRkcmVzcxgDIAEoCSIrCgpTZXJ2",
+            "ZXJMaXN0Eh0KB3NlcnZlcnMYASADKAsyDC5ldGNkLlNlcnZlcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Etcd.Server), global::Etcd.Server.Parser, new[]{ "Name", "Address" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Etcd.Server), global::Etcd.Server.Parser, new[]{ "Name", "Address", "LoginAddress" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Etcd.ServerList), global::Etcd.ServerList.Parser, new[]{ "Servers" }, null, null, null, null)
           }));
     }
@@ -74,6 +74,7 @@ namespace Etcd {
     public Server(Server other) : this() {
       name_ = other.name_;
       address_ = other.address_;
+      loginAddress_ = other.loginAddress_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -107,6 +108,18 @@ namespace Etcd {
       }
     }
 
+    /// <summary>Field number for the "login_address" field.</summary>
+    public const int LoginAddressFieldNumber = 3;
+    private string loginAddress_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string LoginAddress {
+      get { return loginAddress_; }
+      set {
+        loginAddress_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -124,6 +137,7 @@ namespace Etcd {
       }
       if (Name != other.Name) return false;
       if (Address != other.Address) return false;
+      if (LoginAddress != other.LoginAddress) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -133,6 +147,7 @@ namespace Etcd {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (Address.Length != 0) hash ^= Address.GetHashCode();
+      if (LoginAddress.Length != 0) hash ^= LoginAddress.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -159,6 +174,10 @@ namespace Etcd {
         output.WriteRawTag(18);
         output.WriteString(Address);
       }
+      if (LoginAddress.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(LoginAddress);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -177,6 +196,10 @@ namespace Etcd {
         output.WriteRawTag(18);
         output.WriteString(Address);
       }
+      if (LoginAddress.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(LoginAddress);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -192,6 +215,9 @@ namespace Etcd {
       }
       if (Address.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
+      }
+      if (LoginAddress.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(LoginAddress);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -210,6 +236,9 @@ namespace Etcd {
       }
       if (other.Address.Length != 0) {
         Address = other.Address;
+      }
+      if (other.LoginAddress.Length != 0) {
+        LoginAddress = other.LoginAddress;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -234,6 +263,10 @@ namespace Etcd {
             Address = input.ReadString();
             break;
           }
+          case 26: {
+            LoginAddress = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -255,6 +288,10 @@ namespace Etcd {
           }
           case 18: {
             Address = input.ReadString();
+            break;
+          }
+          case 26: {
+            LoginAddress = input.ReadString();
             break;
           }
         }
