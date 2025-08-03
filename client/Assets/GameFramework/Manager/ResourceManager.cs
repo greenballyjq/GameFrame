@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using WeChatWASM;
 using YooAsset;
 
 /// <summary>
@@ -35,14 +33,17 @@ public class ResourceManager : IManager
         
         // 初始化YooAsset
         YooAssets.Initialize();
-        
+
         // 设置运行模式
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         _playMode = EPlayMode.EditorSimulateMode;
-        #else
+
+#elif UNITY_WEBGL
+          _playMode = EPlayMode.WebPlayMode;
+#else
         _playMode = EPlayMode.HostPlayMode;
-        #endif
-        
+#endif
+
         // 创建默认资源包
         var defaultPackage = CreatePackage(DefaultPackageName);
         YooAssets.SetDefaultPackage(defaultPackage);
@@ -114,9 +115,6 @@ public class ResourceManager : IManager
         if (_playMode == EPlayMode.EditorSimulateMode)
         {
             var buildResult = EditorSimulateModeHelper.SimulateBuild("DefaultPackage");
-            // Debug.Log($"[ResourceManager] Build result packageRoot: {buildResult.PackageRootDirectory}");
-            // var packageRoot = Path.Combine(Application.dataPath, "../", "Bundles/WebGL/DefaultPackage"); //安卓平台
-            // var packageRoot = "D:/WorkSpace/GooseClient/client/Bundles/WebGL/DefaultPackage";
             var packageRoot = buildResult.PackageRootDirectory;
             Debug.Log($"[ResourceManager] PackageRoot : {packageRoot}");
             var editorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
@@ -145,17 +143,48 @@ public class ResourceManager : IManager
             hostInitParameters.CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
 
             initParameters = hostInitParameters;
+
         }
         else if (_playMode == EPlayMode.WebPlayMode)
         {
-            IRemoteServices remoteServices = new RemoteServices(_defaultHostServer, _fallbackHostServer);
-            var webServerFileSystemParams = FileSystemParameters.CreateDefaultWebServerFileSystemParameters();
-            var webRemoteFileSystemParams = FileSystemParameters.CreateDefaultWebRemoteFileSystemParameters(remoteServices); //支持跨域下载
-            var webInitParameters = new WebPlayModeParameters();
-            webInitParameters.WebServerFileSystemParameters = webServerFileSystemParams;
-            webInitParameters.WebRemoteFileSystemParameters = webRemoteFileSystemParams;
-            initParameters = webInitParameters;
-        }
+            var PlatformManager = GameFrameworkManager.Instance.GetManager<PlatformManager>();
+            var curType = PlatformManager.GetCurrentPlatform();
+			IRemoteServices remoteServices = new RemoteServices(_defaultHostServer, _fallbackHostServer);
+			var webInitParameters = new WebPlayModeParameters();
+			string packageRoot = "yoo";
+			switch (curType)
+            {
+                case PlatformManager.PlatformType.WeChat:
+
+#if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
+                   string builtinPath = $"{WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin";
+					packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
+					webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, builtinPath);
+                   Debug.LogError($"[ResourceManager] PackageRoot : {builtinPath}");
+#endif
+
+
+                    break;
+                case PlatformManager.PlatformType.TikTok:
+		
+
+					// 创建解密服务类
+					//var decryptionServices = new WebDecryption();
+
+					//// 随意填写
+					// packageRoot = "yoo";
+
+					//// 创建初始化参数
+
+					//webInitParameters.WebServerFileSystemParameters = TiktokFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, decryptionServices);
+
+					break;
+                case PlatformManager.PlatformType.Kuaishou:
+                    break;
+            }
+			initParameters = webInitParameters;
+
+		}
         
         // 初始化操作
         var initOperation = package.InitializeAsync(initParameters);
@@ -169,7 +198,7 @@ public class ResourceManager : IManager
     /// <summary>
     /// 初始化资源包 (Task版本，向后兼容)
     /// </summary>
-    public async Task<bool> InitPackage(string packageName)
+    public async UniTask<bool> InitPackage(string packageName)
     {
         var operation = await InitPackageAsync(packageName);
         return operation.Status == EOperationStatus.Succeed;
@@ -191,7 +220,7 @@ public class ResourceManager : IManager
         return package.GetPackageVersion();
     }
 
-    public async Task<string> RequestPackageVersionAsync(string packageName = DefaultPackageName, int timeout = 30)
+    public async UniTask<string> RequestPackageVersionAsync(string packageName = DefaultPackageName, int timeout = 30)
     {
         var package = GetPackage(packageName);
         if (package == null)
@@ -229,7 +258,7 @@ public class ResourceManager : IManager
     /// <summary>
     /// 更新资源包清单 (Task版本，向后兼容)
     /// </summary>
-    public async Task<bool> UpdatePackageManifestAsync(string packageVersion, string packageName = DefaultPackageName)
+    public async UniTask<bool> UpdatePackageManifestAsync(string packageVersion, string packageName = DefaultPackageName)
     {
         Debug.Log($"[ResourceManager] UpdatePackageManifestAsync packageVersion: {packageVersion}");
         var package = GetPackage(packageName);
@@ -308,7 +337,7 @@ public class ResourceManager : IManager
     /// <summary>
     /// 异步加载资源 (Task版本，向后兼容)
     /// </summary>
-    public async Task<T> LoadAssetAsync<T>(string assetPath, string packageName = DefaultPackageName) where T : UnityEngine.Object
+    public async UniTask<T> LoadAssetAsync<T>(string assetPath, string packageName = DefaultPackageName) where T : UnityEngine.Object
     {
         var handle = await LoadAssetAsyncWithUniTask<T>(assetPath, packageName);
         return handle?.AssetObject as T;
