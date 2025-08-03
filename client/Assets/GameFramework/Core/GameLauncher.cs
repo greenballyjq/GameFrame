@@ -1,5 +1,4 @@
-using System.Threading.Tasks;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
@@ -95,14 +94,18 @@ namespace GameFramework.Core
         /// <summary>
         /// 初始化游戏
         /// </summary>
-        private async Task InitGameAsync()
+        private async UniTask InitGameAsync()
         {
             Debug.Log("[GameLauncher] 开始初始化游戏");
-            
-            // 等待框架初始化完成
-            while (!_frameworkManager.IsInitialized)
+			if (_gameConfig.loading)
+			{
+				_gameConfig.loading.SetActive(true);
+
+			}
+			// 等待框架初始化完成
+			while (!_frameworkManager.IsInitialized)
             {
-                await Task.Delay(10);
+                await UniTask.Delay(10);
             }
             
             // 初始化资源系统
@@ -113,11 +116,40 @@ namespace GameFramework.Core
                 return;
             }
             
-            // 加载游戏启动场景
-            _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
+            // 加载游戏启动场景(有点问题，待定)
+
+            //var sceneHandle = _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
+            //if (sceneHandle != null)
+            //{
+            //    Debug.Log($"[GameLauncher] 开始加载场景: {_gameConfig.StartScenePath}");
+                
+            //    // 等待场景加载完成
+            //    await sceneHandle;
+                
+            //    if (sceneHandle.Status == YooAsset.EOperationStatus.Succeed)
+            //    {
+            //        Debug.Log($"[GameLauncher] 场景加载成功: {_gameConfig.StartScenePath}");
+            //    }
+            //    else
+            //    {
+            //        Debug.LogError($"[GameLauncher] 场景加载失败: {_gameConfig.StartScenePath}, 错误: {sceneHandle.LastError}");
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.LogError($"[GameLauncher] 无法创建场景加载句柄: {_gameConfig.StartScenePath}");
+            //    return;
+            //}
             
             // 游戏初始化完成
             _isInitialized = true;
+
+   //         if(_gameConfig.loading)
+   //         {
+			//	_gameConfig.loading.SetActive(false);
+
+			//}
             
             Debug.Log("[GameLauncher] 游戏初始化完成");
         }
@@ -127,7 +159,7 @@ namespace GameFramework.Core
         /// <summary>
         /// 初始化资源系统
         /// </summary>
-        private async Task<bool> InitResourceSystem()
+        private async UniTask<bool> InitResourceSystem()
         {
             // 显示更新面板
             if (_updatePanel != null)
@@ -238,7 +270,7 @@ namespace GameFramework.Core
             UpdateProgress(1);
             
             // 延迟关闭更新面板
-            await Task.Delay(1500);
+            await UniTask.Delay(1500);
             if (_updatePanel != null)
                 _updatePanel.SetActive(false);
                 
@@ -303,9 +335,35 @@ namespace GameFramework.Core
             if (success)
             {
                 // 继续游戏初始化流程
-                _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
-                _isInitialized = true;
-                Debug.Log("[GameLauncher] 游戏初始化完成");
+                var sceneHandle = _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
+                if (sceneHandle != null)
+                {
+                    Debug.Log($"[GameLauncher] 重试加载场景: {_gameConfig.StartScenePath}");
+                    await sceneHandle;
+                    
+                    if (sceneHandle.Status == YooAsset.EOperationStatus.Succeed)
+                    {
+                        Debug.Log($"[GameLauncher] 重试场景加载成功: {_gameConfig.StartScenePath}");
+                        _isInitialized = true;
+                        Debug.Log("[GameLauncher] 游戏初始化完成");
+                    }
+                    else
+                    {
+                        Debug.LogError($"[GameLauncher] 重试场景加载失败: {_gameConfig.StartScenePath}, 错误: {sceneHandle.LastError}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"[GameLauncher] 重试时无法创建场景加载句柄: {_gameConfig.StartScenePath}");
+                }
+            }
+        }
+
+        public void OnCompleteLauncher()
+        {
+            if(_gameConfig.loading)
+            {
+                _gameConfig.loading.SetActive(false);
             }
         }
     }
@@ -323,7 +381,7 @@ namespace GameFramework.Core
         public string GameVersion = "1.0.0";
         
         // 游戏启动场景路径
-        public string StartScenePath = "Assets/Scenes/GameMain.unity";
+        public string StartScenePath = "GooseDemo";
         
         // 默认语言
         public SystemLanguage DefaultLanguage = SystemLanguage.ChineseSimplified;
@@ -339,5 +397,7 @@ namespace GameFramework.Core
         
         // CDN地址
         public string CDNUrl = "http://127.0.0.1/CDN/";
+
+        public GameObject loading;
     }
 } 

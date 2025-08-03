@@ -46,6 +46,9 @@ public class TikTokPlatform : IPlatform
         _isInitialized = false;
     }
 
+    public void Login(Action<string> success, Action<string> fail)
+    { }
+
     public void Login(Action<LoginResult> success, Action<string> fail)
     {
         Debug.Log("[TikTokPlatform] 抖音平台登录");
@@ -384,9 +387,19 @@ public class TikTokPlatform : IPlatform
         success?.Invoke();
         #endif
     }
-    
-    // 以下是模拟的抖音API调用，实际项目中需要通过JSLib实现
-    #if UNITY_WEBGL && !UNITY_EDITOR
+
+	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
+	{
+		throw new NotImplementedException();
+	}
+
+	public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+	{
+		throw new NotImplementedException();
+	}
+
+	// 以下是模拟的抖音API调用，实际项目中需要通过JSLib实现
+#if UNITY_WEBGL && !UNITY_EDITOR
     private void TTInit()
     {
         // 实际项目中通过JSLib调用抖音小游戏的初始化API
@@ -442,5 +455,5 @@ public class TikTokPlatform : IPlatform
     {
         // 实际项目中通过JSLib调用抖音小游戏的跳转API
     }
-    #endif
+#endif
 } 
