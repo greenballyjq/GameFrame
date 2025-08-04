@@ -61,7 +61,7 @@ namespace GameFramework.Core
             _frameworkManager.OnInitialized += OnFrameworkInitialized;
             
             // 初始化游戏
-             await InitGameAsync();
+            //  await InitGameAsync();
         }
         
         private void Update()
@@ -105,7 +105,7 @@ namespace GameFramework.Core
             if (_retryButton != null)
                 _retryButton.onClick.AddListener(RetryResourceUpdate);
 
-            //InitGameAsync();
+            InitGameAsync().Forget();
         }
         
         /// <summary>
