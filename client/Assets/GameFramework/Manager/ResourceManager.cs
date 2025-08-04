@@ -43,6 +43,8 @@ public class ResourceManager : IManager
 #else
         _playMode = EPlayMode.HostPlayMode;
 #endif
+        
+        Debug.Log($"[ResourceManager] 当前运行模式：{_playMode}");
 
         // 创建默认资源包
         var defaultPackage = CreatePackage(DefaultPackageName);
@@ -112,6 +114,8 @@ public class ResourceManager : IManager
         // 初始化参数
         InitializeParameters initParameters = null;
         
+        Debug.Log($"[ResourceManager] PackageRoot2: {WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin");
+        
         if (_playMode == EPlayMode.EditorSimulateMode)
         {
             var buildResult = EditorSimulateModeHelper.SimulateBuild("DefaultPackage");
@@ -155,14 +159,13 @@ public class ResourceManager : IManager
 			switch (curType)
             {
                 case PlatformManager.PlatformType.WeChat:
-
 #if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
+// #if UNITY_WEBGL && !UNITY_EDITOR
                    string builtinPath = $"{WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin";
 					packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
-					webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, builtinPath);
+					webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
                    Debug.LogError($"[ResourceManager] PackageRoot : {builtinPath}");
 #endif
-
 
                     break;
                 case PlatformManager.PlatformType.TikTok:

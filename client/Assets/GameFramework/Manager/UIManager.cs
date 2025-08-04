@@ -136,7 +136,7 @@ public class UIManager : IManager
         else
         {
             // 从资源管理器加载界面预制体
-            uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"Assets/_Assets/Prefabs/UI/{uiName}.prefab");
+            uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"Assets/Arts/Prefabs/UI/{uiName}.prefab");
             
             if (uiPrefab == null)
             {
