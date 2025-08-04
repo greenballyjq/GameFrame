@@ -114,7 +114,7 @@ public class ResourceManager : IManager
         // 初始化参数
         InitializeParameters initParameters = null;
         
-        Debug.Log($"[ResourceManager] PackageRoot2: {WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin");
+        // Debug.Log($"[ResourceManager] PackageRoot2: {WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin");
         
         if (_playMode == EPlayMode.EditorSimulateMode)
         {
@@ -151,44 +151,43 @@ public class ResourceManager : IManager
         }
         else if (_playMode == EPlayMode.WebPlayMode)
         {
-            var PlatformManager = GameFrameworkManager.Instance.GetManager<PlatformManager>();
-            var curType = PlatformManager.GetCurrentPlatform();
+            Debug.LogError($"[ResourceManager] WebPlayMode : {_defaultHostServer}");
+            Debug.LogError($"[ResourceManager] 当前URL: {Application.absoluteURL}");
 			IRemoteServices remoteServices = new RemoteServices(_defaultHostServer, _fallbackHostServer);
 			var webInitParameters = new WebPlayModeParameters();
 			string packageRoot = "yoo";
-			switch (curType)
-            {
-                case PlatformManager.PlatformType.WeChat:
-#if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
-// #if UNITY_WEBGL && !UNITY_EDITOR
-                   string builtinPath = $"{WeChatWASM.WX.env.USER_DATA_PATH}/yoo_builtin";
-					packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
-					webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
-                   Debug.LogError($"[ResourceManager] PackageRoot : {builtinPath}");
+#if WEIXINMINIGAME
+            Debug.LogError($"[ResourceManager] WebPlayMode :WEIXINMINIGAME");
+ 
+            packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
+			webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
+            Debug.LogError($"[ResourceManager] PackageRoot : {packageRoot}");
+#else
+            //PlatformManager.PlatformType.TikTok:
 #endif
 
-                    break;
-                case PlatformManager.PlatformType.TikTok:
-		
+            //         break;
+            //     case PlatformManager.PlatformType.TikTok:
 
-					// 创建解密服务类
-					//var decryptionServices = new WebDecryption();
 
-					//// 随意填写
-					// packageRoot = "yoo";
+            // 		// 创建解密服务类
+            // 		//var decryptionServices = new WebDecryption();
 
-					//// 创建初始化参数
+            // 		//// 随意填写
+            // 		// packageRoot = "yoo";
 
-					//webInitParameters.WebServerFileSystemParameters = TiktokFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, decryptionServices);
+            // 		//// 创建初始化参数
 
-					break;
-                case PlatformManager.PlatformType.Kuaishou:
-                    break;
-            }
-			initParameters = webInitParameters;
+            // 		//webInitParameters.WebServerFileSystemParameters = TiktokFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, decryptionServices);
 
-		}
-        
+            // 		break;
+            //     case PlatformManager.PlatformType.Kuaishou:
+            //         break;
+            // }
+            initParameters = webInitParameters;
+
+        }
+
         // 初始化操作
         var initOperation = package.InitializeAsync(initParameters);
         await initOperation.ToUniTask();
@@ -238,25 +237,7 @@ public class ResourceManager : IManager
         return op.PackageVersion;
     }
     
-    /// <summary>
-    /// 更新资源包清单 (UniTask版本)
-    /// </summary>
-    //public async UniTask<UpdatePackageManifestOperation> UpdatePackageManifestAsync(string packageVersion, string packageName = DefaultPackageName)
-    //{
-    //    var package = GetPackage(packageName);
-    //    if (package == null)
-    //    {
-    //        Debug.LogError($"[ResourceManager] 更新资源包清单失败: 资源包 {packageName} 不存在");
-    //        return null;
-    //    }
-        
-    //    var operation = package.UpdatePackageManifestAsync(packageVersion);
-    //    await operation.ToUniTask();
-        
-    //    Debug.Log($"[ResourceManager] 资源包清单更新状态: {operation.Status}, {(operation.Status == EOperationStatus.Succeed ? "成功" : $"失败: {operation.Error}")}");
-        
-    //    return operation;
-    //}
+
     
     /// <summary>
     /// 更新资源包清单 (Task版本，向后兼容)
