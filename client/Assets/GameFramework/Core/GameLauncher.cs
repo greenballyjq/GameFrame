@@ -61,7 +61,7 @@ namespace GameFramework.Core
             _frameworkManager.OnInitialized += OnFrameworkInitialized;
             
             // 初始化游戏
-            await InitGameAsync();
+             await InitGameAsync();
         }
         
         private void Update()
@@ -81,14 +81,31 @@ namespace GameFramework.Core
             
             // 获取各个管理器
             _platformManager = _frameworkManager.GetManager<PlatformManager>();
-            _resourceManager = _frameworkManager.GetManager<ResourceManager>();
+            Debug.Log($"[GameLauncher] _platformManager 获取结果: {(_platformManager != null ? "成功" : "失败")}");
             
+            _resourceManager = _frameworkManager.GetManager<ResourceManager>();
+            Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
+            
+            // 根据配置设置资源加载模式
+            if (_resourceManager != null)
+            {
+                _resourceManager.SetResourceLoadMode(_gameConfig.ResourceLoadMode);
+                Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
+            }
+            else
+            {
+                Debug.LogError("[GameLauncher] 资源管理器为空，无法设置资源加载模式");
+            }
+            
+        
             // 初始化UI
             if (_updatePanel != null)
                 _updatePanel.SetActive(false);
                 
             if (_retryButton != null)
                 _retryButton.onClick.AddListener(RetryResourceUpdate);
+
+            //InitGameAsync();
         }
         
         /// <summary>
@@ -177,8 +194,8 @@ namespace GameFramework.Core
             string cdnUrl = _gameConfig.IsCDNEnabled ? _gameConfig.CDNUrl : "";
             _resourceManager.SetHostServer(cdnUrl);
             
-            // 初始化默认资源包
-            bool initSuccess = await _resourceManager.InitPackage("DefaultPackage");
+            // 初始化资源加载器
+            bool initSuccess = await _resourceManager.InitializeAsync();
             if (!initSuccess)
             {
                 UpdateStatus("资源系统初始化失败");
@@ -334,28 +351,9 @@ namespace GameFramework.Core
             bool success = await InitResourceSystem();
             if (success)
             {
-                // 继续游戏初始化流程
-                var sceneHandle = _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
-                if (sceneHandle != null)
-                {
-                    Debug.Log($"[GameLauncher] 重试加载场景: {_gameConfig.StartScenePath}");
-                    await sceneHandle;
-                    
-                    if (sceneHandle.Status == YooAsset.EOperationStatus.Succeed)
-                    {
-                        Debug.Log($"[GameLauncher] 重试场景加载成功: {_gameConfig.StartScenePath}");
-                        _isInitialized = true;
-                        Debug.Log("[GameLauncher] 游戏初始化完成");
-                    }
-                    else
-                    {
-                        Debug.LogError($"[GameLauncher] 重试场景加载失败: {_gameConfig.StartScenePath}, 错误: {sceneHandle.LastError}");
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"[GameLauncher] 重试时无法创建场景加载句柄: {_gameConfig.StartScenePath}");
-                }
+                // 游戏初始化完成
+                _isInitialized = true;
+                Debug.Log("[GameLauncher] 重试游戏初始化完成");
             }
         }
 
@@ -391,6 +389,9 @@ namespace GameFramework.Core
         
         // 是否显示FPS
         public bool ShowFPS = false;
+        
+        // 资源加载模式
+        public ResourceManager.ResourceLoadMode ResourceLoadMode = ResourceManager.ResourceLoadMode.YooAsset;
         
         // 是否启用CDN
         public bool IsCDNEnabled = true;
