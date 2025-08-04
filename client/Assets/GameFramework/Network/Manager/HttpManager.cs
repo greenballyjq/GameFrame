@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -94,7 +94,7 @@ public class HttpManager : IManager
     /// <param name="timeout">超时时间</param>
     /// <param name="retryCount">重试次数</param>
     /// <returns>HTTP响应</returns>
-    public async Task<HttpResponse> GetAsync(string url, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
+    public async UniTask<HttpResponse> GetAsync(string url, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
     {
         string fullUrl = GetFullUrl(url);
         
@@ -110,7 +110,7 @@ public class HttpManager : IManager
     /// <param name="url">请求URL</param>
     /// <param name="timeout">超时时间</param>
     /// <returns>HTTP响应</returns>
-    public async Task<HttpResponse> GetAsync(string url, float timeout)
+    public async UniTask<HttpResponse> GetAsync(string url, float timeout)
     {
         return await GetAsync(url, null, timeout, DEFAULT_RETRY_COUNT);
     }
@@ -125,7 +125,7 @@ public class HttpManager : IManager
     /// <param name="timeout">超时时间</param>
     /// <param name="retryCount">重试次数</param>
     /// <returns>HTTP响应</returns>
-    public async Task<HttpResponse> PostAsync(byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
+    public async UniTask<HttpResponse> PostAsync(byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
     {
         string fullUrl = GetFullUrl("");
         
@@ -170,7 +170,7 @@ public class HttpManager : IManager
     /// <summary>
     /// 发送HTTP请求
     /// </summary>
-    private async Task<HttpResponse> SendRequestAsync(UnityWebRequest request, Dictionary<string, string> headers, float timeout, int retryCount)
+    private async UniTask<HttpResponse> SendRequestAsync(UnityWebRequest request, Dictionary<string, string> headers, float timeout, int retryCount)
     {
         var response = new HttpResponse();
         
@@ -178,6 +178,9 @@ public class HttpManager : IManager
         //{
             // 设置超时
             request.timeout = (int)timeout;
+            
+            // 忽略SSL证书验证（用于自签证书）
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             
             // 设置请求头
             foreach (var header in _defaultHeaders)
@@ -199,7 +202,7 @@ public class HttpManager : IManager
             // 等待完成
             while (!operation.isDone)
             {
-                await Task.Yield();
+                await UniTask.Yield();
             }
           
             // 处理响应
@@ -208,8 +211,8 @@ public class HttpManager : IManager
             if (request.result == UnityWebRequest.Result.Success)
             {
                 response.Success = true;
-                response.Data = request.downloadHandler.text;
-                response.Bytes = request.downloadHandler.data;
+                response.Data = request.downloadHandler?.text ?? "";
+                response.Bytes = request.downloadHandler?.data;
             }
             else
             {
@@ -233,6 +236,9 @@ public class HttpManager : IManager
             }
 
             Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
+            
+            // 清理证书处理器
+            request.certificateHandler?.Dispose();
         //}
         //catch (Exception e)
         //{
@@ -240,10 +246,10 @@ public class HttpManager : IManager
         //    response.Error = $"网络请求异常: {e.Message}";
         //    Debug.LogError($"[HttpManager] 网络请求异常: {e.Message}");
         //}
-        //finally
-        //{
-        //    request?.Dispose();
-        //}
+        // finally
+        // {
+            request?.Dispose();
+        // }
 
         return response;
     }
@@ -314,4 +320,20 @@ public class ProtobufResponse<T> where T : class, new()
 
     // 原始响应数据（字节数组）
     public byte[] RawData { get; set; } = null;
+}
+
+/// <summary>
+/// 自定义证书处理器 - 忽略SSL证书验证（用于自签证书）
+/// </summary>
+public class AcceptAllCertificatesSignedWithASpecificKeyPublicKey : CertificateHandler
+{
+    /// <summary>
+    /// 验证证书 - 总是返回true以忽略证书验证
+    /// </summary>
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        // 对于开发环境的自签证书，总是返回true
+        // 在生产环境中，您应该实现适当的证书验证逻辑
+        return true;
+    }
 } 

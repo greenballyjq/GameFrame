@@ -22,21 +22,21 @@ public class DefaultPlatform : IPlatform
         Debug.Log("[DefaultPlatform] 释放默认平台");
     }
 
-    public void Login(Action<LoginResult> success, Action<string> fail)
+    public void Login(Action<string> success, Action<string> fail)
     {
         Debug.Log("[DefaultPlatform] 默认平台登录");
         
         // 模拟登录成功
-        var result = new LoginResult
-        {
-            UserId = "default_user_id",
-            UserName = "DefaultUser",
-            Avatar = "",
-            Token = "default_token",
-            ExtraData = new Dictionary<string, object>()
-        };
+        //var result = new LoginResult
+        //{
+        //    UserId = "default_user_id",
+        //    UserName = "DefaultUser",
+        //    Avatar = "",
+        //    Token = "default_token",
+        //    ExtraData = new Dictionary<string, object>()
+        //};
         
-        success?.Invoke(result);
+        //success?.Invoke(result);
     }
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
@@ -114,4 +114,14 @@ public class DefaultPlatform : IPlatform
         // 默认平台不支持跳转小游戏
         fail?.Invoke("默认平台不支持跳转小游戏");
     }
+
+	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
+	{
+		throw new NotImplementedException();
+	}
+
+	public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+	{
+		throw new NotImplementedException();
+	}
 } 

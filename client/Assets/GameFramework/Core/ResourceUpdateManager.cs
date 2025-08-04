@@ -1,7 +1,6 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
-using System.Threading.Tasks;
-using GameFramework.Core;
 using UnityEngine;
 using YooAsset;
 
@@ -64,13 +63,14 @@ public class ResourceUpdateManager : MonoBehaviour
     private IEnumerator UpdateResourcesCoroutine(string packageName)
     {
         Debug.Log("[ResourceUpdateManager] 开始资源更新流程");
-        
-        // 1. 初始化资源包
-        var initTask = _resourceManager.InitPackage(packageName);
-        yield return new WaitUntil(() => initTask.IsCompleted);
-        
-        if (!initTask.Result)
-        {
+
+		// 1. 初始化资源包
+		bool initResult = false;
+		var initTask = _resourceManager.InitPackage(packageName);
+		yield return initTask.ToCoroutine(x => initResult = x);
+
+		if (!initResult)
+		{
             Debug.LogError("[ResourceUpdateManager] 资源包初始化失败");
             _isUpdating = false;
             OnUpdateCompleted?.Invoke(false);
@@ -89,12 +89,14 @@ public class ResourceUpdateManager : MonoBehaviour
             OnUpdateCompleted?.Invoke(true); // 使用内置版本也算成功
             yield break;
         }
-        
-        // 3. 更新资源清单
-        var manifestTask = _resourceManager.UpdatePackageManifestAsync(packageVersion, packageName);
-        yield return new WaitUntil(() => manifestTask.IsCompleted);
-        
-        if (!manifestTask.Result)
+
+		// 3. 更新资源清单
+		bool manifestResult = false;
+
+		var manifestTask = _resourceManager.UpdatePackageManifestAsync(packageVersion, packageName);
+		yield return manifestTask.ToCoroutine(x => manifestResult = x);
+
+		if (!manifestResult)
         {
             Debug.LogError("[ResourceUpdateManager] 更新资源清单失败");
             _isUpdating = false;
@@ -174,11 +176,12 @@ public class ResourceUpdateManager : MonoBehaviour
         var package = _resourceManager.GetPackage(packageName);
         if (package == null /*|| !package.IsInitialized*/)
         {
-            var initTask = _resourceManager.InitPackage(packageName);
-            yield return new WaitUntil(() => initTask.IsCompleted);
-            
-            if (!initTask.Result)
-            {
+			bool initResult = false;
+			var initTask = _resourceManager.InitPackage(packageName);
+			yield return initTask.ToCoroutine(x => initResult = x);
+
+			if (!initResult)
+			{
                 Debug.LogError("[ResourceUpdateManager] 资源包初始化失败");
                 _isUpdating = false;
                 OnUpdateCompleted?.Invoke(false);
@@ -200,12 +203,14 @@ public class ResourceUpdateManager : MonoBehaviour
                 OnUpdateCompleted?.Invoke(true);
                 yield break;
             }
-            
+
             // 3. 更新资源清单
-            var manifestTask = _resourceManager.UpdatePackageManifestAsync(packageVersion, packageName);
-            yield return new WaitUntil(() => manifestTask.IsCompleted);
+            bool manifestResult = false;
+
+			var manifestTask = _resourceManager.UpdatePackageManifestAsync(packageVersion, packageName);
+			yield return manifestTask.ToCoroutine(x => manifestResult = x);
             
-            if (!manifestTask.Result)
+            if (!manifestResult)
             {
                 Debug.LogError("[ResourceUpdateManager] 更新资源清单失败");
                 _isUpdating = false;

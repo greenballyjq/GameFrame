@@ -21,13 +21,38 @@ public interface IPlatform
     /// 释放平台
     /// </summary>
     void Release();
-    
+
     /// <summary>
     /// 登录
     /// </summary>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    void Login(Action<LoginResult> success, Action<string> fail);
+    void Login(Action<string> success, Action<string> fail);
+
+    /// <summary>
+    /// 检查用户授权状态
+    /// </summary>
+    /// <param name="success">成功回调，返回授权设置</param>
+    /// <param name="fail">失败回调</param>
+    void CheckUserAuthorization(Action<bool> success, Action<string> fail);
+    
+    /// <summary>
+    /// 获取用户信息（需要先检查授权）
+    /// </summary>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    //void GetUserInfo(Action<UserInfoResult> success, Action<string> fail);
+    
+    /// <summary>
+    /// 创建用户信息授权按钮（透明区域）
+    /// </summary>
+    /// <param name="x">左上角X坐标</param>
+    /// <param name="y">左上角Y坐标</param>
+    /// <param name="width">宽度</param>
+    /// <param name="height">高度</param>
+    /// <param name="onTap">点击回调</param>
+    /// <returns>按钮控制器</returns>
+    IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap);
     
     /// <summary>
     /// 分享
@@ -35,7 +60,7 @@ public interface IPlatform
     /// <param name="shareInfo">分享信息</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    void Share(ShareInfo shareInfo, Action success, Action<string> fail);
+    //void Share(ShareInfo shareInfo, Action success, Action<string> fail);
     
     /// <summary>
     /// 显示广告
@@ -44,7 +69,7 @@ public interface IPlatform
     /// <param name="adId">广告ID</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail);
+    //void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail);
     
     /// <summary>
     /// 支付
@@ -52,7 +77,7 @@ public interface IPlatform
     /// <param name="payInfo">支付信息</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail);
+    //void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail);
     
     /// <summary>
     /// 获取系统信息
@@ -88,6 +113,7 @@ public class LoginResult
     public string Token { get; set; }
     public Dictionary<string, object> ExtraData { get; set; }
 }
+
 
 /// <summary>
 /// 分享信息
@@ -152,4 +178,64 @@ public class SystemInfo
     public float ScreenWidth { get; set; }
     public float ScreenHeight { get; set; }
     public string Language { get; set; }
+} 
+
+/// <summary>
+/// 授权结果
+/// </summary>
+public class AuthorizationResult
+{
+    /// <summary>
+    /// 授权设置字典，key为权限名称，value为是否已授权
+    /// </summary>
+    public Dictionary<string, bool> AuthSetting { get; set; }
+    
+    /// <summary>
+    /// 是否已授权用户信息
+    /// </summary>
+    public bool HasUserInfoAuth => AuthSetting != null && 
+                                   AuthSetting.ContainsKey("scope.userInfo") && 
+                                   AuthSetting["scope.userInfo"];
+}
+
+/// <summary>
+/// 用户信息结果
+/// </summary>
+public class UserInfoResult
+{
+    public int ErrCode { get; set; }
+    public string ErrMsg { get; set; }
+    public string NickName { get; set; }
+    public string AvatarUrl { get; set; }
+    public int Gender { get; set; }
+    public string Country { get; set; }
+    public string Province { get; set; }
+    public string City { get; set; }
+    public string Language { get; set; }
+    public string EncryptedData { get; set; }
+    public string Iv { get; set; }
+    public string Signature { get; set; }
+    public string CloudID { get; set; }
+    public bool IsSuccess => ErrCode == 0;
+}
+
+/// <summary>
+/// 用户信息按钮接口
+/// </summary>
+public interface IUserInfoButton
+{
+    /// <summary>
+    /// 显示按钮
+    /// </summary>
+    void Show();
+    
+    /// <summary>
+    /// 隐藏按钮
+    /// </summary>
+    void Hide();
+    
+    /// <summary>
+    /// 销毁按钮
+    /// </summary>
+    void Destroy();
 } 

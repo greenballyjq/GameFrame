@@ -129,7 +129,7 @@ namespace GameFramework.Network
             try
             {
                 var responseData = await httpManager.GetAsync(endpoint, 300);
-                if (responseData != null && responseData.Bytes.Length > 0)
+                if (responseData != null && responseData.Success && responseData.Bytes != null && responseData.Bytes.Length > 0)
                 {
                     // 反序列化响应
                     var parser = new MessageParser<T>(() => new T());
@@ -138,7 +138,8 @@ namespace GameFramework.Network
                 }
                 else
                 {
-                    throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
+                    string errorMsg = responseData?.Error ?? "响应数据为空";
+                    throw new InvalidOperationException($"获取 {typeof(T).Name} 失败: {errorMsg}");
                 }
 
             }
@@ -170,6 +171,11 @@ namespace GameFramework.Network
         {
             MessageSetters = messageSetters;
             MessageAccessors = messageAccessors;
+        }
+
+        public void SetHeader(string key, string value)
+        {
+            httpManager?.SetDefaultHeader(key, value);
         }
     }
 }

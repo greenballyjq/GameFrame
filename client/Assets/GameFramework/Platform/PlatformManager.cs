@@ -147,4 +147,9 @@ public class PlatformManager : IManager
         
         Debug.Log($"[PlatformManager] 切换到平台: {platformType}");
     }
+
+    public PlatformType GetCurrentPlatform()
+    {
+        return _currentPlatformType;
+    }
 } 

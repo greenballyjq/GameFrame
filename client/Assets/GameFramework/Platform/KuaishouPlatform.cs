@@ -46,6 +46,11 @@ public class KuaishouPlatform : IPlatform
         _isInitialized = false;
     }
 
+    public void Login(Action<string> success, Action<string> fail)
+    {
+
+    }
+
     public void Login(Action<LoginResult> success, Action<string> fail)
     {
         Debug.Log("[KuaishouPlatform] 快手平台登录");
@@ -384,9 +389,19 @@ public class KuaishouPlatform : IPlatform
         success?.Invoke();
         #endif
     }
-    
-    // 以下是模拟的快手API调用，实际项目中需要通过JSLib实现
-    #if UNITY_WEBGL && !UNITY_EDITOR
+
+	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
+	{
+		throw new NotImplementedException();
+	}
+
+	public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+	{
+		throw new NotImplementedException();
+	}
+
+	// 以下是模拟的快手API调用，实际项目中需要通过JSLib实现
+#if UNITY_WEBGL && !UNITY_EDITOR
     private void KSInit()
     {
         // 实际项目中通过JSLib调用快手小游戏的初始化API
@@ -442,5 +457,5 @@ public class KuaishouPlatform : IPlatform
     {
         // 实际项目中通过JSLib调用快手小游戏的跳转API
     }
-    #endif
+#endif
 } 
