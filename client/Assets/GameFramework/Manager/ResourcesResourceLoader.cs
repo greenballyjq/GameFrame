@@ -60,7 +60,13 @@ public class ResourcesResourceLoader : IResourceLoader
             Debug.LogError("[ResourcesResourceLoader] 资源加载器未初始化");
             return null;
         }
-        
+
+        string resourcesPrefix = "Assets/";
+        if (assetPath.StartsWith(resourcesPrefix))
+        {
+            assetPath = assetPath.Substring(resourcesPrefix.Length);
+        }
+
         // 从Resources目录加载资源
         Debug.Log($"[ResourcesResourceLoader] 开始从Resources加载资源: {assetPath}");
         
