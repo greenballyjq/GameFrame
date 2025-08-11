@@ -99,6 +99,12 @@ public class PlatformManager : IManager
         #else
         _currentPlatformType = PlatformType.Default;
         #endif
+
+#if WEIXINMINIGAME
+        _currentPlatformType = PlatformType.WeChat;
+#else
+        _currentPlatformType = PlatformType.Default;
+#endif
         
         Debug.Log($"[PlatformManager] 当前平台: {_currentPlatformType}");
     }
