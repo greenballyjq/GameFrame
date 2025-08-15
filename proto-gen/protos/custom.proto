@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message Custom { map<string, bytes> datas = 1; }
+
+message C2S_Custom {}
+
+message S2C_Custom {
+  Custom custom = 1;
+}
+
+message C2S_UploadCustom {
+  string type = 1; // 类型
+  bytes data = 2;  // 序列化后的二进制数据, 注意数据不要超过 8k
+}

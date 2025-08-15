@@ -24,23 +24,25 @@ public static partial class MessageReflection {
         string.Concat(
           "Cg1tZXNzYWdlLnByb3RvGgxvcGNvZGUucHJvdG8aC2xvZ2luLnByb3RvGgpw",
           "aW5nLnByb3RvGgpiYXNlLnByb3RvGgxjbGllbnQucHJvdG8aCml0ZW0ucHJv",
-          "dG8ijwIKC0MyU19NZXNzYWdlEg8KB3Nlc3Npb24YASABKAQSGwoFbG9naW4Y",
-          "AiABKAsyCi5DMlNfTG9naW5IABIdCgZsb2dvdXQYAyABKAsyCy5DMlNfTG9n",
-          "b3V0SAASGQoEcGluZxgEIAEoCzIJLkMyU19QaW5nSAASGQoEYmFzZRgFIAEo",
-          "CzIJLkMyU19CYXNlSAASJgoLY2xpZW50X2RhdGEYBiABKAsyDy5DMlNfQ2xp",
-          "ZW50RGF0YUgAEjMKEnVwbG9hZF9jbGllbnRfZGF0YRgHIAEoCzIVLkMyU19V",
-          "cGxvYWRDbGllbnREYXRhSAASGQoEaXRlbRgIIAEoCzIJLkMyU19JdGVtSABC",
-          "BQoDbXNnIvcBCgtTMkNfTWVzc2FnZRIPCgdzZXNzaW9uGAEgASgEEhsKBGNv",
-          "ZGUYAiABKA4yCy5TMkNfT1BDb2RlSAASGwoFbG9naW4YAyABKAsyCi5TMkNf",
-          "TG9naW5IABIdCgZsb2dvdXQYBCABKAsyCy5TMkNfTG9nb3V0SAASGQoEcGlu",
-          "ZxgFIAEoCzIJLlMyQ19QaW5nSAASGQoEYmFzZRgGIAEoCzIJLlMyQ19CYXNl",
-          "SAASJgoLY2xpZW50X2RhdGEYByABKAsyDy5TMkNfQ2xpZW50RGF0YUgAEhkK",
-          "BGl0ZW0YCCABKAsyCS5TMkNfSXRlbUgAQgUKA21zZ2IGcHJvdG8z"));
+          "dG8aDmN1cnJlbmN5LnByb3RvIrICCgtDMlNfTWVzc2FnZRIPCgdzZXNzaW9u",
+          "GAEgASgEEhsKBWxvZ2luGAIgASgLMgouQzJTX0xvZ2luSAASHQoGbG9nb3V0",
+          "GAMgASgLMgsuQzJTX0xvZ291dEgAEhkKBHBpbmcYBCABKAsyCS5DMlNfUGlu",
+          "Z0gAEhkKBGJhc2UYBSABKAsyCS5DMlNfQmFzZUgAEiYKC2NsaWVudF9kYXRh",
+          "GAYgASgLMg8uQzJTX0NsaWVudERhdGFIABIzChJ1cGxvYWRfY2xpZW50X2Rh",
+          "dGEYByABKAsyFS5DMlNfVXBsb2FkQ2xpZW50RGF0YUgAEhkKBGl0ZW0YCCAB",
+          "KAsyCS5DMlNfSXRlbUgAEiEKCGN1cnJlbmN5GAkgASgLMg0uQzJTX0N1cnJl",
+          "bmN5SABCBQoDbXNnIpoCCgtTMkNfTWVzc2FnZRIPCgdzZXNzaW9uGAEgASgE",
+          "EhsKBGNvZGUYAiABKA4yCy5TMkNfT1BDb2RlSAASGwoFbG9naW4YAyABKAsy",
+          "Ci5TMkNfTG9naW5IABIdCgZsb2dvdXQYBCABKAsyCy5TMkNfTG9nb3V0SAAS",
+          "GQoEcGluZxgFIAEoCzIJLlMyQ19QaW5nSAASGQoEYmFzZRgGIAEoCzIJLlMy",
+          "Q19CYXNlSAASJgoLY2xpZW50X2RhdGEYByABKAsyDy5TMkNfQ2xpZW50RGF0",
+          "YUgAEhkKBGl0ZW0YCCABKAsyCS5TMkNfSXRlbUgAEiEKCGN1cnJlbmN5GAkg",
+          "ASgLMg0uUzJDX0N1cnJlbmN5SABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::ClientReflection.Descriptor, global::ItemReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::ClientReflection.Descriptor, global::ItemReflection.Descriptor, global::CurrencyReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Logout", "Ping", "Base", "ClientData", "UploadClientData", "Item" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Logout", "Ping", "Base", "ClientData", "Item" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Logout", "Ping", "Base", "ClientData", "UploadClientData", "Item", "Currency" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Logout", "Ping", "Base", "ClientData", "Item", "Currency" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -103,6 +105,9 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
         break;
       case MsgOneofCase.Item:
         Item = other.Item.Clone();
+        break;
+      case MsgOneofCase.Currency:
+        Currency = other.Currency.Clone();
         break;
     }
 
@@ -214,6 +219,18 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
   }
 
+  /// <summary>Field number for the "currency" field.</summary>
+  public const int CurrencyFieldNumber = 9;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2S_Currency Currency {
+    get { return msgCase_ == MsgOneofCase.Currency ? (global::C2S_Currency) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Currency;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -225,6 +242,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     ClientData = 6,
     UploadClientData = 7,
     Item = 8,
+    Currency = 9,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -263,6 +281,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     if (!object.Equals(ClientData, other.ClientData)) return false;
     if (!object.Equals(UploadClientData, other.UploadClientData)) return false;
     if (!object.Equals(Item, other.Item)) return false;
+    if (!object.Equals(Currency, other.Currency)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -279,6 +298,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     if (msgCase_ == MsgOneofCase.ClientData) hash ^= ClientData.GetHashCode();
     if (msgCase_ == MsgOneofCase.UploadClientData) hash ^= UploadClientData.GetHashCode();
     if (msgCase_ == MsgOneofCase.Item) hash ^= Item.GetHashCode();
+    if (msgCase_ == MsgOneofCase.Currency) hash ^= Currency.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -330,6 +350,10 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(66);
       output.WriteMessage(Item);
     }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      output.WriteRawTag(74);
+      output.WriteMessage(Currency);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -372,6 +396,10 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(66);
       output.WriteMessage(Item);
     }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      output.WriteRawTag(74);
+      output.WriteMessage(Currency);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -405,6 +433,9 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
     if (msgCase_ == MsgOneofCase.Item) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
+    }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Currency);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -463,6 +494,12 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           Item = new global::C2S_Item();
         }
         Item.MergeFrom(other.Item);
+        break;
+      case MsgOneofCase.Currency:
+        if (Currency == null) {
+          Currency = new global::C2S_Currency();
+        }
+        Currency.MergeFrom(other.Currency);
         break;
     }
 
@@ -548,6 +585,15 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           Item = subBuilder;
           break;
         }
+        case 74: {
+          global::C2S_Currency subBuilder = new global::C2S_Currency();
+          if (msgCase_ == MsgOneofCase.Currency) {
+            subBuilder.MergeFrom(Currency);
+          }
+          input.ReadMessage(subBuilder);
+          Currency = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -630,6 +676,15 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           Item = subBuilder;
           break;
         }
+        case 74: {
+          global::C2S_Currency subBuilder = new global::C2S_Currency();
+          if (msgCase_ == MsgOneofCase.Currency) {
+            subBuilder.MergeFrom(Currency);
+          }
+          input.ReadMessage(subBuilder);
+          Currency = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -693,6 +748,9 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
         break;
       case MsgOneofCase.Item:
         Item = other.Item.Clone();
+        break;
+      case MsgOneofCase.Currency:
+        Currency = other.Currency.Clone();
         break;
     }
 
@@ -807,6 +865,18 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
   }
 
+  /// <summary>Field number for the "currency" field.</summary>
+  public const int CurrencyFieldNumber = 9;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2C_Currency Currency {
+    get { return msgCase_ == MsgOneofCase.Currency ? (global::S2C_Currency) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Currency;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -818,6 +888,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     Base = 6,
     ClientData = 7,
     Item = 8,
+    Currency = 9,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -856,6 +927,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (!object.Equals(Base, other.Base)) return false;
     if (!object.Equals(ClientData, other.ClientData)) return false;
     if (!object.Equals(Item, other.Item)) return false;
+    if (!object.Equals(Currency, other.Currency)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -872,6 +944,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (msgCase_ == MsgOneofCase.Base) hash ^= Base.GetHashCode();
     if (msgCase_ == MsgOneofCase.ClientData) hash ^= ClientData.GetHashCode();
     if (msgCase_ == MsgOneofCase.Item) hash ^= Item.GetHashCode();
+    if (msgCase_ == MsgOneofCase.Currency) hash ^= Currency.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -923,6 +996,10 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(66);
       output.WriteMessage(Item);
     }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      output.WriteRawTag(74);
+      output.WriteMessage(Currency);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -965,6 +1042,10 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(66);
       output.WriteMessage(Item);
     }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      output.WriteRawTag(74);
+      output.WriteMessage(Currency);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -998,6 +1079,9 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
     if (msgCase_ == MsgOneofCase.Item) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
+    }
+    if (msgCase_ == MsgOneofCase.Currency) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Currency);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1053,6 +1137,12 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           Item = new global::S2C_Item();
         }
         Item.MergeFrom(other.Item);
+        break;
+      case MsgOneofCase.Currency:
+        if (Currency == null) {
+          Currency = new global::S2C_Currency();
+        }
+        Currency.MergeFrom(other.Currency);
         break;
     }
 
@@ -1134,6 +1224,15 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           Item = subBuilder;
           break;
         }
+        case 74: {
+          global::S2C_Currency subBuilder = new global::S2C_Currency();
+          if (msgCase_ == MsgOneofCase.Currency) {
+            subBuilder.MergeFrom(Currency);
+          }
+          input.ReadMessage(subBuilder);
+          Currency = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -1210,6 +1309,15 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           }
           input.ReadMessage(subBuilder);
           Item = subBuilder;
+          break;
+        }
+        case 74: {
+          global::S2C_Currency subBuilder = new global::S2C_Currency();
+          if (msgCase_ == MsgOneofCase.Currency) {
+            subBuilder.MergeFrom(Currency);
+          }
+          input.ReadMessage(subBuilder);
+          Currency = subBuilder;
           break;
         }
       }

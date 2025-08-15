@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Currency {
+  uint64 threekp = 1;
+  uint64 diamond = 2;
+  uint64 point = 3;
+}
+
+message C2S_Currency {}
+
+message S2C_Currency { Currency Currency = 1; }

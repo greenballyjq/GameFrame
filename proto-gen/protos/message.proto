@@ -5,6 +5,7 @@ import "ping.proto";
 import "base.proto";
 import "client.proto";
 import "item.proto";
+import "currency.proto";
 
 message C2S_Message {
     uint64 session = 1; //会话ID, 服务器返回请求会带上该会话ID,不可为0
@@ -16,6 +17,7 @@ message C2S_Message {
         C2S_ClientData client_data = 6;
         C2S_UploadClientData upload_client_data = 7;
         C2S_Item item = 8;
+        C2S_Currency currency = 9;
     }
 }
 
@@ -29,5 +31,6 @@ message S2C_Message {
         S2C_Base base = 6;
         S2C_ClientData client_data = 7;
         S2C_Item item = 8;
+ 	S2C_Currency currency = 9;
     }
 }

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message C2S_WaveResult {
+    uint32 wave_id = 1;
+    uint64 point = 2; //获得积分
+    uint64 threekp = 3; //获得3kp数量
+}
