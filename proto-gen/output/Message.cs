@@ -23,26 +23,26 @@ public static partial class MessageReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cg1tZXNzYWdlLnByb3RvGgxvcGNvZGUucHJvdG8aC2xvZ2luLnByb3RvGgpw",
-          "aW5nLnByb3RvGgpiYXNlLnByb3RvGgxjbGllbnQucHJvdG8aCml0ZW0ucHJv",
-          "dG8aDmN1cnJlbmN5LnByb3RvIrICCgtDMlNfTWVzc2FnZRIPCgdzZXNzaW9u",
-          "GAEgASgEEhsKBWxvZ2luGAIgASgLMgouQzJTX0xvZ2luSAASHQoGbG9nb3V0",
-          "GAMgASgLMgsuQzJTX0xvZ291dEgAEhkKBHBpbmcYBCABKAsyCS5DMlNfUGlu",
-          "Z0gAEhkKBGJhc2UYBSABKAsyCS5DMlNfQmFzZUgAEiYKC2NsaWVudF9kYXRh",
-          "GAYgASgLMg8uQzJTX0NsaWVudERhdGFIABIzChJ1cGxvYWRfY2xpZW50X2Rh",
-          "dGEYByABKAsyFS5DMlNfVXBsb2FkQ2xpZW50RGF0YUgAEhkKBGl0ZW0YCCAB",
-          "KAsyCS5DMlNfSXRlbUgAEiEKCGN1cnJlbmN5GAkgASgLMg0uQzJTX0N1cnJl",
-          "bmN5SABCBQoDbXNnIpoCCgtTMkNfTWVzc2FnZRIPCgdzZXNzaW9uGAEgASgE",
-          "EhsKBGNvZGUYAiABKA4yCy5TMkNfT1BDb2RlSAASGwoFbG9naW4YAyABKAsy",
-          "Ci5TMkNfTG9naW5IABIdCgZsb2dvdXQYBCABKAsyCy5TMkNfTG9nb3V0SAAS",
-          "GQoEcGluZxgFIAEoCzIJLlMyQ19QaW5nSAASGQoEYmFzZRgGIAEoCzIJLlMy",
-          "Q19CYXNlSAASJgoLY2xpZW50X2RhdGEYByABKAsyDy5TMkNfQ2xpZW50RGF0",
-          "YUgAEhkKBGl0ZW0YCCABKAsyCS5TMkNfSXRlbUgAEiEKCGN1cnJlbmN5GAkg",
-          "ASgLMg0uUzJDX0N1cnJlbmN5SABCBQoDbXNnYgZwcm90bzM="));
+          "aW5nLnByb3RvGgpiYXNlLnByb3RvGgxjdXN0b20ucHJvdG8aCml0ZW0ucHJv",
+          "dG8aCndhdmUucHJvdG8aDmN1cnJlbmN5LnByb3RvIr0CCgtDMlNfTWVzc2Fn",
+          "ZRIPCgdzZXNzaW9uGAEgASgEEhsKBWxvZ2luGAIgASgLMgouQzJTX0xvZ2lu",
+          "SAASGQoEcGluZxgEIAEoCzIJLkMyU19QaW5nSAASHgoJYmFzZV9kYXRhGAUg",
+          "ASgLMgkuQzJTX0Jhc2VIABIiCgtjdXN0b21fZGF0YRgGIAEoCzILLkMyU19D",
+          "dXN0b21IABIqCg11cGxvYWRfY3VzdG9tGAcgASgLMhEuQzJTX1VwbG9hZEN1",
+          "c3RvbUgAEh4KCWl0ZW1fZGF0YRgIIAEoCzIJLkMyU19JdGVtSAASJgoLd2F2",
+          "ZV9yZXN1bHQYCSABKAsyDy5DMlNfV2F2ZVJlc3VsdEgAEiYKDWN1cnJlbmN5",
+          "X2RhdGEYCiABKAsyDS5DMlNfQ3VycmVuY3lIAEIFCgNtc2cihgIKC1MyQ19N",
+          "ZXNzYWdlEg8KB3Nlc3Npb24YASABKAQSGwoEY29kZRgCIAEoDjILLlMyQ19P",
+          "UENvZGVIABIbCgVsb2dpbhgDIAEoCzIKLlMyQ19Mb2dpbkgAEhkKBHBpbmcY",
+          "BSABKAsyCS5TMkNfUGluZ0gAEh4KCWJhc2VfZGF0YRgGIAEoCzIJLlMyQ19C",
+          "YXNlSAASIgoLY3VzdG9tX2RhdGEYByABKAsyCy5TMkNfQ3VzdG9tSAASHgoJ",
+          "aXRlbV9kYXRhGAggASgLMgkuUzJDX0l0ZW1IABImCg1jdXJyZW5jeV9kYXRh",
+          "GAkgASgLMg0uUzJDX0N1cnJlbmN5SABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::ClientReflection.Descriptor, global::ItemReflection.Descriptor, global::CurrencyReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::CustomReflection.Descriptor, global::ItemReflection.Descriptor, global::WaveReflection.Descriptor, global::CurrencyReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Logout", "Ping", "Base", "ClientData", "UploadClientData", "Item", "Currency" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Logout", "Ping", "Base", "ClientData", "Item", "Currency" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Ping", "BaseData", "CustomData", "UploadCustom", "ItemData", "WaveResult", "CurrencyData" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Ping", "BaseData", "CustomData", "ItemData", "CurrencyData" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -88,26 +88,26 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       case MsgOneofCase.Login:
         Login = other.Login.Clone();
         break;
-      case MsgOneofCase.Logout:
-        Logout = other.Logout.Clone();
-        break;
       case MsgOneofCase.Ping:
         Ping = other.Ping.Clone();
         break;
-      case MsgOneofCase.Base:
-        Base = other.Base.Clone();
+      case MsgOneofCase.BaseData:
+        BaseData = other.BaseData.Clone();
         break;
-      case MsgOneofCase.ClientData:
-        ClientData = other.ClientData.Clone();
+      case MsgOneofCase.CustomData:
+        CustomData = other.CustomData.Clone();
         break;
-      case MsgOneofCase.UploadClientData:
-        UploadClientData = other.UploadClientData.Clone();
+      case MsgOneofCase.UploadCustom:
+        UploadCustom = other.UploadCustom.Clone();
         break;
-      case MsgOneofCase.Item:
-        Item = other.Item.Clone();
+      case MsgOneofCase.ItemData:
+        ItemData = other.ItemData.Clone();
         break;
-      case MsgOneofCase.Currency:
-        Currency = other.Currency.Clone();
+      case MsgOneofCase.WaveResult:
+        WaveResult = other.WaveResult.Clone();
+        break;
+      case MsgOneofCase.CurrencyData:
+        CurrencyData = other.CurrencyData.Clone();
         break;
     }
 
@@ -124,7 +124,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
   public const int SessionFieldNumber = 1;
   private ulong session_;
   /// <summary>
-  ///会话ID, 服务器返回请求会带上该会话ID,不可为0
+  /// 会话ID,不可为0,且在整个游戏过程中不能重复
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -137,6 +137,9 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
 
   /// <summary>Field number for the "login" field.</summary>
   public const int LoginFieldNumber = 2;
+  /// <summary>
+  /// 请求登陆
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public global::C2S_Login Login {
@@ -147,20 +150,11 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
   }
 
-  /// <summary>Field number for the "logout" field.</summary>
-  public const int LogoutFieldNumber = 3;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_Logout Logout {
-    get { return msgCase_ == MsgOneofCase.Logout ? (global::C2S_Logout) msg_ : null; }
-    set {
-      msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Logout;
-    }
-  }
-
   /// <summary>Field number for the "ping" field.</summary>
   public const int PingFieldNumber = 4;
+  /// <summary>
+  /// 发送ping包
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public global::C2S_Ping Ping {
@@ -171,63 +165,93 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
   }
 
-  /// <summary>Field number for the "base" field.</summary>
-  public const int BaseFieldNumber = 5;
+  /// <summary>Field number for the "base_data" field.</summary>
+  public const int BaseDataFieldNumber = 5;
+  /// <summary>
+  /// 请求基础数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_Base Base {
-    get { return msgCase_ == MsgOneofCase.Base ? (global::C2S_Base) msg_ : null; }
+  public global::C2S_Base BaseData {
+    get { return msgCase_ == MsgOneofCase.BaseData ? (global::C2S_Base) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Base;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.BaseData;
     }
   }
 
-  /// <summary>Field number for the "client_data" field.</summary>
-  public const int ClientDataFieldNumber = 6;
+  /// <summary>Field number for the "custom_data" field.</summary>
+  public const int CustomDataFieldNumber = 6;
+  /// <summary>
+  /// 请求客户端自定义数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_ClientData ClientData {
-    get { return msgCase_ == MsgOneofCase.ClientData ? (global::C2S_ClientData) msg_ : null; }
+  public global::C2S_Custom CustomData {
+    get { return msgCase_ == MsgOneofCase.CustomData ? (global::C2S_Custom) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ClientData;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.CustomData;
     }
   }
 
-  /// <summary>Field number for the "upload_client_data" field.</summary>
-  public const int UploadClientDataFieldNumber = 7;
+  /// <summary>Field number for the "upload_custom" field.</summary>
+  public const int UploadCustomFieldNumber = 7;
+  /// <summary>
+  /// 上传客户端自定义数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_UploadClientData UploadClientData {
-    get { return msgCase_ == MsgOneofCase.UploadClientData ? (global::C2S_UploadClientData) msg_ : null; }
+  public global::C2S_UploadCustom UploadCustom {
+    get { return msgCase_ == MsgOneofCase.UploadCustom ? (global::C2S_UploadCustom) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.UploadClientData;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.UploadCustom;
     }
   }
 
-  /// <summary>Field number for the "item" field.</summary>
-  public const int ItemFieldNumber = 8;
+  /// <summary>Field number for the "item_data" field.</summary>
+  public const int ItemDataFieldNumber = 8;
+  /// <summary>
+  /// 请求物品数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_Item Item {
-    get { return msgCase_ == MsgOneofCase.Item ? (global::C2S_Item) msg_ : null; }
+  public global::C2S_Item ItemData {
+    get { return msgCase_ == MsgOneofCase.ItemData ? (global::C2S_Item) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Item;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ItemData;
     }
   }
 
-  /// <summary>Field number for the "currency" field.</summary>
-  public const int CurrencyFieldNumber = 9;
+  /// <summary>Field number for the "wave_result" field.</summary>
+  public const int WaveResultFieldNumber = 9;
+  /// <summary>
+  /// 上传波次结果
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::C2S_Currency Currency {
-    get { return msgCase_ == MsgOneofCase.Currency ? (global::C2S_Currency) msg_ : null; }
+  public global::C2S_WaveResult WaveResult {
+    get { return msgCase_ == MsgOneofCase.WaveResult ? (global::C2S_WaveResult) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Currency;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.WaveResult;
+    }
+  }
+
+  /// <summary>Field number for the "currency_data" field.</summary>
+  public const int CurrencyDataFieldNumber = 10;
+  /// <summary>
+  /// 请求货币数据
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2S_Currency CurrencyData {
+    get { return msgCase_ == MsgOneofCase.CurrencyData ? (global::C2S_Currency) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.CurrencyData;
     }
   }
 
@@ -236,13 +260,13 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
   public enum MsgOneofCase {
     None = 0,
     Login = 2,
-    Logout = 3,
     Ping = 4,
-    Base = 5,
-    ClientData = 6,
-    UploadClientData = 7,
-    Item = 8,
-    Currency = 9,
+    BaseData = 5,
+    CustomData = 6,
+    UploadCustom = 7,
+    ItemData = 8,
+    WaveResult = 9,
+    CurrencyData = 10,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -275,13 +299,13 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
     if (Session != other.Session) return false;
     if (!object.Equals(Login, other.Login)) return false;
-    if (!object.Equals(Logout, other.Logout)) return false;
     if (!object.Equals(Ping, other.Ping)) return false;
-    if (!object.Equals(Base, other.Base)) return false;
-    if (!object.Equals(ClientData, other.ClientData)) return false;
-    if (!object.Equals(UploadClientData, other.UploadClientData)) return false;
-    if (!object.Equals(Item, other.Item)) return false;
-    if (!object.Equals(Currency, other.Currency)) return false;
+    if (!object.Equals(BaseData, other.BaseData)) return false;
+    if (!object.Equals(CustomData, other.CustomData)) return false;
+    if (!object.Equals(UploadCustom, other.UploadCustom)) return false;
+    if (!object.Equals(ItemData, other.ItemData)) return false;
+    if (!object.Equals(WaveResult, other.WaveResult)) return false;
+    if (!object.Equals(CurrencyData, other.CurrencyData)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -292,13 +316,13 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     int hash = 1;
     if (Session != 0UL) hash ^= Session.GetHashCode();
     if (msgCase_ == MsgOneofCase.Login) hash ^= Login.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Logout) hash ^= Logout.GetHashCode();
     if (msgCase_ == MsgOneofCase.Ping) hash ^= Ping.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Base) hash ^= Base.GetHashCode();
-    if (msgCase_ == MsgOneofCase.ClientData) hash ^= ClientData.GetHashCode();
-    if (msgCase_ == MsgOneofCase.UploadClientData) hash ^= UploadClientData.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Item) hash ^= Item.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Currency) hash ^= Currency.GetHashCode();
+    if (msgCase_ == MsgOneofCase.BaseData) hash ^= BaseData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.CustomData) hash ^= CustomData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.UploadCustom) hash ^= UploadCustom.GetHashCode();
+    if (msgCase_ == MsgOneofCase.ItemData) hash ^= ItemData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.WaveResult) hash ^= WaveResult.GetHashCode();
+    if (msgCase_ == MsgOneofCase.CurrencyData) hash ^= CurrencyData.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -326,33 +350,33 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(18);
       output.WriteMessage(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      output.WriteRawTag(26);
-      output.WriteMessage(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       output.WriteRawTag(34);
       output.WriteMessage(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
+    if (msgCase_ == MsgOneofCase.BaseData) {
       output.WriteRawTag(42);
-      output.WriteMessage(Base);
+      output.WriteMessage(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
+    if (msgCase_ == MsgOneofCase.CustomData) {
       output.WriteRawTag(50);
-      output.WriteMessage(ClientData);
+      output.WriteMessage(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.UploadClientData) {
+    if (msgCase_ == MsgOneofCase.UploadCustom) {
       output.WriteRawTag(58);
-      output.WriteMessage(UploadClientData);
+      output.WriteMessage(UploadCustom);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
+    if (msgCase_ == MsgOneofCase.ItemData) {
       output.WriteRawTag(66);
-      output.WriteMessage(Item);
+      output.WriteMessage(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
+    if (msgCase_ == MsgOneofCase.WaveResult) {
       output.WriteRawTag(74);
-      output.WriteMessage(Currency);
+      output.WriteMessage(WaveResult);
+    }
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
+      output.WriteRawTag(82);
+      output.WriteMessage(CurrencyData);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -372,33 +396,33 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(18);
       output.WriteMessage(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      output.WriteRawTag(26);
-      output.WriteMessage(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       output.WriteRawTag(34);
       output.WriteMessage(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
+    if (msgCase_ == MsgOneofCase.BaseData) {
       output.WriteRawTag(42);
-      output.WriteMessage(Base);
+      output.WriteMessage(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
+    if (msgCase_ == MsgOneofCase.CustomData) {
       output.WriteRawTag(50);
-      output.WriteMessage(ClientData);
+      output.WriteMessage(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.UploadClientData) {
+    if (msgCase_ == MsgOneofCase.UploadCustom) {
       output.WriteRawTag(58);
-      output.WriteMessage(UploadClientData);
+      output.WriteMessage(UploadCustom);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
+    if (msgCase_ == MsgOneofCase.ItemData) {
       output.WriteRawTag(66);
-      output.WriteMessage(Item);
+      output.WriteMessage(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
+    if (msgCase_ == MsgOneofCase.WaveResult) {
       output.WriteRawTag(74);
-      output.WriteMessage(Currency);
+      output.WriteMessage(WaveResult);
+    }
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
+      output.WriteRawTag(82);
+      output.WriteMessage(CurrencyData);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -416,26 +440,26 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     if (msgCase_ == MsgOneofCase.Login) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Base);
+    if (msgCase_ == MsgOneofCase.BaseData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ClientData);
+    if (msgCase_ == MsgOneofCase.CustomData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.UploadClientData) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UploadClientData);
+    if (msgCase_ == MsgOneofCase.UploadCustom) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UploadCustom);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
+    if (msgCase_ == MsgOneofCase.ItemData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Currency);
+    if (msgCase_ == MsgOneofCase.WaveResult) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(WaveResult);
+    }
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(CurrencyData);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -459,47 +483,47 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
         }
         Login.MergeFrom(other.Login);
         break;
-      case MsgOneofCase.Logout:
-        if (Logout == null) {
-          Logout = new global::C2S_Logout();
-        }
-        Logout.MergeFrom(other.Logout);
-        break;
       case MsgOneofCase.Ping:
         if (Ping == null) {
           Ping = new global::C2S_Ping();
         }
         Ping.MergeFrom(other.Ping);
         break;
-      case MsgOneofCase.Base:
-        if (Base == null) {
-          Base = new global::C2S_Base();
+      case MsgOneofCase.BaseData:
+        if (BaseData == null) {
+          BaseData = new global::C2S_Base();
         }
-        Base.MergeFrom(other.Base);
+        BaseData.MergeFrom(other.BaseData);
         break;
-      case MsgOneofCase.ClientData:
-        if (ClientData == null) {
-          ClientData = new global::C2S_ClientData();
+      case MsgOneofCase.CustomData:
+        if (CustomData == null) {
+          CustomData = new global::C2S_Custom();
         }
-        ClientData.MergeFrom(other.ClientData);
+        CustomData.MergeFrom(other.CustomData);
         break;
-      case MsgOneofCase.UploadClientData:
-        if (UploadClientData == null) {
-          UploadClientData = new global::C2S_UploadClientData();
+      case MsgOneofCase.UploadCustom:
+        if (UploadCustom == null) {
+          UploadCustom = new global::C2S_UploadCustom();
         }
-        UploadClientData.MergeFrom(other.UploadClientData);
+        UploadCustom.MergeFrom(other.UploadCustom);
         break;
-      case MsgOneofCase.Item:
-        if (Item == null) {
-          Item = new global::C2S_Item();
+      case MsgOneofCase.ItemData:
+        if (ItemData == null) {
+          ItemData = new global::C2S_Item();
         }
-        Item.MergeFrom(other.Item);
+        ItemData.MergeFrom(other.ItemData);
         break;
-      case MsgOneofCase.Currency:
-        if (Currency == null) {
-          Currency = new global::C2S_Currency();
+      case MsgOneofCase.WaveResult:
+        if (WaveResult == null) {
+          WaveResult = new global::C2S_WaveResult();
         }
-        Currency.MergeFrom(other.Currency);
+        WaveResult.MergeFrom(other.WaveResult);
+        break;
+      case MsgOneofCase.CurrencyData:
+        if (CurrencyData == null) {
+          CurrencyData = new global::C2S_Currency();
+        }
+        CurrencyData.MergeFrom(other.CurrencyData);
         break;
     }
 
@@ -531,15 +555,6 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           Login = subBuilder;
           break;
         }
-        case 26: {
-          global::C2S_Logout subBuilder = new global::C2S_Logout();
-          if (msgCase_ == MsgOneofCase.Logout) {
-            subBuilder.MergeFrom(Logout);
-          }
-          input.ReadMessage(subBuilder);
-          Logout = subBuilder;
-          break;
-        }
         case 34: {
           global::C2S_Ping subBuilder = new global::C2S_Ping();
           if (msgCase_ == MsgOneofCase.Ping) {
@@ -551,47 +566,56 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
         }
         case 42: {
           global::C2S_Base subBuilder = new global::C2S_Base();
-          if (msgCase_ == MsgOneofCase.Base) {
-            subBuilder.MergeFrom(Base);
+          if (msgCase_ == MsgOneofCase.BaseData) {
+            subBuilder.MergeFrom(BaseData);
           }
           input.ReadMessage(subBuilder);
-          Base = subBuilder;
+          BaseData = subBuilder;
           break;
         }
         case 50: {
-          global::C2S_ClientData subBuilder = new global::C2S_ClientData();
-          if (msgCase_ == MsgOneofCase.ClientData) {
-            subBuilder.MergeFrom(ClientData);
+          global::C2S_Custom subBuilder = new global::C2S_Custom();
+          if (msgCase_ == MsgOneofCase.CustomData) {
+            subBuilder.MergeFrom(CustomData);
           }
           input.ReadMessage(subBuilder);
-          ClientData = subBuilder;
+          CustomData = subBuilder;
           break;
         }
         case 58: {
-          global::C2S_UploadClientData subBuilder = new global::C2S_UploadClientData();
-          if (msgCase_ == MsgOneofCase.UploadClientData) {
-            subBuilder.MergeFrom(UploadClientData);
+          global::C2S_UploadCustom subBuilder = new global::C2S_UploadCustom();
+          if (msgCase_ == MsgOneofCase.UploadCustom) {
+            subBuilder.MergeFrom(UploadCustom);
           }
           input.ReadMessage(subBuilder);
-          UploadClientData = subBuilder;
+          UploadCustom = subBuilder;
           break;
         }
         case 66: {
           global::C2S_Item subBuilder = new global::C2S_Item();
-          if (msgCase_ == MsgOneofCase.Item) {
-            subBuilder.MergeFrom(Item);
+          if (msgCase_ == MsgOneofCase.ItemData) {
+            subBuilder.MergeFrom(ItemData);
           }
           input.ReadMessage(subBuilder);
-          Item = subBuilder;
+          ItemData = subBuilder;
           break;
         }
         case 74: {
-          global::C2S_Currency subBuilder = new global::C2S_Currency();
-          if (msgCase_ == MsgOneofCase.Currency) {
-            subBuilder.MergeFrom(Currency);
+          global::C2S_WaveResult subBuilder = new global::C2S_WaveResult();
+          if (msgCase_ == MsgOneofCase.WaveResult) {
+            subBuilder.MergeFrom(WaveResult);
           }
           input.ReadMessage(subBuilder);
-          Currency = subBuilder;
+          WaveResult = subBuilder;
+          break;
+        }
+        case 82: {
+          global::C2S_Currency subBuilder = new global::C2S_Currency();
+          if (msgCase_ == MsgOneofCase.CurrencyData) {
+            subBuilder.MergeFrom(CurrencyData);
+          }
+          input.ReadMessage(subBuilder);
+          CurrencyData = subBuilder;
           break;
         }
       }
@@ -622,15 +646,6 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           Login = subBuilder;
           break;
         }
-        case 26: {
-          global::C2S_Logout subBuilder = new global::C2S_Logout();
-          if (msgCase_ == MsgOneofCase.Logout) {
-            subBuilder.MergeFrom(Logout);
-          }
-          input.ReadMessage(subBuilder);
-          Logout = subBuilder;
-          break;
-        }
         case 34: {
           global::C2S_Ping subBuilder = new global::C2S_Ping();
           if (msgCase_ == MsgOneofCase.Ping) {
@@ -642,47 +657,56 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
         }
         case 42: {
           global::C2S_Base subBuilder = new global::C2S_Base();
-          if (msgCase_ == MsgOneofCase.Base) {
-            subBuilder.MergeFrom(Base);
+          if (msgCase_ == MsgOneofCase.BaseData) {
+            subBuilder.MergeFrom(BaseData);
           }
           input.ReadMessage(subBuilder);
-          Base = subBuilder;
+          BaseData = subBuilder;
           break;
         }
         case 50: {
-          global::C2S_ClientData subBuilder = new global::C2S_ClientData();
-          if (msgCase_ == MsgOneofCase.ClientData) {
-            subBuilder.MergeFrom(ClientData);
+          global::C2S_Custom subBuilder = new global::C2S_Custom();
+          if (msgCase_ == MsgOneofCase.CustomData) {
+            subBuilder.MergeFrom(CustomData);
           }
           input.ReadMessage(subBuilder);
-          ClientData = subBuilder;
+          CustomData = subBuilder;
           break;
         }
         case 58: {
-          global::C2S_UploadClientData subBuilder = new global::C2S_UploadClientData();
-          if (msgCase_ == MsgOneofCase.UploadClientData) {
-            subBuilder.MergeFrom(UploadClientData);
+          global::C2S_UploadCustom subBuilder = new global::C2S_UploadCustom();
+          if (msgCase_ == MsgOneofCase.UploadCustom) {
+            subBuilder.MergeFrom(UploadCustom);
           }
           input.ReadMessage(subBuilder);
-          UploadClientData = subBuilder;
+          UploadCustom = subBuilder;
           break;
         }
         case 66: {
           global::C2S_Item subBuilder = new global::C2S_Item();
-          if (msgCase_ == MsgOneofCase.Item) {
-            subBuilder.MergeFrom(Item);
+          if (msgCase_ == MsgOneofCase.ItemData) {
+            subBuilder.MergeFrom(ItemData);
           }
           input.ReadMessage(subBuilder);
-          Item = subBuilder;
+          ItemData = subBuilder;
           break;
         }
         case 74: {
-          global::C2S_Currency subBuilder = new global::C2S_Currency();
-          if (msgCase_ == MsgOneofCase.Currency) {
-            subBuilder.MergeFrom(Currency);
+          global::C2S_WaveResult subBuilder = new global::C2S_WaveResult();
+          if (msgCase_ == MsgOneofCase.WaveResult) {
+            subBuilder.MergeFrom(WaveResult);
           }
           input.ReadMessage(subBuilder);
-          Currency = subBuilder;
+          WaveResult = subBuilder;
+          break;
+        }
+        case 82: {
+          global::C2S_Currency subBuilder = new global::C2S_Currency();
+          if (msgCase_ == MsgOneofCase.CurrencyData) {
+            subBuilder.MergeFrom(CurrencyData);
+          }
+          input.ReadMessage(subBuilder);
+          CurrencyData = subBuilder;
           break;
         }
       }
@@ -734,23 +758,20 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       case MsgOneofCase.Login:
         Login = other.Login.Clone();
         break;
-      case MsgOneofCase.Logout:
-        Logout = other.Logout.Clone();
-        break;
       case MsgOneofCase.Ping:
         Ping = other.Ping.Clone();
         break;
-      case MsgOneofCase.Base:
-        Base = other.Base.Clone();
+      case MsgOneofCase.BaseData:
+        BaseData = other.BaseData.Clone();
         break;
-      case MsgOneofCase.ClientData:
-        ClientData = other.ClientData.Clone();
+      case MsgOneofCase.CustomData:
+        CustomData = other.CustomData.Clone();
         break;
-      case MsgOneofCase.Item:
-        Item = other.Item.Clone();
+      case MsgOneofCase.ItemData:
+        ItemData = other.ItemData.Clone();
         break;
-      case MsgOneofCase.Currency:
-        Currency = other.Currency.Clone();
+      case MsgOneofCase.CurrencyData:
+        CurrencyData = other.CurrencyData.Clone();
         break;
     }
 
@@ -767,7 +788,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
   public const int SessionFieldNumber = 1;
   private ulong session_;
   /// <summary>
-  ///回应请求会话ID,0表示服务器推送
+  /// 透传 session
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -781,7 +802,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
   /// <summary>Field number for the "code" field.</summary>
   public const int CodeFieldNumber = 2;
   /// <summary>
-  ///通用操作码
+  /// 通用操作码
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -795,6 +816,9 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
 
   /// <summary>Field number for the "login" field.</summary>
   public const int LoginFieldNumber = 3;
+  /// <summary>
+  /// 登陆消息
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public global::S2C_Login Login {
@@ -805,20 +829,11 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
   }
 
-  /// <summary>Field number for the "logout" field.</summary>
-  public const int LogoutFieldNumber = 4;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::S2C_Logout Logout {
-    get { return msgCase_ == MsgOneofCase.Logout ? (global::S2C_Logout) msg_ : null; }
-    set {
-      msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Logout;
-    }
-  }
-
   /// <summary>Field number for the "ping" field.</summary>
   public const int PingFieldNumber = 5;
+  /// <summary>
+  /// ping消息
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public global::S2C_Ping Ping {
@@ -829,51 +844,63 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
   }
 
-  /// <summary>Field number for the "base" field.</summary>
-  public const int BaseFieldNumber = 6;
+  /// <summary>Field number for the "base_data" field.</summary>
+  public const int BaseDataFieldNumber = 6;
+  /// <summary>
+  /// 基础数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::S2C_Base Base {
-    get { return msgCase_ == MsgOneofCase.Base ? (global::S2C_Base) msg_ : null; }
+  public global::S2C_Base BaseData {
+    get { return msgCase_ == MsgOneofCase.BaseData ? (global::S2C_Base) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Base;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.BaseData;
     }
   }
 
-  /// <summary>Field number for the "client_data" field.</summary>
-  public const int ClientDataFieldNumber = 7;
+  /// <summary>Field number for the "custom_data" field.</summary>
+  public const int CustomDataFieldNumber = 7;
+  /// <summary>
+  /// 客户端自定义数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::S2C_ClientData ClientData {
-    get { return msgCase_ == MsgOneofCase.ClientData ? (global::S2C_ClientData) msg_ : null; }
+  public global::S2C_Custom CustomData {
+    get { return msgCase_ == MsgOneofCase.CustomData ? (global::S2C_Custom) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ClientData;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.CustomData;
     }
   }
 
-  /// <summary>Field number for the "item" field.</summary>
-  public const int ItemFieldNumber = 8;
+  /// <summary>Field number for the "item_data" field.</summary>
+  public const int ItemDataFieldNumber = 8;
+  /// <summary>
+  /// 物品数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::S2C_Item Item {
-    get { return msgCase_ == MsgOneofCase.Item ? (global::S2C_Item) msg_ : null; }
+  public global::S2C_Item ItemData {
+    get { return msgCase_ == MsgOneofCase.ItemData ? (global::S2C_Item) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Item;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ItemData;
     }
   }
 
-  /// <summary>Field number for the "currency" field.</summary>
-  public const int CurrencyFieldNumber = 9;
+  /// <summary>Field number for the "currency_data" field.</summary>
+  public const int CurrencyDataFieldNumber = 9;
+  /// <summary>
+  /// 货币数据
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::S2C_Currency Currency {
-    get { return msgCase_ == MsgOneofCase.Currency ? (global::S2C_Currency) msg_ : null; }
+  public global::S2C_Currency CurrencyData {
+    get { return msgCase_ == MsgOneofCase.CurrencyData ? (global::S2C_Currency) msg_ : null; }
     set {
       msg_ = value;
-      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Currency;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.CurrencyData;
     }
   }
 
@@ -883,12 +910,11 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     None = 0,
     Code = 2,
     Login = 3,
-    Logout = 4,
     Ping = 5,
-    Base = 6,
-    ClientData = 7,
-    Item = 8,
-    Currency = 9,
+    BaseData = 6,
+    CustomData = 7,
+    ItemData = 8,
+    CurrencyData = 9,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -922,12 +948,11 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (Session != other.Session) return false;
     if (Code != other.Code) return false;
     if (!object.Equals(Login, other.Login)) return false;
-    if (!object.Equals(Logout, other.Logout)) return false;
     if (!object.Equals(Ping, other.Ping)) return false;
-    if (!object.Equals(Base, other.Base)) return false;
-    if (!object.Equals(ClientData, other.ClientData)) return false;
-    if (!object.Equals(Item, other.Item)) return false;
-    if (!object.Equals(Currency, other.Currency)) return false;
+    if (!object.Equals(BaseData, other.BaseData)) return false;
+    if (!object.Equals(CustomData, other.CustomData)) return false;
+    if (!object.Equals(ItemData, other.ItemData)) return false;
+    if (!object.Equals(CurrencyData, other.CurrencyData)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -939,12 +964,11 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (Session != 0UL) hash ^= Session.GetHashCode();
     if (msgCase_ == MsgOneofCase.Code) hash ^= Code.GetHashCode();
     if (msgCase_ == MsgOneofCase.Login) hash ^= Login.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Logout) hash ^= Logout.GetHashCode();
     if (msgCase_ == MsgOneofCase.Ping) hash ^= Ping.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Base) hash ^= Base.GetHashCode();
-    if (msgCase_ == MsgOneofCase.ClientData) hash ^= ClientData.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Item) hash ^= Item.GetHashCode();
-    if (msgCase_ == MsgOneofCase.Currency) hash ^= Currency.GetHashCode();
+    if (msgCase_ == MsgOneofCase.BaseData) hash ^= BaseData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.CustomData) hash ^= CustomData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.ItemData) hash ^= ItemData.GetHashCode();
+    if (msgCase_ == MsgOneofCase.CurrencyData) hash ^= CurrencyData.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -976,29 +1000,25 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(26);
       output.WriteMessage(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      output.WriteRawTag(34);
-      output.WriteMessage(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       output.WriteRawTag(42);
       output.WriteMessage(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
+    if (msgCase_ == MsgOneofCase.BaseData) {
       output.WriteRawTag(50);
-      output.WriteMessage(Base);
+      output.WriteMessage(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
+    if (msgCase_ == MsgOneofCase.CustomData) {
       output.WriteRawTag(58);
-      output.WriteMessage(ClientData);
+      output.WriteMessage(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
+    if (msgCase_ == MsgOneofCase.ItemData) {
       output.WriteRawTag(66);
-      output.WriteMessage(Item);
+      output.WriteMessage(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
       output.WriteRawTag(74);
-      output.WriteMessage(Currency);
+      output.WriteMessage(CurrencyData);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1022,29 +1042,25 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(26);
       output.WriteMessage(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      output.WriteRawTag(34);
-      output.WriteMessage(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       output.WriteRawTag(42);
       output.WriteMessage(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
+    if (msgCase_ == MsgOneofCase.BaseData) {
       output.WriteRawTag(50);
-      output.WriteMessage(Base);
+      output.WriteMessage(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
+    if (msgCase_ == MsgOneofCase.CustomData) {
       output.WriteRawTag(58);
-      output.WriteMessage(ClientData);
+      output.WriteMessage(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
+    if (msgCase_ == MsgOneofCase.ItemData) {
       output.WriteRawTag(66);
-      output.WriteMessage(Item);
+      output.WriteMessage(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
       output.WriteRawTag(74);
-      output.WriteMessage(Currency);
+      output.WriteMessage(CurrencyData);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -1065,23 +1081,20 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (msgCase_ == MsgOneofCase.Login) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Login);
     }
-    if (msgCase_ == MsgOneofCase.Logout) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Logout);
-    }
     if (msgCase_ == MsgOneofCase.Ping) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ping);
     }
-    if (msgCase_ == MsgOneofCase.Base) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Base);
+    if (msgCase_ == MsgOneofCase.BaseData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(BaseData);
     }
-    if (msgCase_ == MsgOneofCase.ClientData) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ClientData);
+    if (msgCase_ == MsgOneofCase.CustomData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(CustomData);
     }
-    if (msgCase_ == MsgOneofCase.Item) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
+    if (msgCase_ == MsgOneofCase.ItemData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemData);
     }
-    if (msgCase_ == MsgOneofCase.Currency) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Currency);
+    if (msgCase_ == MsgOneofCase.CurrencyData) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(CurrencyData);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1108,41 +1121,35 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
         }
         Login.MergeFrom(other.Login);
         break;
-      case MsgOneofCase.Logout:
-        if (Logout == null) {
-          Logout = new global::S2C_Logout();
-        }
-        Logout.MergeFrom(other.Logout);
-        break;
       case MsgOneofCase.Ping:
         if (Ping == null) {
           Ping = new global::S2C_Ping();
         }
         Ping.MergeFrom(other.Ping);
         break;
-      case MsgOneofCase.Base:
-        if (Base == null) {
-          Base = new global::S2C_Base();
+      case MsgOneofCase.BaseData:
+        if (BaseData == null) {
+          BaseData = new global::S2C_Base();
         }
-        Base.MergeFrom(other.Base);
+        BaseData.MergeFrom(other.BaseData);
         break;
-      case MsgOneofCase.ClientData:
-        if (ClientData == null) {
-          ClientData = new global::S2C_ClientData();
+      case MsgOneofCase.CustomData:
+        if (CustomData == null) {
+          CustomData = new global::S2C_Custom();
         }
-        ClientData.MergeFrom(other.ClientData);
+        CustomData.MergeFrom(other.CustomData);
         break;
-      case MsgOneofCase.Item:
-        if (Item == null) {
-          Item = new global::S2C_Item();
+      case MsgOneofCase.ItemData:
+        if (ItemData == null) {
+          ItemData = new global::S2C_Item();
         }
-        Item.MergeFrom(other.Item);
+        ItemData.MergeFrom(other.ItemData);
         break;
-      case MsgOneofCase.Currency:
-        if (Currency == null) {
-          Currency = new global::S2C_Currency();
+      case MsgOneofCase.CurrencyData:
+        if (CurrencyData == null) {
+          CurrencyData = new global::S2C_Currency();
         }
-        Currency.MergeFrom(other.Currency);
+        CurrencyData.MergeFrom(other.CurrencyData);
         break;
     }
 
@@ -1179,15 +1186,6 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           Login = subBuilder;
           break;
         }
-        case 34: {
-          global::S2C_Logout subBuilder = new global::S2C_Logout();
-          if (msgCase_ == MsgOneofCase.Logout) {
-            subBuilder.MergeFrom(Logout);
-          }
-          input.ReadMessage(subBuilder);
-          Logout = subBuilder;
-          break;
-        }
         case 42: {
           global::S2C_Ping subBuilder = new global::S2C_Ping();
           if (msgCase_ == MsgOneofCase.Ping) {
@@ -1199,38 +1197,38 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
         }
         case 50: {
           global::S2C_Base subBuilder = new global::S2C_Base();
-          if (msgCase_ == MsgOneofCase.Base) {
-            subBuilder.MergeFrom(Base);
+          if (msgCase_ == MsgOneofCase.BaseData) {
+            subBuilder.MergeFrom(BaseData);
           }
           input.ReadMessage(subBuilder);
-          Base = subBuilder;
+          BaseData = subBuilder;
           break;
         }
         case 58: {
-          global::S2C_ClientData subBuilder = new global::S2C_ClientData();
-          if (msgCase_ == MsgOneofCase.ClientData) {
-            subBuilder.MergeFrom(ClientData);
+          global::S2C_Custom subBuilder = new global::S2C_Custom();
+          if (msgCase_ == MsgOneofCase.CustomData) {
+            subBuilder.MergeFrom(CustomData);
           }
           input.ReadMessage(subBuilder);
-          ClientData = subBuilder;
+          CustomData = subBuilder;
           break;
         }
         case 66: {
           global::S2C_Item subBuilder = new global::S2C_Item();
-          if (msgCase_ == MsgOneofCase.Item) {
-            subBuilder.MergeFrom(Item);
+          if (msgCase_ == MsgOneofCase.ItemData) {
+            subBuilder.MergeFrom(ItemData);
           }
           input.ReadMessage(subBuilder);
-          Item = subBuilder;
+          ItemData = subBuilder;
           break;
         }
         case 74: {
           global::S2C_Currency subBuilder = new global::S2C_Currency();
-          if (msgCase_ == MsgOneofCase.Currency) {
-            subBuilder.MergeFrom(Currency);
+          if (msgCase_ == MsgOneofCase.CurrencyData) {
+            subBuilder.MergeFrom(CurrencyData);
           }
           input.ReadMessage(subBuilder);
-          Currency = subBuilder;
+          CurrencyData = subBuilder;
           break;
         }
       }
@@ -1266,15 +1264,6 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           Login = subBuilder;
           break;
         }
-        case 34: {
-          global::S2C_Logout subBuilder = new global::S2C_Logout();
-          if (msgCase_ == MsgOneofCase.Logout) {
-            subBuilder.MergeFrom(Logout);
-          }
-          input.ReadMessage(subBuilder);
-          Logout = subBuilder;
-          break;
-        }
         case 42: {
           global::S2C_Ping subBuilder = new global::S2C_Ping();
           if (msgCase_ == MsgOneofCase.Ping) {
@@ -1286,38 +1275,38 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
         }
         case 50: {
           global::S2C_Base subBuilder = new global::S2C_Base();
-          if (msgCase_ == MsgOneofCase.Base) {
-            subBuilder.MergeFrom(Base);
+          if (msgCase_ == MsgOneofCase.BaseData) {
+            subBuilder.MergeFrom(BaseData);
           }
           input.ReadMessage(subBuilder);
-          Base = subBuilder;
+          BaseData = subBuilder;
           break;
         }
         case 58: {
-          global::S2C_ClientData subBuilder = new global::S2C_ClientData();
-          if (msgCase_ == MsgOneofCase.ClientData) {
-            subBuilder.MergeFrom(ClientData);
+          global::S2C_Custom subBuilder = new global::S2C_Custom();
+          if (msgCase_ == MsgOneofCase.CustomData) {
+            subBuilder.MergeFrom(CustomData);
           }
           input.ReadMessage(subBuilder);
-          ClientData = subBuilder;
+          CustomData = subBuilder;
           break;
         }
         case 66: {
           global::S2C_Item subBuilder = new global::S2C_Item();
-          if (msgCase_ == MsgOneofCase.Item) {
-            subBuilder.MergeFrom(Item);
+          if (msgCase_ == MsgOneofCase.ItemData) {
+            subBuilder.MergeFrom(ItemData);
           }
           input.ReadMessage(subBuilder);
-          Item = subBuilder;
+          ItemData = subBuilder;
           break;
         }
         case 74: {
           global::S2C_Currency subBuilder = new global::S2C_Currency();
-          if (msgCase_ == MsgOneofCase.Currency) {
-            subBuilder.MergeFrom(Currency);
+          if (msgCase_ == MsgOneofCase.CurrencyData) {
+            subBuilder.MergeFrom(CurrencyData);
           }
           input.ReadMessage(subBuilder);
-          Currency = subBuilder;
+          CurrencyData = subBuilder;
           break;
         }
       }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
+using GooseCatcher;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,8 @@ public class UIManager : IManager
         PopUp,      // 弹窗层
         Guide,      // 引导层
         Tips,       // 提示层
-        Loading     // 加载层
+        Loading,    // 加载层
+        Game        // 游戏层
     }
     
     // UI根节点
@@ -85,7 +87,9 @@ public class UIManager : IManager
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.matchWidthOrHeight = 0.5f;
-        
+
+        ScreenAdapter screenAdapter = _uiRoot.AddComponent<ScreenAdapter>();
+
         _uiRoot.AddComponent<GraphicRaycaster>();
         
         // 创建各层级父节点
@@ -107,6 +111,8 @@ public class UIManager : IManager
             
             // 添加GraphicRaycaster组件
             layerObj.AddComponent<GraphicRaycaster>();
+            
+            if (layer == UILayer.Game) screenAdapter.SetRootRect(rectTransform);
             
             _layerParents.Add(layer, layerObj.transform);
         }

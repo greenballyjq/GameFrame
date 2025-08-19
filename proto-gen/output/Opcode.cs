@@ -40,51 +40,51 @@ public static partial class OpcodeReflection {
 #region Enums
 public enum S2C_OPCode {
   /// <summary>
-  ///操作成功
+  /// 操作成功
   /// </summary>
   [pbr::OriginalName("OP_Success")] OpSuccess = 0,
   /// <summary>
-  ///操作失败
+  /// 操作失败
   /// </summary>
   [pbr::OriginalName("OP_Failed")] OpFailed = 1,
   /// <summary>
-  ///会话过期,需重新登陆
+  /// 会话过期,需重新登陆
   /// </summary>
   [pbr::OriginalName("OP_Session_Expired")] OpSessionExpired = 2,
   /// <summary>
-  ///会话令牌无效
+  /// 会话令牌无效
   /// </summary>
   [pbr::OriginalName("OP_Session_Token_Invalid")] OpSessionTokenInvalid = 3,
   /// <summary>
-  ///金币不足
+  /// 金币不足
   /// </summary>
   [pbr::OriginalName("OP_3kp_Not_Enough")] Op3KpNotEnough = 101,
   /// <summary>
-  ///体力不足
+  /// 体力不足
   /// </summary>
   [pbr::OriginalName("OP_Stamina_Not_Enough")] OpStaminaNotEnough = 102,
   /// <summary>
-  ///物品不足
+  /// 物品不足
   /// </summary>
   [pbr::OriginalName("OP_Item_Not_Enough")] OpItemNotEnough = 103,
   /// <summary>
-  ///无效账号(手机号方式)
+  /// 无效账号(手机号方式)
   /// </summary>
   [pbr::OriginalName("OP_Login_Invalid_Account")] OpLoginInvalidAccount = 1001,
   /// <summary>
-  ///平台认证失败
+  /// 平台认证失败
   /// </summary>
   [pbr::OriginalName("OP_Login_Auth_failed")] OpLoginAuthFailed = 1002,
   /// <summary>
-  ///顶号
+  /// 顶号
   /// </summary>
   [pbr::OriginalName("OP_Logout_Other_Login")] OpLogoutOtherLogin = 1101,
   /// <summary>
-  ///心跳超时
+  /// 心跳超时
   /// </summary>
   [pbr::OriginalName("OP_Logout_Timeout")] OpLogoutTimeout = 1102,
   /// <summary>
-  ///服务器关闭
+  /// 服务器关闭
   /// </summary>
   [pbr::OriginalName("OP_Logout_Server_Shutdown")] OpLogoutServerShutdown = 1103,
 }

@@ -1,16 +1,16 @@
 syntax = "proto3";
 package record;
 import "base.proto";
-import "client.proto";
+import "custom.proto";
 import "item.proto";
 
 message PlayerData {
-    PlayerBase base = 1;
-    ClientData client = 2;
-    PlayerItem item = 3;
+  PlayerBase base = 1;
+  Custom custom = 2;
+  PlayerItem item = 3;
 }
 
 message SaveData {
-    string version = 1;
-    bytes data = 2;
+  string version = 1;
+  bytes data = 2;
 }

@@ -22,16 +22,15 @@ public static partial class BaseReflection {
   static BaseReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpiYXNlLnByb3RvIkMKClBsYXllckJhc2USEgoKY3JlYXRldGltZRgBIAEo",
-          "BBIPCgdvZmZ0aW1lGAIgASgEEhAKCGdhbWV0aW1lGAMgASgEIgoKCEMyU19C",
-          "YXNlIiwKCFMyQ19CYXNlEiAKC3BsYXllcl9iYXNlGAEgASgLMgsuUGxheWVy",
-          "QmFzZWIGcHJvdG8z"));
+          "CgpiYXNlLnByb3RvIjMKClBsYXllckJhc2USEgoKY3JlYXRldGltZRgBIAEo",
+          "BBIRCglsYXN0bG9naW4YAiABKAQiCgoIQzJTX0Jhc2UiJQoIUzJDX0Jhc2US",
+          "GQoEYmFzZRgBIAEoCzILLlBsYXllckJhc2ViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerBase), global::PlayerBase.Parser, new[]{ "Createtime", "Offtime", "Gametime" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerBase), global::PlayerBase.Parser, new[]{ "Createtime", "Lastlogin" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Base), global::C2S_Base.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Base), global::S2C_Base.Parser, new[]{ "PlayerBase" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Base), global::S2C_Base.Parser, new[]{ "Base" }, null, null, null, null)
         }));
   }
   #endregion
@@ -73,8 +72,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public PlayerBase(PlayerBase other) : this() {
     createtime_ = other.createtime_;
-    offtime_ = other.offtime_;
-    gametime_ = other.gametime_;
+    lastlogin_ = other.lastlogin_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -88,7 +86,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
   public const int CreatetimeFieldNumber = 1;
   private ulong createtime_;
   /// <summary>
-  ///建号时间戳
+  /// 建号时间戳
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -99,33 +97,18 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
     }
   }
 
-  /// <summary>Field number for the "offtime" field.</summary>
-  public const int OfftimeFieldNumber = 2;
-  private ulong offtime_;
+  /// <summary>Field number for the "lastlogin" field.</summary>
+  public const int LastloginFieldNumber = 2;
+  private ulong lastlogin_;
   /// <summary>
-  ///离线时间戳
+  /// 上次登陆时间戳
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Offtime {
-    get { return offtime_; }
+  public ulong Lastlogin {
+    get { return lastlogin_; }
     set {
-      offtime_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "gametime" field.</summary>
-  public const int GametimeFieldNumber = 3;
-  private ulong gametime_;
-  /// <summary>
-  ///累积游戏时间(毫秒)
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Gametime {
-    get { return gametime_; }
-    set {
-      gametime_ = value;
+      lastlogin_ = value;
     }
   }
 
@@ -145,8 +128,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
       return true;
     }
     if (Createtime != other.Createtime) return false;
-    if (Offtime != other.Offtime) return false;
-    if (Gametime != other.Gametime) return false;
+    if (Lastlogin != other.Lastlogin) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -155,8 +137,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
   public override int GetHashCode() {
     int hash = 1;
     if (Createtime != 0UL) hash ^= Createtime.GetHashCode();
-    if (Offtime != 0UL) hash ^= Offtime.GetHashCode();
-    if (Gametime != 0UL) hash ^= Gametime.GetHashCode();
+    if (Lastlogin != 0UL) hash ^= Lastlogin.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -179,13 +160,9 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
       output.WriteRawTag(8);
       output.WriteUInt64(Createtime);
     }
-    if (Offtime != 0UL) {
+    if (Lastlogin != 0UL) {
       output.WriteRawTag(16);
-      output.WriteUInt64(Offtime);
-    }
-    if (Gametime != 0UL) {
-      output.WriteRawTag(24);
-      output.WriteUInt64(Gametime);
+      output.WriteUInt64(Lastlogin);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -201,13 +178,9 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
       output.WriteRawTag(8);
       output.WriteUInt64(Createtime);
     }
-    if (Offtime != 0UL) {
+    if (Lastlogin != 0UL) {
       output.WriteRawTag(16);
-      output.WriteUInt64(Offtime);
-    }
-    if (Gametime != 0UL) {
-      output.WriteRawTag(24);
-      output.WriteUInt64(Gametime);
+      output.WriteUInt64(Lastlogin);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -222,11 +195,8 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
     if (Createtime != 0UL) {
       size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Createtime);
     }
-    if (Offtime != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Offtime);
-    }
-    if (Gametime != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Gametime);
+    if (Lastlogin != 0UL) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Lastlogin);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -243,11 +213,8 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
     if (other.Createtime != 0UL) {
       Createtime = other.Createtime;
     }
-    if (other.Offtime != 0UL) {
-      Offtime = other.Offtime;
-    }
-    if (other.Gametime != 0UL) {
-      Gametime = other.Gametime;
+    if (other.Lastlogin != 0UL) {
+      Lastlogin = other.Lastlogin;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -269,11 +236,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
           break;
         }
         case 16: {
-          Offtime = input.ReadUInt64();
-          break;
-        }
-        case 24: {
-          Gametime = input.ReadUInt64();
+          Lastlogin = input.ReadUInt64();
           break;
         }
       }
@@ -296,11 +259,7 @@ public sealed partial class PlayerBase : pb::IMessage<PlayerBase>
           break;
         }
         case 16: {
-          Offtime = input.ReadUInt64();
-          break;
-        }
-        case 24: {
-          Gametime = input.ReadUInt64();
+          Lastlogin = input.ReadUInt64();
           break;
         }
       }
@@ -496,7 +455,7 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2C_Base(S2C_Base other) : this() {
-    playerBase_ = other.playerBase_ != null ? other.playerBase_.Clone() : null;
+    base_ = other.base_ != null ? other.base_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -506,15 +465,15 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
     return new S2C_Base(this);
   }
 
-  /// <summary>Field number for the "player_base" field.</summary>
-  public const int PlayerBaseFieldNumber = 1;
-  private global::PlayerBase playerBase_;
+  /// <summary>Field number for the "base" field.</summary>
+  public const int BaseFieldNumber = 1;
+  private global::PlayerBase base_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerBase PlayerBase {
-    get { return playerBase_; }
+  public global::PlayerBase Base {
+    get { return base_; }
     set {
-      playerBase_ = value;
+      base_ = value;
     }
   }
 
@@ -533,7 +492,7 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerBase, other.PlayerBase)) return false;
+    if (!object.Equals(Base, other.Base)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -541,7 +500,7 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerBase_ != null) hash ^= PlayerBase.GetHashCode();
+    if (base_ != null) hash ^= Base.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -560,9 +519,9 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerBase_ != null) {
+    if (base_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerBase);
+      output.WriteMessage(Base);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -574,9 +533,9 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerBase_ != null) {
+    if (base_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerBase);
+      output.WriteMessage(Base);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -588,8 +547,8 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerBase_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerBase);
+    if (base_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Base);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -603,11 +562,11 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
     if (other == null) {
       return;
     }
-    if (other.playerBase_ != null) {
-      if (playerBase_ == null) {
-        PlayerBase = new global::PlayerBase();
+    if (other.base_ != null) {
+      if (base_ == null) {
+        Base = new global::PlayerBase();
       }
-      PlayerBase.MergeFrom(other.PlayerBase);
+      Base.MergeFrom(other.Base);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -625,10 +584,10 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerBase_ == null) {
-            PlayerBase = new global::PlayerBase();
+          if (base_ == null) {
+            Base = new global::PlayerBase();
           }
-          input.ReadMessage(PlayerBase);
+          input.ReadMessage(Base);
           break;
         }
       }
@@ -647,10 +606,10 @@ public sealed partial class S2C_Base : pb::IMessage<S2C_Base>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerBase_ == null) {
-            PlayerBase = new global::PlayerBase();
+          if (base_ == null) {
+            Base = new global::PlayerBase();
           }
-          input.ReadMessage(PlayerBase);
+          input.ReadMessage(Base);
           break;
         }
       }

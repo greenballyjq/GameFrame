@@ -1,9 +1,6 @@
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using WeChatWASM;
 using YooAsset;
 
 /// <summary>

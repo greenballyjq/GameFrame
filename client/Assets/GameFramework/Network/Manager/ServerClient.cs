@@ -88,7 +88,7 @@ namespace GameFramework.Network
                 {
                    handler(postMessage, message);
                 }
-                Debug.LogError($"ok postMessage {postMessage}");
+                Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
                 byte[] bodyRaw = postMessage.ToByteArray();
                 var responseData = await httpManager.PostAsync(bodyRaw);
                 if (responseData != null && responseData.Bytes.Length > 0)
@@ -97,7 +97,7 @@ namespace GameFramework.Network
                     // 反序列化响应
                     S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
 
-                    Debug.LogError($"S2C_Message内容：{wrapper}");
+                    Debug.LogError($"S2C_Message内容：{wrapper.Code}, {wrapper}");
 
                     if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
                     {

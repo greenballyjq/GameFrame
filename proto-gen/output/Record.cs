@@ -24,15 +24,15 @@ namespace Record {
     static RecordReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxyZWNvcmQucHJvdG8SBnJlY29yZBoKYmFzZS5wcm90bxoMY2xpZW50LnBy",
-            "b3RvGgppdGVtLnByb3RvIl8KClBsYXllckRhdGESGQoEYmFzZRgBIAEoCzIL",
-            "LlBsYXllckJhc2USGwoGY2xpZW50GAIgASgLMgsuQ2xpZW50RGF0YRIZCgRp",
-            "dGVtGAMgASgLMgsuUGxheWVySXRlbSIpCghTYXZlRGF0YRIPCgd2ZXJzaW9u",
-            "GAEgASgJEgwKBGRhdGEYAiABKAxiBnByb3RvMw=="));
+            "CgxyZWNvcmQucHJvdG8SBnJlY29yZBoKYmFzZS5wcm90bxoMY3VzdG9tLnBy",
+            "b3RvGgppdGVtLnByb3RvIlsKClBsYXllckRhdGESGQoEYmFzZRgBIAEoCzIL",
+            "LlBsYXllckJhc2USFwoGY3VzdG9tGAIgASgLMgcuQ3VzdG9tEhkKBGl0ZW0Y",
+            "AyABKAsyCy5QbGF5ZXJJdGVtIikKCFNhdmVEYXRhEg8KB3ZlcnNpb24YASAB",
+            "KAkSDAoEZGF0YRgCIAEoDGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::BaseReflection.Descriptor, global::ClientReflection.Descriptor, global::ItemReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::BaseReflection.Descriptor, global::CustomReflection.Descriptor, global::ItemReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Record.PlayerData), global::Record.PlayerData.Parser, new[]{ "Base", "Client", "Item" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Record.PlayerData), global::Record.PlayerData.Parser, new[]{ "Base", "Custom", "Item" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Record.SaveData), global::Record.SaveData.Parser, new[]{ "Version", "Data" }, null, null, null, null)
           }));
     }
@@ -75,7 +75,7 @@ namespace Record {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PlayerData(PlayerData other) : this() {
       base_ = other.base_ != null ? other.base_.Clone() : null;
-      client_ = other.client_ != null ? other.client_.Clone() : null;
+      custom_ = other.custom_ != null ? other.custom_.Clone() : null;
       item_ = other.item_ != null ? other.item_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -98,15 +98,15 @@ namespace Record {
       }
     }
 
-    /// <summary>Field number for the "client" field.</summary>
-    public const int ClientFieldNumber = 2;
-    private global::ClientData client_;
+    /// <summary>Field number for the "custom" field.</summary>
+    public const int CustomFieldNumber = 2;
+    private global::Custom custom_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ClientData Client {
-      get { return client_; }
+    public global::Custom Custom {
+      get { return custom_; }
       set {
-        client_ = value;
+        custom_ = value;
       }
     }
 
@@ -138,7 +138,7 @@ namespace Record {
         return true;
       }
       if (!object.Equals(Base, other.Base)) return false;
-      if (!object.Equals(Client, other.Client)) return false;
+      if (!object.Equals(Custom, other.Custom)) return false;
       if (!object.Equals(Item, other.Item)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -148,7 +148,7 @@ namespace Record {
     public override int GetHashCode() {
       int hash = 1;
       if (base_ != null) hash ^= Base.GetHashCode();
-      if (client_ != null) hash ^= Client.GetHashCode();
+      if (custom_ != null) hash ^= Custom.GetHashCode();
       if (item_ != null) hash ^= Item.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -172,9 +172,9 @@ namespace Record {
         output.WriteRawTag(10);
         output.WriteMessage(Base);
       }
-      if (client_ != null) {
+      if (custom_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Client);
+        output.WriteMessage(Custom);
       }
       if (item_ != null) {
         output.WriteRawTag(26);
@@ -194,9 +194,9 @@ namespace Record {
         output.WriteRawTag(10);
         output.WriteMessage(Base);
       }
-      if (client_ != null) {
+      if (custom_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(Client);
+        output.WriteMessage(Custom);
       }
       if (item_ != null) {
         output.WriteRawTag(26);
@@ -215,8 +215,8 @@ namespace Record {
       if (base_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Base);
       }
-      if (client_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Client);
+      if (custom_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Custom);
       }
       if (item_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
@@ -239,11 +239,11 @@ namespace Record {
         }
         Base.MergeFrom(other.Base);
       }
-      if (other.client_ != null) {
-        if (client_ == null) {
-          Client = new global::ClientData();
+      if (other.custom_ != null) {
+        if (custom_ == null) {
+          Custom = new global::Custom();
         }
-        Client.MergeFrom(other.Client);
+        Custom.MergeFrom(other.Custom);
       }
       if (other.item_ != null) {
         if (item_ == null) {
@@ -274,10 +274,10 @@ namespace Record {
             break;
           }
           case 18: {
-            if (client_ == null) {
-              Client = new global::ClientData();
+            if (custom_ == null) {
+              Custom = new global::Custom();
             }
-            input.ReadMessage(Client);
+            input.ReadMessage(Custom);
             break;
           }
           case 26: {
@@ -310,10 +310,10 @@ namespace Record {
             break;
           }
           case 18: {
-            if (client_ == null) {
-              Client = new global::ClientData();
+            if (custom_ == null) {
+              Custom = new global::Custom();
             }
-            input.ReadMessage(Client);
+            input.ReadMessage(Custom);
             break;
           }
           case 26: {

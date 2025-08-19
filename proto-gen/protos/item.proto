@@ -1,16 +1,13 @@
 syntax = "proto3";
 
 message PlayerItem {
-    map<uint64, uint64> items = 1; // <item_id, count>
+  map<string, uint64> items = 1; // <item_id, count>
 }
 
-message C2S_Item {
-}
+message C2S_Item {}
 
-message S2C_Item {
-    PlayerItem player_item = 1;
-}
+message S2C_Item { PlayerItem item = 1; }
 
 message S2C_ItemUpdate {
-    map<uint64, uint64> items = 1; //增量更新
+  map<string, uint64> items = 1; // 增量更新
 }

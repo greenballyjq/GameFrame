@@ -24,17 +24,17 @@ public static partial class ItemReflection {
         string.Concat(
           "CgppdGVtLnByb3RvImEKClBsYXllckl0ZW0SJQoFaXRlbXMYASADKAsyFi5Q",
           "bGF5ZXJJdGVtLkl0ZW1zRW50cnkaLAoKSXRlbXNFbnRyeRILCgNrZXkYASAB",
-          "KAQSDQoFdmFsdWUYAiABKAQ6AjgBIgoKCEMyU19JdGVtIiwKCFMyQ19JdGVt",
-          "EiAKC3BsYXllcl9pdGVtGAEgASgLMgsuUGxheWVySXRlbSJpCg5TMkNfSXRl",
-          "bVVwZGF0ZRIpCgVpdGVtcxgBIAMoCzIaLlMyQ19JdGVtVXBkYXRlLkl0ZW1z",
-          "RW50cnkaLAoKSXRlbXNFbnRyeRILCgNrZXkYASABKAQSDQoFdmFsdWUYAiAB",
-          "KAQ6AjgBYgZwcm90bzM="));
+          "KAkSDQoFdmFsdWUYAiABKAQ6AjgBIgoKCEMyU19JdGVtIiUKCFMyQ19JdGVt",
+          "EhkKBGl0ZW0YASABKAsyCy5QbGF5ZXJJdGVtImkKDlMyQ19JdGVtVXBkYXRl",
+          "EikKBWl0ZW1zGAEgAygLMhouUzJDX0l0ZW1VcGRhdGUuSXRlbXNFbnRyeRos",
+          "CgpJdGVtc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoBDoCOAFi",
+          "BnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerItem), global::PlayerItem.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Item), global::C2S_Item.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Item), global::S2C_Item.Parser, new[]{ "PlayerItem" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Item), global::S2C_Item.Parser, new[]{ "Item" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_ItemUpdate), global::S2C_ItemUpdate.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
         }));
   }
@@ -88,15 +88,15 @@ public sealed partial class PlayerItem : pb::IMessage<PlayerItem>
 
   /// <summary>Field number for the "items" field.</summary>
   public const int ItemsFieldNumber = 1;
-  private static readonly pbc::MapField<ulong, ulong>.Codec _map_items_codec
-      = new pbc::MapField<ulong, ulong>.Codec(pb::FieldCodec.ForUInt64(8, 0UL), pb::FieldCodec.ForUInt64(16, 0UL), 10);
-  private readonly pbc::MapField<ulong, ulong> items_ = new pbc::MapField<ulong, ulong>();
+  private static readonly pbc::MapField<string, ulong>.Codec _map_items_codec
+      = new pbc::MapField<string, ulong>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt64(16, 0UL), 10);
+  private readonly pbc::MapField<string, ulong> items_ = new pbc::MapField<string, ulong>();
   /// <summary>
   /// &lt;item_id, count>
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::MapField<ulong, ulong> Items {
+  public pbc::MapField<string, ulong> Items {
     get { return items_; }
   }
 
@@ -409,7 +409,7 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2C_Item(S2C_Item other) : this() {
-    playerItem_ = other.playerItem_ != null ? other.playerItem_.Clone() : null;
+    item_ = other.item_ != null ? other.item_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -419,15 +419,15 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
     return new S2C_Item(this);
   }
 
-  /// <summary>Field number for the "player_item" field.</summary>
-  public const int PlayerItemFieldNumber = 1;
-  private global::PlayerItem playerItem_;
+  /// <summary>Field number for the "item" field.</summary>
+  public const int ItemFieldNumber = 1;
+  private global::PlayerItem item_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::PlayerItem PlayerItem {
-    get { return playerItem_; }
+  public global::PlayerItem Item {
+    get { return item_; }
     set {
-      playerItem_ = value;
+      item_ = value;
     }
   }
 
@@ -446,7 +446,7 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (!object.Equals(PlayerItem, other.PlayerItem)) return false;
+    if (!object.Equals(Item, other.Item)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -454,7 +454,7 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (playerItem_ != null) hash ^= PlayerItem.GetHashCode();
+    if (item_ != null) hash ^= Item.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -473,9 +473,9 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (playerItem_ != null) {
+    if (item_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerItem);
+      output.WriteMessage(Item);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -487,9 +487,9 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (playerItem_ != null) {
+    if (item_ != null) {
       output.WriteRawTag(10);
-      output.WriteMessage(PlayerItem);
+      output.WriteMessage(Item);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -501,8 +501,8 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (playerItem_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerItem);
+    if (item_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Item);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -516,11 +516,11 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
     if (other == null) {
       return;
     }
-    if (other.playerItem_ != null) {
-      if (playerItem_ == null) {
-        PlayerItem = new global::PlayerItem();
+    if (other.item_ != null) {
+      if (item_ == null) {
+        Item = new global::PlayerItem();
       }
-      PlayerItem.MergeFrom(other.PlayerItem);
+      Item.MergeFrom(other.Item);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -538,10 +538,10 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          if (playerItem_ == null) {
-            PlayerItem = new global::PlayerItem();
+          if (item_ == null) {
+            Item = new global::PlayerItem();
           }
-          input.ReadMessage(PlayerItem);
+          input.ReadMessage(Item);
           break;
         }
       }
@@ -560,10 +560,10 @@ public sealed partial class S2C_Item : pb::IMessage<S2C_Item>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          if (playerItem_ == null) {
-            PlayerItem = new global::PlayerItem();
+          if (item_ == null) {
+            Item = new global::PlayerItem();
           }
-          input.ReadMessage(PlayerItem);
+          input.ReadMessage(Item);
           break;
         }
       }
@@ -619,15 +619,15 @@ public sealed partial class S2C_ItemUpdate : pb::IMessage<S2C_ItemUpdate>
 
   /// <summary>Field number for the "items" field.</summary>
   public const int ItemsFieldNumber = 1;
-  private static readonly pbc::MapField<ulong, ulong>.Codec _map_items_codec
-      = new pbc::MapField<ulong, ulong>.Codec(pb::FieldCodec.ForUInt64(8, 0UL), pb::FieldCodec.ForUInt64(16, 0UL), 10);
-  private readonly pbc::MapField<ulong, ulong> items_ = new pbc::MapField<ulong, ulong>();
+  private static readonly pbc::MapField<string, ulong>.Codec _map_items_codec
+      = new pbc::MapField<string, ulong>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt64(16, 0UL), 10);
+  private readonly pbc::MapField<string, ulong> items_ = new pbc::MapField<string, ulong>();
   /// <summary>
-  ///增量更新
+  /// 增量更新
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::MapField<ulong, ulong> Items {
+  public pbc::MapField<string, ulong> Items {
     get { return items_; }
   }
 

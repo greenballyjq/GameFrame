@@ -23,13 +23,12 @@ public static partial class PingReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "CgpwaW5nLnByb3RvIh4KCEMyU19QaW5nEhIKCmNsaWVudHRpbWUYASABKAQi",
-          "MAoIUzJDX1BpbmcSEgoKc2VydmVydGltZRgBIAEoBBIQCghnYW1ldGltZRgC",
-          "IAEoBGIGcHJvdG8z"));
+          "HgoIUzJDX1BpbmcSEgoKc2VydmVydGltZRgBIAEoBGIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Ping), global::C2S_Ping.Parser, new[]{ "Clienttime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Ping), global::S2C_Ping.Parser, new[]{ "Servertime", "Gametime" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Ping), global::S2C_Ping.Parser, new[]{ "Servertime" }, null, null, null, null)
         }));
   }
   #endregion
@@ -84,7 +83,7 @@ public sealed partial class C2S_Ping : pb::IMessage<C2S_Ping>
   public const int ClienttimeFieldNumber = 1;
   private ulong clienttime_;
   /// <summary>
-  ///客户端时间戳
+  /// 客户端时间戳
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -263,7 +262,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2C_Ping(S2C_Ping other) : this() {
     servertime_ = other.servertime_;
-    gametime_ = other.gametime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -277,7 +275,7 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
   public const int ServertimeFieldNumber = 1;
   private ulong servertime_;
   /// <summary>
-  ///服务器时间戳
+  /// 服务器时间戳
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -285,21 +283,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
     get { return servertime_; }
     set {
       servertime_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "gametime" field.</summary>
-  public const int GametimeFieldNumber = 2;
-  private ulong gametime_;
-  /// <summary>
-  ///实际累计游戏时间
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Gametime {
-    get { return gametime_; }
-    set {
-      gametime_ = value;
     }
   }
 
@@ -319,7 +302,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
       return true;
     }
     if (Servertime != other.Servertime) return false;
-    if (Gametime != other.Gametime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -328,7 +310,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
   public override int GetHashCode() {
     int hash = 1;
     if (Servertime != 0UL) hash ^= Servertime.GetHashCode();
-    if (Gametime != 0UL) hash ^= Gametime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -351,10 +332,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
       output.WriteRawTag(8);
       output.WriteUInt64(Servertime);
     }
-    if (Gametime != 0UL) {
-      output.WriteRawTag(16);
-      output.WriteUInt64(Gametime);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -369,10 +346,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
       output.WriteRawTag(8);
       output.WriteUInt64(Servertime);
     }
-    if (Gametime != 0UL) {
-      output.WriteRawTag(16);
-      output.WriteUInt64(Gametime);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -385,9 +358,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
     int size = 0;
     if (Servertime != 0UL) {
       size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Servertime);
-    }
-    if (Gametime != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Gametime);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -403,9 +373,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
     }
     if (other.Servertime != 0UL) {
       Servertime = other.Servertime;
-    }
-    if (other.Gametime != 0UL) {
-      Gametime = other.Gametime;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -426,10 +393,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
           Servertime = input.ReadUInt64();
           break;
         }
-        case 16: {
-          Gametime = input.ReadUInt64();
-          break;
-        }
       }
     }
   #endif
@@ -447,10 +410,6 @@ public sealed partial class S2C_Ping : pb::IMessage<S2C_Ping>
           break;
         case 8: {
           Servertime = input.ReadUInt64();
-          break;
-        }
-        case 16: {
-          Gametime = input.ReadUInt64();
           break;
         }
       }

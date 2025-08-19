@@ -3,34 +3,34 @@ import "opcode.proto";
 import "login.proto";
 import "ping.proto";
 import "base.proto";
-import "client.proto";
+import "custom.proto";
 import "item.proto";
+import "wave.proto";
 import "currency.proto";
 
 message C2S_Message {
-    uint64 session = 1; //会话ID, 服务器返回请求会带上该会话ID,不可为0
-    oneof msg {
-        C2S_Login login = 2;
-        C2S_Logout logout = 3;
-        C2S_Ping ping = 4;
-        C2S_Base base = 5;
-        C2S_ClientData client_data = 6;
-        C2S_UploadClientData upload_client_data = 7;
-        C2S_Item item = 8;
-        C2S_Currency currency = 9;
-    }
+  uint64 session = 1; // 会话ID,不可为0,且在整个游戏过程中不能重复
+  oneof msg {
+    C2S_Login login = 2;                // 请求登陆
+    C2S_Ping ping = 4;                  // 发送ping包
+    C2S_Base base_data = 5;             // 请求基础数据
+    C2S_Custom custom_data = 6;         // 请求客户端自定义数据
+    C2S_UploadCustom upload_custom = 7; // 上传客户端自定义数据
+    C2S_Item item_data = 8;             // 请求物品数据
+    C2S_WaveResult wave_result = 9;     // 上传波次结果
+    C2S_Currency currency_data = 10;    // 请求货币数据
+  }
 }
 
 message S2C_Message {
-    uint64 session = 1; //回应请求会话ID,0表示服务器推送
-    oneof msg {
-        S2C_OPCode code = 2; //通用操作码
-        S2C_Login login = 3;
-        S2C_Logout logout = 4;
-        S2C_Ping ping = 5;
-        S2C_Base base = 6;
-        S2C_ClientData client_data = 7;
-        S2C_Item item = 8;
- 	S2C_Currency currency = 9;
-    }
+  uint64 session = 1; // 透传 session
+  oneof msg {
+    S2C_OPCode code = 2;            // 通用操作码
+    S2C_Login login = 3;            // 登陆消息
+    S2C_Ping ping = 5;              // ping消息
+    S2C_Base base_data = 6;         // 基础数据
+    S2C_Custom custom_data = 7;     // 客户端自定义数据
+    S2C_Item item_data = 8;         // 物品数据
+    S2C_Currency currency_data = 9; // 货币数据
+  }
 }
