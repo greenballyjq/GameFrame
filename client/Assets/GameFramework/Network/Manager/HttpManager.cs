@@ -179,8 +179,6 @@ public class HttpManager : IManager
             // 设置超时
             request.timeout = (int)timeout;
             
-            // 忽略SSL证书验证（用于自签证书）
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             
             // 设置请求头
             foreach (var header in _defaultHeaders)
@@ -237,8 +235,6 @@ public class HttpManager : IManager
 
             Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
             
-            // 清理证书处理器
-            request.certificateHandler?.Dispose();
         //}
         //catch (Exception e)
         //{
@@ -322,18 +318,4 @@ public class ProtobufResponse<T> where T : class, new()
     public byte[] RawData { get; set; } = null;
 }
 
-/// <summary>
-/// 自定义证书处理器 - 忽略SSL证书验证（用于自签证书）
-/// </summary>
-public class AcceptAllCertificatesSignedWithASpecificKeyPublicKey : CertificateHandler
-{
-    /// <summary>
-    /// 验证证书 - 总是返回true以忽略证书验证
-    /// </summary>
-    protected override bool ValidateCertificate(byte[] certificateData)
-    {
-        // 对于开发环境的自签证书，总是返回true
-        // 在生产环境中，您应该实现适当的证书验证逻辑
-        return true;
-    }
-} 
+ 
