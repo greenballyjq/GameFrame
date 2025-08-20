@@ -417,6 +417,7 @@ public class WeChatPlatform : IPlatform
         {
             success = res => {
                 //successAction(res.code);
+                Debug.Log($"[WechatPlatform] 登录成功");
                 success.Invoke(res.code);
             },
 

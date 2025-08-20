@@ -180,7 +180,7 @@ public class HttpManager : IManager
             request.timeout = (int)timeout;
             
             // 忽略SSL证书验证（用于自签证书）
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            // request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             
             // 设置请求头
             foreach (var header in _defaultHeaders)
