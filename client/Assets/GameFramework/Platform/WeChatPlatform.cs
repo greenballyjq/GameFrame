@@ -1,9 +1,9 @@
+using GameFramework.Network;
 using System;
 using System.Collections.Generic;
-using GameFramework.Network;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
-using WeChatWASM;
 
 /// <summary>
 /// 微信平台实现
@@ -12,13 +12,14 @@ public class WeChatPlatform : IPlatform
 {
     // 是否已初始化
     private bool _isInitialized = false;
-    
+
     public void Init()
     {
         Debug.Log("[WeChatPlatform] 初始化微信平台");
-        
+
         // 调用微信小游戏的初始化API
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
+
         try
         {
             // 这里调用微信小游戏的JS接口
@@ -31,11 +32,14 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台初始化失败: {e.Message}");
         }
-        #else
+
+#else
+
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台初始化");
-        #endif
+
+#endif
     }
 
     public void Update()
@@ -48,19 +52,18 @@ public class WeChatPlatform : IPlatform
         Debug.Log("[WeChatPlatform] 释放微信平台");
         _isInitialized = false;
     }
-    
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
     {
         Debug.Log("[WeChatPlatform] 微信平台分享: " + shareInfo.Title);
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("微信平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的分享API
@@ -82,23 +85,23 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信分享失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟分享成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
     {
         Debug.Log($"[WeChatPlatform] 微信平台显示广告: {adType}, ID: {adId}");
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("微信平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 根据广告类型调用不同的API
@@ -155,24 +158,24 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信显示广告失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟广告完成
         var result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
     {
         Debug.Log($"[WeChatPlatform] 微信平台支付: {payInfo.Amount} {payInfo.Currency}");
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("微信平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的支付API
@@ -200,7 +203,7 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信支付失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟支付成功
         var result = new PayResult
         {
@@ -208,15 +211,15 @@ public class WeChatPlatform : IPlatform
             IsSuccess = true,
             Receipt = "wx_receipt_12345"
         };
-        
+
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public SystemInfo GetSystemInfo()
     {
         Debug.Log("[WeChatPlatform] 获取微信系统信息");
-        
+
         if (!_isInitialized)
         {
             Debug.LogWarning("[WeChatPlatform] 微信平台未初始化，返回默认系统信息");
@@ -229,8 +232,8 @@ public class WeChatPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的获取系统信息API
@@ -251,7 +254,7 @@ public class WeChatPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        #else
+#else
         // 编辑器模式下模拟系统信息
         return new SystemInfo
         {
@@ -261,20 +264,20 @@ public class WeChatPlatform : IPlatform
             ScreenHeight = Screen.height,
             Language = "zh_CN"
         };
-        #endif
+#endif
     }
 
     public void Vibrate(bool isShort)
     {
         Debug.Log($"[WeChatPlatform] 微信平台振动: {(isShort ? "短" : "长")}");
-        
+
         if (!_isInitialized)
         {
             Debug.LogWarning("[WeChatPlatform] 微信平台未初始化，无法振动");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的振动API
@@ -292,23 +295,23 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台振动失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟振动
         Debug.Log($"[WeChatPlatform] 编辑器模式下模拟微信振动: {(isShort ? "短" : "长")}");
-        #endif
+#endif
     }
 
     public void NavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
     {
         Debug.Log($"[WeChatPlatform] 微信平台跳转小游戏: {appId}, Path: {path}");
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("微信平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的跳转API
@@ -329,25 +332,32 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信跳转小游戏失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     private void WXInit()
     {
-        WX.InitSDK((code) =>
-        {
-            Debug.Log("微信SDK初始化成功");
+        //WX.InitSDK((code) =>
+        //{
+        //    Debug.Log("微信SDK初始化成功");
+        //});
 
+#if WEIXINMINIGAME
+        WeChatWASM.WX.InitSDK((code) =>
+        {
+            Debug.Log("[WeChatPlatform]微信SDK初始化成功" + " " + "code：" + code);
         });
+#endif
+
     }
 
-    
     private void WXLogin(Action<string> successAction, Action<string> failAction)
     {
-        LoginOption loginOption = new LoginOption()
+#if WEIXINMINIGAME
+        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
         {
             success = res => {
                 successAction(res.code);
@@ -360,51 +370,51 @@ public class WeChatPlatform : IPlatform
             }
         };
 
-        WX.Login(loginOption);
-        
+        WeChatWASM.WX.Login(loginOption);
+#endif
     }
-    
+
     private void WXShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的分享API
     }
-    
+
     private void WXShowBannerAd(string adId, Action success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的Banner广告API
     }
-    
+
     private void WXShowInterstitialAd(string adId, Action success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的插屏广告API
     }
-    
+
     private void WXShowRewardedAd(string adId, Action success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的激励视频API
     }
-    
+
     private void WXPay(string orderId, string amount, string desc, Action<string> success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的支付API
     }
-    
+
     private SystemInfo WXGetSystemInfo()
     {
         // 实际项目中通过JSLib调用微信小游戏的获取系统信息API
         return new SystemInfo();
     }
-    
+
     private void WXVibrateShort()
     {
         // 实际项目中通过JSLib调用微信小游戏的短振动API
     }
-    
+
     private void WXVibrateLong()
     {
         // 实际项目中通过JSLib调用微信小游戏的长振动API
     }
-    
+
     private void WXNavigateToMiniProgram(string appId, string path, string extraData, Action success, Action<string> fail)
     {
         // 实际项目中通过JSLib调用微信小游戏的跳转API
@@ -413,29 +423,31 @@ public class WeChatPlatform : IPlatform
     //微信登录
     public void Login(Action<string> success, Action<string> fail)
     {
-        LoginOption loginOption = new LoginOption()
+        Debug.Log("[WeChatPlatform] 微信平台登录");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // 调用微信小游戏的登录API
+        try
         {
-            success = res => {
-                //successAction(res.code);
-                Debug.Log($"[WechatPlatform] 登录成功");
-                success.Invoke(res.code);
-            },
+            WXLogin(success, fail);
+        }
+        catch(Exception e)
+        {
+            Debug.LogError($"[WeChatPlatform] 微信平台登录失败: {e.Message}");
+        }
+#else
+        // 编辑器模式下模拟登录成功
+        Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台登录成功");
+#endif
 
-
-            fail = (result) => {
-                fail.Invoke(result.errMsg);
-                Debug.Log($"登录失败 code={result.errno} msg={result.errMsg}");
-            }
-        };
-
-        WX.Login(loginOption);
 
     }
 
     //检测玩家是否授权成功
     public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
     {
-        GetSettingOption option = new GetSettingOption();
+#if WEIXINMINIGAME
+        WeChatWASM.GetSettingOption option = new WeChatWASM.GetSettingOption();
         option.success = (res) => {
             if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])   //有个人信息授权
             {
@@ -464,7 +476,8 @@ public class WeChatPlatform : IPlatform
                 });
             }
         };
-        WX.GetSetting(option);
+        WeChatWASM.WX.GetSetting(option);
+#endif
     }
 
     public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
@@ -474,14 +487,15 @@ public class WeChatPlatform : IPlatform
 
     public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
     {
-        WXUserInfoButton btn = WX.CreateUserInfoButton(x, y, width, height, "zh_CN", false);
+#if WEIXINMINIGAME
+        WeChatWASM.WXUserInfoButton btn = WeChatWASM.WX.CreateUserInfoButton(x, y, width, height, "zh_CN", false);
         // 监听授权区域的点击
         btn.OnTap((res) =>
         {
             if (res.errCode == 0)
             {
                 // 创建用户信息对象
-               
+
                 UserInfoResult userInfo = new UserInfoResult
                 {
                     NickName = res.userInfo.nickName,
@@ -502,8 +516,9 @@ public class WeChatPlatform : IPlatform
         });
 
         return (IUserInfoButton)btn;
+#else
+        return (IUserInfoButton)(new UserInfoResult());
+#endif
 
-    
     }
-    //#endif
-} 
+}

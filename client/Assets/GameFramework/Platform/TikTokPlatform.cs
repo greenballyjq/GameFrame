@@ -13,9 +13,9 @@ public class TikTokPlatform : IPlatform
     public void Init()
     {
         Debug.Log("[TikTokPlatform] 初始化抖音平台");
-        
+
         // 调用抖音小游戏的初始化API
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 这里调用抖音小游戏的JS接口
@@ -28,7 +28,7 @@ public class TikTokPlatform : IPlatform
         {
             Debug.LogError($"[TikTokPlatform] 抖音平台初始化失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[TikTokPlatform] 编辑器模式下模拟抖音平台初始化");
@@ -47,19 +47,45 @@ public class TikTokPlatform : IPlatform
     }
 
     public void Login(Action<string> success, Action<string> fail)
-    { }
-
-    public void Login(Action<LoginResult> success, Action<string> fail)
     {
         Debug.Log("[TikTokPlatform] 抖音平台登录");
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+        // 调用抖音小游戏的登录API
+        try
+        {
+            TTLogin(success,fail);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[TikTokPlatform] 抖音平台登录失败: {e.Message}");
+        }
+#else
+        // 编辑器模式下模拟登录成功
+        Debug.Log("[TikTokPlatform] 编辑器模式下模拟抖音平台登录成功");
+#endif
+    }
+
+
+    #region public void Login(Action<LoginResult> success, Action<string> fail)
+    /*
+    public void Login(Action<LoginResult> success, Action<string> fail)
+    {
+        Debug.Log("[TikTokPlatform] 抖音平台登录");
+
+        if (!_isInitialized)
+        {
+            fail?.Invoke("抖音平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的登录API
@@ -88,7 +114,7 @@ public class TikTokPlatform : IPlatform
         {
             fail?.Invoke($"抖音登录失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟登录成功
         var result = new LoginResult
         {
@@ -98,10 +124,12 @@ public class TikTokPlatform : IPlatform
             Token = "tt_token_12345",
             ExtraData = new Dictionary<string, object>()
         };
-        
+
         success?.Invoke(result);
-        #endif
+#endif
     }
+    */
+    #endregion
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
     {
@@ -112,8 +140,8 @@ public class TikTokPlatform : IPlatform
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 调用抖音小游戏的分享API
@@ -135,10 +163,10 @@ public class TikTokPlatform : IPlatform
         {
             fail?.Invoke($"抖音分享失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟分享成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
@@ -150,8 +178,8 @@ public class TikTokPlatform : IPlatform
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 根据广告类型调用不同的API
@@ -208,11 +236,11 @@ public class TikTokPlatform : IPlatform
         {
             fail?.Invoke($"抖音显示广告失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟广告完成
         var result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
@@ -224,8 +252,8 @@ public class TikTokPlatform : IPlatform
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 调用抖音小游戏的支付API
@@ -253,7 +281,7 @@ public class TikTokPlatform : IPlatform
         {
             fail?.Invoke($"抖音支付失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟支付成功
         var result = new PayResult
         {
@@ -263,7 +291,7 @@ public class TikTokPlatform : IPlatform
         };
         
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public SystemInfo GetSystemInfo()
@@ -282,8 +310,8 @@ public class TikTokPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 调用抖音小游戏的获取系统信息API
@@ -304,7 +332,7 @@ public class TikTokPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        #else
+#else
         // 编辑器模式下模拟系统信息
         return new SystemInfo
         {
@@ -314,7 +342,7 @@ public class TikTokPlatform : IPlatform
             ScreenHeight = Screen.height,
             Language = "zh_CN"
         };
-        #endif
+#endif
     }
 
     public void Vibrate(bool isShort)
@@ -327,7 +355,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 调用抖音小游戏的振动API
@@ -345,10 +373,10 @@ public class TikTokPlatform : IPlatform
         {
             Debug.LogError($"[TikTokPlatform] 抖音平台振动失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟振动
         Debug.Log($"[TikTokPlatform] 编辑器模式下模拟抖音振动: {(isShort ? "短" : "长")}");
-        #endif
+#endif
     }
 
     public void NavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
@@ -360,8 +388,8 @@ public class TikTokPlatform : IPlatform
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
         try
         {
             // 调用抖音小游戏的跳转API
@@ -382,10 +410,10 @@ public class TikTokPlatform : IPlatform
         {
             fail?.Invoke($"抖音跳转小游戏失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
-        #endif
+#endif
     }
 
 	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
@@ -399,15 +427,30 @@ public class TikTokPlatform : IPlatform
 	}
 
 	// 以下是模拟的抖音API调用，实际项目中需要通过JSLib实现
-#if UNITY_WEBGL && !UNITY_EDITOR
-    private void TTInit()
+#if DOUYINMINIGAME
+        private void TTInit()
     {
-        // 实际项目中通过JSLib调用抖音小游戏的初始化API
+        TTSDK.TT.InitSDK((code,env) =>
+        {
+            Debug.Log("[TikTokPlaform] 抖音SDK初始化成功");
+            Debug.Log("[TikTokPlaform] Unity Message Code：" + code);
+            Debug.Log("[TikTokPlaform] Unity Message HostEnum：" + env.m_HostEnum);
+            Debug.Log("[TikTokPlaform] 是否在真机环境：" + TTSDK.TT.s_ContainerEnv.GetContainerRuntime());
+        });
     }
     
     private void TTLogin(Action<string> success, Action<string> fail)
     {
-        // 实际项目中通过JSLib调用抖音小游戏的登录API
+        TTSDK.TT.Login(
+               (code, anonymousCode, isLogin) =>
+               {
+                   Debug.Log($"Login: code:{code},anonymousCode:{anonymousCode},isLogin:{isLogin}");
+                   Debug.Log("[TikTokPlaform] 抖音平台登录成功");
+                   success(code);
+               },
+               (msg) => {
+                   fail(msg);
+               });
     }
     
     private void TTShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)

@@ -13,9 +13,9 @@ public class KuaishouPlatform : IPlatform
     public void Init()
     {
         Debug.Log("[KuaishouPlatform] 初始化快手平台");
-        
+
         // 调用快手小游戏的初始化API
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 这里调用快手小游戏的JS接口
@@ -28,7 +28,7 @@ public class KuaishouPlatform : IPlatform
         {
             Debug.LogError($"[KuaishouPlatform] 快手平台初始化失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[KuaishouPlatform] 编辑器模式下模拟快手平台初始化");
@@ -48,7 +48,26 @@ public class KuaishouPlatform : IPlatform
 
     public void Login(Action<string> success, Action<string> fail)
     {
+        Debug.Log("[KuaishouPlatform] 快手平台登录");
 
+        if (!_isInitialized)
+        {
+            fail?.Invoke("快手平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+        try
+        {
+            KSLogin(success, fail);
+        }
+        catch(Exception e)
+        {
+            Debug.LogError($"[KuaishouPlatform] 快手登录失败： {e.Message}");
+        }
+#else
+        Debug.Log("[KuaishouPlatform] 编辑器模式下模拟快手登录成功");
+#endif
     }
 
     public void Login(Action<LoginResult> success, Action<string> fail)
@@ -60,8 +79,8 @@ public class KuaishouPlatform : IPlatform
             fail?.Invoke("快手平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的登录API
@@ -90,7 +109,7 @@ public class KuaishouPlatform : IPlatform
         {
             fail?.Invoke($"快手登录失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟登录成功
         var result = new LoginResult
         {
@@ -114,8 +133,8 @@ public class KuaishouPlatform : IPlatform
             fail?.Invoke("快手平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的分享API
@@ -137,7 +156,7 @@ public class KuaishouPlatform : IPlatform
         {
             fail?.Invoke($"快手分享失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟分享成功
         success?.Invoke();
         #endif
@@ -152,8 +171,8 @@ public class KuaishouPlatform : IPlatform
             fail?.Invoke("快手平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 根据广告类型调用不同的API
@@ -210,7 +229,7 @@ public class KuaishouPlatform : IPlatform
         {
             fail?.Invoke($"快手显示广告失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟广告完成
         var result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
@@ -227,7 +246,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+        #if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的支付API
@@ -284,8 +303,8 @@ public class KuaishouPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的获取系统信息API
@@ -306,7 +325,7 @@ public class KuaishouPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        #else
+#else
         // 编辑器模式下模拟系统信息
         return new SystemInfo
         {
@@ -328,8 +347,8 @@ public class KuaishouPlatform : IPlatform
             Debug.LogWarning("[KuaishouPlatform] 快手平台未初始化，无法振动");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的振动API
@@ -347,7 +366,7 @@ public class KuaishouPlatform : IPlatform
         {
             Debug.LogError($"[KuaishouPlatform] 快手平台振动失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟振动
         Debug.Log($"[KuaishouPlatform] 编辑器模式下模拟快手振动: {(isShort ? "短" : "长")}");
         #endif
@@ -362,8 +381,8 @@ public class KuaishouPlatform : IPlatform
             fail?.Invoke("快手平台未初始化");
             return;
         }
-        
-        #if UNITY_WEBGL && !UNITY_EDITOR
+
+#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
         try
         {
             // 调用快手小游戏的跳转API
@@ -384,7 +403,7 @@ public class KuaishouPlatform : IPlatform
         {
             fail?.Invoke($"快手跳转小游戏失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
         #endif
@@ -401,15 +420,32 @@ public class KuaishouPlatform : IPlatform
 	}
 
 	// 以下是模拟的快手API调用，实际项目中需要通过JSLib实现
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if KUAISHOUMINIGAME
     private void KSInit()
     {
-        // 实际项目中通过JSLib调用快手小游戏的初始化API
+        KSWASM.KS.InitSDK((code) =>
+        {
+            Debug.Log("[KuaishouPlatform] 快手SDK初始化成功" + " " + "code：" + code);
+        });
     }
     
     private void KSLogin(Action<string> success, Action<string> fail)
     {
-        // 实际项目中通过JSLib调用快手小游戏的登录API
+        KSWASM.LoginOption loginOption = new KSWASM.LoginOption()
+        {
+            success = res =>
+            {
+                Debug.Log("[KuaishouPlatform] 登录成功，给你看看Code");
+                success(res.code);
+            },
+
+            fail = (result) =>
+            {
+                fail(result.msg);
+            }
+        };
+
+        KSWASM.KS.Login(loginOption);
     }
     
     private void KSShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)

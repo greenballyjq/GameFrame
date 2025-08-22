@@ -68,9 +68,6 @@ namespace GameFramework.Network
             isConnected = false;
         }
 
-
-
-
         /// <summary>
         /// 发送C2S消息到服务器
         /// </summary>
@@ -91,6 +88,8 @@ namespace GameFramework.Network
                 Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
                 byte[] bodyRaw = postMessage.ToByteArray();
                 var responseData = await httpManager.PostAsync(bodyRaw);
+                Debug.Log("[ServerClient]" + " responseData的内容是：" + responseData.Data);
+                Debug.Log("[ServerClient]" + " responseData的内容是：" + responseData.Bytes);
                 if (responseData != null && responseData.Bytes.Length > 0)
                 {
                   
@@ -105,22 +104,14 @@ namespace GameFramework.Network
 
                     }
 
-                    throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
-
-
+                Debug.Log("[ServerClient] No parser");
+                throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
                 }
                 else
                 {
+                    Debug.Log("[ServerClient] responseData可能为空");
                     throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
                 }
-
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.LogError($"[ServerClient] 发送消息失败：{e.Message}");
-            //    throw;
-            //}
-
         }
 
 
