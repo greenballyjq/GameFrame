@@ -75,18 +75,19 @@ public class UIManager : IManager
     private void CreateUIRoot()
     {
         // 创建UI根节点
-        _uiRoot = new GameObject("UIRoot");
+        //_uiRoot = new GameObject("UIRoot");
+        _uiRoot = GameObject.Find("UIRoot");
         GameObject.DontDestroyOnLoad(_uiRoot);
         
         // 添加Canvas和CanvasScaler组件
-        var canvas = _uiRoot.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
+        //var canvas = _uiRoot.AddComponent<Canvas>();
+        //canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        //canvas.sortingOrder = 100;
         
-        var scaler = _uiRoot.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        scaler.matchWidthOrHeight = 0.5f;
+        //var scaler = _uiRoot.AddComponent<CanvasScaler>();
+        //scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        //scaler.referenceResolution = new Vector2(1920, 1080);
+        //scaler.matchWidthOrHeight = 0.5f;
 
         ScreenAdapter screenAdapter = _uiRoot.AddComponent<ScreenAdapter>();
 
@@ -111,8 +112,8 @@ public class UIManager : IManager
             
             // 添加GraphicRaycaster组件
             layerObj.AddComponent<GraphicRaycaster>();
-            
-            if (layer == UILayer.Game) screenAdapter.SetRootRect(rectTransform);
+			layerObj.layer = LayerMask.NameToLayer("UI");
+			if (layer == UILayer.Game) screenAdapter.SetRootRect(rectTransform);
             
             _layerParents.Add(layer, layerObj.transform);
         }
