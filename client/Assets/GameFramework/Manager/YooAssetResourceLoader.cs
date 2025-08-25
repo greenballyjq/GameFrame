@@ -2,6 +2,9 @@ using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using System.Collections.Generic;
 using UnityEngine;
+#if WEIXINMINIGAME
+using WeChatWASM;
+#endif
 using YooAsset;
 
 /// <summary>
@@ -253,7 +256,7 @@ public class YooAssetResourceLoader : IResourceLoader
 #else
             // 为普通WebGL环境配置WebServerFileSystemParameters
             Debug.LogError($"[YooAssetResourceLoader] WebPlayMode :OTHER");
-            //webInitParameters.WebServerFileSystemParameters = FileSystemParameters.CreateDefaultWebServerFileSystemParameters(remoteServices);
+            webInitParameters.WebServerFileSystemParameters = FileSystemParameters.CreateDefaultWebServerFileSystemParameters((IWebDecryptionServices)remoteServices);
 #endif
             initParameters = webInitParameters;
         }

@@ -32,7 +32,9 @@ public class PlatformManager : IManager
         
         // 注册各平台实现
         RegisterPlatform(PlatformType.Default, new DefaultPlatform());
+#if WEIXINMINIGAME
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
+#endif
         RegisterPlatform(PlatformType.TikTok, new TikTokPlatform());
         RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
         

@@ -1,9 +1,12 @@
-using GameFramework.Network;
+#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+
+using WeChatWASM;
+
 
 /// <summary>
 /// 微信平台实现
@@ -19,7 +22,6 @@ public class WeChatPlatform : IPlatform
 
         // 调用微信小游戏的初始化API
 #if UNITY_WEBGL && !UNITY_EDITOR
-
         try
         {
             // 这里调用微信小游戏的JS接口
@@ -32,13 +34,10 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台初始化失败: {e.Message}");
         }
-
 #else
-
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台初始化");
-
 #endif
     }
 
@@ -62,7 +61,7 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("微信平台未初始化");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -100,7 +99,7 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("微信平台未初始化");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -174,7 +173,7 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("微信平台未初始化");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -232,7 +231,7 @@ public class WeChatPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -276,7 +275,7 @@ public class WeChatPlatform : IPlatform
             Debug.LogWarning("[WeChatPlatform] 微信平台未初始化，无法振动");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -310,7 +309,7 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("微信平台未初始化");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
@@ -340,24 +339,20 @@ public class WeChatPlatform : IPlatform
 
     private void WXInit()
     {
-        //WX.InitSDK((code) =>
-        //{
-        //    Debug.Log("微信SDK初始化成功");
-        //});
-
 #if WEIXINMINIGAME
-        WeChatWASM.WX.InitSDK((code) =>
+        WX.InitSDK((code) =>
         {
-            Debug.Log("[WeChatPlatform]微信SDK初始化成功" + " " + "code：" + code);
+            Debug.Log("微信SDK初始化成功");
+
         });
 #endif
-
     }
+
 
     private void WXLogin(Action<string> successAction, Action<string> failAction)
     {
 #if WEIXINMINIGAME
-        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
+        LoginOption loginOption = new LoginOption()
         {
             success = res => {
                 successAction(res.code);
@@ -370,8 +365,9 @@ public class WeChatPlatform : IPlatform
             }
         };
 
-        WeChatWASM.WX.Login(loginOption);
+        WX.Login(loginOption);
 #endif
+        
     }
 
     private void WXShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)
@@ -423,22 +419,23 @@ public class WeChatPlatform : IPlatform
     //微信登录
     public void Login(Action<string> success, Action<string> fail)
     {
-        Debug.Log("[WeChatPlatform] 微信平台登录");
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-        // 调用微信小游戏的登录API
-        try
+        LoginOption loginOption = new LoginOption()
         {
-            WXLogin(success, fail);
-        }
-        catch(Exception e)
-        {
-            Debug.LogError($"[WeChatPlatform] 微信平台登录失败: {e.Message}");
-        }
-#else
-        // 编辑器模式下模拟登录成功
-        Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台登录成功");
-#endif
+            success = res => {
+                //successAction(res.code);
+                Debug.Log($"[WechatPlatform] 登录成功");
+                success.Invoke(res.code);
+            },
+
+
+            fail = (result) => {
+                fail.Invoke(result.errMsg);
+                Debug.Log($"登录失败 code={result.errno} msg={result.errMsg}");
+            }
+        };
+
+        WX.Login(loginOption);
 
 
     }
@@ -521,4 +518,6 @@ public class WeChatPlatform : IPlatform
 #endif
 
     }
+    //#endif
 }
+#endif

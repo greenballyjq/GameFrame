@@ -76,27 +76,48 @@ public class UIManager : IManager
     {
         // 创建UI根节点
         _uiRoot = new GameObject("UIRoot");
-        GameObject.DontDestroyOnLoad(_uiRoot);
+        // 设置为UI层级
+        int uiLayer = LayerMask.NameToLayer("UI");
+        _uiRoot.layer = uiLayer;
+        _uiRoot.transform.localPosition = Vector3.zero;
         
+        GameObject.DontDestroyOnLoad(_uiRoot);
+
+        // 创建UI摄像机
+        GameObject uiCameraGameObject = new GameObject("UICamera");
+        uiCameraGameObject.transform.SetParent(_uiRoot.transform);
+        uiCameraGameObject.transform.localPosition = new Vector3(0, 0, -120);
+        Camera uiCamera = uiCameraGameObject.AddComponent<Camera>();
+        uiCamera.orthographic = true;
+        LayerMask uiMask = LayerMask.GetMask("UI");
+        uiCamera.cullingMask = uiMask;
+        uiCamera.clearFlags = CameraClearFlags.Depth;
+
         // 添加Canvas和CanvasScaler组件
         var canvas = _uiRoot.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        // canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        // UIRoot绑定UI摄像机
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = uiCamera;
         canvas.sortingOrder = 100;
         
         var scaler = _uiRoot.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
-        scaler.matchWidthOrHeight = 0.5f;
+        scaler.matchWidthOrHeight = 0.65f;
 
         ScreenAdapter screenAdapter = _uiRoot.AddComponent<ScreenAdapter>();
 
         _uiRoot.AddComponent<GraphicRaycaster>();
+        
+        _uiRoot.transform.position = Vector3.zero;
         
         // 创建各层级父节点
         foreach (UILayer layer in Enum.GetValues(typeof(UILayer)))
         {
             var layerObj = new GameObject(layer.ToString());
             layerObj.transform.SetParent(_uiRoot.transform, false);
+            layerObj.layer = uiLayer;
             
             // 添加RectTransform并设置为全屏
             var rectTransform = layerObj.AddComponent<RectTransform>();
