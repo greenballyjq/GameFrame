@@ -35,8 +35,12 @@ public class PlatformManager : IManager
 #if WEIXINMINIGAME
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
 #endif
+#if DOUYINMINIGAME
         RegisterPlatform(PlatformType.TikTok, new TikTokPlatform());
+#endif
+#if KUAISHOUMINIGAME
         RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
+#endif
         
         // 自动检测当前平台
         DetectCurrentPlatform();
@@ -77,31 +81,7 @@ public class PlatformManager : IManager
     /// </summary>
     private void DetectCurrentPlatform()
     {
-        //// 根据运行环境判断当前平台
-        //#if UNITY_WEBGL
-        //// 根据URL或其他方式判断具体平台
-        //var url = Application.absoluteURL.ToLower();
-
-        //if (url.Contains("wechat") || url.Contains("weixin"))
-        //{
-        //    _currentPlatformType = PlatformType.WeChat;
-        //}
-        //else if (url.Contains("tiktok") || url.Contains("douyin"))
-        //{
-        //    _currentPlatformType = PlatformType.TikTok;
-        //}
-        //else if (url.Contains("kuaishou"))
-        //{
-        //    _currentPlatformType = PlatformType.Kuaishou;
-        //}
-        //else
-        //{
-        //    _currentPlatformType = PlatformType.Default;
-        //}
-        //#else
-        //_currentPlatformType = PlatformType.Default;
-        //#endif
-
+       
 #if WEIXINMINIGAME
         _currentPlatformType = PlatformType.WeChat;
 #elif DOUYINMINIGAME

@@ -23,16 +23,18 @@ public static partial class LoginReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cgtsb2dpbi5wcm90byIWCgZXZUNoYXQSDAoEY29kZRgBIAEoCSIWCgZUaWtU",
-          "b2sSDAoEY29kZRgBIAEoCSJcCglDMlNfTG9naW4SDQoFcGhvbmUYASABKAkS",
-          "GQoGd2VjaGF0GAIgASgLMgcuV2VDaGF0SAASGQoGdGlrdG9rGAMgASgLMgcu",
-          "VGlrVG9rSABCCgoIcGxhdGZvcm0iGgoJUzJDX0xvZ2luEg0KBXRva2VuGAEg",
-          "ASgJYgZwcm90bzM="));
+          "b2sSDAoEY29kZRgBIAEoCSIYCghLdWFpU2hvdRIMCgRjb2RlGAEgASgJInsK",
+          "CUMyU19Mb2dpbhINCgVwaG9uZRgBIAEoCRIZCgZ3ZWNoYXQYAiABKAsyBy5X",
+          "ZUNoYXRIABIZCgZ0aWt0b2sYAyABKAsyBy5UaWtUb2tIABIdCghrdWFpc2hv",
+          "dRgEIAEoCzIJLkt1YWlTaG91SABCCgoIcGxhdGZvcm0iGgoJUzJDX0xvZ2lu",
+          "Eg0KBXRva2VuGAEgASgJYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::WeChat), global::WeChat.Parser, new[]{ "Code" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::TikTok), global::TikTok.Parser, new[]{ "Code" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Login), global::C2S_Login.Parser, new[]{ "Phone", "Wechat", "Tiktok" }, new[]{ "Platform" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::KuaiShou), global::KuaiShou.Parser, new[]{ "Code" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Login), global::C2S_Login.Parser, new[]{ "Phone", "Wechat", "Tiktok", "Kuaishou" }, new[]{ "Platform" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Login), global::S2C_Login.Parser, new[]{ "Token" }, null, null, null, null)
         }));
   }
@@ -424,6 +426,198 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
 
 }
 
+public sealed partial class KuaiShou : pb::IMessage<KuaiShou>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<KuaiShou> _parser = new pb::MessageParser<KuaiShou>(() => new KuaiShou());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<KuaiShou> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::LoginReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public KuaiShou() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public KuaiShou(KuaiShou other) : this() {
+    code_ = other.code_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public KuaiShou Clone() {
+    return new KuaiShou(this);
+  }
+
+  /// <summary>Field number for the "code" field.</summary>
+  public const int CodeFieldNumber = 1;
+  private string code_ = "";
+  /// <summary>
+  /// 客户端通过 ks.login 获取
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Code {
+    get { return code_; }
+    set {
+      code_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as KuaiShou);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(KuaiShou other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Code != other.Code) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Code.Length != 0) hash ^= Code.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Code.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Code);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Code.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Code);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Code.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Code);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(KuaiShou other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Code.Length != 0) {
+      Code = other.Code;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Code = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Code = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
 public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -438,7 +632,7 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[2]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -465,6 +659,9 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
         break;
       case PlatformOneofCase.Tiktok:
         Tiktok = other.Tiktok.Clone();
+        break;
+      case PlatformOneofCase.Kuaishou:
+        Kuaishou = other.Kuaishou.Clone();
         break;
     }
 
@@ -522,12 +719,28 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     }
   }
 
+  /// <summary>Field number for the "kuaishou" field.</summary>
+  public const int KuaishouFieldNumber = 4;
+  /// <summary>
+  /// 快手
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::KuaiShou Kuaishou {
+    get { return platformCase_ == PlatformOneofCase.Kuaishou ? (global::KuaiShou) platform_ : null; }
+    set {
+      platform_ = value;
+      platformCase_ = value == null ? PlatformOneofCase.None : PlatformOneofCase.Kuaishou;
+    }
+  }
+
   private object platform_;
   /// <summary>Enum of possible cases for the "platform" oneof.</summary>
   public enum PlatformOneofCase {
     None = 0,
     Wechat = 2,
     Tiktok = 3,
+    Kuaishou = 4,
   }
   private PlatformOneofCase platformCase_ = PlatformOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -561,6 +774,7 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     if (Phone != other.Phone) return false;
     if (!object.Equals(Wechat, other.Wechat)) return false;
     if (!object.Equals(Tiktok, other.Tiktok)) return false;
+    if (!object.Equals(Kuaishou, other.Kuaishou)) return false;
     if (PlatformCase != other.PlatformCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -572,6 +786,7 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     if (Phone.Length != 0) hash ^= Phone.GetHashCode();
     if (platformCase_ == PlatformOneofCase.Wechat) hash ^= Wechat.GetHashCode();
     if (platformCase_ == PlatformOneofCase.Tiktok) hash ^= Tiktok.GetHashCode();
+    if (platformCase_ == PlatformOneofCase.Kuaishou) hash ^= Kuaishou.GetHashCode();
     hash ^= (int) platformCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -603,6 +818,10 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
       output.WriteRawTag(26);
       output.WriteMessage(Tiktok);
     }
+    if (platformCase_ == PlatformOneofCase.Kuaishou) {
+      output.WriteRawTag(34);
+      output.WriteMessage(Kuaishou);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -625,6 +844,10 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
       output.WriteRawTag(26);
       output.WriteMessage(Tiktok);
     }
+    if (platformCase_ == PlatformOneofCase.Kuaishou) {
+      output.WriteRawTag(34);
+      output.WriteMessage(Kuaishou);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -643,6 +866,9 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
     }
     if (platformCase_ == PlatformOneofCase.Tiktok) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tiktok);
+    }
+    if (platformCase_ == PlatformOneofCase.Kuaishou) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Kuaishou);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -671,6 +897,12 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
           Tiktok = new global::TikTok();
         }
         Tiktok.MergeFrom(other.Tiktok);
+        break;
+      case PlatformOneofCase.Kuaishou:
+        if (Kuaishou == null) {
+          Kuaishou = new global::KuaiShou();
+        }
+        Kuaishou.MergeFrom(other.Kuaishou);
         break;
     }
 
@@ -711,6 +943,15 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
           Tiktok = subBuilder;
           break;
         }
+        case 34: {
+          global::KuaiShou subBuilder = new global::KuaiShou();
+          if (platformCase_ == PlatformOneofCase.Kuaishou) {
+            subBuilder.MergeFrom(Kuaishou);
+          }
+          input.ReadMessage(subBuilder);
+          Kuaishou = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -748,6 +989,15 @@ public sealed partial class C2S_Login : pb::IMessage<C2S_Login>
           Tiktok = subBuilder;
           break;
         }
+        case 34: {
+          global::KuaiShou subBuilder = new global::KuaiShou();
+          if (platformCase_ == PlatformOneofCase.Kuaishou) {
+            subBuilder.MergeFrom(Kuaishou);
+          }
+          input.ReadMessage(subBuilder);
+          Kuaishou = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -769,7 +1019,7 @@ public sealed partial class S2C_Login : pb::IMessage<S2C_Login>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[3]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
