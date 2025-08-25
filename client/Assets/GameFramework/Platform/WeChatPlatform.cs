@@ -1,9 +1,12 @@
+#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
 using GameFramework.Network;
 using Unity.VisualScripting;
 using UnityEngine;
+
 using WeChatWASM;
+
 
 /// <summary>
 /// 微信平台实现
@@ -18,7 +21,7 @@ public class WeChatPlatform : IPlatform
         Debug.Log("[WeChatPlatform] 初始化微信平台");
         
         // 调用微信小游戏的初始化API
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 这里调用微信小游戏的JS接口
@@ -31,11 +34,11 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台初始化失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台初始化");
-        #endif
+#endif
     }
 
     public void Update()
@@ -60,7 +63,7 @@ public class WeChatPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的分享API
@@ -82,10 +85,10 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信分享失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟分享成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
@@ -98,7 +101,7 @@ public class WeChatPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 根据广告类型调用不同的API
@@ -155,11 +158,11 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信显示广告失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟广告完成
         var result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
@@ -172,7 +175,7 @@ public class WeChatPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的支付API
@@ -200,7 +203,7 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信支付失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟支付成功
         var result = new PayResult
         {
@@ -210,7 +213,7 @@ public class WeChatPlatform : IPlatform
         };
         
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public SystemInfo GetSystemInfo()
@@ -230,7 +233,7 @@ public class WeChatPlatform : IPlatform
             };
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的获取系统信息API
@@ -251,7 +254,7 @@ public class WeChatPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        #else
+#else
         // 编辑器模式下模拟系统信息
         return new SystemInfo
         {
@@ -261,7 +264,7 @@ public class WeChatPlatform : IPlatform
             ScreenHeight = Screen.height,
             Language = "zh_CN"
         };
-        #endif
+#endif
     }
 
     public void Vibrate(bool isShort)
@@ -274,7 +277,7 @@ public class WeChatPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的振动API
@@ -292,10 +295,10 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台振动失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟振动
         Debug.Log($"[WeChatPlatform] 编辑器模式下模拟微信振动: {(isShort ? "短" : "长")}");
-        #endif
+#endif
     }
 
     public void NavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
@@ -308,7 +311,7 @@ public class WeChatPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用微信小游戏的跳转API
@@ -329,24 +332,27 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"微信跳转小游戏失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     private void WXInit()
     {
+#if WEIXINMINIGAME
         WX.InitSDK((code) =>
         {
             Debug.Log("微信SDK初始化成功");
 
         });
+#endif
     }
 
-    
+
     private void WXLogin(Action<string> successAction, Action<string> failAction)
     {
+#if WEIXINMINIGAME
         LoginOption loginOption = new LoginOption()
         {
             success = res => {
@@ -361,6 +367,7 @@ public class WeChatPlatform : IPlatform
         };
 
         WX.Login(loginOption);
+#endif
         
     }
     
@@ -413,6 +420,7 @@ public class WeChatPlatform : IPlatform
     //微信登录
     public void Login(Action<string> success, Action<string> fail)
     {
+
         LoginOption loginOption = new LoginOption()
         {
             success = res => {
@@ -429,6 +437,7 @@ public class WeChatPlatform : IPlatform
         };
 
         WX.Login(loginOption);
+
 
     }
 
@@ -506,4 +515,5 @@ public class WeChatPlatform : IPlatform
     
     }
     //#endif
-} 
+}
+#endif

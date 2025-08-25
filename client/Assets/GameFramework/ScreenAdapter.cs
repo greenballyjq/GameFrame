@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+#if WEIXINMINIGAME
 using WeChatWASM;
+#endif
 
 public class ScreenAdapter : MonoBehaviour
 {
