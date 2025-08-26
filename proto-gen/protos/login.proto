@@ -8,11 +8,16 @@ message TikTok {
   string code = 1; // 客户端通过 tt.login 获取
 }
 
+message KuaiShou {
+  string code = 1; // 客户端通过 ks.login 获取
+}
+
 message C2S_Login {
   string phone = 1; // 手机账号, 三方平台登录可不填
   oneof platform {
-    WeChat wechat = 2; // 微信
-    TikTok tiktok = 3; // 抖音
+    WeChat wechat = 2;     // 微信
+    TikTok tiktok = 3;     // 抖音
+    KuaiShou kuaishou = 4; // 快手
   }
 };
 
