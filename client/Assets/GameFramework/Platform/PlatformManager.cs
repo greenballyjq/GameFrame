@@ -29,20 +29,8 @@ public class PlatformManager : IManager
     public void Init()
     {
         Debug.Log("[PlatformManager] 初始化平台管理器");
-        
-        // 注册各平台实现
-        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
-#if WEIXINMINIGAME
-        RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
-#endif
-#if DOUYINMINIGAME
-        RegisterPlatform(PlatformType.TikTok, new TikTokPlatform());
-#endif
-#if KUAISHOUMINIGAME
-        RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
-#endif
-        
-        // 自动检测当前平台
+ 
+        // 自动检测并注册当前平台
         DetectCurrentPlatform();
         
         // 初始化当前平台
@@ -81,14 +69,18 @@ public class PlatformManager : IManager
     /// </summary>
     private void DetectCurrentPlatform()
     {
-       
+
 #if WEIXINMINIGAME
+        RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
         _currentPlatformType = PlatformType.WeChat;
 #elif DOUYINMINIGAME
+        RegisterPlatform(PlatformType.TikTok, new TikTokPlatform());
         _currentPlatformType = PlatformType.TikTok;
 #elif KUAISHOUMINIGAME
+        RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
         _currentPlatformType = PlatformType.Kuaishou;
 #else
+        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
         _currentPlatformType = PlatformType.Default;
 #endif
 

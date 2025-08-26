@@ -1,6 +1,7 @@
 #if DOUYINMINIGAME
 using System;
-using System.Collections.Generic;
+using TTSDK;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -16,11 +17,10 @@ public class TikTokPlatform : IPlatform
         Debug.Log("[TikTokPlatform] 初始化抖音平台");
 
         // 调用抖音小游戏的初始化API
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
-            // 这里调用抖音小游戏的JS接口
-            // 实际项目中需要通过JSLib来实现
+            // 这里调用抖音小游戏的JS接口，实际项目中需要通过JSLib来实现
             TTInit();
             _isInitialized = true;
             Debug.Log("[TikTokPlatform] 抖音平台初始化成功");
@@ -33,7 +33,7 @@ public class TikTokPlatform : IPlatform
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[TikTokPlatform] 编辑器模式下模拟抖音平台初始化");
-        #endif
+#endif
     }
 
     public void Update()
@@ -57,7 +57,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         // 调用抖音小游戏的登录API
         try
         {
@@ -142,7 +142,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的分享API
@@ -180,7 +180,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 根据广告类型调用不同的API
@@ -191,7 +191,7 @@ public class TikTokPlatform : IPlatform
                     TTShowBannerAd(
                         adId,
                         () => {
-                            var result = new AdResult { IsCompleted = true, AdId = adId };
+                            AdResult result = new AdResult { IsCompleted = true, AdId = adId };
                             success?.Invoke(result);
                         },
                         (error) => {
@@ -239,7 +239,7 @@ public class TikTokPlatform : IPlatform
         }
 #else
         // 编辑器模式下模拟广告完成
-        var result = new AdResult { IsCompleted = true, AdId = adId };
+        AdResult result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
 #endif
     }
@@ -254,7 +254,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的支付API
@@ -312,7 +312,7 @@ public class TikTokPlatform : IPlatform
             };
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的获取系统信息API
@@ -356,7 +356,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
         
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的振动API
@@ -390,7 +390,7 @@ public class TikTokPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && DOUYINMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用抖音小游戏的跳转API
@@ -417,26 +417,207 @@ public class TikTokPlatform : IPlatform
 #endif
     }
 
-	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
-	{
-		throw new NotImplementedException();
-	}
+    public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+    {
+        return null;
+    }
 
-	public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
-	{
-		throw new NotImplementedException();
-	}
+    #region 用户信息授权相关方法
+    /// <summary>
+    /// 获取用户信息
+    /// </summary>
+    /// <param name="success">获取成功</param>
+    /// <param name="fail">获取失败</param>
+    public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
+    {
+        Debug.Log("[TikTokPlatform] 获取用户信息 ");
 
-	// 以下是模拟的抖音API调用，实际项目中需要通过JSLib实现
-#if DOUYINMINIGAME
-        private void TTInit()
+        if (!_isInitialized)
+        {
+            fail?.Invoke("抖音平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+        // 1.检查用户是否已经授权给当前游戏读取个人信息
+        CheckUserAuthorization(
+            // *调用接口成功
+            (isAuthorized) =>
+            {
+                // 已经授权直接获取用户信息
+                if (isAuthorized)
+                {
+                    TTGetUserInfo(success, fail);
+                }
+                else
+                {
+                    // 2.先调用TTAuthorize请求授权
+                    TTAuthorize(
+                        // *调用接口成功
+                        (isAuthSuccess) =>
+                        {
+                            // 受权成功，获取用户信息
+                            if (isAuthSuccess)
+                            {
+                                TTGetUserInfo(success, fail);
+                            }
+                            else
+                            {
+                                // 3.引导用户授权
+                                TTOpenSettingsPanel(
+                                    // *调用接口成功
+                                    (isManualAuthSuccess) =>
+                                    {
+                                        // 用户手动同意授权，获取用户信息
+                                        if (isManualAuthSuccess)
+                                        {
+                                            TTGetUserInfo(success, fail);
+                                        }
+                                        else
+                                        {
+                                            fail?.Invoke("[TikTokPlatform] 用户拒绝手动授权，无法获取用户信息");
+                                        }
+                                    },
+                                    // *调用接口失败 打开设置面板失败
+                                    (errMsg) => fail?.Invoke(errMsg)
+                                );
+                            }
+                        },
+                        // *调用接口失败 请求授权失败
+                        (errMsg) => fail?.Invoke(errMsg)
+                    );
+                }
+            },
+            // *调用接口失败 检查失败
+            (errMsg) => fail?.Invoke(errMsg)
+        );
+#else
+        // 编辑器模式下模拟获取用户信息成功
+        success.Invoke(new UserInfoResult());
+#endif
+
+    }
+
+    /// <summary>
+    /// 检查用户是否已经授权给当前游戏读取个人信息
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
+    {
+        TT.GetUserInfoAuth(
+            (isAuthorized) => {
+                success?.Invoke(isAuthorized);
+            },
+            (errMsg) => {
+                fail?.Invoke($"[TikTokPlatform] 检查授权失败: {errMsg}");
+            }
+        );
+    }
+
+    /// <summary>
+    /// 提前向用户发出授权请求
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    private void TTAuthorize(Action<bool> success, Action<string> fail)
+    {
+        TT.Authorize(
+            "scope.userInfo",
+            // 受权成功
+            (errMsg, data) =>
+            {
+                success?.Invoke(true); 
+            },
+            // 受权失败
+            (code, msg) =>
+            {
+                success?.Invoke(false);            
+            }
+        );
+    }
+
+    /// <summary>
+    /// 引导用户授权
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    private void TTOpenSettingsPanel(Action<bool> success, Action<string> fail)
+    {
+        TT.OpenSettingsPanel(
+            // 用户接受授权
+            (newIsAuthorized) =>
+            {
+                success?.Invoke(newIsAuthorized);
+            },
+            // 用户拒绝授权
+            (errMsg) =>
+            {
+                fail?.Invoke($"[TikTokPlatform] 打开授权面板失败: {errMsg}");
+            }
+        );
+    }
+
+    /// <summary>
+    /// TT获取用户信息
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    private void TTGetUserInfo(Action<UserInfoResult> success, Action<string> fail)
+    {
+        TT.GetUserInfo(
+            (ref TTUserInfo ttUserInfo) =>
+            {
+                UserInfoResult result = new UserInfoResult
+                {
+                    ErrCode = 0,
+                    ErrMsg = "获取用户信息成功",
+                    NickName = ttUserInfo.nickName,
+                    AvatarUrl = ttUserInfo.avatarUrl,
+                    Gender = ttUserInfo.gender,
+                    Country = ttUserInfo.country,
+                    Province = ttUserInfo.province,
+                    City = ttUserInfo.city,
+                    Language = ttUserInfo.language,
+                    EncryptedData = ttUserInfo.encryptedData,
+                    Iv = ttUserInfo.iv,
+                    Signature = ttUserInfo.signature,
+                    CloudID = ttUserInfo.cloudId
+                };
+                success?.Invoke(result);
+            },
+            (errMsg) => fail?.Invoke($"[TikTokPlatform] 获取用户信息失败: {errMsg}")
+        );
+    }
+
+#endregion
+
+    private void TTInit()
     {
         TTSDK.TT.InitSDK((code,env) =>
         {
             Debug.Log("[TikTokPlaform] 抖音SDK初始化成功");
-            Debug.Log("[TikTokPlaform] Unity Message Code：" + code);
-            Debug.Log("[TikTokPlaform] Unity Message HostEnum：" + env.m_HostEnum);
-            Debug.Log("[TikTokPlaform] 是否在真机环境：" + TTSDK.TT.s_ContainerEnv.GetContainerRuntime());
+            Debug.Log("[TikTokPlaform] 错误码(0 无错误/1 TT Unity SDK 版本不支持/2 Unity Engine 版本不被支持)：" + code);
+            Debug.Log("[TikTokPlaform] 宿主：" + env.m_HostEnum);
+            Debug.Log("[TikTokPlaform] 是否在真机环境下：" + TT.InContainerEnv);
+
+            // 1. 获取启动参数
+            LaunchOption launchOptions = env.GetLaunchOptionsSync();
+
+            // 2. 对启动参数进行安全检查
+            if (launchOptions != null && launchOptions.Query != null)
+            {
+                Debug.Log($"[TikTokPlaform] 获取启动参数：");
+                foreach (var item in launchOptions.Query)
+                {
+                    Debug.Log($"Key: {item.Key}, Value: {item.Value}");
+                }
+            }
+            else
+            {
+                Debug.Log("[TikTokPlaform] 无启动参数或参数为空");
+            }
         });
     }
     
@@ -446,11 +627,21 @@ public class TikTokPlatform : IPlatform
                (code, anonymousCode, isLogin) =>
                {
                    Debug.Log($"Login: code:{code},anonymousCode:{anonymousCode},isLogin:{isLogin}");
-                   Debug.Log("[TikTokPlaform] 抖音平台登录成功");
-                   success(code);
+                   if (isLogin)
+                   {
+                       Debug.Log("[TikTokPlaform] 抖音平台登录成功");
+                       success(code);
+                   }
+                   else
+                   {
+                       fail("isLogin为false，code无效");
+                       Debug.Log($"[TikTokPlaform] isLogin为false，code无效");
+                   }
+                   
                },
                (msg) => {
                    fail(msg);
+                   Debug.Log($"[TikTokPlaform] 登录失败 msg={msg}");
                });
     }
     
@@ -499,6 +690,6 @@ public class TikTokPlatform : IPlatform
     {
         // 实际项目中通过JSLib调用抖音小游戏的跳转API
     }
-#endif
+
 } 
 #endif

@@ -1,12 +1,6 @@
 #if WEIXINMINIGAME
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-
-using WeChatWASM;
-
 
 /// <summary>
 /// 微信平台实现
@@ -339,20 +333,15 @@ public class WeChatPlatform : IPlatform
 
     private void WXInit()
     {
-#if WEIXINMINIGAME
-        WX.InitSDK((code) =>
+        WeChatWASM.WX.InitSDK((code) =>
         {
             Debug.Log("微信SDK初始化成功");
-
         });
-#endif
     }
-
 
     private void WXLogin(Action<string> successAction, Action<string> failAction)
     {
-#if WEIXINMINIGAME
-        LoginOption loginOption = new LoginOption()
+        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
         {
             success = res => {
                 successAction(res.code);
@@ -365,9 +354,7 @@ public class WeChatPlatform : IPlatform
             }
         };
 
-        WX.Login(loginOption);
-#endif
-        
+        WeChatWASM.WX.Login(loginOption);        
     }
 
     private void WXShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)
@@ -420,7 +407,7 @@ public class WeChatPlatform : IPlatform
     public void Login(Action<string> success, Action<string> fail)
     {
 
-        LoginOption loginOption = new LoginOption()
+        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
         {
             success = res => {
                 //successAction(res.code);
@@ -435,20 +422,18 @@ public class WeChatPlatform : IPlatform
             }
         };
 
-        WX.Login(loginOption);
-
-
+        WeChatWASM.WX.Login(loginOption);
     }
 
     //检测玩家是否授权成功
     public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
     {
-#if WEIXINMINIGAME
+
         WeChatWASM.GetSettingOption option = new WeChatWASM.GetSettingOption();
         option.success = (res) => {
             if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])   //有个人信息授权
             {
-                WX.GetUserInfo(new GetUserInfoOption
+                WeChatWASM.WX.GetUserInfo(new WeChatWASM.GetUserInfoOption
                 {
                     success = (res) =>
                     {
@@ -459,22 +444,19 @@ public class WeChatPlatform : IPlatform
             }
             else
             {
-                WX.Authorize(new AuthorizeOption
+                WeChatWASM.WX.Authorize(new WeChatWASM.AuthorizeOption
                 {
                     scope = "scope.userInfo",
                     success = res => {
                         success(true);
-
                     },
                     fail = (_) => {
                         fail("授权失败");
-
                     },
                 });
             }
         };
         WeChatWASM.WX.GetSetting(option);
-#endif
     }
 
     public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
@@ -484,7 +466,6 @@ public class WeChatPlatform : IPlatform
 
     public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
     {
-#if WEIXINMINIGAME
         WeChatWASM.WXUserInfoButton btn = WeChatWASM.WX.CreateUserInfoButton(x, y, width, height, "zh_CN", false);
         // 监听授权区域的点击
         btn.OnTap((res) =>
@@ -492,7 +473,6 @@ public class WeChatPlatform : IPlatform
             if (res.errCode == 0)
             {
                 // 创建用户信息对象
-
                 UserInfoResult userInfo = new UserInfoResult
                 {
                     NickName = res.userInfo.nickName,
@@ -513,11 +493,7 @@ public class WeChatPlatform : IPlatform
         });
 
         return (IUserInfoButton)btn;
-#else
-        return (IUserInfoButton)(new UserInfoResult());
-#endif
 
     }
-    //#endif
 }
 #endif

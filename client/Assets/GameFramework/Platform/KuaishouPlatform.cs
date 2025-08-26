@@ -16,7 +16,7 @@ public class KuaishouPlatform : IPlatform
         Debug.Log("[KuaishouPlatform] 初始化快手平台");
 
         // 调用快手小游戏的初始化API
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+        #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 这里调用快手小游戏的JS接口
@@ -29,10 +29,12 @@ public class KuaishouPlatform : IPlatform
         {
             Debug.LogError($"[KuaishouPlatform] 快手平台初始化失败: {e.Message}");
         }
-#else
+        #else
+
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[KuaishouPlatform] 编辑器模式下模拟快手平台初始化");
+
         #endif
     }
 
@@ -57,7 +59,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             KSLogin(success, fail);
@@ -81,7 +83,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的登录API
@@ -135,7 +137,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的分享API
@@ -173,7 +175,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 根据广告类型调用不同的API
@@ -247,7 +249,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+        #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的支付API
@@ -305,7 +307,7 @@ public class KuaishouPlatform : IPlatform
             };
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的获取系统信息API
@@ -349,7 +351,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的振动API
@@ -383,7 +385,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR && KUAISHOUMINIGAME
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的跳转API
@@ -421,7 +423,7 @@ public class KuaishouPlatform : IPlatform
 	}
 
 	// 以下是模拟的快手API调用，实际项目中需要通过JSLib实现
-#if KUAISHOUMINIGAME
+
     private void KSInit()
     {
         KSWASM.KS.InitSDK((code) =>
@@ -494,6 +496,5 @@ public class KuaishouPlatform : IPlatform
     {
         // 实际项目中通过JSLib调用快手小游戏的跳转API
     }
-#endif
 } 
 #endif

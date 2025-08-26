@@ -251,7 +251,7 @@ public class YooAssetResourceLoader : IResourceLoader
 #if WEIXINMINIGAME
             Debug.LogError($"[YooAssetResourceLoader] WebPlayMode :WEIXINMINIGAME");
             packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
-			webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
+			//webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
             Debug.Log($"[YooAssetResourceLoader] PackageRoot : {packageRoot}");
 #else
             // 为普通WebGL环境配置WebServerFileSystemParameters

@@ -88,8 +88,6 @@ namespace GameFramework.Network
                 Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
                 byte[] bodyRaw = postMessage.ToByteArray();
                 var responseData = await httpManager.PostAsync(bodyRaw);
-                Debug.Log("[ServerClient]" + " responseData的内容是：" + responseData.Data);
-                Debug.Log("[ServerClient]" + " responseData的内容是：" + responseData.Bytes);
                 if (responseData != null && responseData.Bytes.Length > 0)
                 {
                   
