@@ -11,7 +11,7 @@ namespace GooseCatcher
         {
             CanvasScaler cs = transform.GetComponent<CanvasScaler>();
 #if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
-            var info = WX.GetWindowInfo();
+            var info = WeChatWASM.WX.GetWindowInfo();
             if (info == null) return;
             Debug.Log($"WindowInfo, top:{info.safeArea.top}, bottom: {info.safeArea.bottom}, left: {info.safeArea.left}" +
                       $", windowHeight: {info.windowHeight}, windowWidth: {info.windowWidth}");
