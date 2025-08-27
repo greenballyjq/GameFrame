@@ -630,7 +630,7 @@ public class TikTokPlatform : IPlatform
                    if (isLogin)
                    {
                        Debug.Log("[TikTokPlaform] 抖音平台登录成功");
-                       success(code);
+                       success(code + "||" + anonymousCode);
                    }
                    else
                    {
