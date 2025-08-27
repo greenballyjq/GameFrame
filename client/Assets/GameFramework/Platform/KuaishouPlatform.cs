@@ -16,7 +16,7 @@ public class KuaishouPlatform : IPlatform
         Debug.Log("[KuaishouPlatform] 初始化快手平台");
 
         // 调用快手小游戏的初始化API
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 这里调用快手小游戏的JS接口
@@ -29,13 +29,13 @@ public class KuaishouPlatform : IPlatform
         {
             Debug.LogError($"[KuaishouPlatform] 快手平台初始化失败: {e.Message}");
         }
-        #else
+#else
 
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
         Debug.Log("[KuaishouPlatform] 编辑器模式下模拟快手平台初始化");
 
-        #endif
+#endif
     }
 
     public void Update()
@@ -124,7 +124,7 @@ public class KuaishouPlatform : IPlatform
         };
         
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
@@ -162,7 +162,7 @@ public class KuaishouPlatform : IPlatform
 #else
         // 编辑器模式下模拟分享成功
         success?.Invoke();
-        #endif
+#endif
     }
 
     public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
@@ -236,7 +236,7 @@ public class KuaishouPlatform : IPlatform
         // 编辑器模式下模拟广告完成
         var result = new AdResult { IsCompleted = true, AdId = adId };
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
@@ -249,7 +249,7 @@ public class KuaishouPlatform : IPlatform
             return;
         }
         
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             // 调用快手小游戏的支付API
@@ -277,7 +277,7 @@ public class KuaishouPlatform : IPlatform
         {
             fail?.Invoke($"快手支付失败: {e.Message}");
         }
-        #else
+#else
         // 编辑器模式下模拟支付成功
         var result = new PayResult
         {
@@ -287,7 +287,7 @@ public class KuaishouPlatform : IPlatform
         };
         
         success?.Invoke(result);
-        #endif
+#endif
     }
 
     public SystemInfo GetSystemInfo()
@@ -338,7 +338,7 @@ public class KuaishouPlatform : IPlatform
             ScreenHeight = Screen.height,
             Language = "zh_CN"
         };
-        #endif
+#endif
     }
 
     public void Vibrate(bool isShort)
@@ -372,7 +372,7 @@ public class KuaishouPlatform : IPlatform
 #else
         // 编辑器模式下模拟振动
         Debug.Log($"[KuaishouPlatform] 编辑器模式下模拟快手振动: {(isShort ? "短" : "长")}");
-        #endif
+#endif
     }
 
     public void NavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
@@ -409,7 +409,7 @@ public class KuaishouPlatform : IPlatform
 #else
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
-        #endif
+#endif
     }
 
 	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
@@ -484,13 +484,47 @@ public class KuaishouPlatform : IPlatform
     
     private void KSVibrateShort()
     {
-        // 实际项目中通过JSLib调用快手小游戏的短振动API
+        var param = new KSWASM.VibrateShortOption
+        {
+            type = "medium", // 快手支持的震动类型：light/medium/heavy
+            success = (result) =>
+            {
+                Debug.Log($"[KuaiShou] 短震动成功: {result.errMsg}");
+            },
+            fail = (err) =>
+            {
+                Debug.LogError($"[KuaiShou] 短震动失败: {err.errMsg}");
+            },
+            complete = (result) =>
+            {
+                Debug.Log($"[KuaiShou] 短震动调用完成: {result.errMsg}");
+            }
+        };
+
+        // 调用快手SDK接口（假设快手短震动接口为KSWASM.KS.VibrateShort）
+        KSWASM.KS.VibrateShort(param);
     }
     
     private void KSVibrateLong()
     {
-        // 实际项目中通过JSLib调用快手小游戏的长振动API
-    }
+        var param = new KSWASM.VibrateLongOption
+        {
+            success = (result) => 
+            {
+                Debug.Log($"[KuaiShou] 长震动成功: {result.errMsg}");
+            },
+            fail = (err) => 
+            {
+                Debug.LogError($"[KuaiShou] 长震动失败: {err.errMsg}");
+            },
+            complete = (result) => 
+            {
+                Debug.Log($"[KuaiShou] 长震动调用完成: {result.errMsg}");
+            }
+        };
+    
+        KSWASM.KS.VibrateLong(param);
+        }
     
     private void KSNavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
     {

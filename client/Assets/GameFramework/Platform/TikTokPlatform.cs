@@ -678,12 +678,40 @@ public class TikTokPlatform : IPlatform
     
     private void TTVibrateShort()
     {
-        // 实际项目中通过JSLib调用抖音小游戏的短振动API
+         TT.VibrateShort(new VibrateShortParam()
+        {
+            Success = (res) => 
+            {
+                Debug.Log($"[TikTokPlatform] 短震动成功，ErrMsg: {res.ErrMsg}");
+            },
+            Fail = (errInfo) =>
+            {
+                Debug.LogError($"[TikTokPlatform] 短震动失败，错误码: {errInfo.ErrorCode}，错误信息: {errInfo.ErrMsg}");
+            },
+            Complete = () =>
+            {
+                Debug.Log("[TikTokPlatform] 短震动调用完成（无论成功/失败）");
+            }
+        });
     }
     
     private void TTVibrateLong()
     {
-        // 实际项目中通过JSLib调用抖音小游戏的长振动API
+        TT.VibrateLong(new VibrateLongParam()
+        {
+            Success = (res) => 
+            {
+                Debug.Log($"[TikTokPlatform] 长震动成功，ErrMsg: {res.ErrMsg}");
+            },
+            Fail = (errInfo) =>
+            {
+                Debug.LogError($"[TikTokPlatform] 长震动失败，错误码: {errInfo.ErrorCode}，错误信息: {errInfo.ErrMsg}");
+            },
+            Complete = () =>
+            {
+                Debug.Log("[TikTokPlatform] 长震动调用完成（无论成功/失败）");
+            }
+        });
     }
     
     private void TTNavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail)
