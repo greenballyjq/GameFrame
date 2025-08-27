@@ -53,6 +53,8 @@ public interface IPlatform
     /// <param name="onTap">点击回调</param>
     /// <returns>按钮控制器</returns>
     IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap);
+
+    // void VibrateShort();
     
     /// <summary>
     /// 分享
