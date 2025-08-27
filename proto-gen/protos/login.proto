@@ -6,6 +6,7 @@ message WeChat {
 
 message TikTok {
   string code = 1; // 客户端通过 tt.login 获取
+  string anonymous_code = 2;
 }
 
 message KuaiShou {

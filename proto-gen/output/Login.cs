@@ -22,17 +22,18 @@ public static partial class LoginReflection {
   static LoginReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgtsb2dpbi5wcm90byIWCgZXZUNoYXQSDAoEY29kZRgBIAEoCSIWCgZUaWtU",
-          "b2sSDAoEY29kZRgBIAEoCSIYCghLdWFpU2hvdRIMCgRjb2RlGAEgASgJInsK",
-          "CUMyU19Mb2dpbhINCgVwaG9uZRgBIAEoCRIZCgZ3ZWNoYXQYAiABKAsyBy5X",
-          "ZUNoYXRIABIZCgZ0aWt0b2sYAyABKAsyBy5UaWtUb2tIABIdCghrdWFpc2hv",
-          "dRgEIAEoCzIJLkt1YWlTaG91SABCCgoIcGxhdGZvcm0iGgoJUzJDX0xvZ2lu",
-          "Eg0KBXRva2VuGAEgASgJYgZwcm90bzM="));
+          "Cgtsb2dpbi5wcm90byIWCgZXZUNoYXQSDAoEY29kZRgBIAEoCSIuCgZUaWtU",
+          "b2sSDAoEY29kZRgBIAEoCRIWCg5hbm9ueW1vdXNfY29kZRgCIAEoCSIYCghL",
+          "dWFpU2hvdRIMCgRjb2RlGAEgASgJInsKCUMyU19Mb2dpbhINCgVwaG9uZRgB",
+          "IAEoCRIZCgZ3ZWNoYXQYAiABKAsyBy5XZUNoYXRIABIZCgZ0aWt0b2sYAyAB",
+          "KAsyBy5UaWtUb2tIABIdCghrdWFpc2hvdRgEIAEoCzIJLkt1YWlTaG91SABC",
+          "CgoIcGxhdGZvcm0iGgoJUzJDX0xvZ2luEg0KBXRva2VuGAEgASgJYgZwcm90",
+          "bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::WeChat), global::WeChat.Parser, new[]{ "Code" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::TikTok), global::TikTok.Parser, new[]{ "Code" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::TikTok), global::TikTok.Parser, new[]{ "Code", "AnonymousCode" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::KuaiShou), global::KuaiShou.Parser, new[]{ "Code" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Login), global::C2S_Login.Parser, new[]{ "Phone", "Wechat", "Tiktok", "Kuaishou" }, new[]{ "Platform" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Login), global::S2C_Login.Parser, new[]{ "Token" }, null, null, null, null)
@@ -269,6 +270,7 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public TikTok(TikTok other) : this() {
     code_ = other.code_;
+    anonymousCode_ = other.anonymousCode_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -293,6 +295,18 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
     }
   }
 
+  /// <summary>Field number for the "anonymous_code" field.</summary>
+  public const int AnonymousCodeFieldNumber = 2;
+  private string anonymousCode_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AnonymousCode {
+    get { return anonymousCode_; }
+    set {
+      anonymousCode_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -309,6 +323,7 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
       return true;
     }
     if (Code != other.Code) return false;
+    if (AnonymousCode != other.AnonymousCode) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -317,6 +332,7 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
   public override int GetHashCode() {
     int hash = 1;
     if (Code.Length != 0) hash ^= Code.GetHashCode();
+    if (AnonymousCode.Length != 0) hash ^= AnonymousCode.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -339,6 +355,10 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
       output.WriteRawTag(10);
       output.WriteString(Code);
     }
+    if (AnonymousCode.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AnonymousCode);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -353,6 +373,10 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
       output.WriteRawTag(10);
       output.WriteString(Code);
     }
+    if (AnonymousCode.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AnonymousCode);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -365,6 +389,9 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
     int size = 0;
     if (Code.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Code);
+    }
+    if (AnonymousCode.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AnonymousCode);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -380,6 +407,9 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
     }
     if (other.Code.Length != 0) {
       Code = other.Code;
+    }
+    if (other.AnonymousCode.Length != 0) {
+      AnonymousCode = other.AnonymousCode;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -400,6 +430,10 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
           Code = input.ReadString();
           break;
         }
+        case 18: {
+          AnonymousCode = input.ReadString();
+          break;
+        }
       }
     }
   #endif
@@ -417,6 +451,10 @@ public sealed partial class TikTok : pb::IMessage<TikTok>
           break;
         case 10: {
           Code = input.ReadString();
+          break;
+        }
+        case 18: {
+          AnonymousCode = input.ReadString();
           break;
         }
       }
