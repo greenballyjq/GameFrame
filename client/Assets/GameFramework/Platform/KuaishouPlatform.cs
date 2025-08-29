@@ -49,6 +49,11 @@ public class KuaishouPlatform : IPlatform
         _isInitialized = false;
     }
 
+    /// <summary>
+    /// 登录
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
     public void Login(Action<string> success, Action<string> fail)
     {
         Debug.Log("[KuaishouPlatform] 快手平台登录");
@@ -73,10 +78,11 @@ public class KuaishouPlatform : IPlatform
 #endif
     }
 
+    #region public void Login(Action<LoginResult> success, Action<string> fail)
     public void Login(Action<LoginResult> success, Action<string> fail)
     {
         Debug.Log("[KuaishouPlatform] 快手平台登录");
-        
+
         if (!_isInitialized)
         {
             fail?.Invoke("快手平台未初始化");
@@ -122,11 +128,18 @@ public class KuaishouPlatform : IPlatform
             Token = "ks_token_12345",
             ExtraData = new Dictionary<string, object>()
         };
-        
+
         success?.Invoke(result);
 #endif
     }
+    #endregion
 
+    /// <summary>
+    /// 分享
+    /// </summary>
+    /// <param name="shareInfo"></param>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
     {
         Debug.Log("[KuaishouPlatform] 快手平台分享: " + shareInfo.Title);
@@ -486,22 +499,18 @@ public class KuaishouPlatform : IPlatform
     {
         var param = new KSWASM.VibrateShortOption
         {
-            type = "medium", // 快手支持的震动类型：light/medium/heavy
+            type = "light", // 快手支持的震动类型：light/medium/heavy
             success = (result) =>
             {
-                Debug.Log($"[KuaiShou] 短震动成功: {result.errMsg}");
+                Debug.Log($"[KuaishouPlatform] 短震动成功: {result.errMsg}");
             },
             fail = (err) =>
             {
-                Debug.LogError($"[KuaiShou] 短震动失败: {err.errMsg}");
-            },
-            complete = (result) =>
-            {
-                Debug.Log($"[KuaiShou] 短震动调用完成: {result.errMsg}");
+                Debug.LogError($"[KuaishouPlatform] 短震动失败: {err.errMsg}");
             }
         };
 
-        // 调用快手SDK接口（假设快手短震动接口为KSWASM.KS.VibrateShort）
+        // 调用快手SDK接口
         KSWASM.KS.VibrateShort(param);
     }
     
@@ -511,15 +520,11 @@ public class KuaishouPlatform : IPlatform
         {
             success = (result) => 
             {
-                Debug.Log($"[KuaiShou] 长震动成功: {result.errMsg}");
+                Debug.Log($"[KuaishouPlatform] 长震动成功: {result.errMsg}");
             },
             fail = (err) => 
             {
-                Debug.LogError($"[KuaiShou] 长震动失败: {err.errMsg}");
-            },
-            complete = (result) => 
-            {
-                Debug.Log($"[KuaiShou] 长震动调用完成: {result.errMsg}");
+                Debug.LogError($"[KuaishouPlatform] 长震动失败: {err.errMsg}");
             }
         };
     

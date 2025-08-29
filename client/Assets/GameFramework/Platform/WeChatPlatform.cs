@@ -1,6 +1,8 @@
 #if WEIXINMINIGAME
 using System;
+using UnityEditor;
 using UnityEngine;
+using WeChatWASM;
 
 /// <summary>
 /// 微信平台实现
@@ -10,6 +12,9 @@ public class WeChatPlatform : IPlatform
     // 是否已初始化
     private bool _isInitialized = false;
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
     public void Init()
     {
         Debug.Log("[WeChatPlatform] 初始化微信平台");
@@ -18,8 +23,6 @@ public class WeChatPlatform : IPlatform
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
-            // 这里调用微信小游戏的JS接口
-            // 实际项目中需要通过JSLib来实现
             WXInit();
             _isInitialized = true;
             Debug.Log("[WeChatPlatform] 微信平台初始化成功");
@@ -44,6 +47,53 @@ public class WeChatPlatform : IPlatform
     {
         Debug.Log("[WeChatPlatform] 释放微信平台");
         _isInitialized = false;
+    }
+
+    /// <summary>
+    /// 微信登录
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    public void Login(Action<string> success, Action<string> fail)
+    {
+        Debug.Log("[WeChatPlatform] 微信平台登录");
+
+        if (!_isInitialized)
+        {
+            fail?.Invoke("微信平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // 调用微信小游戏的登录API
+        try
+        {
+            WXLogin(success, fail);
+        }
+        catch(Exception e)
+        {
+            Debug.LogError($"[WeChatPlatform] 微信平台登录失败: {e.Message}");
+        }
+        WXLogin(success, fail);
+#else
+        // 编辑器模式下模拟登录成功
+        Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台登录成功");
+#endif
+
+        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
+        {
+            success = res => {
+                success(res.code);
+            },
+
+
+            fail = (result) => {
+                fail(result.errMsg);
+                Debug.Log($"登录失败 code={result.errno} msg={result.errMsg}");
+            }
+        };
+
+        WeChatWASM.WX.Login(loginOption);
     }
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
@@ -209,6 +259,87 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
+    //检测玩家是否授权成功
+    public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
+    {
+
+        WeChatWASM.GetSettingOption option = new WeChatWASM.GetSettingOption();
+        option.success = (res) => {
+            if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])   //有个人信息授权
+            {
+                WeChatWASM.WX.GetUserInfo(new WeChatWASM.GetUserInfoOption
+                {
+                    success = (res) =>
+                    {
+                        //res.userInfo;  //这里是成功获取的数据
+                    },
+                    fail = (res) => { }
+                });
+            }
+            else
+            {
+                WeChatWASM.WX.Authorize(new WeChatWASM.AuthorizeOption
+                {
+                    scope = "scope.userInfo",
+                    success = res => {
+                        success(true);
+                    },
+                    fail = (_) => {
+                        fail("授权失败");
+                    },
+                });
+            }
+        };
+        WeChatWASM.WX.GetSetting(option);
+    }
+
+    public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+    {
+        WeChatWASM.WXUserInfoButton btn = WeChatWASM.WX.CreateUserInfoButton(x, y, width, height, "zh_CN", false);
+        // 监听授权区域的点击
+        btn.OnTap((res) =>
+        {
+            if (res.errCode == 0)
+            {
+                // 创建用户信息对象
+                UserInfoResult userInfo = new UserInfoResult
+                {
+                    NickName = res.userInfo.nickName,
+                    AvatarUrl = res.userInfo.avatarUrl,
+                    Gender = res.userInfo.gender,
+                    Country = res.userInfo.country,
+                    Province = res.userInfo.province,
+                    City = res.userInfo.city,
+                    Language = res.userInfo.language,
+                    EncryptedData = res.encryptedData,
+                    Iv = res.iv
+                };
+                onTap?.Invoke(userInfo);
+            }
+
+            //隐藏
+            btn.Hide();
+        });
+
+        return (IUserInfoButton)btn;
+
+    }
+
+    /// <summary>
+    /// 获取用户信息
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 获取系统信息
+    /// </summary>
+    /// <returns></returns>
     public SystemInfo GetSystemInfo()
     {
         Debug.Log("[WeChatPlatform] 获取微信系统信息");
@@ -225,14 +356,11 @@ public class WeChatPlatform : IPlatform
                 Language = "zh_CN"
             };
         }
-        
+
 #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
-            // 调用微信小游戏的获取系统信息API
-            // 实际项目中需要通过JSLib来实现
-            // 这里模拟获取系统信息
-            var systemInfo = WXGetSystemInfo();
+            SystemInfo systemInfo = WXGetSystemInfo();
             return systemInfo;
         }
         catch (Exception e)
@@ -260,6 +388,10 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
+    /// <summary>
+    /// 振动
+    /// </summary>
+    /// <param name="isShort"></param>
     public void Vibrate(bool isShort)
     {
         Debug.Log($"[WeChatPlatform] 微信平台振动: {(isShort ? "短" : "长")}");
@@ -331,35 +463,66 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
+    /// <summary>
+    /// WX初始化
+    /// </summary>
     private void WXInit()
     {
         WeChatWASM.WX.InitSDK((code) =>
         {
-            Debug.Log("微信SDK初始化成功");
+            Debug.Log($"[WeChatPlatform] 微信SDK初始化成功， code={code}");
         });
     }
 
-    private void WXLogin(Action<string> successAction, Action<string> failAction)
+    /// <summary>
+    /// WX登录
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    private void WXLogin(Action<string> success, Action<string> fail)
     {
         WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
         {
-            success = res => {
-                successAction(res.code);
+            success = (res) => {
+                Debug.Log($"[WechatPlatform] 微信登录成功,code:{res.code},errMsg:{res.errMsg}");
+                success.Invoke(res.code);
             },
 
 
             fail = (result) => {
-                failAction(result.errMsg);
-                Debug.Log($"登录失败 code={result.errno} msg={result.errMsg}");
+                Debug.Log($"[WechatPlatform] 微信登录失败,code:{result.errno},msg:{result.errMsg}");
+                fail.Invoke(result.errMsg);
             }
         };
 
-        WeChatWASM.WX.Login(loginOption);        
+        WeChatWASM.WX.Login(loginOption);
     }
 
+    /// <summary>
+    /// WX分享
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="desc"></param>
+    /// <param name="imageUrl"></param>
+    /// <param name="link"></param>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
     private void WXShare(string title, string desc, string imageUrl, string link, Action success, Action<string> fail)
     {
-        // 实际项目中通过JSLib调用微信小游戏的分享API
+        // 构建分享参数
+        ShareAppMessageOption shareOption = new ShareAppMessageOption
+        {
+            title = title,
+            imageUrl = imageUrl,
+            path = link.Contains("?") ? link.Split('?')[0] : link,
+            query = link.Contains("?") ? link.Split('?')[1] : string.Empty
+        };
+
+        // 调用微信分享API
+        WX.ShareAppMessage(shareOption);
+
+        Debug.Log($"[WeChatPlatform] 分享完成");
+
     }
 
     private void WXShowBannerAd(string adId, Action success, Action<string> fail)
@@ -382,36 +545,76 @@ public class WeChatPlatform : IPlatform
         // 实际项目中通过JSLib调用微信小游戏的支付API
     }
 
+    /// <summary>
+    /// WX获取系统信息
+    /// </summary>
+    /// <returns></returns>
     private SystemInfo WXGetSystemInfo()
     {
-        // 实际项目中通过JSLib调用微信小游戏的获取系统信息API
-        return new SystemInfo();
+        WeChatWASM.SystemInfo wxSysInfo = null;
+        GetSystemInfoOption sysInfoOption = new GetSystemInfoOption
+        {
+            // 获取成功
+            success = (info) =>
+            {
+                wxSysInfo = info;
+            },
+            // 获取失败
+            fail = (err) =>
+            {
+                Debug.LogError($"[WeChatPlatform] 获取微信系统信息失败: {err.errMsg}");
+            }
+        };
+
+        // 调用微信SDK获取系统信息
+        WX.GetSystemInfo(sysInfoOption);
+
+        // 转换为通用的SystemInfo对象
+        return new SystemInfo
+        {
+            Platform = wxSysInfo.platform,
+            Version = wxSysInfo.version,
+            ScreenWidth = (float)wxSysInfo.screenWidth,
+            ScreenHeight = (float)wxSysInfo.screenHeight,
+            Language = wxSysInfo.language
+        };
     }
 
+    /// <summary>
+    /// 微信短振动
+    /// </summary>
     private void WXVibrateShort()
     {
-        // 实际项目中通过JSLib调用微信小游戏的短振动API
         WX.VibrateShort(new VibrateShortOption()
         {
-            complete = callbackResult =>
+            type = "medium",
+            success = (callbackResult) =>
             {
-                Debug.Log($"[WechatPlatform] 微信平台短振动完成: {callbackResult}");
+                Debug.Log($"[WeChatPlatform] 短振动成功,ErrMsg:{callbackResult.errMsg}");
             },
-            fail = callbackResult =>
+            fail = (callbackResult) =>
             {
-                
-            },
-            success = callbackResult =>
-            {
-                
-            },
-            type = "heavy"
+                Debug.Log($"[WeChatPlatform] 短振动失败,ErrMsg:{callbackResult.errMsg}");
+            }
         });
     }
 
+    /// <summary>
+    /// WX长振动
+    /// </summary>
     private void WXVibrateLong()
     {
-        // 实际项目中通过JSLib调用微信小游戏的长振动API
+        WX.VibrateLong (new VibrateLongOption()
+        {
+            success = (callbackResult) =>
+            {
+                Debug.Log($"[WeChatPlatform] 长振动成功,ErrMsg:{callbackResult.errMsg}");
+            },
+            fail = (callbackResult) =>
+            {
+                Debug.Log($"[WeChatPlatform] 长振动失败,ErrMsg:{callbackResult.errMsg}");
+            }
+        });
     }
 
     private void WXNavigateToMiniProgram(string appId, string path, string extraData, Action success, Action<string> fail)
@@ -419,97 +622,8 @@ public class WeChatPlatform : IPlatform
         // 实际项目中通过JSLib调用微信小游戏的跳转API
     }
 
-    //微信登录
-    public void Login(Action<string> success, Action<string> fail)
-    {
+    
 
-        WeChatWASM.LoginOption loginOption = new WeChatWASM.LoginOption()
-        {
-            success = res => {
-                //successAction(res.code);
-                Debug.Log($"[WechatPlatform] 登录成功");
-                success.Invoke(res.code);
-            },
-
-
-            fail = (result) => {
-                fail.Invoke(result.errMsg);
-                Debug.Log($"登录失败 code={result.errno} msg={result.errMsg}");
-            }
-        };
-
-        WeChatWASM.WX.Login(loginOption);
-    }
-
-    //检测玩家是否授权成功
-    public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
-    {
-
-        WeChatWASM.GetSettingOption option = new WeChatWASM.GetSettingOption();
-        option.success = (res) => {
-            if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])   //有个人信息授权
-            {
-                WeChatWASM.WX.GetUserInfo(new WeChatWASM.GetUserInfoOption
-                {
-                    success = (res) =>
-                    {
-                        //res.userInfo;  //这里是成功获取的数据
-                    },
-                    fail = (res) => { }
-                });
-            }
-            else
-            {
-                WeChatWASM.WX.Authorize(new WeChatWASM.AuthorizeOption
-                {
-                    scope = "scope.userInfo",
-                    success = res => {
-                        success(true);
-                    },
-                    fail = (_) => {
-                        fail("授权失败");
-                    },
-                });
-            }
-        };
-        WeChatWASM.WX.GetSetting(option);
-    }
-
-    public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
-    {
-        WeChatWASM.WXUserInfoButton btn = WeChatWASM.WX.CreateUserInfoButton(x, y, width, height, "zh_CN", false);
-        // 监听授权区域的点击
-        btn.OnTap((res) =>
-        {
-            if (res.errCode == 0)
-            {
-                // 创建用户信息对象
-                UserInfoResult userInfo = new UserInfoResult
-                {
-                    NickName = res.userInfo.nickName,
-                    AvatarUrl = res.userInfo.avatarUrl,
-                    Gender = res.userInfo.gender,
-                    Country = res.userInfo.country,
-                    Province = res.userInfo.province,
-                    City = res.userInfo.city,
-                    Language = res.userInfo.language,
-                    EncryptedData = res.encryptedData,
-                    Iv = res.iv
-                };
-                onTap?.Invoke(userInfo);
-            }
-
-            //隐藏
-            btn.Hide();
-        });
-
-        return (IUserInfoButton)btn;
-
-    }
+    
 }
 #endif
