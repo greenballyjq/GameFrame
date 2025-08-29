@@ -372,9 +372,7 @@ public class TikTokPlatform : IPlatform
             fail?.Invoke("抖音平台未初始化");
             return;
         }
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-
+#if DOUYINMINIGAME
         // 1.检查用户是否已经授权给当前游戏读取个人信息
         CheckUserAuthorization(
             // *调用接口成功
@@ -399,12 +397,12 @@ public class TikTokPlatform : IPlatform
                             }
                             else
                             {
-                                // 3.引导用户授权
+                                // 3.引导用户手动授权
                                 TTOpenSettingsPanel(
                                     // *调用接口成功
                                     (isManualAuthSuccess) =>
                                     {
-                                        // 用户手动同意授权，获取用户信息
+                                        // 用户同意手动授权，获取用户信息
                                         if (isManualAuthSuccess)
                                         {
                                             TTGetUserInfo(success, fail);
@@ -432,6 +430,47 @@ public class TikTokPlatform : IPlatform
         success.Invoke(new UserInfoResult());
 #endif
 
+    }
+
+    /// <summary>
+    /// 创建用户信息按钮（无对应创建按钮API，用打开设置面板代替）
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <param name="onTap"></param>
+    /// <returns></returns>
+    public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
+    {
+        // 引导用户手动授权
+        TTOpenSettingsPanel((isManualAuthSuccess) =>
+        {
+            if (isManualAuthSuccess)
+            {
+                // 用户同意授权，获取用户信息
+                TTGetUserInfo(
+
+                    // 获取用户信息成功
+                    onTap, 
+
+                    // 获取用户信息失败
+                    (errMsg) =>
+                    {
+                        Debug.LogError(errMsg);
+                    });
+            }
+            else
+            {
+                Debug.Log("[TikTokPlatform] 用户拒绝手动授权，无法获取用户信息");
+            }
+        },
+        (errMsg) =>
+        {
+            // 打开设置面板失败
+            Debug.LogError(errMsg);
+        });
+        return null;
     }
 
     /// <summary>
@@ -570,11 +609,6 @@ public class TikTokPlatform : IPlatform
         // 编辑器模式下模拟跳转成功
         success?.Invoke();
 #endif
-    }
-
-    public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
-    {
-        return null;
     }
 
     /// <summary>
@@ -1039,7 +1073,9 @@ public class TikTokPlatform : IPlatform
     private void TTGetUserInfoAuth(Action<bool> success, Action<string> fail)
     {
         TT.GetUserInfoAuth(
+            // 检查授权成功
             (isAuthorized) => {
+                // 返回用户是否授权
                 success?.Invoke(isAuthorized);
             },
             (errMsg) => {
@@ -1051,39 +1087,47 @@ public class TikTokPlatform : IPlatform
     /// <summary>
     /// TT提前向用户发出授权请求
     /// </summary>
-    /// <param name="success"></param>
-    /// <param name="fail"></param>
+    /// <param name="success">授权请求成功</param>
+    /// <param name="fail">授权请求失败</param>
     private void TTAuthorize(Action<bool> success, Action<string> fail)
     {
         TT.Authorize(
             "scope.userInfo",
-            // 受权成功
+            // 授权请求成功
             (errMsg, data) =>
             {
                 success?.Invoke(true);
             },
-            // 受权失败
             (code, msg) =>
             {
-                success?.Invoke(false);
+                // 用户拒绝授权
+                if (code == "21102" || msg.Contains("auth deny"))
+                {
+                    success?.Invoke(false);
+                }
+                // 其他错误
+                else
+                {
+                    fail?.Invoke($"[TikTokPlatform] 授权请求失败：{code}，{msg}");
+                }
             }
         );
     }
 
     /// <summary>
-    /// TT引导用户授权
+    /// TT打开引导用户授权面板
     /// </summary>
     /// <param name="success"></param>
     /// <param name="fail"></param>
     private void TTOpenSettingsPanel(Action<bool> success, Action<string> fail)
     {
         TT.OpenSettingsPanel(
-            // 用户接受授权
+            // 打开授权面板成功
             (newIsAuthorized) =>
             {
+                // 返回用户是否授权
                 success?.Invoke(newIsAuthorized);
             },
-            // 用户拒绝授权
             (errMsg) =>
             {
                 fail?.Invoke($"[TikTokPlatform] 打开授权面板失败: {errMsg}");
@@ -1099,12 +1143,11 @@ public class TikTokPlatform : IPlatform
     private void TTGetUserInfo(Action<UserInfoResult> success, Action<string> fail)
     {
         TT.GetUserInfo(
+            // 获取用户信息成功
             (ref TTUserInfo ttUserInfo) =>
             {
                 UserInfoResult result = new UserInfoResult
                 {
-                    ErrCode = 0,
-                    ErrMsg = "获取用户信息成功",
                     NickName = ttUserInfo.nickName,
                     AvatarUrl = ttUserInfo.avatarUrl,
                     Gender = ttUserInfo.gender,
@@ -1114,8 +1157,6 @@ public class TikTokPlatform : IPlatform
                     Language = ttUserInfo.language,
                     EncryptedData = ttUserInfo.encryptedData,
                     Iv = ttUserInfo.iv,
-                    Signature = ttUserInfo.signature,
-                    CloudID = ttUserInfo.cloudId
                 };
                 success?.Invoke(result);
             },
@@ -1136,11 +1177,11 @@ public class TikTokPlatform : IPlatform
         // 转换为通用的SystemInfo对象
         return new SystemInfo
         {
-            Platform = ttInfo.hostName, // 宿主名称（如Douyin）
-            Version = ttInfo.hostVersion, // 宿主版本号（如19.2.0）
-            ScreenWidth = ttInfo.screenWidth, // 屏幕宽度（逻辑像素）
-            ScreenHeight = ttInfo.screenHeight, // 屏幕高度（逻辑像素）
-            Language = ttInfo.language // 系统语言（如zh_CN）
+            Platform = ttInfo.hostName,
+            Version = ttInfo.hostVersion,
+            ScreenWidth = ttInfo.screenWidth,
+            ScreenHeight = ttInfo.screenHeight,
+            Language = ttInfo.language
         };
     }
     
