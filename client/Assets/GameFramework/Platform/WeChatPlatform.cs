@@ -391,7 +391,7 @@ public class WeChatPlatform : IPlatform
     private void WXVibrateShort()
     {
         // 实际项目中通过JSLib调用微信小游戏的短振动API
-        WX.VibrateShort(new VibrateShortOption()
+        WeChatWASM.WX.VibrateShort(new WeChatWASM.VibrateShortOption()
         {
             complete = callbackResult =>
             {
