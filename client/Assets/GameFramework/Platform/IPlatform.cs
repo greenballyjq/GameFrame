@@ -62,8 +62,8 @@ public interface IPlatform
     /// <param name="shareInfo">分享信息</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    //void Share(ShareInfo shareInfo, Action success, Action<string> fail);
-    
+    void Share(ShareInfo shareInfo, Action success, Action<string> fail);
+
     /// <summary>
     /// 显示广告
     /// </summary>
@@ -71,16 +71,16 @@ public interface IPlatform
     /// <param name="adId">广告ID</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    //void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail);
-    
+    void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail);
+
     /// <summary>
     /// 支付
     /// </summary>
     /// <param name="payInfo">支付信息</param>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    //void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail);
-    
+    void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail);
+
     /// <summary>
     /// 获取系统信息
     /// </summary>
