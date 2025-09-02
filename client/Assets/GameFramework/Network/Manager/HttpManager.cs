@@ -35,6 +35,8 @@ public class HttpManager : IManager
         // 设置默认请求头
         _defaultHeaders.Clear();
         _defaultHeaders.Add("Content-Type", "application/json");
+        // 加入Access-Control-Allow-Origin，解决跨域问题
+        _defaultHeaders.Add("Access-Control-Allow-Origin", "*");
     }
 
     /// <summary>
@@ -183,6 +185,7 @@ public class HttpManager : IManager
             // 设置请求头
             foreach (var header in _defaultHeaders)
             {
+                Debug.Log($"[HttpManager] 添加请求头 {header.Key}:{header.Value}");
                 request.SetRequestHeader(header.Key, header.Value);
             }
             

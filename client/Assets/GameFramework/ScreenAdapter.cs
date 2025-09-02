@@ -10,9 +10,9 @@ public class ScreenAdapter : MonoBehaviour
 
     public void SetRootRect(RectTransform rect)
     {
-#if UNITY_WEBGL && WEIXINMINIGAME
+#if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
         CanvasScaler cs = transform.GetComponent<CanvasScaler>();
-        var info = WX.GetWindowInfo();
+        var info = WeChatWASM.WX.GetWindowInfo();
         if (info == null) return;
         Debug.Log($"WindowInfo, top:{info.safeArea.top}, bottom: {info.safeArea.bottom}, left: {info.safeArea.left}" +
                   $", windowHeight: {info.windowHeight}, windowWidth: {info.windowWidth}");
