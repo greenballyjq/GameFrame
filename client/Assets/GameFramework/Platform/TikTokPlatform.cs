@@ -369,7 +369,7 @@ public class TikTokPlatform : IPlatform
 
         if (!_isInitialized)
         {
-            fail?.Invoke("抖音平台未初始化");
+            fail?.Invoke("[TikTokPlatform] 抖音平台未初始化");
             return;
         }
 #if DOUYINMINIGAME
