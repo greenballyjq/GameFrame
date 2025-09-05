@@ -124,4 +124,9 @@ public class DefaultPlatform : IPlatform
 	{
 		throw new NotImplementedException();
 	}
+
+    public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
+    {
+        throw new NotImplementedException();
+    }
 } 

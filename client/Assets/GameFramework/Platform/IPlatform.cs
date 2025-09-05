@@ -82,6 +82,13 @@ public interface IPlatform
     void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail);
 
     /// <summary>
+    /// 获取用户信息
+    /// </summary>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void GetUserInfo(Action<UserInfoResult> success, Action<string> fail);
+
+    /// <summary>
     /// 获取系统信息
     /// </summary>
     /// <returns>系统信息</returns>
