@@ -38,6 +38,10 @@ public class UIManager : IManager
     
     // 资源管理器引用
     private ResourceManager _resourceManager;
+
+    private Camera _uiCamera;
+    
+    public Camera UICamera => _uiCamera;
     
     public void Init()
     {
@@ -87,18 +91,18 @@ public class UIManager : IManager
         GameObject uiCameraGameObject = new GameObject("UICamera");
         uiCameraGameObject.transform.SetParent(_uiRoot.transform);
         uiCameraGameObject.transform.localPosition = new Vector3(0, 0, -120);
-        Camera uiCamera = uiCameraGameObject.AddComponent<Camera>();
-        uiCamera.orthographic = true;
+        _uiCamera = uiCameraGameObject.AddComponent<Camera>();
+        _uiCamera.orthographic = true;
         LayerMask uiMask = LayerMask.GetMask("UI");
-        uiCamera.cullingMask = uiMask;
-        uiCamera.clearFlags = CameraClearFlags.Depth;
+        _uiCamera.cullingMask = uiMask;
+        _uiCamera.clearFlags = CameraClearFlags.Depth;
 
         // 添加Canvas和CanvasScaler组件
         var canvas = _uiRoot.AddComponent<Canvas>();
         // canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         // UIRoot绑定UI摄像机
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = uiCamera;
+        canvas.worldCamera = _uiCamera;
         canvas.sortingOrder = 100;
         
         var scaler = _uiRoot.AddComponent<CanvasScaler>();
