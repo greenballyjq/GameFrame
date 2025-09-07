@@ -130,7 +130,6 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
-    #region 广告相关
     /// <summary>
     /// 展示广告
     /// </summary>
@@ -270,6 +269,7 @@ public class WeChatPlatform : IPlatform
     public bool IsBannerAdShowing(string adId)
     {
         _bannerShowStateDict.TryGetValue(adId, out bool isShowing);
+        Debug.Log($"[WeChatPlatform] 查询Banner显示状态 adId:{adId} isShowing:{isShowing}");
         return isShowing;
     }
 
@@ -298,6 +298,7 @@ public class WeChatPlatform : IPlatform
         {
             left = bannerAd.style.left;
             top = bannerAd.style.top;
+            Debug.Log($"[WeChatPlatform] 获取Banner位置 adId:{adId} left:{left} top:{top}");
         }
     }
 
@@ -330,11 +331,10 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     public bool IsBannerAdExist(string adId)
     {
-        return _bannerAdDict.ContainsKey(adId);
+        bool isExist = _bannerAdDict.ContainsKey(adId);
+        Debug.Log($"[WeChatPlatform] 查询Banner实例是否存在 adId:{adId} isExist:{isExist}");
+        return isExist;
     }
-
-    #endregion
-
     #endregion
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
@@ -402,6 +402,7 @@ public class WeChatPlatform : IPlatform
             // 如果已经授权，则直接调用成功回调
             if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])
             {
+                Debug.Log("[WeChatPlatform] 玩家已授权用户信息");
                 success(true);
             }
             // 如果未授权，则调用授权API
@@ -425,7 +426,9 @@ public class WeChatPlatform : IPlatform
         {
             fail($"[WeChatPlatform] 检查授权失败 errMsg:{res.errMsg}");
         };
-        WeChatWASM.WX.GetSetting(option);
+
+        // 调用微信获取授权设置API
+        WX.GetSetting(option);
     }
 
     /// <summary>
@@ -452,15 +455,15 @@ public class WeChatPlatform : IPlatform
                     AvatarUrl = res.userInfo.avatarUrl,
                     Language = res.userInfo.language,
 
-                    // 废弃字段强制设为无效值（忽略接口返回的旧数据）
+                    // 处理已废弃字段
                     Gender = 0,
-                    Country = string.Empty,
-                    Province = string.Empty,
-                    City = string.Empty,
+                    Country = "",
+                    Province = "",
+                    City = "",
 
                     // 保留加密数据（若实际业务需要）
-                    EncryptedData = res.encryptedData ?? string.Empty,
-                    Iv = res.iv ?? string.Empty
+                    EncryptedData = "",
+                    Iv = ""
                 };
                 onTap?.Invoke(userInfo);
             }
@@ -479,7 +482,6 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     /// <param name="success"></param>
     /// <param name="fail"></param>
-    /// <exception cref="NotImplementedException"></exception>
     public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
     {
         Debug.Log("[WeChatPlatform] 获取微信用户信息");
@@ -504,13 +506,15 @@ public class WeChatPlatform : IPlatform
         // 编辑器模式下模拟用户信息
         success?.Invoke(new UserInfoResult() 
         {
-            NickName = "UnityPlayer",
+            NickName = "模拟微信用户",
             AvatarUrl = "https://www.example.com/avatar.png",
-            Gender = 1,
-            Country = "中国",
-            Province = "广东",
-            City = "广州",
-            Language = "zh_CN"
+            Gender = 0,
+            Country = "",
+            Province = "",
+            City = "",
+            Language = "",
+            EncryptedData = "",
+            Iv = ""
         });
 #endif
     }
@@ -602,7 +606,7 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
-   /// <summary>
+    /// <summary>
    /// 跳转小游戏
    /// </summary>
    /// <param name="appId"></param>
@@ -709,7 +713,7 @@ public class WeChatPlatform : IPlatform
     }
 
     /// <summary>
-    /// WX显示Banner广告
+    /// WX显示Banner广告（默认位置与样式，自动刷新间隔30秒）
     /// </summary>
     /// <param name="adId"></param>
     /// <param name="success"></param>
@@ -938,7 +942,7 @@ public class WeChatPlatform : IPlatform
             multiton = false // 单例模式
         };
 
-        // 创建广告实例
+        // 创建激励广告实例
         WXRewardedVideoAd rewardedAd = WX.CreateRewardedVideoAd(createAdParam);
         if (rewardedAd == null)
         {
@@ -1034,15 +1038,15 @@ public class WeChatPlatform : IPlatform
                     AvatarUrl = res.userInfo.avatarUrl,
                     Language = res.userInfo.language,
 
-                    // 处理已废弃字段（按公告明确标记为无效值）
-                    Gender = 0,  // 0表示未知，符合微信最新规范
-                    Country = string.Empty,
-                    Province = string.Empty,
-                    City = string.Empty,
+                    // 处理已废弃字段
+                    Gender = 0,
+                    Country = "",
+                    Province = "",
+                    City = "",
 
                     // 微信UserInfo中没有的字段保持默认值
-                    EncryptedData = string.Empty,
-                    Iv = string.Empty
+                    EncryptedData = "",
+                    Iv = ""
                 };
 
                 success?.Invoke(result);
