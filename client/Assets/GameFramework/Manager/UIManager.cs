@@ -42,6 +42,8 @@ public class UIManager : IManager
     private Camera _uiCamera;
     
     public Camera UICamera => _uiCamera;
+
+    public GameObject UIRoot => _uiRoot;
     
     public void Init()
     {
