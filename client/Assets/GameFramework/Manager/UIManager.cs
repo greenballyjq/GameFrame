@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GameFramework.Core;
 using GooseCatcher;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -40,8 +41,12 @@ public class UIManager : IManager
     private ResourceManager _resourceManager;
 
     private Camera _uiCamera;
+
+    private EventSystem _uiEventSystem;
     
     public Camera UICamera => _uiCamera;
+
+    public EventSystem UIEventSystem => _uiEventSystem;
 
     public GameObject UIRoot => _uiRoot;
     
@@ -98,6 +103,12 @@ public class UIManager : IManager
         LayerMask uiMask = LayerMask.GetMask("UI");
         _uiCamera.cullingMask = uiMask;
         _uiCamera.clearFlags = CameraClearFlags.Depth;
+
+        // 创建EventSystem
+        GameObject eventSystemObj = new GameObject("EventSystem");
+        eventSystemObj.transform.SetParent(_uiRoot.transform);
+        _uiEventSystem = eventSystemObj.AddComponent<EventSystem>();
+        eventSystemObj.AddComponent<StandaloneInputModule>();
 
         // 添加Canvas和CanvasScaler组件
         var canvas = _uiRoot.AddComponent<Canvas>();
