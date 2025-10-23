@@ -51,17 +51,17 @@ namespace GameFramework.Core
             
             // 创建框架管理器
             var frameworkObj = new GameObject("GameFrameworkManager");
-            frameworkObj.transform.SetParent(transform);
+
+            // DontDestroyOnLoad 只能作用于根级（root）GameObject。
+            // frameworkObj.transform.SetParent(transform);
+
             _frameworkManager = frameworkObj.AddComponent<GameFrameworkManager>();
         }
         
-        private async void Start()
+        private void Start()
         {
             // 初始化框架
             _frameworkManager.OnInitialized += OnFrameworkInitialized;
-            
-            // 初始化游戏
-            //  await InitGameAsync();
         }
         
         private void Update()
@@ -74,7 +74,7 @@ namespace GameFramework.Core
         
         /// <summary>
         /// 框架初始化完成回调
-        /// </summary>
+        /// </summary>+
         private void OnFrameworkInitialized()
         {
             Debug.Log("[GameLauncher] 框架初始化完成");
@@ -119,6 +119,7 @@ namespace GameFramework.Core
 				_gameConfig.loading.SetActive(true);
 
 			}
+
 			// 等待框架初始化完成
 			while (!_frameworkManager.IsInitialized)
             {
@@ -170,8 +171,6 @@ namespace GameFramework.Core
             
             Debug.Log("[GameLauncher] 游戏初始化完成");
         }
-        
-        
         
         /// <summary>
         /// 初始化资源系统
