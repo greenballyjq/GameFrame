@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,12 @@ namespace GameFramework.Core
         // 是否已初始化
         private bool _isInitialized = false;
         public bool IsInitialized => _isInitialized;
-        
+
+        /// <summary>
+        /// 初始化完成事件
+        /// </summary>
+        public event Action OnInitialized;
+
         // 游戏配置
         [SerializeField] private GameConfig _gameConfig;
         
@@ -36,7 +42,6 @@ namespace GameFramework.Core
         
         // 资源管理器
         private ResourceManager _resourceManager;
-        
         
         private void Awake()
         {
@@ -71,13 +76,24 @@ namespace GameFramework.Core
             
             // 游戏逻辑更新
         }
-        
+
+        /// <summary>
+        /// 等待初始化完成
+        /// </summary>
+        public async UniTask WaitForInitializationAsync()
+        {
+            while (!_isInitialized)
+            {
+                await UniTask.Yield();
+            }
+        }
+
         /// <summary>
         /// 框架初始化完成回调
         /// </summary>+
         private void OnFrameworkInitialized()
         {
-            Debug.Log("[GameLauncher] 框架初始化完成");
+            Debug.Log("[GameLauncher] 开始初始化游戏启动器");
             
             // 获取各个管理器
             _platformManager = _frameworkManager.GetManager<PlatformManager>();
@@ -163,12 +179,15 @@ namespace GameFramework.Core
             // 游戏初始化完成
             _isInitialized = true;
 
-   //         if(_gameConfig.loading)
-   //         {
-			//	_gameConfig.loading.SetActive(false);
+            // 触发初始化完成事件
+            OnInitialized?.Invoke();
 
-			//}
-            
+            //         if(_gameConfig.loading)
+            //         {
+            //	_gameConfig.loading.SetActive(false);
+
+            //}
+
             Debug.Log("[GameLauncher] 游戏初始化完成");
         }
         
@@ -352,6 +371,7 @@ namespace GameFramework.Core
             {
                 // 游戏初始化完成
                 _isInitialized = true;
+                OnInitialized?.Invoke(); // 触发事件
                 Debug.Log("[GameLauncher] 重试游戏初始化完成");
             }
         }
@@ -388,7 +408,7 @@ namespace GameFramework.Core
         
         // 是否显示FPS
         public bool ShowFPS = false;
-        
+
         // 资源加载模式
         public ResourceManager.ResourceLoadMode ResourceLoadMode = ResourceManager.ResourceLoadMode.YooAsset;
         

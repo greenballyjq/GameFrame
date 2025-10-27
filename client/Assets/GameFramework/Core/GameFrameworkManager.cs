@@ -62,11 +62,10 @@ public class GameFrameworkManager : MonoBehaviour
         {
             manager.Init();
         }
-            
+
+        Debug.Log("[GameFramework] 框架初始化完成");
         IsInitialized = true;
         OnInitialized?.Invoke();
-            
-        Debug.Log("[GameFramework] 框架初始化完成");
     }
 
     /// <summary>
