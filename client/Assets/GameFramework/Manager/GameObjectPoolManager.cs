@@ -71,7 +71,7 @@ public class GameObjectPoolManager : IManager
         Debug.Log("[GameObjectPoolManager] 释放游戏对象池管理器");
     }
 
-    #region 对象池核心方法
+    #region 公共方法
     /// <summary>
     /// 从对象池中取出对象
     /// </summary>
@@ -277,10 +277,6 @@ public class GameObjectPoolManager : IManager
         Debug.Log("[GameObjectPoolManager] 已销毁所有对象");
     }
 
-    #endregion
-
-    #region 查询方法
-
     /// <summary>
     /// 设置每个对象池的最大容量
     /// </summary>
@@ -305,49 +301,6 @@ public class GameObjectPoolManager : IManager
     {
         return _maxPoolSize;
     }
-
-    /// <summary>
-    /// 获取对象池中指定类型的对象数量
-    /// </summary>
-    /// <param name="prefabPath">预制体路径</param>
-    /// <returns>池中对象数量</returns>
-    public int GetPoolCount(string prefabPath)
-    {
-        if (_objectPools.TryGetValue(prefabPath, out var pool))
-            return pool.Count;
-
-        return 0;
-    }
-
-    /// <summary>
-    /// 检查对象池是否存在
-    /// </summary>
-    /// <param name="prefabPath">预制体路径</param>
-    /// <returns>是否存在该对象池</returns>
-    public bool HasPool(string prefabPath)
-    {
-        return _objectPools.ContainsKey(prefabPath);
-    }
-
-    /// <summary>
-    /// 获取正在使用中的对象数量
-    /// </summary>
-    /// <param name="prefabPath">预制体路径，如果为null则返回所有活跃对象数量</param>
-    /// <returns>活跃对象数量</returns>
-    public int GetActiveCount(string prefabPath = null)
-    {
-        if (string.IsNullOrEmpty(prefabPath))
-            return _activeObjects.Count;
-
-        int count = 0;
-        foreach (var obj in _activeObjects)
-        {
-            if (_objectToPathMap.TryGetValue(obj, out string path) && path == prefabPath)
-                count++;
-        }
-        return count;
-    }
-
     #endregion
 
     #region 私有方法
@@ -404,7 +357,7 @@ public class GameObjectPoolManager : IManager
         obj.transform.SetParent(_poolRoot);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
-        obj.transform.localScale = Vector3.one;
+        //obj.transform.localScale = Vector3.one;
     }
 
     /// <summary>
