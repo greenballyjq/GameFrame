@@ -1,286 +1,246 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using UnityEngine;
 
 /// <summary>
-/// ÓÎÏ·¶ÔÏó³Ø¹ÜÀíÆ÷ - ¹ÜÀíGameObjectµÄ¶ÔÏó³Ø
+/// æ¸¸æˆå¯¹è±¡æ± ç®¡ç†å™¨
 /// </summary>
 public class GameObjectPoolManager : IManager
 {
-    // ¶ÔÏó³Ø×Öµä - °´Ô¤ÖÆÌåÂ·¾¶·Ö×é
+    /// <summary>
+    /// å¯¹è±¡æ± å­—å…¸
+    /// </summary>
     private readonly Dictionary<string, Stack<GameObject>> _objectPools = new Dictionary<string, Stack<GameObject>>();
 
-    // Ô¤ÖÆÌå»º´æ×Öµä
+    /// <summary>
+    /// é¢„åˆ¶ä½“ç¼“å­˜å­—å…¸
+    /// </summary>
     private readonly Dictionary<string, GameObject> _prefabCache = new Dictionary<string, GameObject>();
 
-    // ¡¾ĞÂÔö¡¿¶ÔÏóµ½Â·¾¶µÄÓ³Éä±í
+    /// <summary>
+    /// å¯¹è±¡åˆ°è·¯å¾„çš„æ˜ å°„è¡¨
+    /// </summary>
     private readonly Dictionary<GameObject, string> _objectToPathMap = new Dictionary<GameObject, string>();
 
-    // ×ÊÔ´¹ÜÀíÆ÷ÒıÓÃ
+    /// <summary>
+    /// æ­£åœ¨ä½¿ç”¨ä¸­çš„å¯¹è±¡é›†åˆ
+    /// </summary>
+    private readonly HashSet<GameObject> _activeObjects = new HashSet<GameObject>();
+
+    /// <summary>
+    /// èµ„æºç®¡ç†å™¨å¼•ç”¨
+    /// </summary>
     private ResourceManager _resourceManager;
 
-    // ¶ÔÏó³Ø¸ù½Úµã
+    /// <summary>
+    /// å¯¹è±¡æ± æ ¹èŠ‚ç‚¹
+    /// </summary>
     private Transform _poolRoot;
+
+    /// <summary>
+    /// æ¯ä¸ªå¯¹è±¡æ± çš„æœ€å¤§å®¹é‡ï¼ˆé»˜è®¤100ï¼‰
+    /// </summary>
+    private int _maxPoolSize = 100;
 
     public void Init()
     {
-        Debug.Log("[GameObjectPoolManager] ³õÊ¼»¯ÓÎÏ·¶ÔÏó³Ø¹ÜÀíÆ÷");
+        Debug.Log("[GameObjectPoolManager] åˆå§‹åŒ–æ¸¸æˆå¯¹è±¡æ± ç®¡ç†å™¨");
 
         _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
 
-        // ´´½¨¶ÔÏó³Ø¸ù½Úµã
         CreatePoolRoot();
     }
 
     public void Update()
     {
-        // ¶ÔÏó³Ø¹ÜÀíÆ÷ÎŞĞè¸üĞÂ
+        // å¯¹è±¡æ± ç®¡ç†å™¨æ— éœ€æ›´æ–°
     }
 
     public void Release()
     {
-        // Ïú»ÙËùÓĞ¶ÔÏó³Ø
-        ClearAllPools();
+        DestroyAll();
 
-        // Çå³ıÔ¤ÖÆÌå»º´æ
-        _prefabCache.Clear();
-
-        // ¡¾ĞÂÔö¡¿Çå³ıÓ³Éä±í
-        _objectToPathMap.Clear();
-
-        // Ïú»Ù¸ù½Úµã
         if (_poolRoot != null)
         {
             GameObject.Destroy(_poolRoot.gameObject);
             _poolRoot = null;
         }
 
-        Debug.Log("[GameObjectPoolManager] ÊÍ·ÅÓÎÏ·¶ÔÏó³Ø¹ÜÀíÆ÷");
+        Debug.Log("[GameObjectPoolManager] é‡Šæ”¾æ¸¸æˆå¯¹è±¡æ± ç®¡ç†å™¨");
     }
 
+    #region å¯¹è±¡æ± æ ¸å¿ƒæ–¹æ³•
     /// <summary>
-    /// ´´½¨¶ÔÏó³Ø¸ù½Úµã
+    /// ä»å¯¹è±¡æ± ä¸­å–å‡ºå¯¹è±¡
     /// </summary>
-    private void CreatePoolRoot()
+    /// <param name="prefabPath">é¢„åˆ¶ä½“èµ„æºè·¯å¾„</param>
+    /// <returns>è¿”å›GameObjectï¼Œå¦‚æœå¤±è´¥è¿”å›null</returns>
+    public async UniTask<GameObject> PullAsync(string prefabPath)
     {
-        var poolRootObj = new GameObject("ObjectPoolRoot");
-        poolRootObj.transform.position = Vector3.zero;
-        GameObject.DontDestroyOnLoad(poolRootObj);
-
-        _poolRoot = poolRootObj.transform;
-
-        Debug.Log("[GameObjectPoolManager] ¶ÔÏó³Ø¸ù½Úµã´´½¨Íê³É");
-    }
-
-    /// <summary>
-    /// ´Ó¶ÔÏó³ØÖĞÈ¡³ö¶ÔÏó
-    /// </summary>
-    public async UniTask<T> PullAsync<T>(string prefabPath) where T : Component, IPoolable
-    {
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Debug.LogError("[GameObjectPoolManager] Ô¤ÖÆÌåÂ·¾¶²»ÄÜÎª¿Õ");
+        if (!ValidatePrefabPath(prefabPath))
             return null;
-        }
 
-        // 1. ¼ì²é¶ÔÏó³ØÊÇ·ñÓĞ¿ÉÓÃ¶ÔÏó
+        GameObject obj = null;
+
+        // æ£€æŸ¥å¯¹è±¡æ± æ˜¯å¦æœ‰å¯ç”¨å¯¹è±¡
         if (_objectPools.TryGetValue(prefabPath, out var pool) && pool.Count > 0)
         {
-            var pooledObj = pool.Pop();
-            pooledObj.SetActive(true);
-            pooledObj.transform.SetParent(null); // ´Ó³ØÖĞÒÆ³ö
-
-            var poolableComponent = pooledObj.GetComponent<T>();
-            if (poolableComponent != null)
+            obj = pool.Pop();
+        }
+        // å¯¹è±¡æ± ä¸ºç©ºï¼Œæ£€æŸ¥é¢„åˆ¶ä½“ç¼“å­˜
+        else if (_prefabCache.TryGetValue(prefabPath, out var cachedPrefab))
+        {
+            obj = GameObject.Instantiate(cachedPrefab);
+            _objectToPathMap[obj] = prefabPath;
+        }
+        // é¢„åˆ¶ä½“æœªç¼“å­˜ï¼Œéœ€è¦åŠ è½½
+        else
+        {
+            var prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
+            if (prefab == null)
             {
-                poolableComponent.OnPull();
+                Debug.LogError($"[GameObjectPoolManager] åŠ è½½é¢„åˆ¶ä½“å¤±è´¥: {prefabPath}");
+                return null;
             }
 
-            Debug.Log($"[GameObjectPoolManager] ´Ó¶ÔÏó³ØÈ¡³ö¶ÔÏó: {prefabPath}");
-            return poolableComponent;
+            _prefabCache[prefabPath] = prefab;
+            obj = GameObject.Instantiate(prefab);
+            _objectToPathMap[obj] = prefabPath;
         }
 
-        // 2. ¶ÔÏó³ØÎª¿Õ£¬¼ì²éÔ¤ÖÆÌå»º´æ
-        GameObject prefab = null;
-        if (_prefabCache.TryGetValue(prefabPath, out prefab))
-        {
-            // Ô¤ÖÆÌåÒÑ»º´æ£¬Ö±½ÓÊµÀı»¯
-            var newObj = GameObject.Instantiate(prefab);
-            newObj.SetActive(true);
+        // æ¿€æ´»å¯¹è±¡å¹¶ç§»å‡ºæ± 
+        obj.SetActive(true);
+        obj.transform.SetParent(null);
 
-            // ¡¾ĞÂÔö¡¿¼ÇÂ¼¶ÔÏóµ½Â·¾¶µÄÓ³Éä
-            _objectToPathMap[newObj] = prefabPath;
+        // åŠ å…¥æ´»è·ƒå¯¹è±¡é›†åˆ
+        _activeObjects.Add(obj);
 
-            var newPoolableComponent = newObj.GetComponent<T>();
-            if (newPoolableComponent != null)
-            {
-                newPoolableComponent.OnPull();
-            }
+        // è°ƒç”¨æ± åŒ–å›è°ƒ
+        TryInvokePoolableCallback(obj, PoolableCallback.OnPull);
 
-            Debug.Log($"[GameObjectPoolManager] ´Ó»º´æÊµÀı»¯¶ÔÏó: {prefabPath}");
-            return newPoolableComponent;
-        }
-
-        // 3. Ô¤ÖÆÌåÎ´»º´æ£¬ĞèÒª¼ÓÔØ
-        prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
-        if (prefab == null)
-        {
-            Debug.LogError($"[GameObjectPoolManager] ¼ÓÔØÔ¤ÖÆÌåÊ§°Ü: {prefabPath}");
-            return null;
-        }
-
-        // 4. »º´æÔ¤ÖÆÌå
-        _prefabCache[prefabPath] = prefab;
-
-        // 5. ÊµÀı»¯ĞÂ¶ÔÏó
-        var instantiatedObj = GameObject.Instantiate(prefab);
-        instantiatedObj.SetActive(true);
-
-        // ¡¾ĞÂÔö¡¿¼ÇÂ¼¶ÔÏóµ½Â·¾¶µÄÓ³Éä
-        _objectToPathMap[instantiatedObj] = prefabPath;
-
-        var instantiatedPoolableComponent = instantiatedObj.GetComponent<T>();
-        if (instantiatedPoolableComponent != null)
-        {
-            instantiatedPoolableComponent.OnPull();
-        }
-
-        Debug.Log($"[GameObjectPoolManager] ¼ÓÔØ²¢ÊµÀı»¯¶ÔÏó: {prefabPath}");
-        return instantiatedPoolableComponent;
+        Debug.Log($"[GameObjectPoolManager] ä»å¯¹è±¡æ± å–å‡ºå¯¹è±¡: {prefabPath}");
+        return obj;
     }
 
     /// <summary>
-    /// »ØÊÕ¶ÔÏóµ½¶ÔÏó³Ø
+    /// å›æ”¶å¯¹è±¡åˆ°å¯¹è±¡æ± 
     /// </summary>
+    /// <param name="obj">è¦å›æ”¶çš„GameObject</param>
     public void Push(GameObject obj)
     {
         if (obj == null)
         {
-            Debug.LogError("[GameObjectPoolManager] »ØÊÕ¶ÔÏó²»ÄÜÎª¿Õ");
+            Debug.LogError("[GameObjectPoolManager] å›æ”¶å¯¹è±¡ä¸èƒ½ä¸ºç©º");
             return;
         }
 
-        // ¡¾ĞŞ¸Ä¡¿´ÓÓ³Éä±í»ñÈ¡Ô¤ÖÆÌåÂ·¾¶
+        // æ£€æŸ¥å¯¹è±¡æ˜¯å¦ç”±å¯¹è±¡æ± ç®¡ç†
         if (!_objectToPathMap.TryGetValue(obj, out string prefabPath))
         {
-            Debug.LogError($"[GameObjectPoolManager] ¶ÔÏó {obj.name} Ã»ÓĞÂ·¾¶Ó³Éä¼ÇÂ¼");
+            Debug.LogError($"[GameObjectPoolManager] æ— æ³•å›æ”¶å¯¹è±¡ {obj.name}ï¼šè¯¥å¯¹è±¡ä¸æ˜¯ä»å¯¹è±¡æ± ä¸­åˆ›å»ºçš„");
             return;
         }
 
-        // µ÷ÓÃ¶ÔÏóµÄ»ØÊÕ·½·¨
-        var poolableComponent = obj.GetComponent<IPoolable>();
-        if (poolableComponent != null)
+        // æ£€æŸ¥æ˜¯å¦é‡å¤å›æ”¶
+        if (!_activeObjects.Contains(obj))
         {
-            poolableComponent.OnPush();
+            Debug.LogWarning($"[GameObjectPoolManager] å¯¹è±¡ {obj.name} å·²ç»åœ¨æ± ä¸­æˆ–å·²è¢«å›æ”¶ï¼Œå¿½ç•¥é‡å¤å›æ”¶");
+            return;
         }
 
-        // ÖØÖÃ¶ÔÏó×´Ì¬
-        obj.SetActive(false);
-        obj.transform.SetParent(_poolRoot);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.identity;
-        obj.transform.localScale = Vector3.one;
+        // ä»æ´»è·ƒå¯¹è±¡é›†åˆä¸­ç§»é™¤
+        _activeObjects.Remove(obj);
 
-        // È·±£¶ÔÏó³Ø´æÔÚ
-        if (!_objectPools.ContainsKey(prefabPath))
+        // è°ƒç”¨æ± åŒ–å›è°ƒ
+        TryInvokePoolableCallback(obj, PoolableCallback.OnPush);
+
+        var pool = EnsurePoolExists(prefabPath);
+
+        // æ£€æŸ¥å¯¹è±¡æ± å®¹é‡
+        if (pool.Count >= _maxPoolSize)
         {
-            _objectPools[prefabPath] = new Stack<GameObject>();
+            DestroyManagedObject(obj);
+            Debug.Log($"[GameObjectPoolManager] å¯¹è±¡æ± å·²æ»¡ï¼Œé”€æ¯å¯¹è±¡: {prefabPath}");
+            return;
         }
 
-        // »ØÊÕµ½¶ÔÏó³Ø
-        _objectPools[prefabPath].Push(obj);
+        // é‡ç½®å¯¹è±¡çŠ¶æ€
+        ResetObjectTransform(obj);
 
-        Debug.Log($"[GameObjectPoolManager] »ØÊÕ¶ÔÏóµ½³Ø: {prefabPath}");
+        // å›æ”¶åˆ°å¯¹è±¡æ± 
+        pool.Push(obj);
+
+        Debug.Log($"[GameObjectPoolManager] å›æ”¶å¯¹è±¡åˆ°æ± : {prefabPath}");
     }
 
     /// <summary>
-    /// Ô¤¼ÓÔØ¶ÔÏóµ½¶ÔÏó³Ø
+    /// é¢„åŠ è½½å¯¹è±¡åˆ°å¯¹è±¡æ± 
     /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
+    /// <param name="count">é¢„åŠ è½½æ•°é‡</param>
     public async UniTask PreloadAsync(string prefabPath, int count)
     {
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Debug.LogError("[GameObjectPoolManager] Ô¤ÖÆÌåÂ·¾¶²»ÄÜÎª¿Õ");
+        if (!ValidatePrefabPath(prefabPath))
             return;
-        }
 
         if (count <= 0)
         {
-            Debug.LogError("[GameObjectPoolManager] Ô¤¼ÓÔØÊıÁ¿±ØĞë´óÓÚ0");
+            Debug.LogError("[GameObjectPoolManager] é¢„åŠ è½½æ•°é‡å¿…é¡»å¤§äº0");
             return;
         }
 
-        // ¼ÓÔØÔ¤ÖÆÌå
         var prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
         if (prefab == null)
         {
-            Debug.LogError($"[GameObjectPoolManager] Ô¤¼ÓÔØÊ§°Ü£¬ÎŞ·¨¼ÓÔØÔ¤ÖÆÌå: {prefabPath}");
+            Debug.LogError($"[GameObjectPoolManager] é¢„åŠ è½½å¤±è´¥ï¼Œæ— æ³•åŠ è½½é¢„åˆ¶ä½“: {prefabPath}");
             return;
         }
 
-        // »º´æÔ¤ÖÆÌå
         _prefabCache[prefabPath] = prefab;
 
-        // È·±£¶ÔÏó³Ø´æÔÚ
-        if (!_objectPools.ContainsKey(prefabPath))
-        {
-            _objectPools[prefabPath] = new Stack<GameObject>();
-        }
+        var pool = EnsurePoolExists(prefabPath);
 
-        // Ô¤´´½¨Ö¸¶¨ÊıÁ¿µÄ¶ÔÏó
         for (int i = 0; i < count; i++)
         {
             var obj = GameObject.Instantiate(prefab, _poolRoot);
             obj.SetActive(false);
-            obj.name = prefab.name; // È·±£Ãû³ÆÒ»ÖÂ
+            obj.name = prefab.name;
 
-            // ¡¾ĞÂÔö¡¿¼ÇÂ¼¶ÔÏóµ½Â·¾¶µÄÓ³Éä
             _objectToPathMap[obj] = prefabPath;
 
-            _objectPools[prefabPath].Push(obj);
+            pool.Push(obj);
         }
 
-        Debug.Log($"[GameObjectPoolManager] Ô¤¼ÓÔØÍê³É: {prefabPath}, ÊıÁ¿: {count}");
+        Debug.Log($"[GameObjectPoolManager] é¢„åŠ è½½å®Œæˆ: {prefabPath}, æ•°é‡: {count}");
     }
 
     /// <summary>
-    /// Çå³ıÖ¸¶¨¶ÔÏó³Ø
+    /// æ¸…é™¤æŒ‡å®šå¯¹è±¡æ± ï¼ˆä¸å½±å“æ´»è·ƒå¯¹è±¡ï¼‰
     /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
     public void ClearPool(string prefabPath)
     {
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Debug.LogError("[GameObjectPoolManager] Ô¤ÖÆÌåÂ·¾¶²»ÄÜÎª¿Õ");
+        if (!ValidatePrefabPath(prefabPath))
             return;
-        }
 
         if (_objectPools.TryGetValue(prefabPath, out var pool))
         {
-            // µ÷ÓÃËùÓĞ¶ÔÏóµÄÏú»Ù·½·¨
             while (pool.Count > 0)
             {
                 var obj = pool.Pop();
-                var poolableComponent = obj.GetComponent<IPoolable>();
-                if (poolableComponent != null)
-                {
-                    poolableComponent.OnPoolDestroy();
-                }
-
-                // ¡¾ĞÂÔö¡¿ÇåÀíÓ³Éä¼ÇÂ¼
-                _objectToPathMap.Remove(obj);
-
-                GameObject.Destroy(obj);
+                DestroyManagedObject(obj);
             }
 
             _objectPools.Remove(prefabPath);
-            Debug.Log($"[GameObjectPoolManager] Çå³ı¶ÔÏó³Ø: {prefabPath}");
+            _prefabCache.Remove(prefabPath);
+            Debug.Log($"[GameObjectPoolManager] æ¸…é™¤å¯¹è±¡æ± : {prefabPath}");
         }
     }
 
     /// <summary>
-    /// Çå³ıËùÓĞ¶ÔÏó³Ø
+    /// æ¸…é™¤æ‰€æœ‰å¯¹è±¡æ± ï¼ˆä¸å½±å“æ´»è·ƒå¯¹è±¡ï¼‰
     /// </summary>
     public void ClearAllPools()
     {
@@ -290,40 +250,210 @@ public class GameObjectPoolManager : IManager
             while (pool.Count > 0)
             {
                 var obj = pool.Pop();
-                var poolableComponent = obj.GetComponent<IPoolable>();
-                if (poolableComponent != null)
-                {
-                    poolableComponent.OnPoolDestroy();
-                }
-
-                // ¡¾ĞÂÔö¡¿ÇåÀíÓ³Éä¼ÇÂ¼
-                _objectToPathMap.Remove(obj);
-
-                GameObject.Destroy(obj);
+                DestroyManagedObject(obj);
             }
         }
 
         _objectPools.Clear();
-        Debug.Log("[GameObjectPoolManager] Çå³ıËùÓĞ¶ÔÏó³Ø");
+        _prefabCache.Clear();
+        Debug.Log($"[GameObjectPoolManager] æ¸…é™¤æ‰€æœ‰å¯¹è±¡æ± ï¼Œå‰©ä½™æ´»è·ƒå¯¹è±¡: {_activeObjects.Count}");
     }
 
     /// <summary>
-    /// »ñÈ¡¶ÔÏó³ØÖĞÖ¸¶¨ÀàĞÍµÄ¶ÔÏóÊıÁ¿
+    /// å¼ºåˆ¶é”€æ¯æ‰€æœ‰å¯¹è±¡ï¼ŒåŒ…æ‹¬æ­£åœ¨ä½¿ç”¨çš„æ´»è·ƒå¯¹è±¡
     /// </summary>
+    public void DestroyAll()
+    {
+        ClearAllPools();
+
+        var activeObjectsCopy = new List<GameObject>(_activeObjects);
+        foreach (var obj in activeObjectsCopy)
+        {
+            if (obj != null)
+                DestroyManagedObject(obj);
+        }
+
+        _activeObjects.Clear();
+        Debug.Log("[GameObjectPoolManager] å·²é”€æ¯æ‰€æœ‰å¯¹è±¡");
+    }
+
+    #endregion
+
+    #region æŸ¥è¯¢æ–¹æ³•
+
+    /// <summary>
+    /// è®¾ç½®æ¯ä¸ªå¯¹è±¡æ± çš„æœ€å¤§å®¹é‡
+    /// </summary>
+    /// <param name="maxSize">æœ€å¤§å®¹é‡</param>
+    public void SetMaxPoolSize(int maxSize)
+    {
+        if (maxSize < 0)
+        {
+            Debug.LogWarning("[GameObjectPoolManager] å¯¹è±¡æ± æœ€å¤§å®¹é‡ä¸èƒ½å°äº0ï¼Œä½¿ç”¨é»˜è®¤å€¼100");
+            _maxPoolSize = 100;
+            return;
+        }
+        _maxPoolSize = maxSize;
+        Debug.Log($"[GameObjectPoolManager] è®¾ç½®å¯¹è±¡æ± æœ€å¤§å®¹é‡: {_maxPoolSize}");
+    }
+
+    /// <summary>
+    /// è·å–æ¯ä¸ªå¯¹è±¡æ± çš„æœ€å¤§å®¹é‡
+    /// </summary>
+    /// <returns>æœ€å¤§å®¹é‡</returns>
+    public int GetMaxPoolSize()
+    {
+        return _maxPoolSize;
+    }
+
+    /// <summary>
+    /// è·å–å¯¹è±¡æ± ä¸­æŒ‡å®šç±»å‹çš„å¯¹è±¡æ•°é‡
+    /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
+    /// <returns>æ± ä¸­å¯¹è±¡æ•°é‡</returns>
     public int GetPoolCount(string prefabPath)
     {
         if (_objectPools.TryGetValue(prefabPath, out var pool))
-        {
             return pool.Count;
-        }
+
         return 0;
     }
 
     /// <summary>
-    /// ¼ì²é¶ÔÏó³ØÊÇ·ñ´æÔÚ
+    /// æ£€æŸ¥å¯¹è±¡æ± æ˜¯å¦å­˜åœ¨
     /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
+    /// <returns>æ˜¯å¦å­˜åœ¨è¯¥å¯¹è±¡æ± </returns>
     public bool HasPool(string prefabPath)
     {
         return _objectPools.ContainsKey(prefabPath);
     }
+
+    /// <summary>
+    /// è·å–æ­£åœ¨ä½¿ç”¨ä¸­çš„å¯¹è±¡æ•°é‡
+    /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„ï¼Œå¦‚æœä¸ºnullåˆ™è¿”å›æ‰€æœ‰æ´»è·ƒå¯¹è±¡æ•°é‡</param>
+    /// <returns>æ´»è·ƒå¯¹è±¡æ•°é‡</returns>
+    public int GetActiveCount(string prefabPath = null)
+    {
+        if (string.IsNullOrEmpty(prefabPath))
+            return _activeObjects.Count;
+
+        int count = 0;
+        foreach (var obj in _activeObjects)
+        {
+            if (_objectToPathMap.TryGetValue(obj, out string path) && path == prefabPath)
+                count++;
+        }
+        return count;
+    }
+
+    #endregion
+
+    #region ç§æœ‰æ–¹æ³•
+
+    /// <summary>
+    /// åˆ›å»ºå¯¹è±¡æ± æ ¹èŠ‚ç‚¹
+    /// </summary>
+    private void CreatePoolRoot()
+    {
+        var poolRootObj = new GameObject("ObjectPoolRoot");
+        poolRootObj.transform.position = Vector3.zero;
+        GameObject.DontDestroyOnLoad(poolRootObj);
+
+        _poolRoot = poolRootObj.transform;
+
+        Debug.Log("[GameObjectPoolManager] å¯¹è±¡æ± æ ¹èŠ‚ç‚¹åˆ›å»ºå®Œæˆ");
+    }
+
+    /// <summary>
+    /// éªŒè¯é¢„åˆ¶ä½“è·¯å¾„æ˜¯å¦æœ‰æ•ˆ
+    /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
+    /// <returns>è·¯å¾„æ˜¯å¦æœ‰æ•ˆ</returns>
+    private bool ValidatePrefabPath(string prefabPath)
+    {
+        if (string.IsNullOrEmpty(prefabPath))
+        {
+            Debug.LogError("[GameObjectPoolManager] é¢„åˆ¶ä½“è·¯å¾„ä¸èƒ½ä¸ºç©º");
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// ç¡®ä¿æŒ‡å®šè·¯å¾„çš„å¯¹è±¡æ± å­˜åœ¨
+    /// </summary>
+    /// <param name="prefabPath">é¢„åˆ¶ä½“è·¯å¾„</param>
+    /// <returns>å¯¹è±¡æ± å®ä¾‹</returns>
+    private Stack<GameObject> EnsurePoolExists(string prefabPath)
+    {
+        if (!_objectPools.ContainsKey(prefabPath))
+            _objectPools[prefabPath] = new Stack<GameObject>();
+
+        return _objectPools[prefabPath];
+    }
+
+    /// <summary>
+    /// é‡ç½®å¯¹è±¡çš„TransformçŠ¶æ€
+    /// </summary>
+    /// <param name="obj">è¦é‡ç½®çš„å¯¹è±¡</param>
+    private void ResetObjectTransform(GameObject obj)
+    {
+        obj.SetActive(false);
+        obj.transform.SetParent(_poolRoot);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// å°è¯•è°ƒç”¨IPoolableå›è°ƒ
+    /// </summary>
+    /// <param name="obj">æ¸¸æˆå¯¹è±¡</param>
+    /// <param name="callback">å›è°ƒç±»å‹</param>
+    private void TryInvokePoolableCallback(GameObject obj, PoolableCallback callback)
+    {
+        var poolable = obj.GetComponent<IPoolable>();
+        if (poolable != null)
+        {
+            switch (callback)
+            {
+                case PoolableCallback.OnPull:
+                    poolable.OnPull();
+                    break;
+                case PoolableCallback.OnPush:
+                    poolable.OnPush();
+                    break;
+                case PoolableCallback.OnPoolDestroy:
+                    poolable.OnPoolDestroy();
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// é”€æ¯å¯¹è±¡å¹¶æ¸…ç†ç›¸å…³è®°å½•
+    /// </summary>
+    /// <param name="obj">è¦é”€æ¯çš„å¯¹è±¡</param>
+    private void DestroyManagedObject(GameObject obj)
+    {
+        TryInvokePoolableCallback(obj, PoolableCallback.OnPoolDestroy);
+
+        _objectToPathMap.Remove(obj);
+
+        GameObject.Destroy(obj);
+    }
+
+    /// <summary>
+    /// æ± åŒ–å›è°ƒç±»å‹
+    /// </summary>
+    private enum PoolableCallback
+    {
+        OnPull,
+        OnPush,
+        OnPoolDestroy
+    }
+
+    #endregion
 }

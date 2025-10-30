@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Core;
@@ -52,6 +52,7 @@ public class GameFrameworkManager : MonoBehaviour
         RegisterManager<PlatformManager>();
         RegisterManager<EventManager>();
         RegisterManager<UIManager>();
+        RegisterManager<GameObjectPoolManager>();
             
         // 注册网络相关管理器
         RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能

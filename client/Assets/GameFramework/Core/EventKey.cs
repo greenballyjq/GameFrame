@@ -1,19 +1,19 @@
-using System;
+ï»¿using System;
 namespace GameFramework.Core
 {
     /// <summary>
-    /// ÊÂ¼ş¼ü»ùÀà
+    /// äº‹ä»¶é”®åŸºç±»
     /// </summary>
     public class EventKey {}
 
     /// <summary>
-    /// ·ºĞÍÊÂ¼ş¼ü
+    /// æ³›å‹äº‹ä»¶é”®
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class EventKey<T> : EventKey where T : EventArgs { }
 
     /// <summary>
-    /// ÊÂ¼ş²ÎÊı»ùÀà
+    /// äº‹ä»¶å‚æ•°åŸºç±»
     /// </summary>
     public class EventArgs
     {
