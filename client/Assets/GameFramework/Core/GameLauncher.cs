@@ -93,7 +93,7 @@ namespace GameFramework.Core
         /// </summary>+
         private void OnFrameworkInitialized()
         {
-            Debug.Log("[GameLauncher] 开始初始化游戏启动器");
+            Debug.Log("[GameLauncher] 开始初始化游戏启动器...");
             
             // 获取各个管理器
             _platformManager = _frameworkManager.GetManager<PlatformManager>();
@@ -129,7 +129,6 @@ namespace GameFramework.Core
         /// </summary>
         private async UniTask InitGameAsync()
         {
-            Debug.Log("[GameLauncher] 开始初始化游戏");
 			if (_gameConfig.loading)
 			{
 				_gameConfig.loading.SetActive(true);
@@ -187,8 +186,6 @@ namespace GameFramework.Core
             //	_gameConfig.loading.SetActive(false);
 
             //}
-
-            Debug.Log("[GameLauncher] 游戏初始化完成");
         }
         
         /// <summary>
