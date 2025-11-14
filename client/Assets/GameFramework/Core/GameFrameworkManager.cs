@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Core;
+using GameFramework.Manager;
 using GameFramework.Network;
 
 /// <summary>
@@ -52,6 +53,7 @@ public class GameFrameworkManager : MonoBehaviour
         RegisterManager<PlatformManager>();
         RegisterManager<EventManager>();
         RegisterManager<UIManager>();
+        RegisterManager<TimerManager>();
         RegisterManager<GameObjectPoolManager>();
             
         // 注册网络相关管理器

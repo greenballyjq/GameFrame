@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// 快手平台实现
 /// </summary>
@@ -24,6 +25,7 @@ public class KuaishouPlatform : IPlatform
     public void Init()
     {
         Debug.Log("[KuaishouPlatform] 初始化快手平台");
+        
 
         // 调用快手小游戏的初始化API
 #if UNITY_WEBGL && !UNITY_EDITOR
