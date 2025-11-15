@@ -112,6 +112,54 @@ namespace GameFramework.Manager
 
             return timerId;
         }
+        
+        /// <summary>
+        /// 开启计时器(一次性)
+        /// </summary>
+        /// <param name="duration">时长</param>
+        /// <param name="callback">回调</param>
+        /// <param name="playerLoopTiming"></param>
+        /// <param name="ignoreTimeScale">是否忽略时间缩放</param>
+        /// <returns></returns>
+        public int StartTimerOneShot(float duration, Action callback,
+            PlayerLoopTiming playerLoopTiming = PlayerLoopTiming.Update, bool ignoreTimeScale = false)
+        {
+            int timerId = Guid.NewGuid().GetHashCode();
+            TimerInfo timerInfo = new TimerInfo
+            {
+                Id = timerId,
+                Duration = duration,
+                IsPaused = false,
+                PlayerLoopTiming = playerLoopTiming,
+                IgnoreTimeScale = ignoreTimeScale,
+                Callback = callback,
+                Repeat = 1,
+                Cts = new CancellationTokenSource(),
+            };
+            
+            UnityEngine.Debug.Log(
+                $"[TimerManager] 计时器 {timerId} 已启动, 时长：{duration:F2}秒, 重复次数：{1}, 是否忽略时间缩放：{ignoreTimeScale}");
+
+            _activeTimers[timerId] = timerInfo;
+            ExecuteTimerAsync(timerId, timerInfo).Forget();
+
+            return timerId;
+        }
+
+        /// <summary>
+        /// 重置计时器
+        /// </summary>
+        /// <param name="timerId">计时器id</param>
+        /// <returns></returns>
+        public bool ResetTimer(int timerId)
+        {
+            if (_activeTimers.TryGetValue(timerId, out var timerInfo))
+            {
+                timerInfo.ElapsedTime = 0f;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 暂停计时器
@@ -264,6 +312,11 @@ namespace GameFramework.Manager
             }
 
             return 0f;
+        }
+
+        public TimerInfo GetTimerInfo(int timerId)
+        {
+            return _activeTimers.GetValueOrDefault(timerId);
         }
 
         /// <summary>
