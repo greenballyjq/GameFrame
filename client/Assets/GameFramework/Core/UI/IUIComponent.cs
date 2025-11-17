@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core.UI
 {
     /// <summary>
     /// UI子组件接口

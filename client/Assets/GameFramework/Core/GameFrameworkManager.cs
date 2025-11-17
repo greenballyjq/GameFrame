@@ -55,7 +55,7 @@ public class GameFrameworkManager : MonoBehaviour
         RegisterManager<UIManager>();
         RegisterManager<TimerManager>();
         RegisterManager<GameObjectPoolManager>();
-            
+        
         // 注册网络相关管理器
         RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能
         RegisterManager<ServerClient>();         // 注册服务器客户端

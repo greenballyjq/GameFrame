@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameFramework.Core
+namespace GameFramework.Core.UI
 {
     /// <summary>
     /// UI基类 - 所有UI界面的基类
