@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message C2S_Mall {
+    string gametype = 1; //当前游戏类型，见游戏枚举定义
+}
+
+message S2C_Mall {
+    string items = 1; //道具列表，json 格式，具体定义和 web 一致
+}

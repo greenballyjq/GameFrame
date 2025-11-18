@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
@@ -34,7 +33,7 @@ namespace GameFramework.Manager
         public float RemainTime => Duration - ElapsedTime;
 
         /// <summary>
-        /// 
+        /// PlayerLoop执行时机
         /// </summary>
         public PlayerLoopTiming PlayerLoopTiming { get; set; }
 
@@ -208,8 +207,6 @@ namespace GameFramework.Manager
 
             return false;
         }
-        
-        
 
         /// <summary>
         /// 执行计时Tick
@@ -218,27 +215,22 @@ namespace GameFramework.Manager
         /// <param name="timerInfo">计时器信息</param>
         private async UniTask ExecuteTimerAsync(int timerId, TimerInfo timerInfo)
         {
-            // Stopwatch runningStopwatch = new Stopwatch();
-            
             try
             {
                 while (true)
                 {
                     if (timerInfo.IsPaused)
                     {
-                        // runningStopwatch.Stop();
                         while (timerInfo.IsPaused)
                         {
                             await UniTask.Yield(timerInfo.PlayerLoopTiming, timerInfo.Cts.Token);
                         }
-                        // runningStopwatch.Start();
                     }
 
                     timerInfo.ElapsedTime += timerInfo.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
                     
                     if (timerInfo.RemainTime <= 0f)
                     {
-                        // runningStopwatch.Restart();
                         timerInfo.Callback?.Invoke();
                         timerInfo.ElapsedTime = 0f;
                         if (timerInfo.Repeat != LOOP)

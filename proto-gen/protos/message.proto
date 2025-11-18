@@ -7,6 +7,7 @@ import "custom.proto";
 import "item.proto";
 import "wave.proto";
 import "currency.proto";
+import "mall.proto";
 
 message C2S_Message {
   uint64 session = 1; // 会话ID,不可为0,且在整个游戏过程中不能重复
@@ -19,6 +20,7 @@ message C2S_Message {
     C2S_Item item_data = 8;             // 请求物品数据
     C2S_WaveResult wave_result = 9;     // 上传波次结果
     C2S_Currency currency_data = 10;    // 请求货币数据
+    C2S_Mall mall_items = 11;            // 请求商城物品列表
   }
 }
 
@@ -32,5 +34,6 @@ message S2C_Message {
     S2C_Custom custom_data = 7;     // 客户端自定义数据
     S2C_Item item_data = 8;         // 物品数据
     S2C_Currency currency_data = 9; // 货币数据
+    S2C_Mall mall_items = 10;        // 商城物品列表
   }
 }
