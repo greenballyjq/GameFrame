@@ -45,7 +45,6 @@ namespace GameFramework.Core.Pool
 
             IPoolItem item = obj.GetComponent<IPoolItem>();
             item.OnSpawned();
-            obj.SetActive(true);
 
             return obj;
         }
@@ -56,21 +55,8 @@ namespace GameFramework.Core.Pool
         /// <param name="obj">要回收的对象</param>
         public void Despawn(GameObject obj)
         {
-            if (obj == null)
-            {
-                Debug.LogError("[GameObjectPool] 回收对象不能为null");
-                return;
-            }
-
-            if (!obj.activeSelf)
-            {
-                Debug.LogError($"[GameObjectPool] 对象 {obj.name} 已经被回收，请勿重复回收");
-                return;
-            }
-
             IPoolItem item = obj.GetComponent<IPoolItem>();
             item.OnDespawned();
-            obj.SetActive(false);
 
             obj.transform.SetParent(_parent);
             _stack.Push(obj);

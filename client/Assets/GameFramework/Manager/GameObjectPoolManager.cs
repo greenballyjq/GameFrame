@@ -32,7 +32,7 @@ public class GameObjectPoolManager : IManager
     public void Init()
     {
         // 创建对象池根节点
-        var rootObj = new GameObject("ObjectPoolRoot");
+        GameObject rootObj = new GameObject("ObjectPoolRoot");
         _poolRoot = rootObj.transform;
         _poolRoot.position = Vector3.zero;
         Object.DontDestroyOnLoad(rootObj);
@@ -95,20 +95,10 @@ public class GameObjectPoolManager : IManager
     }
 
     /// <summary>
-    /// 创建对象
-    /// </summary>
-    /// <param name="prefab">预制体</param>
-    /// <returns>创建的GameObject</returns>
-    public GameObject Spawn(GameObject prefab)
-    {
-        return GetPool(prefab).Spawn();
-    }
-
-    /// <summary>
-    /// 异步创建对象（根据资源路径）
+    /// 取出对象
     /// </summary>
     /// <param name="prefabPath">预制体资源路径</param>
-    /// <returns>创建的GameObject</returns>
+    /// <returns>取出的对象</returns>
     public async UniTask<GameObject> SpawnAsync(string prefabPath)
     {
         if (string.IsNullOrEmpty(prefabPath))
@@ -117,7 +107,7 @@ public class GameObjectPoolManager : IManager
             return null;
         }
 
-        // 加载或从缓存获取预制体
+        // 从缓存获取预制体，如果不存在则加载
         if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
         {
             prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
@@ -126,60 +116,28 @@ public class GameObjectPoolManager : IManager
                 Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
                 return null;
             }
+            
+            // 在放入缓存前检查预制体是否有IPoolItem组件
+            if (prefab.GetComponent<IPoolItem>() == null)
+            {
+                Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
+                return null;
+            }
+            
             _prefabCache[prefabPath] = prefab;
         }
 
-        var obj = GetPool(prefab).Spawn();
+        GameObject obj = GetPool(prefab).Spawn();
 
         // 设置IPoolItem中的路径
-        var poolItem = obj.GetComponent<IPoolItem>();
-        if (poolItem != null)
-            poolItem.PrefabPath = prefabPath;
+        IPoolItem poolItem = obj.GetComponent<IPoolItem>();
+        poolItem.PrefabPath = prefabPath;
 
         return obj;
     }
 
     /// <summary>
     /// 回收对象
-    /// </summary>
-    /// <param name="obj">要回收的对象</param>
-    /// <param name="prefab">预制体</param>
-    public void Despawn(GameObject obj, GameObject prefab)
-    {
-        GetPool(prefab).Despawn(obj);
-    }
-
-    /// <summary>
-    /// 回收对象（根据资源路径）
-    /// </summary>
-    /// <param name="prefabPath">预制体资源路径</param>
-    /// <param name="obj">要回收的对象</param>
-    public void Despawn(GameObject obj,string prefabPath)
-    {
-        if (obj == null)
-        {
-            Debug.LogError("[GameObjectPoolManager] 回收对象不能为null");
-            return;
-        }
-        
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
-            return;
-        }
-        
-        // 从缓存获取预制体
-        if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
-        {
-            Debug.LogError($"[GameObjectPoolManager] 预制体 {prefabPath} 不在缓存中，对象可能不是从这个路径创建的");
-            return;
-        }
-        
-        GetPool(prefab).Despawn(obj);
-    }
-
-    /// <summary>
-    /// 回收对象（从接口获取路径）
     /// </summary>
     /// <param name="obj">要回收的对象</param>
     public void Despawn(GameObject obj)
@@ -189,12 +147,19 @@ public class GameObjectPoolManager : IManager
             Debug.LogError("[GameObjectPoolManager] 回收对象不能为null");
             return;
         }
-        
-        // 从接口获取路径
-        var poolItem = obj.GetComponent<IPoolItem>();
-        if (poolItem == null || string.IsNullOrEmpty(poolItem.PrefabPath))
+
+        // 检查对象是否已经被回收
+        if (!obj.activeSelf)
         {
-            Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 没有实现IPoolItem或PrefabPath为空");
+            Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
+            return;
+        }
+
+        // 从IPoolItem中获取路径
+        IPoolItem poolItem = obj.GetComponent<IPoolItem>();
+        if (poolItem == null)
+        {
+            Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 没有实现IPoolItem");
             return;
         }
         
