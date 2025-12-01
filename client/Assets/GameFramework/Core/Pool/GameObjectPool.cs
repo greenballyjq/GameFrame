@@ -24,11 +24,6 @@ namespace GameFramework.Core.Pool
         /// </summary>
         private readonly Transform _parent;
 
-        /// <summary>
-        /// 构造GameObject对象池。
-        /// </summary>
-        /// <param name="prefab">预制体</param>
-        /// <param name="parent">父节点</param>
         public GameObjectPool(GameObject prefab, Transform parent)
         {
             _prefab = prefab;

@@ -5,12 +5,12 @@ using GameFramework.Core.Pool;
 using UnityEngine;
 
 /// <summary>
-/// GameObject对象池管理器。  
+/// GameObject对象池管理器
 /// </summary>
 public class GameObjectPoolManager : IManager
 {
     /// <summary>
-    /// prefab对应的对象池字典
+    /// 预制体对应对象池字典
     /// </summary>
     private readonly Dictionary<GameObject, GameObjectPool> _pools = new Dictionary<GameObject, GameObjectPool>();
     
@@ -18,6 +18,11 @@ public class GameObjectPoolManager : IManager
     /// 预制体缓存字典
     /// </summary>
     private readonly Dictionary<string, GameObject> _prefabCache = new Dictionary<string, GameObject>();
+
+    /// <summary>
+    /// 实例对应的源预制体
+    /// </summary>
+    private readonly Dictionary<GameObject, GameObject> _instancePrefabs = new Dictionary<GameObject, GameObject>();
     
     /// <summary>
     /// 资源管理器引用
@@ -43,10 +48,7 @@ public class GameObjectPoolManager : IManager
         Debug.Log("[GameObjectPoolManager] 初始化完成");
     }
 
-    public void Update()
-    {
-        // 此管理器不需要更新
-    }
+    public void Update(){ }
 
     public void Release()
     {
@@ -58,6 +60,9 @@ public class GameObjectPoolManager : IManager
         
         // 清理预制体缓存
         _prefabCache.Clear();
+
+        // 清理实例映射
+        _instancePrefabs.Clear();
         
         // 销毁根节点
         if (_poolRoot != null)
@@ -71,7 +76,7 @@ public class GameObjectPoolManager : IManager
 
     #region 公共方法
     /// <summary>
-    /// 获取某prefab对应的池
+    /// 获取预制体对应对象池
     /// </summary>
     /// <param name="prefab">预制体</param>
     /// <returns>对象池实例</returns>
@@ -95,7 +100,7 @@ public class GameObjectPoolManager : IManager
     }
 
     /// <summary>
-    /// 取出对象
+    /// 取出对象（路径方式）
     /// </summary>
     /// <param name="prefabPath">预制体资源路径</param>
     /// <returns>取出的对象</returns>
@@ -129,9 +134,36 @@ public class GameObjectPoolManager : IManager
 
         GameObject obj = GetPool(prefab).Spawn();
 
-        // 设置IPoolItem中的路径
-        IPoolItem poolItem = obj.GetComponent<IPoolItem>();
-        poolItem.PrefabPath = prefabPath;
+        // 记录实例对应的预制体
+        _instancePrefabs[obj] = prefab;
+
+        return obj;
+    }
+
+    /// <summary>
+    /// 取出对象（预制体方式）
+    /// </summary>
+    /// <param name="prefab">预制体</param>
+    /// <returns>取出的对象</returns>
+    public GameObject Spawn(GameObject prefab)
+    {
+        if (prefab == null)
+        {
+            Debug.LogError("[GameObjectPoolManager] prefab不能为null");
+            return null;
+        }
+
+        // 检查预制体是否有IPoolItem组件
+        if (prefab.GetComponent<IPoolItem>() == null)
+        {
+            Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口");
+            return null;
+        }
+
+        GameObject obj = GetPool(prefab).Spawn();
+
+        // 记录实例对应的预制体
+        _instancePrefabs[obj] = prefab;
 
         return obj;
     }
@@ -155,22 +187,15 @@ public class GameObjectPoolManager : IManager
             return;
         }
 
-        // 从IPoolItem中获取路径
-        IPoolItem poolItem = obj.GetComponent<IPoolItem>();
-        if (poolItem == null)
+        // 从映射中获取预制体
+        if (!_instancePrefabs.TryGetValue(obj, out var prefab))
         {
-            Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 没有实现IPoolItem");
-            return;
-        }
-        
-        // 从缓存获取预制体
-        if (!_prefabCache.TryGetValue(poolItem.PrefabPath, out var prefab))
-        {
-            Debug.LogError($"[GameObjectPoolManager] 预制体 {poolItem.PrefabPath} 不在缓存中");
+            Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中");
             return;
         }
         
         GetPool(prefab).Despawn(obj);
+        _instancePrefabs.Remove(obj);
     }
     #endregion
 }

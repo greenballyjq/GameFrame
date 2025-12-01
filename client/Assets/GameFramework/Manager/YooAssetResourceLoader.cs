@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using System.Collections.Generic;
 using UnityEngine;
@@ -103,7 +103,7 @@ public class YooAssetResourceLoader : IResourceLoader
             return null;
         }
         
-        var downloader = package.CreateResourceDownloader(10, 3, 60);
+        var downloader = package.CreateResourceDownloader(10, 3);
         return downloader;
     }
     
