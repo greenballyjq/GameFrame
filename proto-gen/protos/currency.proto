@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 message Currency {
-  uint64 threekp = 1;
-  uint64 diamond = 2;
-  uint64 point = 3;
+  uint64 threekp = 1; //金币
+  uint64 diamond = 2; //钻石
+  uint64 point = 3; //积分
 }
 
 message C2S_Currency {}

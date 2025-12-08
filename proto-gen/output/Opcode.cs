@@ -22,14 +22,15 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8quQIKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
+          "CgxvcGNvZGUucHJvdG8q9QIKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
           "Eg0KCU9QX0ZhaWxlZBABEhYKEk9QX1Nlc3Npb25fRXhwaXJlZBACEhwKGE9Q",
           "X1Nlc3Npb25fVG9rZW5fSW52YWxpZBADEhUKEU9QXzNrcF9Ob3RfRW5vdWdo",
           "EGUSGQoVT1BfU3RhbWluYV9Ob3RfRW5vdWdoEGYSFgoST1BfSXRlbV9Ob3Rf",
-          "RW5vdWdoEGcSHQoYT1BfTG9naW5fSW52YWxpZF9BY2NvdW50EOkHEhkKFE9Q",
-          "X0xvZ2luX0F1dGhfZmFpbGVkEOoHEhoKFU9QX0xvZ291dF9PdGhlcl9Mb2dp",
-          "bhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIeChlPUF9Mb2dvdXRfU2Vy",
-          "dmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
+          "RW5vdWdoEGcSGQoVT1BfTWFsbEl0ZW1fTm90X0V4aXN0EGgSHwobT1BfTWFs",
+          "bEl0ZW1fQnV5X0NvdW50X0Vycm9yEGkSHQoYT1BfTG9naW5fSW52YWxpZF9B",
+          "Y2NvdW50EOkHEhkKFE9QX0xvZ2luX0F1dGhfZmFpbGVkEOoHEhoKFU9QX0xv",
+          "Z291dF9PdGhlcl9Mb2dpbhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIe",
+          "ChlPUF9Mb2dvdXRfU2VydmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2C_OPCode), }, null, null));
@@ -67,6 +68,14 @@ public enum S2C_OPCode {
   /// 物品不足
   /// </summary>
   [pbr::OriginalName("OP_Item_Not_Enough")] OpItemNotEnough = 103,
+  /// <summary>
+  /// 商品不存在
+  /// </summary>
+  [pbr::OriginalName("OP_MallItem_Not_Exist")] OpMallItemNotExist = 104,
+  /// <summary>
+  /// 购买数量错误
+  /// </summary>
+  [pbr::OriginalName("OP_MallItem_Buy_Count_Error")] OpMallItemBuyCountError = 105,
   /// <summary>
   /// 无效账号(手机号方式)
   /// </summary>

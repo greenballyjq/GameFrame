@@ -41,7 +41,7 @@ namespace GameFramework.Manager
         /// </summary>
         public virtual void Init()
         {
-            Debug.Log($"[{GetType().Name}] 初始化配置管理器");
+            // Debug.Log($"[{GetType().Name}] 初始化配置管理器");
             // 异步初始化配置
             InitializeAsync();
         }
@@ -61,7 +61,7 @@ namespace GameFramework.Manager
         {
             _tables = null;
             Initialized = false;
-            Debug.Log($"[{GetType().Name}] 配置管理器已释放");
+            // Debug.Log($"[{GetType().Name}] 配置管理器已释放");
         }
 
         /// <summary>
@@ -71,14 +71,14 @@ namespace GameFramework.Manager
         {
             try
             {
-                Debug.Log($"[{GetType().Name}] 开始加载配置表");
+                // Debug.Log($"[{GetType().Name}] 开始加载配置表");
                 await LoadTablesAsync();
                 Initialized = true;
-                Debug.Log($"[{GetType().Name}] 配置表加载完成");
+                // Debug.Log($"[{GetType().Name}] 配置表加载完成");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[{GetType().Name}] 配置表加载失败: {ex.Message}");
+                // Debug.LogError($"[{GetType().Name}] 配置表加载失败: {ex.Message}");
             }
         }
 

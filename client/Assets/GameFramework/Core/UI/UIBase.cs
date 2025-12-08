@@ -12,7 +12,7 @@ namespace GameFramework.Core.UI
         /// </summary>
         public virtual void OnInit(object userData)
         {
-            Debug.Log($"[{GetType().Name}] 初始化");
+            // Debug.Log($"[{GetType().Name}] 初始化");
         }
         
         /// <summary>
@@ -28,7 +28,7 @@ namespace GameFramework.Core.UI
         /// </summary>
         public virtual void OnClose()
         {
-            Debug.Log($"[{GetType().Name}] 关闭");
+            // Debug.Log($"[{GetType().Name}] 关闭");
         }
         
         /// <summary>

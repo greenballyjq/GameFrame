@@ -30,7 +30,7 @@ public class YooAssetResourceLoader : IResourceLoader
     
     public async UniTask<bool> InitializeAsync()
     {
-        Debug.Log("[YooAssetResourceLoader] 初始化YooAsset资源加载器");
+        // Debug.Log("[YooAssetResourceLoader] 初始化YooAsset资源加载器");
         
         // 初始化YooAsset
         YooAssets.Initialize();
@@ -45,7 +45,7 @@ public class YooAssetResourceLoader : IResourceLoader
         _playMode = EPlayMode.HostPlayMode;
 #endif
         
-        Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
+        // Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
 
         // 创建默认资源包
         var defaultPackage = CreatePackage(DefaultPackageName);

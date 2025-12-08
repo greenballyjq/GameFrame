@@ -9,6 +9,8 @@ enum S2C_OPCode {
   OP_3kp_Not_Enough = 101;     // 金币不足
   OP_Stamina_Not_Enough = 102; // 体力不足
   OP_Item_Not_Enough = 103;    // 物品不足
+  OP_MallItem_Not_Exist = 104; // 商品不存在
+  OP_MallItem_Buy_Count_Error = 105; // 购买数量错误
 
   OP_Login_Invalid_Account = 1001; // 无效账号(手机号方式)
   OP_Login_Auth_failed = 1002;     // 平台认证失败

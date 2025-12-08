@@ -103,8 +103,8 @@ namespace GameFramework.Manager
                 Cts = new CancellationTokenSource(),
             };
 
-            UnityEngine.Debug.Log(
-                $"[TimerManager] 计时器 {timerId} 已启动, 时长：{duration:F2}秒, 重复次数：{repeat}, 是否忽略时间缩放：{ignoreTimeScale}");
+            // UnityEngine.Debug.Log(
+            //     $"[TimerManager] 计时器 {timerId} 已启动, 时长：{duration:F2}秒, 重复次数：{repeat}, 是否忽略时间缩放：{ignoreTimeScale}");
 
             _activeTimers[timerId] = timerInfo;
             ExecuteTimerAsync(timerId, timerInfo).Forget();
@@ -136,8 +136,8 @@ namespace GameFramework.Manager
                 Cts = new CancellationTokenSource(),
             };
             
-            UnityEngine.Debug.Log(
-                $"[TimerManager] 计时器 {timerId} 已启动, 时长：{duration:F2}秒, 重复次数：{1}, 是否忽略时间缩放：{ignoreTimeScale}");
+            // UnityEngine.Debug.Log(
+            //     $"[TimerManager] 计时器 {timerId} 已启动, 时长：{duration:F2}秒, 重复次数：{1}, 是否忽略时间缩放：{ignoreTimeScale}");
 
             _activeTimers[timerId] = timerInfo;
             ExecuteTimerAsync(timerId, timerInfo).Forget();
@@ -172,14 +172,14 @@ namespace GameFramework.Manager
                 if (!timerInfo.IsPaused)
                 {
                     timerInfo.IsPaused = true;
-                    UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已暂停, 剩余时间：{timerInfo.RemainTime:F2}秒");
+                    // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已暂停, 剩余时间：{timerInfo.RemainTime:F2}秒");
                     return true;
                 }
 
-                UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已经暂停");
+                // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已经暂停");
             }
 
-            UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 不存在");
+            // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 不存在");
 
             return false;
         }
@@ -196,14 +196,14 @@ namespace GameFramework.Manager
                 if (timerInfo.IsPaused)
                 {
                     timerInfo.IsPaused = false;
-                    UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已恢复, 剩余时间：{timerInfo.RemainTime:F2}秒");
+                    // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 已恢复, 剩余时间：{timerInfo.RemainTime:F2}秒");
                     return true;
                 }
 
-                UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 未暂停");
+                // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 未暂停");
             }
 
-            UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 不存在");
+            // UnityEngine.Debug.Log($"[TimerManager] 计时器 {timerId} 不存在");
 
             return false;
         }

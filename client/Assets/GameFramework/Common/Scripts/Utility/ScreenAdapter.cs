@@ -14,8 +14,8 @@ public class ScreenAdapter : MonoBehaviour
         CanvasScaler cs = transform.GetComponent<CanvasScaler>();
         var info = WeChatWASM.WX.GetWindowInfo();
         if (info == null) return;
-        Debug.Log($"WindowInfo, top:{info.safeArea.top}, bottom: {info.safeArea.bottom}, left: {info.safeArea.left}" +
-                  $", windowHeight: {info.windowHeight}, windowWidth: {info.windowWidth}");
+        // Debug.Log($"WindowInfo, top:{info.safeArea.top}, bottom: {info.safeArea.bottom}, left: {info.safeArea.left}" +
+        //           $", windowHeight: {info.windowHeight}, windowWidth: {info.windowWidth}");
         float py = (float)info.safeArea.top / (float)info.windowHeight;
         float by = ((float)info.windowHeight - (float)info.safeArea.bottom) / (float)info.windowHeight;
         // Rootrect初始时设置其Anchor，使其与父节点一样大，也就是屏幕的大小

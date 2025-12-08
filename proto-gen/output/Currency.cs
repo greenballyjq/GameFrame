@@ -87,6 +87,9 @@ public sealed partial class Currency : pb::IMessage<Currency>
   /// <summary>Field number for the "threekp" field.</summary>
   public const int ThreekpFieldNumber = 1;
   private ulong threekp_;
+  /// <summary>
+  ///金币
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public ulong Threekp {
@@ -99,6 +102,9 @@ public sealed partial class Currency : pb::IMessage<Currency>
   /// <summary>Field number for the "diamond" field.</summary>
   public const int DiamondFieldNumber = 2;
   private ulong diamond_;
+  /// <summary>
+  ///钻石
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public ulong Diamond {
@@ -111,6 +117,9 @@ public sealed partial class Currency : pb::IMessage<Currency>
   /// <summary>Field number for the "point" field.</summary>
   public const int PointFieldNumber = 3;
   private ulong point_;
+  /// <summary>
+  ///积分
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public ulong Point {

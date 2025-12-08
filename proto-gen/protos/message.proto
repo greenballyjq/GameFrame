@@ -20,7 +20,9 @@ message C2S_Message {
     C2S_Item item_data = 8;             // 请求物品数据
     C2S_WaveResult wave_result = 9;     // 上传波次结果
     C2S_Currency currency_data = 10;    // 请求货币数据
-    C2S_Mall mall_items = 11;            // 请求商城物品列表
+    C2S_Mall mall_items = 11;           // 请求商城物品列表
+    C2S_Buy buy = 12;                   // 购买道具
+    C2S_OrderList order_list = 13;      // 请求订单列表
   }
 }
 
@@ -34,6 +36,8 @@ message S2C_Message {
     S2C_Custom custom_data = 7;     // 客户端自定义数据
     S2C_Item item_data = 8;         // 物品数据
     S2C_Currency currency_data = 9; // 货币数据
-    S2C_Mall mall_items = 10;        // 商城物品列表
+    S2C_Mall mall_items = 10;       // 商城物品列表
+    S2C_Buy buy = 11;               // 购买道具
+    S2C_OrderList order_list = 12;  // 订单列表
   }
 }

@@ -1,125 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using GameFramework.Core;
 using GameFramework.Manager;
 using GameFramework.Network;
+using UnityEngine;
 
-/// <summary>
-/// 游戏框架管理器 - 框架核心入口 
-/// @author: Eva
-/// </summary>
-public class GameFrameworkManager : MonoBehaviour
+namespace GameFramework.Core
 {
-    private static GameFrameworkManager _instance;
-    public static GameFrameworkManager Instance => _instance;
+    /// <summary>
+    /// 游戏框架管理器 - 框架核心入口 
+    /// @author: Eva
+    /// </summary>
+    public class GameFrameworkManager : MonoSingleton<GameFrameworkManager>
+    {
+        // private static GameFrameworkManager _instance;
+        // public static GameFrameworkManager Instance => _instance;
 
-    // 管理器集合
-    private readonly Dictionary<Type, IManager> _managers = new Dictionary<Type, IManager>();
+        // 管理器集合
+        private readonly Dictionary<Type, IManager> _managers = new Dictionary<Type, IManager>();
 
-    // 初始化事件
-    public event Action OnInitialized;
+        // 初始化事件
+        public event Action OnInitialized;
         
-    // 框架是否已初始化
-    public bool IsInitialized { get; private set; }
+        // 框架是否已初始化
+        public bool IsInitialized { get; private set; }
 
-    private void Awake()
-    {
-        if (_instance != null)
+        // private void Awake()
+        // {
+        //     // Debug.Log($"[GameFrameworkManager] Awake！！");
+        //     if (_instance != null)
+        //     {
+        //         Destroy(gameObject);
+        //         return;
+        //     }
+        //     
+        //     _instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
+
+        private void Start()
         {
-            Destroy(gameObject);
-            return;
+            // InitFramework();
         }
-            
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
-        InitFramework();
-    }
+        /// <summary>
+        /// 初始化框架
+        /// </summary>
+        public void InitFramework()
+        {
+            // Debug.Log("[GameFramework] 开始初始化框架...");
 
-    /// <summary>
-    /// 初始化框架
-    /// </summary>
-    public void InitFramework()
-    {
-        Debug.Log("[GameFramework] 开始初始化框架...");
-
-        // 注册各个管理器
-        RegisterManager<ResourceManager>();
-        // ConfigManager 由业务层独立管理，框架不注册
-        RegisterManager<PlatformManager>();
-        RegisterManager<EventManager>();
-        RegisterManager<UIManager>();
-        RegisterManager<TimerManager>();
-        RegisterManager<GameObjectPoolManager>();
+            // 注册各个管理器
+            RegisterManager<ResourceManager>();
+            // ConfigManager 由业务层独立管理，框架不注册
+            RegisterManager<PlatformManager>();
+            RegisterManager<EventManager>();
+            RegisterManager<UIManager>();
+            RegisterManager<TimerManager>();
+            RegisterManager<GameObjectPoolManager>();
         
-        // 注册网络相关管理器
-        RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能
-        RegisterManager<ServerClient>();         // 注册服务器客户端
+            // 注册网络相关管理器
+            RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能
+            RegisterManager<ServerClient>();         // 注册服务器客户端
             
-        // 初始化各个管理器
-        foreach (var manager in _managers.Values)
-        {
-            manager.Init();
+            // 初始化各个管理器
+            foreach (var manager in _managers.Values)
+            {
+                manager.Init();
+            }
+
+            // Debug.Log("[GameFramework] 框架初始化完成");
+            IsInitialized = true;
+            OnInitialized?.Invoke();
         }
 
-        Debug.Log("[GameFramework] 框架初始化完成");
-        IsInitialized = true;
-        OnInitialized?.Invoke();
-    }
-
-    /// <summary>
-    /// 注册管理器
-    /// </summary>
-    public void RegisterManager<T>() where T : IManager, new()
-    {
-        var type = typeof(T);
-        if (_managers.ContainsKey(type))
+        /// <summary>
+        /// 注册管理器
+        /// </summary>
+        public void RegisterManager<T>() where T : IManager, new()
         {
-            Debug.LogWarning($"[GameFramework] 管理器 {type.Name} 已经注册");
-            return;
+            var type = typeof(T);
+            if (_managers.ContainsKey(type))
+            {
+                // Debug.LogWarning($"[GameFramework] 管理器 {type.Name} 已经注册");
+                return;
+            }
+
+            var manager = new T();
+            _managers.Add(type, manager);
+            // Debug.Log($"[GameFramework] 注册管理器: {type.Name}");
         }
 
-        var manager = new T();
-        _managers.Add(type, manager);
-        Debug.Log($"[GameFramework] 注册管理器: {type.Name}");
-    }
-
-    /// <summary>
-    /// 获取管理器
-    /// </summary>
-    public T GetManager<T>() where T : class, IManager
-    {
-        var type = typeof(T);
-        if (_managers.TryGetValue(type, out var manager))
+        /// <summary>
+        /// 获取管理器
+        /// </summary>
+        public T GetManager<T>() where T : class, IManager
         {
-            return manager as T;
+            var type = typeof(T);
+            if (_managers.TryGetValue(type, out var manager))
+            {
+                return manager as T;
+            }
+
+            Debug.LogError($"[GameFramework] 管理器 {type.Name} 未注册");
+            return null;
         }
 
-        Debug.LogError($"[GameFramework] 管理器 {type.Name} 未注册");
-        return null;
-    }
-
-    private void Update()
-    {
-        // 更新所有管理器
-        foreach (var manager in _managers.Values)
+        private void Update()
         {
-            manager.Update();
+            // 更新所有管理器
+            foreach (var manager in _managers.Values)
+            {
+                manager.Update();
+            }
         }
-    }
 
-    private void OnDestroy()
-    {
-        // 释放所有管理器
-        foreach (var manager in _managers.Values)
+        private void OnDestroy()
         {
-            manager.Release();
-        }
+            // 释放所有管理器
+            foreach (var manager in _managers.Values)
+            {
+                manager.Release();
+            }
             
-        _managers.Clear();
+            _managers.Clear();
+        }
     }
 }

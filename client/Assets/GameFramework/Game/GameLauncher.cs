@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using GameFramework.Game;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
@@ -9,11 +10,11 @@ namespace GameFramework.Core
     /// <summary>
     /// 游戏启动器 - 游戏入口点
     /// </summary>
-    public class GameLauncher : MonoBehaviour
+    public class GameLauncher : MonoSingleton<GameLauncher>
     {
         // 单例实例
-        private static GameLauncher _instance;
-        public static GameLauncher Instance => _instance;
+        // private static GameLauncher _instance;
+        // public static GameLauncher Instance => _instance;
         
         // 是否已初始化
         private bool _isInitialized = false;
@@ -36,37 +37,58 @@ namespace GameFramework.Core
         
         // 框架管理器
         private GameFrameworkManager _frameworkManager;
+
+        private GameLogic _gameLogic;
         
         // 平台管理器
         private PlatformManager _platformManager;
         
         // 资源管理器
         private ResourceManager _resourceManager;
-        
-        private void Awake()
+
+        protected override async void Awake()
         {
-            if (_instance != null)
+            base.Awake();
+            await LaunchGame();
+            // Debug.Log
+        }
+
+        private async UniTask LaunchGame()
+        {
+            Debug.Log($"[{GetType().Name}] 启动游戏!!!");
+            _gameConfig.loading.SetActive(true);
+            var gameFrameworkManager = FindObjectOfType<GameFrameworkManager>();
+            if (gameFrameworkManager == null)
             {
-                Destroy(gameObject);
-                return;
+                var frameworkObj = new GameObject("GameFrameworkManager");
+                _frameworkManager = frameworkObj.AddComponent<GameFrameworkManager>();
             }
+            else
+            {
+                _frameworkManager = GameFrameworkManager.Instance;
+            }
+            _frameworkManager.InitFramework();
             
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-            // 创建框架管理器
-            var frameworkObj = new GameObject("GameFrameworkManager");
+            await InitResourceAsync();
 
-            // DontDestroyOnLoad 只能作用于根级（root）GameObject。
-            // frameworkObj.transform.SetParent(transform);
-
-            _frameworkManager = frameworkObj.AddComponent<GameFrameworkManager>();
+            var gameLogic = FindObjectOfType<GameLogic>();
+            if (gameLogic == null)
+            {
+                var gameLogicObj = new GameObject("GameLogic");
+                _gameLogic = gameLogicObj.AddComponent<GameLogic>();
+            }
+            else
+            {
+                _gameLogic = gameLogic;
+            }
+            await _gameLogic.InitGameAsync();
+            _gameConfig.loading.SetActive(false);
         }
         
         private void Start()
         {
             // 初始化框架
-            _frameworkManager.OnInitialized += OnFrameworkInitialized;
+            // _frameworkManager.OnInitialized += OnFrameworkInitialized;
         }
         
         private void Update()
@@ -90,27 +112,27 @@ namespace GameFramework.Core
 
         /// <summary>
         /// 框架初始化完成回调
-        /// </summary>+
+        /// </summary>
         private void OnFrameworkInitialized()
         {
-            Debug.Log("[GameLauncher] 开始初始化游戏启动器...");
+            // Debug.Log("[GameLauncher] 开始初始化游戏启动器...");
             
             // 获取各个管理器
             _platformManager = _frameworkManager.GetManager<PlatformManager>();
-            Debug.Log($"[GameLauncher] _platformManager 获取结果: {(_platformManager != null ? "成功" : "失败")}");
+            // Debug.Log($"[GameLauncher] _platformManager 获取结果: {(_platformManager != null ? "成功" : "失败")}");
             
             _resourceManager = _frameworkManager.GetManager<ResourceManager>();
-            Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
+            // Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
             
             // 根据配置设置资源加载模式
             if (_resourceManager != null)
             {
                 _resourceManager.SetResourceLoadMode(_gameConfig.ResourceLoadMode);
-                Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
+                // Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
             }
             else
             {
-                Debug.LogError("[GameLauncher] 资源管理器为空，无法设置资源加载模式");
+                // Debug.LogError("[GameLauncher] 资源管理器为空，无法设置资源加载模式");
             }
             
         
@@ -122,6 +144,27 @@ namespace GameFramework.Core
                 _retryButton.onClick.AddListener(RetryResourceUpdate);
 
             InitGameAsync().Forget();
+        }
+
+        private async UniTask InitResourceAsync()
+        {
+            _resourceManager = _frameworkManager.GetManager<ResourceManager>();
+            // Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
+            
+            // 根据配置设置资源加载模式
+            if (_resourceManager != null)
+            {
+                _resourceManager.SetResourceLoadMode(_gameConfig.ResourceLoadMode);
+                // Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
+            }
+            
+            bool resourceInitSuccess = await InitResourceSystemAsync();
+            if (!resourceInitSuccess)
+            {
+                Debug.LogError("[GameLauncher] 资源系统初始化失败");
+                return;
+            }
+            _isInitialized = true;
         }
         
         /// <summary>
@@ -135,14 +178,14 @@ namespace GameFramework.Core
 
 			}
 
-			// 等待框架初始化完成
-			while (!_frameworkManager.IsInitialized)
-            {
-                await UniTask.Delay(10);
-            }
+			// // 等待框架初始化完成
+			// while (!_frameworkManager.IsInitialized)
+   //          {
+   //              await UniTask.Delay(10);
+   //          }
             
             // 初始化资源系统
-            bool resourceInitSuccess = await InitResourceSystem();
+            bool resourceInitSuccess = await InitResourceSystemAsync();
             if (!resourceInitSuccess)
             {
                 Debug.LogError("[GameLauncher] 资源系统初始化失败");
@@ -177,21 +220,15 @@ namespace GameFramework.Core
             
             // 游戏初始化完成
             _isInitialized = true;
-
+            
             // 触发初始化完成事件
             OnInitialized?.Invoke();
-
-            //         if(_gameConfig.loading)
-            //         {
-            //	_gameConfig.loading.SetActive(false);
-
-            //}
         }
         
         /// <summary>
         /// 初始化资源系统
         /// </summary>
-        private async UniTask<bool> InitResourceSystem()
+        private async UniTask<bool> InitResourceSystemAsync()
         {
             // 显示更新面板
             if (_updatePanel != null)
@@ -363,7 +400,7 @@ namespace GameFramework.Core
             UpdateProgress(0);
             
             // 重新初始化资源系统
-            bool success = await InitResourceSystem();
+            bool success = await InitResourceSystemAsync();
             if (success)
             {
                 // 游戏初始化完成
@@ -395,7 +432,7 @@ namespace GameFramework.Core
         public string GameVersion = "1.0.0";
         
         // 游戏启动场景路径
-        public string StartScenePath = "GooseDemo";
+        public string StartScenePath = "GooseGame";
         
         // 默认语言
         public SystemLanguage DefaultLanguage = SystemLanguage.ChineseSimplified;

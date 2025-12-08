@@ -53,7 +53,7 @@ public class UIManager : IManager
     
     public void Init()
     {
-        Debug.Log("[UIManager] 初始化UI管理器");
+        // Debug.Log("[UIManager] 初始化UI管理器");
         
         _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
         
@@ -78,7 +78,7 @@ public class UIManager : IManager
         // 清除缓存
         _uiPrefabCache.Clear();
         
-        Debug.Log("[UIManager] 释放UI管理器");
+        // Debug.Log("[UIManager] 释放UI管理器");
     }
     
     /// <summary>
@@ -156,7 +156,7 @@ public class UIManager : IManager
             _layerParents.Add(layer, layerObj.transform);
         }
         
-        Debug.Log("[UIManager] UI根节点创建完成");
+        // Debug.Log("[UIManager] UI根节点创建完成");
     }
     
     /// <summary>

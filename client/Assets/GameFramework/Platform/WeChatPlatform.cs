@@ -23,7 +23,7 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     public void Init()
     {
-        Debug.Log("[WeChatPlatform] 初始化微信平台");
+        // Debug.Log("[WeChatPlatform] 初始化微信平台");
 
         // 调用微信小游戏的初始化API
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -69,7 +69,7 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
             return;
         }
-
+        
 #if UNITY_WEBGL && !UNITY_EDITOR
         // 调用微信小游戏的登录API
         try
@@ -80,13 +80,108 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台登录失败 errMsg:{e.Message}");
         }
-        WXLogin(success, fail);
+        // WXLogin(success, fail);
 #else
         // 编辑器模式下模拟登录成功
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台登录成功");
 #endif
     }
 
+    /// <summary>
+    /// 手机号快速验证，向用户申请，并在用户同意后，快速填写和验证手机
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    public void GetUserPhoneNumber(Action<string> success, Action<string> fail)
+    {
+        var getPhoneNumberOption = new GetPhoneNumberOption
+        {
+            complete = result =>
+            {
+                
+            },
+            success = getPhoneNumberSuccessCallbackResult =>
+            {   
+                success?.Invoke(getPhoneNumberSuccessCallbackResult.code);
+            },
+            fail = result =>
+            {
+                fail?.Invoke(result.errMsg);
+            },
+        };
+        
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.GetPhoneNumber(getPhoneNumberOption);
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke(e.Message);
+        }
+#endif
+    }
+
+    /// <summary>
+    /// 获取玩家模糊位置 - 经纬度（需要获取授权）
+    /// </summary>
+    public void GetFuzzyLocation(Action<double, double> success, Action<string> fail)
+    {
+        var getFuzzyLocationOption = new GetFuzzyLocationOption
+        {
+            complete = result => { },
+            fail = result =>
+            {
+                fail?.Invoke(result.errMsg);
+            },
+            success = result =>
+            {
+                success?.Invoke(result.latitude, result.longitude);
+            },
+        };
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.GetFuzzyLocation(getFuzzyLocationOption);
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke(e.Message);
+        }
+#endif
+    }
+
+    /// <summary>
+    /// 打开隐私弹窗
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    public void OpenPrivacyContract(Action success, Action<string> fail)
+    {
+        var option = new RequirePrivacyAuthorizeOption()
+        {
+            complete = result => { },
+            success = result =>
+            {
+                success?.Invoke();
+            },
+            fail = result =>
+            {
+                fail?.Invoke(result.errMsg);
+            }
+        };
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.RequirePrivacyAuthorize(option);
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke(e.Message);
+        }
+#endif
+    }
+    
     /// <summary>
     /// 分享
     /// </summary>
@@ -401,7 +496,7 @@ public class WeChatPlatform : IPlatform
             // 如果已经授权，则直接调用成功回调
             if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])
             {
-                Debug.Log("[WeChatPlatform] 玩家已授权用户信息");
+                // Debug.Log("[WeChatPlatform] 玩家已授权用户信息");
                 success(true);
             }
             // 如果未授权，则调用授权API

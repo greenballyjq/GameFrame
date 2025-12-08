@@ -21,7 +21,7 @@ public class TikTokPlatform : IPlatform
     /// </summary>
     public void Init()
     {
-        Debug.Log("[TikTokPlatform] 初始化抖音平台");
+        // Debug.Log("[TikTokPlatform] 初始化抖音平台");
 
         // 调用抖音小游戏的初始化API
 #if UNITY_WEBGL && !UNITY_EDITOR

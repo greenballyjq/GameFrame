@@ -24,7 +24,7 @@ public class KuaishouPlatform : IPlatform
     /// </summary>
     public void Init()
     {
-        Debug.Log("[KuaishouPlatform] 初始化快手平台");
+        // Debug.Log("[KuaishouPlatform] 初始化快手平台");
         
 
         // 调用快手小游戏的初始化API

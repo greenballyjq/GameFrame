@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
+using GameFramework.Game.UI;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -30,7 +32,7 @@ public class HttpManager : IManager
     /// </summary>
     public void Init()
     {
-        Debug.Log("[HttpManager] 初始化HTTP管理器");
+        // Debug.Log("[HttpManager] 初始化HTTP管理器");
         
         // 设置默认请求头
         _defaultHeaders.Clear();
@@ -137,6 +139,14 @@ public class HttpManager : IManager
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/x-protobuf");
         request.SetRequestHeader("Accept", "application/x-protobuf");
+
+        if (headers == null)
+        {
+            headers = new Dictionary<string, string>();
+        }
+        headers["Content-Type"] = "application/x-protobuf";
+        headers["Accept"] = "application/x-protobuf";
+        
         return await SendRequestAsync(request, headers, timeout, retryCount);
     }
     
@@ -196,6 +206,10 @@ public class HttpManager : IManager
                     request.SetRequestHeader(header.Key, header.Value);
                 }
             }
+            // string headersStr = request.GetResponseHeaders().Aggregate("", (pre, next) => pre += next.Key + ":" + next.Value + "   ");
+            // UIGameMessage uiGameMessage = await GameFrameworkManager.Instance.GetManager<UIManager>()
+            //     .OpenUIAsync<UIGameMessage>("UIGameMessage");
+            // uiGameMessage.ShowMessage($"[HttpManager] request headers: {headersStr}");
             
             // 发送请求
             var operation = request.SendWebRequest();
@@ -205,7 +219,7 @@ public class HttpManager : IManager
             {
                 await UniTask.Yield();
             }
-          
+            
             // 处理响应
             response.StatusCode = (int)request.responseCode;
             
@@ -235,7 +249,8 @@ public class HttpManager : IManager
                 //    );
                 //}
             }
-
+            
+            
             Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
             
         //}

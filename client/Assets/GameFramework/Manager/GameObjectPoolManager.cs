@@ -40,7 +40,7 @@ public class GameObjectPoolManager : IManager
         // 获取资源管理器
         _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
         
-        Debug.Log("[GameObjectPoolManager] 初始化完成");
+        // Debug.Log("[GameObjectPoolManager] 初始化完成");
     }
 
     public void Update()
@@ -66,7 +66,7 @@ public class GameObjectPoolManager : IManager
             _poolRoot = null;
         }
         
-        Debug.Log("[GameObjectPoolManager] 所有对象池已释放");
+        // Debug.Log("[GameObjectPoolManager] 所有对象池已释放");
     }
 
     #region 公共方法
@@ -79,7 +79,7 @@ public class GameObjectPoolManager : IManager
     {
         if (prefab == null)
         {
-            Debug.LogError("[GameObjectPoolManager] prefab不能为null");
+            // Debug.LogError("[GameObjectPoolManager] prefab不能为null");
             return null;
         }
         
@@ -88,7 +88,7 @@ public class GameObjectPoolManager : IManager
             pool = new GameObjectPool(prefab, _poolRoot);
             _pools.Add(prefab, pool);
 
-            Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
+            // Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
         }
 
         return pool;
@@ -103,7 +103,7 @@ public class GameObjectPoolManager : IManager
     {
         if (string.IsNullOrEmpty(prefabPath))
         {
-            Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
+            // Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
             return null;
         }
 
@@ -113,14 +113,14 @@ public class GameObjectPoolManager : IManager
             prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
             if (prefab == null)
             {
-                Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
+                // Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
                 return null;
             }
             
             // 在放入缓存前检查预制体是否有IPoolItem组件
             if (prefab.GetComponent<IPoolItem>() == null)
             {
-                Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
+                // Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
                 return null;
             }
             

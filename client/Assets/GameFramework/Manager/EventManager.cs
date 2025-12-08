@@ -10,7 +10,7 @@ public class EventManager : IManager
 {
     public void Init()
     {
-        Debug.Log("[EventManager] 初始化事件管理器");
+        // Debug.Log("[EventManager] 初始化事件管理器");
     }
 
     public void Update()
@@ -22,7 +22,7 @@ public class EventManager : IManager
     {
         _events.Clear();
         _strongEvents.Clear();
-        Debug.Log("[EventManager] 释放事件管理器");
+        // Debug.Log("[EventManager] 释放事件管理器");
     }
 
     #region 原有字符串事件方法（保持兼容）
@@ -38,13 +38,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            // Debug.LogError("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            // Debug.LogError("[EventManager] 回调不能为空");
             return;
         }
 
@@ -454,7 +454,8 @@ public class EventManager : IManager
             {
                 try
                 {
-                    action(eventData);
+                    // action(eventData);
+                    action?.Invoke(eventData);
                 }
                 catch (Exception e)
                 {

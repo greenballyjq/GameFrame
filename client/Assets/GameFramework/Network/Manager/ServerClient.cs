@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
+using GameFramework.Game.UI;
 using Google.Protobuf;
 using UnityEngine;
 
 namespace GameFramework.Network
 {
-
     /// <summary>
     /// 服务器客户端管理器 - 作为统一的服务器通信出口
     /// 使用 Google Protobuf 协议进行通信
@@ -19,37 +19,38 @@ namespace GameFramework.Network
         private bool isConnected = false;
         private Dictionary<Type, Func<S2C_Message, IMessage>> MessageAccessors;
         private Dictionary<Type, Action<C2S_Message, IMessage>> MessageSetters;
+
         /// <summary>
         /// 是否已连接到服务器
         /// </summary>
         public bool IsConnected => isConnected;
-        
+
         /// <summary>
         /// 服务器URL
         /// </summary>
-        public string ServerUrl 
-        { 
-            get => serverUrl; 
-            set => serverUrl = value; 
+        public string ServerUrl
+        {
+            get => serverUrl;
+            set => serverUrl = value;
         }
-        
+
         /// <summary>
         /// 初始化
         /// </summary>
         public void Init()
         {
-            Debug.Log("[ServerClient] 初始化服务器客户端");
-            
+            // Debug.Log("[ServerClient] 初始化服务器客户端");
+
             // 初始化HTTP管理器
             httpManager = new HttpManager();
             httpManager.Init();
-            
+
             // 设置服务器URL
             httpManager.SetBaseUrl(serverUrl);
-            
-            Debug.Log($"[ServerClient] 服务器地址设置为：{serverUrl}");
+
+            // Debug.Log($"[ServerClient] 服务器地址设置为：{serverUrl}");
         }
-        
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -57,13 +58,13 @@ namespace GameFramework.Network
         {
             httpManager?.Update();
         }
-        
+
         /// <summary>
         /// 释放
         /// </summary>
         public void Release()
         {
-            Debug.Log("[ServerClient] 释放服务器客户端");
+            // Debug.Log("[ServerClient] 释放服务器客户端");
             httpManager?.Release();
             isConnected = false;
         }
@@ -78,38 +79,53 @@ namespace GameFramework.Network
         {
             //try
             //{
-                var postMessage = new C2S_Message();
-                postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                var messageType = message.GetType();
-                if (MessageSetters.TryGetValue(messageType, out var handler))
+            var postMessage = new C2S_Message();
+            postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var messageType = message.GetType();
+            if (MessageSetters.TryGetValue(messageType, out var handler))
+            {
+                handler(postMessage, message);
+            }
+
+            Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
+
+
+            byte[] bodyRaw = postMessage.ToByteArray();
+            var responseData = await httpManager.PostAsync(bodyRaw);
+
+            // if (messageType.Name == "C2S_Login")
+            if (false)
+            {
+                UIGameMessage uiGameMessage = await GameFrameworkManager.Instance.GetManager<UIManager>()
+                    .OpenUIAsync<UIGameMessage>("UIGameMessage");
+                C2S_Login c2SLogin = (C2S_Login)message;
+                uiGameMessage.ShowMessage(
+                    $"[ServerClient] messageType: {messageType.Name}, url: {httpManager._baseUrl}, response code: {responseData.StatusCode}" +
+                    $", response result:{responseData.Success}, response error: {responseData.Error}, response bytes: {responseData.Bytes == null}" +
+                    $", length : {responseData.Bytes?.Length}, wechat code: {c2SLogin.Wechat.Code}");
+            }
+            
+            // TODO: 这里出现responseData为空的情况，需要处理
+            if (responseData != null && responseData.Bytes.Length > 0)
+            {
+                // 反序列化响应
+                S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
+
+                Debug.LogError($"S2C_Message内容：{wrapper.Code}, {wrapper}");
+
+                if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
                 {
-                   handler(postMessage, message);
+                    return (T)accessor(wrapper);
                 }
-                Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
-                byte[] bodyRaw = postMessage.ToByteArray();
-                var responseData = await httpManager.PostAsync(bodyRaw);
-                if (responseData != null && responseData.Bytes.Length > 0)
-                {
-                  
-                    // 反序列化响应
-                    S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
-
-                    Debug.LogError($"S2C_Message内容：{wrapper.Code}, {wrapper}");
-
-                    if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
-                    {
-                        return (T)accessor(wrapper);
-
-                    }
 
                 Debug.Log("[ServerClient] No parser");
                 throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
-                }
-                else
-                {
-                    Debug.Log("[ServerClient] responseData可能为空");
-                    throw new InvalidOperationException($"No parser found for {typeof(T).Name}");
-                }
+            }
+            else
+            {
+                Debug.Log("[ServerClient] responseData可能为空");
+                throw new InvalidOperationException($"ResponseData is null");
+            }
         }
 
 
@@ -118,7 +134,8 @@ namespace GameFramework.Network
             try
             {
                 var responseData = await httpManager.GetAsync(endpoint, 300);
-                if (responseData != null && responseData.Success && responseData.Bytes != null && responseData.Bytes.Length > 0)
+                if (responseData != null && responseData.Success && responseData.Bytes != null &&
+                    responseData.Bytes.Length > 0)
                 {
                     // 反序列化响应
                     var parser = new MessageParser<T>(() => new T());
@@ -130,7 +147,6 @@ namespace GameFramework.Network
                     string errorMsg = responseData?.Error ?? "响应数据为空";
                     throw new InvalidOperationException($"获取 {typeof(T).Name} 失败: {errorMsg}");
                 }
-
             }
             catch (Exception e)
             {
@@ -149,14 +165,15 @@ namespace GameFramework.Network
             {
                 throw new ArgumentException("服务器URL不能为空", nameof(url));
             }
-            
+
             serverUrl = url;
             httpManager?.SetBaseUrl(url);
             Debug.Log($"[ServerClient] 服务器地址已更新为：{url}");
         }
 
 
-        public void SetMessageHandler(Dictionary<Type, Action<C2S_Message, IMessage>> messageSetters, Dictionary<Type, Func<S2C_Message, IMessage>> messageAccessors)
+        public void SetMessageHandler(Dictionary<Type, Action<C2S_Message, IMessage>> messageSetters,
+            Dictionary<Type, Func<S2C_Message, IMessage>> messageAccessors)
         {
             MessageSetters = messageSetters;
             MessageAccessors = messageAccessors;
@@ -168,4 +185,3 @@ namespace GameFramework.Network
         }
     }
 }
-

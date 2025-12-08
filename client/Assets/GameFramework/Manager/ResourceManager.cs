@@ -28,7 +28,7 @@ public class ResourceManager : IManager
     
     public void Init()
     {
-        Debug.Log("[ResourceManager] 初始化资源管理器");
+        // Debug.Log("[ResourceManager] 初始化资源管理器");
         
         // 默认使用YooAsset模式
         SetResourceLoadMode(ResourceLoadMode.YooAsset);
@@ -41,11 +41,11 @@ public class ResourceManager : IManager
     {
         if (_currentMode == mode && _currentLoader != null)
         {
-            Debug.Log($"[ResourceManager] 资源加载模式已经是 {mode}，无需切换");
+            // Debug.Log($"[ResourceManager] 资源加载模式已经是 {mode}，无需切换");
             return;
         }
         
-        Debug.Log($"[ResourceManager] 切换资源加载模式从 {_currentMode} 到 {mode}");
+        // Debug.Log($"[ResourceManager] 切换资源加载模式从 {_currentMode} 到 {mode}");
         
         // 释放当前加载器
         if (_currentLoader != null)
@@ -65,11 +65,11 @@ public class ResourceManager : IManager
                 _currentLoader = new ResourcesResourceLoader();
                 break;
             default:
-                Debug.LogError($"[ResourceManager] 不支持的资源加载模式: {mode}");
+                // Debug.LogError($"[ResourceManager] 不支持的资源加载模式: {mode}");
                 break;
         }
         
-        Debug.Log($"[ResourceManager] 资源加载模式切换完成: {mode}");
+        // Debug.Log($"[ResourceManager] 资源加载模式切换完成: {mode}");
     }
 
 
@@ -110,7 +110,7 @@ public class ResourceManager : IManager
     {
         if (_currentLoader == null)
         {
-            Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
+            // Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
             return false;
         }
         
@@ -139,7 +139,7 @@ public class ResourceManager : IManager
     {
         if (_currentLoader == null)
         {
-            Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
+            // Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
             return null;
         }
         
@@ -155,7 +155,7 @@ public class ResourceManager : IManager
     {
         if (_currentLoader == null)
         {
-            Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
+            // Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
             return false;
         }
         
@@ -169,7 +169,7 @@ public class ResourceManager : IManager
     {
         if (_currentLoader == null)
         {
-            Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
+            // Debug.LogError("[ResourceManager] 当前没有可用的资源加载器");
             return null;
         }
         
