@@ -15,10 +15,5 @@ namespace GameFramework.Core.Pool
         /// 对象回收到池子之前调用
         /// </summary>
         void OnDespawned();
-
-        /// <summary>
-        /// 预制体资源路径
-        /// </summary>
-        string PrefabPath { get; set; }
     }
 }
