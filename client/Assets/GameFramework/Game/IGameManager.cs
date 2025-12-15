@@ -1,4 +1,4 @@
-namespace GameFramework.Game
+﻿namespace GameFramework.Game
 {
     /// <summary>
     /// 游戏业务管理器接口
@@ -9,8 +9,6 @@ namespace GameFramework.Game
         /// 初始化管理器
         /// </summary>
         void Init();
-        
-        // void StartGame();
 
         /// <summary>
         /// 每帧更新

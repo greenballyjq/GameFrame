@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameFramework.Game
 {
@@ -8,7 +8,6 @@ namespace GameFramework.Game
     public abstract class BaseGameManager : MonoBehaviour, IGameManager
     {
         public abstract void Init();
-        // public abstract void StartGame();
         public abstract void Update();
         public abstract void Release();
     }
