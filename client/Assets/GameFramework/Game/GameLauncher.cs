@@ -12,7 +12,21 @@ namespace GameFramework.Game
     /// </summary>
     public class GameLauncher : MonoSingleton<GameLauncher>
     {
-        // 是否已初始化
+        /// <summary>
+        /// 游戏配置
+        /// </summary>
+        [SerializeField] private GameConfig _gameConfig;
+
+        // 资源更新UI
+        [SerializeField] private GameObject _updatePanel;
+        [SerializeField] private Slider _progressBar;
+        [SerializeField] private Text _progressText;
+        [SerializeField] private Text _statusText;
+        [SerializeField] private Button _retryButton;
+
+        /// <summary>
+        /// 是否已初始化
+        /// </summary>
         private bool _isInitialized = false;
         public bool IsInitialized => _isInitialized;
 
@@ -21,39 +35,45 @@ namespace GameFramework.Game
         /// </summary>
         public event Action OnInitialized;
 
-        // 游戏配置
-        [SerializeField] private GameConfig _gameConfig;
-        
-        // 资源更新UI
-        [SerializeField] private GameObject _updatePanel;
-        [SerializeField] private Slider _progressBar;
-        [SerializeField] private Text _progressText;
-        [SerializeField] private Text _statusText;
-        [SerializeField] private Button _retryButton;
-        
-        // 框架管理器
+        /// <summary>
+        /// 框架管理器
+        /// </summary>
         private GameFrameworkManager _frameworkManager;
-
-        private GameLogic _gameLogic;
         
-        // 平台管理器
+        /// <summary>
+        /// 平台管理器
+        /// </summary>
         private PlatformManager _platformManager;
         
-        // 资源管理器
+        /// <summary>
+        /// 资源管理器
+        /// </summary>
         private ResourceManager _resourceManager;
+
+        /// <summary>
+        /// 游戏逻辑类
+        /// </summary>
+        private GameLogic _gameLogic;
 
         protected override async void Awake()
         {
             base.Awake();
             await LaunchGameAsync();
-            // Debug.Log
         }
 
+        /// <summary>
+        /// 异步启动游戏
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         private async UniTask LaunchGameAsync()
         {
-            Debug.Log($"[{GetType().Name}] 启动游戏!!!");
-            if (_gameConfig.loading) 
-                _gameConfig.loading?.SetActive(true);
+            Debug.Log($"[GameLauncher] 启动游戏");
+
+            // 显示游戏加载界面
+            _gameConfig.loading?.SetActive(true);
+
+            // 初始化框架管理器
             var gameFrameworkManager = FindObjectOfType<GameFrameworkManager>();
             if (gameFrameworkManager == null)
             {
@@ -66,19 +86,22 @@ namespace GameFramework.Game
             }
             _frameworkManager.InitFramework();
             
+            // 初始化资源系统
             await InitResourceAsync();
 
+            // 初始化游戏逻辑类
             var gameLogic = FindObjectOfType<GameLogic>();
             if (gameLogic == null)
             {
-                // var gameLogicObj = new GameObject("GameLogic");
-                // _gameLogic = gameLogicObj.AddComponent<GameLogic>();
+                var gameLogicObj = new GameObject("GameLogic");
+                _gameLogic = gameLogicObj.AddComponent<GameLogic>();
                 throw new InvalidOperationException("GameLogic子类对象未找到！");
             }
             _gameLogic = gameLogic;
             await _gameLogic.InitGameAsync();
-            if (_gameConfig.loading) 
-                _gameConfig.loading?.SetActive(false);
+
+            // 隐藏游戏加载界面
+            _gameConfig.loading?.SetActive(false);
         }
         
         private void Start()
@@ -93,17 +116,6 @@ namespace GameFramework.Game
                 return;
             
             // 游戏逻辑更新
-        }
-
-        /// <summary>
-        /// 等待初始化完成
-        /// </summary>
-        public async UniTask WaitForInitializationAsync()
-        {
-            while (!_isInitialized)
-            {
-                await UniTask.Yield();
-            }
         }
 
         /// <summary>
@@ -406,11 +418,14 @@ namespace GameFramework.Game
             }
         }
 
-        public void OnCompleteLauncher()
+        /// <summary>
+        /// 等待初始化完成
+        /// </summary>
+        public async UniTask WaitForInitializationAsync()
         {
-            if(_gameConfig.loading)
+            while (!_isInitialized)
             {
-                _gameConfig.loading.SetActive(false);
+                await UniTask.Yield();
             }
         }
     }
@@ -422,13 +437,13 @@ namespace GameFramework.Game
     public class GameConfig
     {
         // 游戏名称
-        public string GameName = "GooseCatcher";
+        public string GameName = "GameName";
         
         // 游戏版本
         public string GameVersion = "1.0.0";
         
         // 游戏启动场景路径
-        public string StartScenePath = "GooseGame";
+        public string StartScenePath = "StartScenePath";
         
         // 默认语言
         public SystemLanguage DefaultLanguage = SystemLanguage.ChineseSimplified;
@@ -448,6 +463,7 @@ namespace GameFramework.Game
         // CDN地址
         public string CDNUrl = "http://127.0.0.1/CDN/";
 
+        // 加载界面
         public GameObject loading;
     }
 } 
