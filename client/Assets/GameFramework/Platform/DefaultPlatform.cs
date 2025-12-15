@@ -76,6 +76,11 @@ public class DefaultPlatform : IPlatform
         success?.Invoke(result);
     }
 
+    public void GetPhoneNumber(Action<string> success, Action<string> fail)
+    {
+        success?.Invoke("13800138000");
+    }
+
     public SystemInfo GetSystemInfo()
     {
         Debug.Log("[DefaultPlatform] 获取系统信息");

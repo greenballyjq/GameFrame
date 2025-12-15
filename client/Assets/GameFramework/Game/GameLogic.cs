@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
-using GameFramework.Manager;
 using GameFramework.Network;
-using GooseCatcher.Manager;
 using UnityEngine;
 
 namespace GameFramework.Game
@@ -10,7 +10,7 @@ namespace GameFramework.Game
     /// <summary>
     /// 游戏逻辑基类 - 具体游戏逻辑的基类
     /// </summary>
-    public abstract class GameLogic : MonoBehaviour
+    public abstract class GameLogic : MonoSingleton<GameLogic>
     {
         // 游戏框架管理器
         protected GameFrameworkManager FrameworkManager => GameFrameworkManager.Instance;
@@ -54,10 +54,15 @@ namespace GameFramework.Game
 
         // 游戏启动器
         protected GameLauncher GameLauncher => GameLauncher.Instance;
+        
+        public bool IsInitialized { get; private set; }
+        
+        protected Dictionary<Type, IGameManager> GameManagers = new Dictionary<Type, IGameManager>();
 
         // 游戏初始化时调用
-        protected virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             // 子类实现
         }
 
@@ -87,29 +92,25 @@ namespace GameFramework.Game
             // Debug.Log("[GameLogic] 初始化游戏");
             CurrentState = GameState.Loading;
 
-            // 框架初始化
-            // FrameworkManager.InitFramework();
-            
-            // 等待框架初始化完成
-            // while (FrameworkManager == null || !FrameworkManager.IsInitialized || !GameLauncher.IsInitialized)
-            // {
-            //     // Debug.Log("DEBUG!");
-            //     await UniTask.Delay(10);
-            // }
-
-            // GameConfigManager.Instance.Init();
-            // 等待游戏配置初始化完成
-            // await WaitForGameConfigInitialization();
-
             // 游戏特定的初始化
             await OnGameInitAsync();
             OnGameInit();
+            
+            IsInitialized = true;
 
             // 加载完成，进入准备状态
             CurrentState = GameState.Ready;
 
             // 调用游戏准备事件
             OnGameReady();
+        }
+
+        public async UniTask WaitForInitializationAsync()
+        {
+            while (!IsInitialized)
+            {
+                await UniTask.Yield();
+            }
         }
 
         /// <summary>
@@ -124,6 +125,34 @@ namespace GameFramework.Game
         //
         //     // Debug.Log("[GameLogic] 游戏配置初始化完成");
         // }
+
+        protected abstract void RegisterGameManagers();
+
+        protected void RegisterGameManager<T>() where T : BaseGameManager
+        {
+            var type = typeof(T);
+            if (GameManagers.ContainsKey(type))
+            {
+                return;
+            }
+            var manager = FindObjectOfType<T>();
+            if (manager == null)
+            {
+                var go = new GameObject(type.Name);
+                manager = go.AddComponent<T>();
+            }
+
+            GameManagers[type] = manager;
+        }
+
+        public T GetGameManager<T>() where T : BaseGameManager
+        {
+            if (GameManagers.TryGetValue(typeof(T), out var manager))
+            {
+                return (T)manager;
+            }
+            return null;
+        }
 
         // 游戏初始化，子类实现
         protected abstract void OnGameInit();
@@ -199,7 +228,7 @@ namespace GameFramework.Game
         protected abstract void OnGameEnd();
 
         // 重新开始游戏
-        public virtual void RestartGame()
+        public virtual async void RestartGame()
         {
             // Debug.Log("[GameLogic] 重新开始游戏");
             // 结束当前游戏
@@ -209,7 +238,7 @@ namespace GameFramework.Game
             }
 
             // 重新初始化游戏
-            InitGameAsync();
+            await InitGameAsync();
         }
 
         // 游戏进行中更新，子类实现

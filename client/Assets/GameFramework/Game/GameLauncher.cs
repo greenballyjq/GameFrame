@@ -1,21 +1,17 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using GameFramework.Game;
+using GameFramework.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
 
-namespace GameFramework.Core
+namespace GameFramework.Game
 {
     /// <summary>
     /// 游戏启动器 - 游戏入口点
     /// </summary>
     public class GameLauncher : MonoSingleton<GameLauncher>
     {
-        // 单例实例
-        // private static GameLauncher _instance;
-        // public static GameLauncher Instance => _instance;
-        
         // 是否已初始化
         private bool _isInitialized = false;
         public bool IsInitialized => _isInitialized;
@@ -49,14 +45,15 @@ namespace GameFramework.Core
         protected override async void Awake()
         {
             base.Awake();
-            await LaunchGame();
+            await LaunchGameAsync();
             // Debug.Log
         }
 
-        private async UniTask LaunchGame()
+        private async UniTask LaunchGameAsync()
         {
             Debug.Log($"[{GetType().Name}] 启动游戏!!!");
-            _gameConfig.loading.SetActive(true);
+            if (_gameConfig.loading) 
+                _gameConfig.loading?.SetActive(true);
             var gameFrameworkManager = FindObjectOfType<GameFrameworkManager>();
             if (gameFrameworkManager == null)
             {
@@ -74,15 +71,14 @@ namespace GameFramework.Core
             var gameLogic = FindObjectOfType<GameLogic>();
             if (gameLogic == null)
             {
-                var gameLogicObj = new GameObject("GameLogic");
-                _gameLogic = gameLogicObj.AddComponent<GameLogic>();
+                // var gameLogicObj = new GameObject("GameLogic");
+                // _gameLogic = gameLogicObj.AddComponent<GameLogic>();
+                throw new InvalidOperationException("GameLogic子类对象未找到！");
             }
-            else
-            {
-                _gameLogic = gameLogic;
-            }
+            _gameLogic = gameLogic;
             await _gameLogic.InitGameAsync();
-            _gameConfig.loading.SetActive(false);
+            if (_gameConfig.loading) 
+                _gameConfig.loading?.SetActive(false);
         }
         
         private void Start()

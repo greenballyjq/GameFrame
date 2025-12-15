@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
-using GameFramework.Game.UI;
 using Google.Protobuf;
 using UnityEngine;
 
@@ -92,18 +91,6 @@ namespace GameFramework.Network
 
             byte[] bodyRaw = postMessage.ToByteArray();
             var responseData = await httpManager.PostAsync(bodyRaw);
-
-            // if (messageType.Name == "C2S_Login")
-            if (false)
-            {
-                UIGameMessage uiGameMessage = await GameFrameworkManager.Instance.GetManager<UIManager>()
-                    .OpenUIAsync<UIGameMessage>("UIGameMessage");
-                C2S_Login c2SLogin = (C2S_Login)message;
-                uiGameMessage.ShowMessage(
-                    $"[ServerClient] messageType: {messageType.Name}, url: {httpManager._baseUrl}, response code: {responseData.StatusCode}" +
-                    $", response result:{responseData.Success}, response error: {responseData.Error}, response bytes: {responseData.Bytes == null}" +
-                    $", length : {responseData.Bytes?.Length}, wechat code: {c2SLogin.Wechat.Code}");
-            }
             
             // TODO: 这里出现responseData为空的情况，需要处理
             if (responseData != null && responseData.Bytes.Length > 0)

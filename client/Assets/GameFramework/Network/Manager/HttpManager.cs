@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
-using GameFramework.Game.UI;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -206,10 +205,6 @@ public class HttpManager : IManager
                     request.SetRequestHeader(header.Key, header.Value);
                 }
             }
-            // string headersStr = request.GetResponseHeaders().Aggregate("", (pre, next) => pre += next.Key + ":" + next.Value + "   ");
-            // UIGameMessage uiGameMessage = await GameFrameworkManager.Instance.GetManager<UIManager>()
-            //     .OpenUIAsync<UIGameMessage>("UIGameMessage");
-            // uiGameMessage.ShowMessage($"[HttpManager] request headers: {headersStr}");
             
             // 发送请求
             var operation = request.SendWebRequest();

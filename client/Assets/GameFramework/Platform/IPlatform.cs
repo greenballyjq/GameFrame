@@ -11,12 +11,12 @@ public interface IPlatform
     /// 初始化平台
     /// </summary>
     void Init();
-    
+
     /// <summary>
     /// 更新平台
     /// </summary>
     void Update();
-    
+
     /// <summary>
     /// 释放平台
     /// </summary>
@@ -35,14 +35,14 @@ public interface IPlatform
     /// <param name="success">成功回调，返回授权设置</param>
     /// <param name="fail">失败回调</param>
     void CheckUserAuthorization(Action<bool> success, Action<string> fail);
-    
+
     /// <summary>
     /// 获取用户信息（需要先检查授权）
     /// </summary>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
     //void GetUserInfo(Action<UserInfoResult> success, Action<string> fail);
-    
+
     /// <summary>
     /// 创建用户信息授权按钮（透明区域）
     /// </summary>
@@ -55,7 +55,7 @@ public interface IPlatform
     IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap);
 
     // void VibrateShort();
-    
+
     /// <summary>
     /// 分享
     /// </summary>
@@ -87,19 +87,26 @@ public interface IPlatform
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
     void GetUserInfo(Action<UserInfoResult> success, Action<string> fail);
+    
+    /// <summary>
+    /// 获取用户手机号码
+    /// </summary>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void GetPhoneNumber(Action<string> success, Action<string> fail);
 
     /// <summary>
     /// 获取系统信息
     /// </summary>
     /// <returns>系统信息</returns>
     SystemInfo GetSystemInfo();
-    
+
     /// <summary>
     /// 振动
     /// </summary>
     /// <param name="isShort">是否短振动</param>
     void Vibrate(bool isShort);
-    
+
     /// <summary>
     /// 跳转其他小游戏
     /// </summary>
@@ -140,10 +147,10 @@ public class ShareInfo
 /// </summary>
 public enum AdType
 {
-    Banner,     // 横幅广告
+    Banner, // 横幅广告
     Interstitial, // 插屏广告
-    Reward,     // 激励视频
-    Native      // 原生广告
+    Reward, // 激励视频
+    Native // 原生广告
 }
 
 /// <summary>
@@ -187,7 +194,7 @@ public class SystemInfo
     public float ScreenWidth { get; set; }
     public float ScreenHeight { get; set; }
     public string Language { get; set; }
-} 
+}
 
 /// <summary>
 /// 授权结果
@@ -198,12 +205,12 @@ public class AuthorizationResult
     /// 授权设置字典，key为权限名称，value为是否已授权
     /// </summary>
     public Dictionary<string, bool> AuthSetting { get; set; }
-    
+
     /// <summary>
     /// 是否已授权用户信息
     /// </summary>
-    public bool HasUserInfoAuth => AuthSetting != null && 
-                                   AuthSetting.ContainsKey("scope.userInfo") && 
+    public bool HasUserInfoAuth => AuthSetting != null &&
+                                   AuthSetting.ContainsKey("scope.userInfo") &&
                                    AuthSetting["scope.userInfo"];
 }
 
@@ -212,6 +219,7 @@ public class AuthorizationResult
 /// </summary>
 public class UserInfoResult
 {
+    public string RawData { get; set; }
     public int ErrCode { get; set; }
     public string ErrMsg { get; set; }
     public string NickName { get; set; }
@@ -226,6 +234,12 @@ public class UserInfoResult
     public string Signature { get; set; }
     public string CloudID { get; set; }
     public bool IsSuccess => ErrCode == 0;
+
+    public override string ToString()
+    {
+        return $"RawData = {RawData}, NickName = {NickName}, AvatarUrl = {AvatarUrl}, Gender = {Gender}, Province = {Province}, City = {City}," +
+               $" Language = {Language}, EncryptedData = {EncryptedData}, Iv = {Iv}, Signature = {Signature}, CloudID = {CloudID}";
+    }
 }
 
 /// <summary>
@@ -237,14 +251,14 @@ public interface IUserInfoButton
     /// 显示按钮
     /// </summary>
     void Show();
-    
+
     /// <summary>
     /// 隐藏按钮
     /// </summary>
     void Hide();
-    
+
     /// <summary>
     /// 销毁按钮
     /// </summary>
     void Destroy();
-} 
+}

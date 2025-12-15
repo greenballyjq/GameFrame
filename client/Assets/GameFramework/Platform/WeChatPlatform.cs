@@ -1,6 +1,7 @@
 #if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using WeChatWASM;
 
@@ -80,7 +81,6 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WeChatPlatform] 微信平台登录失败 errMsg:{e.Message}");
         }
-        // WXLogin(success, fail);
 #else
         // 编辑器模式下模拟登录成功
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台登录成功");
@@ -585,7 +585,6 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
             return;
         }
-
 #if UNITY_WEBGL && !UNITY_EDITOR
     try
     {
@@ -610,6 +609,47 @@ public class WeChatPlatform : IPlatform
             EncryptedData = "",
             Iv = ""
         });
+#endif
+    }
+
+    /// <summary>
+    /// 获取用户手机号码
+    /// </summary>
+    /// <param name="success">成功回调（动态令牌）</param>
+    /// <param name="fail">失败回调</param>
+    public void GetPhoneNumber(Action<string> success, Action<string> fail)
+    {
+        Debug.Log("[WeChatPlatform] 获取微信用户手机号码");
+        
+        if (!_isInitialized)
+        {
+            fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
+            return;
+        }
+        
+#if UNITY_WEBGL && !UNITY_EDITOR
+        var getPhoneNumberOption = new GetPhoneNumberOption
+        {
+            success = successResult =>
+            {
+                success?.Invoke(successResult.code);
+            },
+            fail = result =>
+            {
+                fail?.Invoke(result.errMsg);
+            }
+        };
+        try
+        {
+            WX.GetPhoneNumber(getPhoneNumberOption);
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke(e.Message);
+        }
+#else
+        // 编辑器模式下模拟手机号码
+        success?.Invoke("12345678901");
 #endif
     }
 
@@ -1122,27 +1162,29 @@ public class WeChatPlatform : IPlatform
     {
         GetUserInfoOption userInfoOption = new GetUserInfoOption
         {
+            withCredentials = true,
             // 获取用户信息成功
             success = (res) =>
             {
                 UserInfoResult result = new UserInfoResult
                 {
+                    RawData = res.rawData,
                     // 仅保留微信当前实际返回的有效字段
                     NickName = res.userInfo.nickName,
                     AvatarUrl = res.userInfo.avatarUrl,
                     Language = res.userInfo.language,
-
+                    
                     // 处理已废弃字段
                     Gender = 0,
                     Country = "",
                     Province = "",
                     City = "",
 
-                    // 微信UserInfo中没有的字段保持默认值
-                    EncryptedData = "",
-                    Iv = ""
+                    // 微信UserInfo中加密字段
+                    EncryptedData = res.encryptedData,
+                    Iv = res.iv,
                 };
-
+                
                 success?.Invoke(result);
             },
             // 获取用户信息失败
