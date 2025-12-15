@@ -10,7 +10,7 @@ namespace GameFramework.Game
         /// </summary>
         void Init();
         
-        void StartGame();
+        // void StartGame();
 
         /// <summary>
         /// 每帧更新

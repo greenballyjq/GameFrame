@@ -12,37 +12,11 @@ namespace GameFramework.Game
     /// </summary>
     public abstract class GameLogic : MonoSingleton<GameLogic>
     {
-        // 游戏框架管理器
-        protected GameFrameworkManager FrameworkManager => GameFrameworkManager.Instance;
-
-        // 平台管理器
-        protected PlatformManager PlatformManager => FrameworkManager.GetManager<PlatformManager>();
-
-        // 资源管理器
-        protected ResourceManager ResourceManager => FrameworkManager.GetManager<ResourceManager>();
-
-        // 游戏配置管理器（游戏业务配置）
-        // protected GameConfigManager GameConfigManager => GameConfigManager.Instance;
-        // protected BaseConfigManager GameConfigManager => GameConfigManager.Instance;
-
-        // 事件管理器
-        protected EventManager EventManager => FrameworkManager.GetManager<EventManager>();
-
-        // UI管理器
-        protected UIManager UIManager => FrameworkManager.GetManager<UIManager>();
-
-        // 服务器客户端
-        public ServerClient ServerClient => FrameworkManager.GetManager<ServerClient>();
-
-        // HTTP管理器（基础网络功能）
-        protected HttpManager HttpManager => FrameworkManager.GetManager<HttpManager>();
-
-
         // 游戏状态
         public enum GameState
         {
             None, // 未初始化
-            Loading, // 加载中
+            Initializing, // 加载中
             Ready, // 准备开始
             Playing, // 游戏中
             Paused, // 暂停
@@ -51,20 +25,10 @@ namespace GameFramework.Game
 
         // 当前游戏状态
         public GameState CurrentState { get; protected set; } = GameState.None;
-
-        // 游戏启动器
-        protected GameLauncher GameLauncher => GameLauncher.Instance;
         
         public bool IsInitialized { get; private set; }
         
-        protected Dictionary<Type, IGameManager> GameManagers = new Dictionary<Type, IGameManager>();
-
-        // 游戏初始化时调用
-        protected override void Awake()
-        {
-            base.Awake();
-            // 子类实现
-        }
+        protected readonly Dictionary<Type, IGameManager> GameManagers = new Dictionary<Type, IGameManager>();
 
         // 游戏帧更新
         protected virtual void Update()
@@ -90,9 +54,12 @@ namespace GameFramework.Game
         public async UniTask InitGameAsync()
         {
             // Debug.Log("[GameLogic] 初始化游戏");
-            CurrentState = GameState.Loading;
+            CurrentState = GameState.Initializing;
 
             // 游戏特定的初始化
+            RegisterGameManagers();
+            InitializeGameManagers();
+            
             await OnGameInitAsync();
             OnGameInit();
             
@@ -105,6 +72,37 @@ namespace GameFramework.Game
             OnGameReady();
         }
 
+        private void OnDestroy()
+        {
+            ReleaseGameManagers();
+        }
+
+        /// <summary>
+        /// 初始化所有游戏业务管理器
+        /// </summary>
+        private void InitializeGameManagers()
+        {
+            Debug.Log("[GameLogic] 初始化游戏业务管理器");
+
+            foreach (var manager in GameManagers.Values)
+                manager.Init();
+
+            Debug.Log("[GameLogic] 初始化游戏业务管理器完成");
+        }
+        
+        /// <summary>
+        /// 释放所有游戏业务管理器
+        /// </summary>
+        private void ReleaseGameManagers()
+        {
+            Debug.Log("[GameLogic] 释放游戏业务管理器");
+
+            foreach (var manager in GameManagers.Values)
+                manager.Release();
+
+            GameManagers.Clear();
+        }
+
         public async UniTask WaitForInitializationAsync()
         {
             while (!IsInitialized)
@@ -112,19 +110,6 @@ namespace GameFramework.Game
                 await UniTask.Yield();
             }
         }
-
-        /// <summary>
-        /// 等待游戏配置初始化完成
-        /// </summary>
-        // protected virtual async UniTask WaitForGameConfigInitialization()
-        // {
-        //     // Debug.Log("[GameLogic] 等待游戏配置初始化...");
-        //
-        //     // 确保GameConfigManager实例存在并等待初始化完成
-        //     // await GameConfigManager.WaitForInitializationAsync();
-        //
-        //     // Debug.Log("[GameLogic] 游戏配置初始化完成");
-        // }
 
         protected abstract void RegisterGameManagers();
 
