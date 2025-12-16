@@ -127,6 +127,11 @@ namespace GameFramework.Core
                 manager = go.AddComponent<T>();
             }
 
+            if (manager.DonotDestroyOnLoad)
+            {
+                DontDestroyOnLoad(manager.gameObject);
+            }
+
             GameManagers[managerType] = manager;
             Debug.Log($"[GameLogic] 注册管理器: {managerType.Name}");
         }

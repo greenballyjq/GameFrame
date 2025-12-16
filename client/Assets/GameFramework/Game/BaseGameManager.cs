@@ -7,9 +7,12 @@ namespace GameFramework.Game
     /// </summary>
     public abstract class BaseGameManager : MonoBehaviour, IGameManager
     {
+        [SerializeField] private bool dontDestroyOnLoad = true;
+        
+        public bool DonotDestroyOnLoad => dontDestroyOnLoad;
+        
         public abstract void Init();
-        // public abstract void StartGame();
-        public abstract void Update();
+        public abstract void DoUpdate();
         public abstract void Release();
     }
 }

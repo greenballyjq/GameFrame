@@ -71,7 +71,8 @@ namespace GameFramework.Game
             Debug.Log($"[GameLauncher] 启动游戏");
 
             // 显示游戏加载界面
-            _gameConfig.loading?.SetActive(true);
+            if (_gameConfig.loading) 
+                _gameConfig.loading.SetActive(true);
 
             // 初始化框架管理器
             var gameFrameworkManager = FindObjectOfType<GameFrameworkManager>();
@@ -101,7 +102,9 @@ namespace GameFramework.Game
             await _gameLogic.InitGameAsync();
 
             // 隐藏游戏加载界面
-            _gameConfig.loading?.SetActive(false);
+            if (_gameConfig.loading) 
+                _gameConfig.loading.SetActive(false);
+            
         }
         
         private void Start()

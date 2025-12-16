@@ -15,7 +15,7 @@ namespace GameFramework.Game
         /// <summary>
         /// 每帧更新
         /// </summary>
-        void Update();
+        void DoUpdate();
 
         /// <summary>
         /// 释放资源
