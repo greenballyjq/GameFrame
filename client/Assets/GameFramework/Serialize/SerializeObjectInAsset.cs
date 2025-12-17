@@ -9,15 +9,25 @@ namespace GameFramework.Serialize
     {
         [SerializeField] private string assetPath;
         
+        private SerializeObjectParent _parent;
+        
         public override SaveSerializedGameObject Save()
         {
             var saveSerializedComponents = TravesalSerialize(transform);
             return new SaveSerializedGameObjectInAsset
             {
-                ExistType = GameObjectExistType.GameObjectInAsset,
+                ParentObjectId = "",
                 AssetPath = assetPath,
+                ExistType = GameObjectExistType.GameObjectInAsset,
                 SaveSerializedComponents = saveSerializedComponents,
-            };  
+            };
         }
+
+        public override void Load(SaveSerializedComponents saveSerializedComponents)
+        {
+            TravesalDeserialize(transform, saveSerializedComponents);
+        }
+        
+        public void SetParent(SerializeObjectParent parent) => _parent = parent;
     }
 }

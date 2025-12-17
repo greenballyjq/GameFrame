@@ -3,7 +3,7 @@
 namespace GameFramework.Serialize
 {
     /// <summary>
-    /// 游戏物体组件（非MonoBehaviour）序列化数据
+    /// 游戏物体组件序列化数据
     /// </summary>
     [Serializable]
     public class ComponentSerialized

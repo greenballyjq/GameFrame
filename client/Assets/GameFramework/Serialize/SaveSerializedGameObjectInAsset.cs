@@ -9,5 +9,6 @@ namespace GameFramework.Serialize
     public class SaveSerializedGameObjectInAsset : SaveSerializedGameObject
     {
         public string AssetPath { get; set; }
+        public string ParentObjectId { get; set; }
     }
 }

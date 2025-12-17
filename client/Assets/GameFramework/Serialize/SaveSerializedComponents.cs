@@ -11,6 +11,5 @@ namespace GameFramework.Serialize
     {
         public SaveSerializedComponents[] Children { get; set; }
         public List<ComponentSerialized> ComponentSerializeList { get; set; }
-        public List<MonoBehaviourSerialized> MonoBehaviourSerializeList { get; set; }
     } 
 }

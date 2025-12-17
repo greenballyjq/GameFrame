@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameFramework.Core;
 using GameFramework.Manager;
 using UnityEngine;
@@ -10,14 +11,10 @@ namespace GameFramework.Serialize
     /// </summary>
     public abstract class SerializeObject : MonoBehaviour
     {
-        private const string TestJson =
-            "{\"Children\":[{\"Children\":[],\"ComponentSerializes\":[{\"ComponentType\":\"Transform\",\"JsonData\":\"{\\\"Position\\\":{\\\"X\\\":1.0,\\\"Y\\\":1.0,\\\"Z\\\":1.0},\\\"LocalPosition\\\":{\\\"X\\\":1.0,\\\"Y\\\":1.0,\\\"Z\\\":1.0},\\\"Rotation\\\":{\\\"W\\\":1.0,\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"LocalRotation\\\":{\\\"W\\\":1.0,\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"LocalScale\\\":{\\\"X\\\":1.0,\\\"Y\\\":1.0,\\\"Z\\\":1.0}}\"}],\"MonoBehaviourSerializes\":[]}],\"ComponentSerializes\":[{\"ComponentType\":\"Transform\",\"JsonData\":\"{\\\"Position\\\":{\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"LocalPosition\\\":{\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"Rotation\\\":{\\\"W\\\":1.0,\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"LocalRotation\\\":{\\\"W\\\":1.0,\\\"X\\\":0.0,\\\"Y\\\":0.0,\\\"Z\\\":0.0},\\\"LocalScale\\\":{\\\"X\\\":1.0,\\\"Y\\\":1.0,\\\"Z\\\":1.0}}\"},{\"ComponentType\":\"Rigidbody2D\",\"JsonData\":\"{\\\"Position\\\":{\\\"X\\\":0.0,\\\"Y\\\":0.0},\\\"Rotation\\\":0.0,\\\"Velocity\\\":{\\\"X\\\":0.0,\\\"Y\\\":0.0},\\\"AngularDrag\\\":0.05,\\\"AngularVelocity\\\":0.0,\\\"GravityScale\\\":0.0,\\\"IsKinematic\\\":false,\\\"FreezeRotation\\\":true,\\\"Mass\\\":1.0,\\\"Constraints\\\":4}\"}],\"MonoBehaviourSerializes\":[{\"MonoBehaviourType\":\"Health\",\"JsonData\":\"{\\\"TotalHp\\\":0.0,\\\"CurrentHp\\\":0.0,\\\"DamageMultiplier\\\":1.0}\"},{\"MonoBehaviourType\":\"EnemyBase\",\"JsonData\":\"{\\\"IsDead\\\":true}\"}]}";
-
         private SaveLoadManager _saveLoadManager;
         
         private async void Start()
         {
-            // TODO: 加入到序列化管理器
             await GameFrameworkManager.Instance.WaitForInitializationAsync();
             _saveLoadManager = GameFrameworkManager.Instance.GetManager<SaveLoadManager>();
             _saveLoadManager.AddSerializeObject(this);
@@ -40,12 +37,14 @@ namespace GameFramework.Serialize
             #endregion
         }
 
+        private void OnDestroy()
+        {
+            _saveLoadManager.RemoveSerializeObject(this);
+        }
+
         public abstract SaveSerializedGameObject Save();
 
-        public void Load(SaveSerializedComponents saveSerializedComponents)
-        {
-            TravesalDeserialize(transform, saveSerializedComponents);
-        }
+        public abstract void Load(SaveSerializedComponents saveSerializedComponents);
 
         /// <summary>
         /// 回溯算法实现游戏物体和子物体的组件与脚本实例序列化
@@ -59,28 +58,49 @@ namespace GameFramework.Serialize
             List<ComponentSerialized> componentsSerializedList = new List<ComponentSerialized>();
             foreach (var component in components)
             {
-                if (component is MonoBehaviour) continue;
-                componentsSerializedList.Add(new ComponentSerialized()
+                // if (component is MonoBehaviour) continue;
+                // componentsSerializedList.Add(new ComponentSerialized()
+                // {
+                //     ComponentType = component.GetType().Name,
+                //     JsonData = component.Serialize(),
+                // });
+                // 组件是否为脚本组件
+                if (component is MonoBehaviour)
                 {
-                    ComponentType = component.GetType().Name,
-                    JsonData = component.Serialize(),
-                });
+                    // 该脚本组件是否实现了ISerializable接口
+                    if (component is ISerializable serializable)
+                    {
+                        componentsSerializedList.Add(new ComponentSerialized
+                        {
+                            ComponentType = component.GetType().Name,
+                            JsonData = serializable.Serialize(),
+                        });
+                    }
+                }
+                else
+                {
+                    componentsSerializedList.Add(new ComponentSerialized
+                    {
+                        ComponentType = component.GetType().Name,
+                        JsonData = component.Serialize()
+                    });
+                }
             }
 
-            List<MonoBehaviourSerialized> monoBehaviourSerializedList = new List<MonoBehaviourSerialized>();
-            foreach (var serializableMonoBehaviour in target.GetComponents<ISerializableMonoBehaviour>())
-            {
-                monoBehaviourSerializedList.Add(new MonoBehaviourSerialized
-                {
-                    MonoBehaviourType = serializableMonoBehaviour.GetType().Name,
-                    JsonData = serializableMonoBehaviour.SerializeMonoBehaviour(),
-                });
-            }
+            // List<MonoBehaviourSerialized> monoBehaviourSerializedList = new List<MonoBehaviourSerialized>();
+            // foreach (var serializableMonoBehaviour in target.GetComponents<ISerializable>())
+            // {
+            //     monoBehaviourSerializedList.Add(new MonoBehaviourSerialized
+            //     {
+            //         MonoBehaviourType = serializableMonoBehaviour.GetType().Name,
+            //         JsonData = serializableMonoBehaviour.Serialize(),
+            //     });
+            // }
 
             var saveItem = new SaveSerializedComponents
             {
                 ComponentSerializeList = componentsSerializedList,
-                MonoBehaviourSerializeList = monoBehaviourSerializedList,
+                // MonoBehaviourSerializeList = monoBehaviourSerializedList,
                 Children = new SaveSerializedComponents[target.childCount]
             };
 
@@ -98,36 +118,55 @@ namespace GameFramework.Serialize
         /// <param name="target"></param>
         /// <param name="loadedSaveSerializedComponents"></param>
         /// <returns></returns>
-        private void TravesalDeserialize(Transform target, SaveSerializedComponents loadedSaveSerializedComponents)
+        protected void TravesalDeserialize(Transform target, SaveSerializedComponents loadedSaveSerializedComponents)
         {
             if (!target) return;
             Debug.Log($"[{GetType().Name}] TravesalDeserialize {target.name}");
             var components = target.GetComponents<Component>();
             foreach (var component in components)
             {
-                if (component is MonoBehaviour) continue;
+                // if (component is MonoBehaviour) continue;
+                // var componentSerializedList = loadedSaveSerializedComponents.ComponentSerializeList;
+                // foreach (var componentSerialized in componentSerializedList)
+                // {
+                //     if (component.GetType().Name == componentSerialized.ComponentType)
+                //     {
+                //         component.Deserialize(componentSerialized.JsonData);
+                //     }
+                // }
+                
                 var componentSerializedList = loadedSaveSerializedComponents.ComponentSerializeList;
                 foreach (var componentSerialized in componentSerializedList)
                 {
                     if (component.GetType().Name == componentSerialized.ComponentType)
                     {
-                        component.Deserialize(componentSerialized.JsonData);
+                        if (component is MonoBehaviour)
+                        {
+                            if (component is ISerializable serializable)
+                            {
+                                serializable.Deserialize(componentSerialized.JsonData);
+                            }
+                        }
+                        else
+                        {
+                            component.Deserialize(componentSerialized.JsonData);
+                        }
                     }
                 }
             }
 
-            var serializableMonoBehaviours = target.GetComponents<ISerializableMonoBehaviour>();
-            foreach (var serializableMonoBehaviour in serializableMonoBehaviours)
-            {
-                var monoBehaviourSerializedList = loadedSaveSerializedComponents.MonoBehaviourSerializeList;
-                foreach (var monoBehaviourSerialized in monoBehaviourSerializedList)
-                {
-                    if (serializableMonoBehaviour.GetType().Name == monoBehaviourSerialized.MonoBehaviourType)
-                    {
-                        serializableMonoBehaviour.DeserializeMonoBehaviour(monoBehaviourSerialized.JsonData);
-                    }
-                }
-            }
+            // var serializableMonoBehaviours = target.GetComponents<ISerializable>();
+            // foreach (var serializableMonoBehaviour in serializableMonoBehaviours)
+            // {
+            //     var monoBehaviourSerializedList = loadedSaveSerializedComponents.MonoBehaviourSerializeList;
+            //     foreach (var monoBehaviourSerialized in monoBehaviourSerializedList)
+            //     {
+            //         if (serializableMonoBehaviour.GetType().Name == monoBehaviourSerialized.MonoBehaviourType)
+            //         {
+            //             serializableMonoBehaviour.Deserialize(monoBehaviourSerialized.JsonData);
+            //         }
+            //     }
+            // }
 
             for (int i = 0; i < target.childCount; i++)
             {

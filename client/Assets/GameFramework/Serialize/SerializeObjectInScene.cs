@@ -21,5 +21,10 @@ namespace GameFramework.Serialize
                 SaveSerializedComponents = saveSerializedComponents,
             }; 
         }
+
+        public override void Load(SaveSerializedComponents saveSerializedComponents)
+        {
+            TravesalDeserialize(transform, saveSerializedComponents);
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace GameFramework.Manager
         /// <summary>
         /// 激活的计时器集合
         /// </summary>
-        private Dictionary<int, TimerInfo> _activeTimers = new Dictionary<int, TimerInfo>();
+        private readonly Dictionary<int, TimerInfo> _activeTimers = new Dictionary<int, TimerInfo>();
 
         /// <summary>
         /// 循环执行参数
