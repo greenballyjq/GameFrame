@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if FRAMEWORK_SAVELOAD 
+
+using UnityEngine;
 
 namespace GameFramework.Serialize
 {
@@ -31,3 +33,4 @@ namespace GameFramework.Serialize
         public void SetParent(SerializeObjectParent parent) => _parent = parent;
     }
 }
+#endif

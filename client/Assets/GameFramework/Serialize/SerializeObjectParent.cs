@@ -1,5 +1,5 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿#if FRAMEWORK_SAVELOAD
+
 using GameFramework.Core;
 using GameFramework.Manager;
 using UnityEngine;
@@ -30,3 +30,4 @@ namespace GameFramework.Serialize
         }
     }
 }
+#endif

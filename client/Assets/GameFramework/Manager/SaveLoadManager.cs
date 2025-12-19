@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#if FRAMEWORK_SAVELOAD
+
+
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using GameFramework.Core;
 using GameFramework.Serialize;
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 using UnityEngine;
 
 namespace GameFramework.Manager
@@ -98,84 +101,84 @@ namespace GameFramework.Manager
                 }
             }
 
-            using (var fileStream = File.OpenWrite($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInscene.json"))
-            {
-                string json = JsonConvert.SerializeObject(_saveSerializedGameObjectInSceneList);
-                var bytes = Encoding.UTF8.GetBytes(json);
-                fileStream.Write(bytes, 0, bytes.Length);
-                fileStream.Close();
-            }
-            
-            using (var fileStream = File.OpenWrite($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInAsset.json"))
-            {
-                string json = JsonConvert.SerializeObject(_saveSerializedGameObjectInAssetList);
-                var bytes = Encoding.UTF8.GetBytes(json);
-                fileStream.Write(bytes, 0, bytes.Length);
-                fileStream.Close();
-            }
+            // using (var fileStream = File.OpenWrite($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInscene.json"))
+            // {
+            //     string json = JsonConvert.SerializeObject(_saveSerializedGameObjectInSceneList);
+            //     var bytes = Encoding.UTF8.GetBytes(json);
+            //     fileStream.Write(bytes, 0, bytes.Length);
+            //     fileStream.Close();
+            // }
+            //
+            // using (var fileStream = File.OpenWrite($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInAsset.json"))
+            // {
+            //     string json = JsonConvert.SerializeObject(_saveSerializedGameObjectInAssetList);
+            //     var bytes = Encoding.UTF8.GetBytes(json);
+            //     fileStream.Write(bytes, 0, bytes.Length);
+            //     fileStream.Close();
+            // }
         }
 
         private void Load()
         {
             using (var streamReader1 = File.OpenText($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInscene.json"))
             {
-                var json1 = streamReader1.ReadToEnd();
-                if (string.IsNullOrEmpty(json1))
-                {
-                    Debug.LogError($"[{GetType().Name}] Load object in scene failed");
-                    return;
-                }
-
-                var saveSerializedGameObjectInSceneList =
-                    JsonConvert.DeserializeObject<List<SaveSerializedGameObjectInScene>>(json1);
-                Debug.Log(
-                    $"[{GetType().Name}] Load object in scene complete {saveSerializedGameObjectInSceneList.Count}");
-                foreach (var saveSerializedGameObjectInScene in saveSerializedGameObjectInSceneList)
-                {
-                    if (_serializeObjectInSceneDictionary.TryGetValue(saveSerializedGameObjectInScene.ObjectIdInScene,
-                            out var serializeObjectInScene))
-                    {
-                        serializeObjectInScene.Load(saveSerializedGameObjectInScene.SaveSerializedComponents);
-                    }
-                }
-            }
-
-            using (var streamReader2 = File.OpenText($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInAsset.json"))
-            {
-                var json2 = streamReader2.ReadToEnd();
-                Debug.Log($"[{GetType().Name}] load from asset: {json2}");
-                if (string.IsNullOrEmpty(json2))
-                {
-                    Debug.LogError($"[{GetType().Name}] Load object in asset failed");
-                    return;
-                }
-
-                var saveSerializedGameObjectInAssetList =
-                    JsonConvert.DeserializeObject<List<SaveSerializedGameObjectInAsset>>(json2);
-                Debug.Log(
-                    $"[{GetType().Name}] Load object in asset complete {saveSerializedGameObjectInAssetList.Count}");
-                foreach (var saveSerializedGameObjectInAsset in saveSerializedGameObjectInAssetList)
-                {
-                    Debug.Log($"[{GetType().Name}] path: {saveSerializedGameObjectInAsset.AssetPath}");
-                    // TODO: 加载资源，并反序列化组件数据     
-                    // Transform prefab = null;
-                    // var go = GameObject.Instantiate(prefab);
-                    // go.GetComponent<SerializeObject>().Load(saveSerializedGameObjectInAsset.SaveSerializedComponents);
-                    var gameObject = Resources.Load<GameObject>(saveSerializedGameObjectInAsset.AssetPath);
-                    if (gameObject == null)
-                    {
-                        Debug.Log($"[{GetType().Name}] Load object in null");
-                        return;
-                    }
-                    var prefab = gameObject.transform;
-                    Transform parent = null;
-                    if (_serializeObjectParentDictionary.TryGetValue(saveSerializedGameObjectInAsset.ParentObjectId, out parent))
-                    {
-                        
-                    }
-                    var transform = GameObject.Instantiate(prefab, parent);
-                    transform.GetComponent<SerializeObject>().Load(saveSerializedGameObjectInAsset.SaveSerializedComponents);
-                }
+            //     var json1 = streamReader1.ReadToEnd();
+            //     if (string.IsNullOrEmpty(json1))
+            //     {
+            //         Debug.LogError($"[{GetType().Name}] Load object in scene failed");
+            //         return;
+            //     }
+            //
+            //     var saveSerializedGameObjectInSceneList =
+            //         JsonConvert.DeserializeObject<List<SaveSerializedGameObjectInScene>>(json1);
+            //     Debug.Log(
+            //         $"[{GetType().Name}] Load object in scene complete {saveSerializedGameObjectInSceneList.Count}");
+            //     foreach (var saveSerializedGameObjectInScene in saveSerializedGameObjectInSceneList)
+            //     {
+            //         if (_serializeObjectInSceneDictionary.TryGetValue(saveSerializedGameObjectInScene.ObjectIdInScene,
+            //                 out var serializeObjectInScene))
+            //         {
+            //             serializeObjectInScene.Load(saveSerializedGameObjectInScene.SaveSerializedComponents);
+            //         }
+            //     }
+            // }
+            //
+            // using (var streamReader2 = File.OpenText($"C:\\Users\\sanqianpan\\Desktop\\loadObjectInAsset.json"))
+            // {
+            //     var json2 = streamReader2.ReadToEnd();
+            //     Debug.Log($"[{GetType().Name}] load from asset: {json2}");
+            //     if (string.IsNullOrEmpty(json2))
+            //     {
+            //         Debug.LogError($"[{GetType().Name}] Load object in asset failed");
+            //         return;
+            //     }
+            //
+            //     var saveSerializedGameObjectInAssetList =
+            //         JsonConvert.DeserializeObject<List<SaveSerializedGameObjectInAsset>>(json2);
+            //     Debug.Log(
+            //         $"[{GetType().Name}] Load object in asset complete {saveSerializedGameObjectInAssetList.Count}");
+            //     foreach (var saveSerializedGameObjectInAsset in saveSerializedGameObjectInAssetList)
+            //     {
+            //         Debug.Log($"[{GetType().Name}] path: {saveSerializedGameObjectInAsset.AssetPath}");
+            //         // TODO: 加载资源，并反序列化组件数据     
+            //         // Transform prefab = null;
+            //         // var go = GameObject.Instantiate(prefab);
+            //         // go.GetComponent<SerializeObject>().Load(saveSerializedGameObjectInAsset.SaveSerializedComponents);
+            //         var gameObject = Resources.Load<GameObject>(saveSerializedGameObjectInAsset.AssetPath);
+            //         if (gameObject == null)
+            //         {
+            //             Debug.Log($"[{GetType().Name}] Load object in null");
+            //             return;
+            //         }
+            //         var prefab = gameObject.transform;
+            //         Transform parent = null;
+            //         if (_serializeObjectParentDictionary.TryGetValue(saveSerializedGameObjectInAsset.ParentObjectId, out parent))
+            //         {
+            //             
+            //         }
+            //         var transform = GameObject.Instantiate(prefab, parent);
+            //         transform.GetComponent<SerializeObject>().Load(saveSerializedGameObjectInAsset.SaveSerializedComponents);
+            //     }
             }
         }
 
@@ -212,3 +215,4 @@ namespace GameFramework.Manager
         }
     }
 }
+#endif

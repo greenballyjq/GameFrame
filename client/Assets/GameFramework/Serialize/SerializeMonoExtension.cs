@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿// using Newtonsoft.Json;
 using UnityEngine;
 
 namespace GameFramework.Serialize
@@ -30,209 +30,221 @@ namespace GameFramework.Serialize
 
         public static string Serialize(this Transform target)
         {
-            return JsonConvert.SerializeObject(new TransformSerializable(target));
-            // return "";
+            // return JsonConvert.SerializeObject(new TransformSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this Transform target, string json)
         {
-            var transformSerializable = JsonConvert.DeserializeObject<TransformSerializable>(json);
-            target.position = transformSerializable.Position.ToVector3();
-            target.rotation = transformSerializable.Rotation.ToQuaternion();
-            target.localPosition = transformSerializable.LocalPosition.ToVector3();
-            target.localRotation = transformSerializable.LocalRotation.ToQuaternion();
-            target.localScale = transformSerializable.LocalScale.ToVector3();
+            // var transformSerializable = JsonConvert.DeserializeObject<TransformSerializable>(json);
+            // target.position = transformSerializable.Position.ToVector3();
+            // target.rotation = transformSerializable.Rotation.ToQuaternion();
+            // target.localPosition = transformSerializable.LocalPosition.ToVector3();
+            // target.localRotation = transformSerializable.LocalRotation.ToQuaternion();
+            // target.localScale = transformSerializable.LocalScale.ToVector3();
         }
 
         public static string Serialize(this Rigidbody2D target)
         {
-            return JsonConvert.SerializeObject(new Rigidbody2DSerializable(target));
+            // return JsonConvert.SerializeObject(new Rigidbody2DSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this Rigidbody2D target, string json)
         {
-            var rigidbody2DSerializable = JsonConvert.DeserializeObject<Rigidbody2DSerializable>(json);
-            target.velocity = rigidbody2DSerializable.Velocity.ToVector2();
-            target.angularDrag = rigidbody2DSerializable.AngularDrag;
-            target.gravityScale = rigidbody2DSerializable.GravityScale;
-            target.isKinematic = rigidbody2DSerializable.IsKinematic;
-            target.mass = rigidbody2DSerializable.Mass;
-            target.constraints = rigidbody2DSerializable.Constraints;
-            target.angularVelocity = rigidbody2DSerializable.AngularVelocity;
-            target.position = rigidbody2DSerializable.Position.ToVector2();
-            target.rotation = rigidbody2DSerializable.Rotation;
+            // var rigidbody2DSerializable = JsonConvert.DeserializeObject<Rigidbody2DSerializable>(json);
+            // target.velocity = rigidbody2DSerializable.Velocity.ToVector2();
+            // target.angularDrag = rigidbody2DSerializable.AngularDrag;
+            // target.gravityScale = rigidbody2DSerializable.GravityScale;
+            // target.isKinematic = rigidbody2DSerializable.IsKinematic;
+            // target.mass = rigidbody2DSerializable.Mass;
+            // target.constraints = rigidbody2DSerializable.Constraints;
+            // target.angularVelocity = rigidbody2DSerializable.AngularVelocity;
+            // target.position = rigidbody2DSerializable.Position.ToVector2();
+            // target.rotation = rigidbody2DSerializable.Rotation;
         }
 
         public static string Serialize(this Rigidbody target)
         {
-            return JsonConvert.SerializeObject(new RigidbodySerializable(target));
+            // return JsonConvert.SerializeObject(new RigidbodySerializable(target));
+            return "";
         }
 
         public static void Deserialize(this Rigidbody target, string json)
         {
-            var rigidbodySerializable = JsonConvert.DeserializeObject<RigidbodySerializable>(json);
-            target.velocity = rigidbodySerializable.Velocity.ToVector3();
-            target.angularDrag = rigidbodySerializable.AngularDrag;
-            target.drag = rigidbodySerializable.Drag;
-            target.freezeRotation = rigidbodySerializable.FreezeRotation;
-            target.isKinematic = rigidbodySerializable.IsKinematic;
-            target.mass = rigidbodySerializable.Mass;
-            target.useGravity = rigidbodySerializable.UseGravity;
-            target.position = rigidbodySerializable.Position.ToVector3();
-            target.rotation = rigidbodySerializable.Rotation.ToQuaternion();
-            target.constraints = rigidbodySerializable.Constraints;
+            // var rigidbodySerializable = JsonConvert.DeserializeObject<RigidbodySerializable>(json);
+            // target.velocity = rigidbodySerializable.Velocity.ToVector3();
+            // target.angularDrag = rigidbodySerializable.AngularDrag;
+            // target.drag = rigidbodySerializable.Drag;
+            // target.freezeRotation = rigidbodySerializable.FreezeRotation;
+            // target.isKinematic = rigidbodySerializable.IsKinematic;
+            // target.mass = rigidbodySerializable.Mass;
+            // target.useGravity = rigidbodySerializable.UseGravity;
+            // target.position = rigidbodySerializable.Position.ToVector3();
+            // target.rotation = rigidbodySerializable.Rotation.ToQuaternion();
+            // target.constraints = rigidbodySerializable.Constraints;
         }
 
         public static void Deserialize(this Collider target, string json)
         {
-            var colliderSerializable = JsonConvert.DeserializeObject<ColliderSerializable>(json);
-            target.enabled = colliderSerializable.Enabled;
-            target.isTrigger = colliderSerializable.IsTrigger;
+            // var colliderSerializable = JsonConvert.DeserializeObject<ColliderSerializable>(json);
+            // target.enabled = colliderSerializable.Enabled;
+            // target.isTrigger = colliderSerializable.IsTrigger;
         }
 
         public static string Serialize(this BoxCollider target)
         {
-            return JsonConvert.SerializeObject(new BoxColliderSerializable(target));
+            // return JsonConvert.SerializeObject(new BoxColliderSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this BoxCollider target, string json)
         {
-            var boxColliderSerializable = JsonConvert.DeserializeObject<BoxColliderSerializable>(json);
-            (target as Collider).Deserialize(json);
-            target.center = boxColliderSerializable.Center.ToVector3();
-            target.size = boxColliderSerializable.Size.ToVector3();
+            // var boxColliderSerializable = JsonConvert.DeserializeObject<BoxColliderSerializable>(json);
+            // (target as Collider).Deserialize(json);
+            // target.center = boxColliderSerializable.Center.ToVector3();
+            // target.size = boxColliderSerializable.Size.ToVector3();
         }
 
         public static string Serialize(this SphereCollider target)
         {
-            return JsonConvert.SerializeObject(new SphereColliderSerializable(target));
+            // return JsonConvert.SerializeObject(new SphereColliderSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this SphereCollider target, string json)
         {
-            var sphereColliderSerializable = JsonConvert.DeserializeObject<SphereColliderSerializable>(json);
-            (target as Collider).Deserialize(json);
-            target.center = sphereColliderSerializable.Center.ToVector3();
-            target.radius = sphereColliderSerializable.Radius;
+            // var sphereColliderSerializable = JsonConvert.DeserializeObject<SphereColliderSerializable>(json);
+            // (target as Collider).Deserialize(json);
+            // target.center = sphereColliderSerializable.Center.ToVector3();
+            // target.radius = sphereColliderSerializable.Radius;
         }
 
         public static string Serialize(this CapsuleCollider target)
         {
-            return JsonConvert.SerializeObject(new CapsuleColliderSerializable(target));
+            // return JsonConvert.SerializeObject(new CapsuleColliderSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this CapsuleCollider target, string json)
         {
-            var capsuleColliderSerializable = JsonConvert.DeserializeObject<CapsuleColliderSerializable>(json);
-            (target as Collider).Deserialize(json);
-            target.center = capsuleColliderSerializable.Center.ToVector3();
-            target.radius = capsuleColliderSerializable.Radius;
-            target.height = capsuleColliderSerializable.Height;
-            target.direction = capsuleColliderSerializable.Direction;
+            // var capsuleColliderSerializable = JsonConvert.DeserializeObject<CapsuleColliderSerializable>(json);
+            // (target as Collider).Deserialize(json);
+            // target.center = capsuleColliderSerializable.Center.ToVector3();
+            // target.radius = capsuleColliderSerializable.Radius;
+            // target.height = capsuleColliderSerializable.Height;
+            // target.direction = capsuleColliderSerializable.Direction;
         }
 
         public static string Serialize(this MeshCollider target)
         {
-            return JsonConvert.SerializeObject(new MeshColliderSerializable(target));
+            // return JsonConvert.SerializeObject(new MeshColliderSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this MeshCollider target, string json)
         {
-            var meshColliderSerializable = JsonConvert.DeserializeObject<MeshColliderSerializable>(json);
-            (target as Collider).Deserialize(json);
-            target.convex = meshColliderSerializable.Convex;
+            // var meshColliderSerializable = JsonConvert.DeserializeObject<MeshColliderSerializable>(json);
+            // (target as Collider).Deserialize(json);
+            // target.convex = meshColliderSerializable.Convex;
         }
 
         public static void Deserialize(this Collider2D target, string json)
         {
-            var collider2DSerializable = JsonConvert.DeserializeObject<Collider2DSerializable>(json);
-            target.enabled = collider2DSerializable.Enabled;
-            target.isTrigger = collider2DSerializable.IsTrigger;
-            target.offset = collider2DSerializable.Offset.ToVector2();
-            target.usedByEffector = collider2DSerializable.UsedByEffector;
-            target.usedByComposite = collider2DSerializable.UsedByComposite;
+            // var collider2DSerializable = JsonConvert.DeserializeObject<Collider2DSerializable>(json);
+            // target.enabled = collider2DSerializable.Enabled;
+            // target.isTrigger = collider2DSerializable.IsTrigger;
+            // target.offset = collider2DSerializable.Offset.ToVector2();
+            // target.usedByEffector = collider2DSerializable.UsedByEffector;
+            // target.usedByComposite = collider2DSerializable.UsedByComposite;
         }
 
         public static string Serialize(this BoxCollider2D target)
         {
-            return JsonConvert.SerializeObject(new BoxCollider2DSerializable(target));
+            // return JsonConvert.SerializeObject(new BoxCollider2DSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this BoxCollider2D target, string json)
         {
-            var boxCollider2DSerializable = JsonConvert.DeserializeObject<BoxCollider2DSerializable>(json);
-            (target as Collider2D).Deserialize(json);
-            target.size = boxCollider2DSerializable.Size.ToVector2();
-            target.autoTiling = boxCollider2DSerializable.AutoTiling;
-            target.edgeRadius = boxCollider2DSerializable.EdgeRadius;
+            // var boxCollider2DSerializable = JsonConvert.DeserializeObject<BoxCollider2DSerializable>(json);
+            // (target as Collider2D).Deserialize(json);
+            // target.size = boxCollider2DSerializable.Size.ToVector2();
+            // target.autoTiling = boxCollider2DSerializable.AutoTiling;
+            // target.edgeRadius = boxCollider2DSerializable.EdgeRadius;
         }
 
         public static string Serialize(this CircleCollider2D target)
         {
-            return JsonConvert.SerializeObject(new CircleCollider2DSerializable(target));
+            // return JsonConvert.SerializeObject(new CircleCollider2DSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this CircleCollider2D target, string json)
         {
-            var circleCollider2DSerializable = JsonConvert.DeserializeObject<CircleCollider2DSerializable>(json);
-            (target as Collider2D).Deserialize(json);
-            target.radius = circleCollider2DSerializable.Radius;
+            // var circleCollider2DSerializable = JsonConvert.DeserializeObject<CircleCollider2DSerializable>(json);
+            // (target as Collider2D).Deserialize(json);
+            // target.radius = circleCollider2DSerializable.Radius;
         }
 
         public static string Serialize(this CapsuleCollider2D target)
         {
-            return JsonConvert.SerializeObject(new CapsuleCollider2DSerializable(target));
+            // return JsonConvert.SerializeObject(new CapsuleCollider2DSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this CapsuleCollider2D target, string json)
         {
-            var capsuleCollider2DSerializable = JsonConvert.DeserializeObject<CapsuleCollider2DSerializable>(json);
-            (target as Collider2D).Deserialize(json);
-            target.size = capsuleCollider2DSerializable.Size.ToVector2();
-            target.direction = capsuleCollider2DSerializable.Direction;
+            // var capsuleCollider2DSerializable = JsonConvert.DeserializeObject<CapsuleCollider2DSerializable>(json);
+            // (target as Collider2D).Deserialize(json);
+            // target.size = capsuleCollider2DSerializable.Size.ToVector2();
+            // target.direction = capsuleCollider2DSerializable.Direction;
         }
 
         public static string Serialize(this CompositeCollider2D target)
         {
-            return JsonConvert.SerializeObject(new CompositeCollider2DSerializable(target));
+            // return JsonConvert.SerializeObject(new CompositeCollider2DSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this CompositeCollider2D target, string json)
         {
-            var compositeCollider2DSerializable = JsonConvert.DeserializeObject<CompositeCollider2DSerializable>(json);
-            (target as Collider2D).Deserialize(json);
-            target.geometryType = compositeCollider2DSerializable.GeometryType;
-            target.generationType = compositeCollider2DSerializable.GenerationType;
-            target.vertexDistance = compositeCollider2DSerializable.VertexDistance;
-            target.edgeRadius = compositeCollider2DSerializable.EdgeRadius;
-            target.offsetDistance = compositeCollider2DSerializable.OffsetDistance;
+            // var compositeCollider2DSerializable = JsonConvert.DeserializeObject<CompositeCollider2DSerializable>(json);
+            // (target as Collider2D).Deserialize(json);
+            // target.geometryType = compositeCollider2DSerializable.GeometryType;
+            // target.generationType = compositeCollider2DSerializable.GenerationType;
+            // target.vertexDistance = compositeCollider2DSerializable.VertexDistance;
+            // target.edgeRadius = compositeCollider2DSerializable.EdgeRadius;
+            // target.offsetDistance = compositeCollider2DSerializable.OffsetDistance;
         }
 
         public static string Serialize(this SpriteRenderer target)
         {
-            return JsonConvert.SerializeObject(new SpriteRendererSerializable(target));
+            // return JsonConvert.SerializeObject(new SpriteRendererSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this SpriteRenderer target, string json)
         {
-            var spriteRendererSerializable = JsonConvert.DeserializeObject<SpriteRendererSerializable>(json);
-            target.color = spriteRendererSerializable.Color.ToColor();
-            target.flipX = spriteRendererSerializable.FlipX;
-            target.flipY = spriteRendererSerializable.FlipY;
-            target.drawMode = spriteRendererSerializable.DrawMode;
+            // var spriteRendererSerializable = JsonConvert.DeserializeObject<SpriteRendererSerializable>(json);
+            // target.color = spriteRendererSerializable.Color.ToColor();
+            // target.flipX = spriteRendererSerializable.FlipX;
+            // target.flipY = spriteRendererSerializable.FlipY;
+            // target.drawMode = spriteRendererSerializable.DrawMode;
         }
 
         public static string Serialize(this Animator target)
         {
-            return JsonConvert.SerializeObject(new AnimatorSerializable(target));
+            // return JsonConvert.SerializeObject(new AnimatorSerializable(target));
+            return "";
         }
 
         public static void Deserialize(this Animator target, string json)
         {
-            var animatorSerializable = JsonConvert.DeserializeObject<AnimatorSerializable>(json);
-            target.applyRootMotion = animatorSerializable.ApplyRootMotion;
-            target.cullingMode = animatorSerializable.CullingMode;
-            target.updateMode = animatorSerializable.UpdateMode;
+            // var animatorSerializable = JsonConvert.DeserializeObject<AnimatorSerializable>(json);
+            // target.applyRootMotion = animatorSerializable.ApplyRootMotion;
+            // target.cullingMode = animatorSerializable.CullingMode;
+            // target.updateMode = animatorSerializable.UpdateMode;
         }
 
         public static string Serialize(this Component target)

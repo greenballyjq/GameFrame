@@ -1,4 +1,4 @@
-﻿using System;
+﻿#if FRAMEWORK_SAVELOAD
 using System.Collections.Generic;
 using GameFramework.Core;
 using GameFramework.Manager;
@@ -175,3 +175,4 @@ namespace GameFramework.Serialize
         }
     }
 }
+#endif
