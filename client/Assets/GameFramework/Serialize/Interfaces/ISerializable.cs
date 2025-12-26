@@ -1,4 +1,4 @@
-﻿namespace GameFramework.Serialize
+﻿namespace GameFramework.Serialize.Interfaces
 {
     /// <summary>
     /// 可序列化接口

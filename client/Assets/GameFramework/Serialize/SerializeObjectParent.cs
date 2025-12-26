@@ -1,4 +1,4 @@
-﻿#if FRAMEWORK_SAVELOAD
+﻿#if FRAMEWORK_SERIALIZE
 
 using GameFramework.Core;
 using GameFramework.Manager;
