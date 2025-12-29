@@ -1,5 +1,6 @@
 using System;
 using GameFramework.Core.Pool;
+using GameFramework.Manager;
 using UnityEngine;
 
 namespace GameFramework.Core.Audio
@@ -10,12 +11,29 @@ namespace GameFramework.Core.Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioPlayer : MonoBehaviour, IPoolItem
     {
+        /// <summary>
+        /// 音频源组件
+        /// </summary>
         private AudioSource _audioSource;
+        /// <summary>
+        /// 剩余循环次数
+        /// </summary>
         private int _remainingLoops;
+        /// <summary>
+        /// 是否正在播放
+        /// </summary>
         private bool _isPlaying;
-        // private Action<AudioPlayer> _onCompleteCallback;
+        /// <summary>
+        /// 音量(0-1)
+        /// </summary>
+        private float _volume;
         
+        /// <summary>
+        /// 音效播放完毕回调
+        /// </summary>
         private AudioCallback _audioCallback;
+        
+        public AudioChannel Channel { get; private set; }
 
         /// <summary>
         /// 音效播放完毕回调事件
@@ -35,10 +53,11 @@ namespace GameFramework.Core.Audio
         /// 播放音效
         /// </summary>
         /// <param name="clip">音频剪辑</param>
+        /// <param name="channel">音频通道</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <param name="volume">音量（0-1）</param>
         /// <returns>返回自身，支持链式调用</returns>
-        public AudioCallback Play(AudioClip clip, int loop = 1, float volume = 1f)
+        public AudioCallback Play(AudioClip clip, AudioChannel channel, int loop = 1, float volume = 1f)
         {
             if (clip == null)
             {
@@ -46,11 +65,15 @@ namespace GameFramework.Core.Audio
                 return _audioCallback;
             }
 
+            _volume = Mathf.Clamp01(volume);
+
             _audioSource.clip = clip;
-            _audioSource.volume = Mathf.Clamp01(volume);
+            _audioSource.volume = _volume;
             _audioSource.loop = loop == -1; // -1表示无限循环
             _remainingLoops = loop;
             _isPlaying = true;
+
+            Channel = channel;
 
             _audioSource.Play();
 
@@ -82,9 +105,33 @@ namespace GameFramework.Core.Audio
         /// </summary>
         public void SetVolume(float volume)
         {
-            if (_audioSource != null)
+            if (_audioSource)
             {
                 _audioSource.volume = Mathf.Clamp01(volume);
+            }
+        }
+
+        /// <summary>
+        /// 设置音量倍数
+        /// </summary>
+        /// <param name="multiplier">音量倍数</param>
+        public void SetVolumeMultiplier(float multiplier)
+        {
+            multiplier = Mathf.Clamp01(multiplier);
+            if (_audioSource)
+            {
+                _audioSource.volume = _volume * multiplier;
+            }
+        }
+
+        /// <summary>
+        /// 恢复音量
+        /// </summary>
+        public void RestoreVolume()
+        {
+            if (_audioSource)
+            {
+                _audioSource.volume = _volume;
             }
         }
 
@@ -93,7 +140,7 @@ namespace GameFramework.Core.Audio
         /// </summary>
         public float GetVolume()
         {
-            return _audioSource != null ? _audioSource.volume : 0f;
+            return _audioSource? _audioSource.volume : 0f;
         }
 
         /// <summary>
@@ -101,7 +148,7 @@ namespace GameFramework.Core.Audio
         /// </summary>
         public bool IsPlaying()
         {
-            return _isPlaying && _audioSource != null && _audioSource.isPlaying;
+            return _isPlaying && _audioSource && _audioSource.isPlaying;
         }
 
         /// <summary>

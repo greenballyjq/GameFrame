@@ -1,4 +1,5 @@
 ﻿using System;
+using GameFramework.Manager;
 using UnityEngine;
 
 namespace GameFramework.Core.Audio
@@ -8,6 +9,7 @@ namespace GameFramework.Core.Audio
     {
         public string audioName;
         public string audioDescription;
+        public AudioChannel audioChannel;
         public AudioClip audioClip;
         [Range(0, 1)] public float volume;
 

@@ -40,7 +40,9 @@ namespace GameFramework.Core.Pool
 
             IPoolItem item = obj.GetComponent<IPoolItem>();
             item.OnSpawned();
-
+            
+            obj.transform.SetParent(_parent);
+            
             return obj;
         }
 
