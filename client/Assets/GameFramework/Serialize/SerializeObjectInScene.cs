@@ -1,4 +1,4 @@
-﻿#if FRAMEWORK_SAVELOAD
+﻿#if FRAMEWORK_SERIALIZE
 using UnityEngine;
 
 namespace GameFramework.Serialize
@@ -14,18 +14,21 @@ namespace GameFramework.Serialize
         
         public override SaveSerializedGameObject Save()
         {
-            var saveSerializedComponents = TravesalSerialize(transform);
+            var saveSerializedGameObject = TravesalSerialize(transform);
             return new SaveSerializedGameObjectInScene
             {
-                ExistType = GameObjectExistType.GameObjectInScene,
+                Active = saveSerializedGameObject.Active,
                 ObjectIdInScene = objectId,
-                SaveSerializedComponents = saveSerializedComponents,
+                Children = saveSerializedGameObject.Children,
+                ComponentSerializedList = saveSerializedGameObject.ComponentSerializedList,
+                ExistType = GameObjectExistType.GameObjectInScene,
             }; 
         }
 
-        public override void Load(SaveSerializedComponents saveSerializedComponents)
+        public override void Load(SaveSerializedGameObject saveSerializedGameObject)
         {
-            TravesalDeserialize(transform, saveSerializedComponents);
+            gameObject.SetActive(saveSerializedGameObject.Active);
+            TravesalDeserialize(transform, saveSerializedGameObject);
         }
     }
 }

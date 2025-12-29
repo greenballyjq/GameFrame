@@ -2,16 +2,11 @@
 
 namespace GameFramework.Serialize
 {
-    [Obsolete]
-    public interface ISerializableMonoBehaviourModel
-    {
-        
-    }
     /// <summary>
     /// Health脚本的序列化模型
     /// </summary>
     [Serializable]
-    public class HealthSerializable : ISerializableMonoBehaviourModel
+    public class HealthSerializable
     {
         public float TotalHp { get; set; }
         public float CurrentHp { get; set; }
@@ -21,7 +16,7 @@ namespace GameFramework.Serialize
     /// <summary>
     /// EnemyBase脚本的序列化模型
     /// </summary>
-    public class EnemyBaseSerializable : ISerializableMonoBehaviourModel
+    public class EnemyBaseSerializable
     {
         public bool IsDead { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using GameFramework.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameFramework.Serialize
 {
@@ -8,8 +9,10 @@ namespace GameFramework.Serialize
     [Serializable]
     public class SaveSerializedGameObject
     {
-        public GameObjectExistType ExistType { get; set; }
-        public SaveSerializedComponents SaveSerializedComponents { get; set; }
+        public SaveSerializedGameObject[] Children { get; set; }
+        public bool Active { get; set; }
+        public List<ComponentSerialized> ComponentSerializedList { get; set; }
+        [Obsolete] public GameObjectExistType ExistType { get; set; }
     }
 
     public enum GameObjectExistType

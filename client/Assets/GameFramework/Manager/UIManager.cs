@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.UI;
+using GameFramework.Manager;
 using GooseCatcher;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -151,7 +152,7 @@ public class UIManager : IManager
             // 添加GraphicRaycaster组件
             layerObj.AddComponent<GraphicRaycaster>();
             
-            if (layer == UILayer.Game) screenAdapter.SetRootRect(rectTransform);
+            // if (layer == UILayer.Game) screenAdapter.SetRootRect(rectTransform);
             
             _layerParents.Add(layer, layerObj.transform);
         }

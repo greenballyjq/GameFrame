@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
+using GameFramework.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
@@ -161,6 +162,7 @@ namespace GameFramework.Game
         /// <summary>
         /// 框架初始化完成回调
         /// </summary>
+        [Obsolete]
         private void OnFrameworkInitialized()
         {
             // Debug.Log("[GameLauncher] 开始初始化游戏启动器...");

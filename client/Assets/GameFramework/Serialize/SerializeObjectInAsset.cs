@@ -1,5 +1,6 @@
-﻿#if FRAMEWORK_SAVELOAD 
+﻿#if FRAMEWORK_SERIALIZE
 
+using System;
 using UnityEngine;
 
 namespace GameFramework.Serialize
@@ -10,27 +11,33 @@ namespace GameFramework.Serialize
     public class SerializeObjectInAsset : SerializeObject
     {
         [SerializeField] private string assetPath;
-        
+
         private SerializeObjectParent _parent;
-        
+
+        private void OnEnable()
+        {
+            _parent = GetComponentInParent<SerializeObjectParent>();
+        }
+
         public override SaveSerializedGameObject Save()
         {
-            var saveSerializedComponents = TravesalSerialize(transform);
+            var serializedGameObject = TravesalSerialize(transform);
             return new SaveSerializedGameObjectInAsset
             {
-                ParentObjectId = "",
-                AssetPath = assetPath,
+                Active = serializedGameObject.Active,
+                Children = serializedGameObject.Children,
+                ComponentSerializedList = serializedGameObject.ComponentSerializedList,
                 ExistType = GameObjectExistType.GameObjectInAsset,
-                SaveSerializedComponents = saveSerializedComponents,
+                AssetPath = assetPath,
+                ParentObjectId = _parent.ObjectId,
             };
         }
 
-        public override void Load(SaveSerializedComponents saveSerializedComponents)
+        public override void Load(SaveSerializedGameObject saveSerializedGameObject)
         {
-            TravesalDeserialize(transform, saveSerializedComponents);
+            gameObject.SetActive(saveSerializedGameObject.Active);
+            TravesalDeserialize(transform, saveSerializedGameObject);
         }
-        
-        public void SetParent(SerializeObjectParent parent) => _parent = parent;
     }
 }
 #endif

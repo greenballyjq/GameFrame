@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameFramework.Serialize
 {
@@ -8,6 +9,6 @@ namespace GameFramework.Serialize
     [Serializable]
     public class SaveSerializedData
     {
-        
+        public List<SaveSerializedGameObject> SaveSerializedGameObjectList { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if FRAMEWORK_SERIALIZE
+
+using System;
 using UnityEngine;
 
 namespace GameFramework.Serialize
@@ -432,3 +434,5 @@ namespace GameFramework.Serialize
         }
     }
 }
+
+#endif

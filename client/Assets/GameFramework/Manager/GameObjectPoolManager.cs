@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Pool;
+using GameFramework.Manager;
 using UnityEngine;
 
 /// <summary>
@@ -13,7 +14,7 @@ public class GameObjectPoolManager : IManager
     /// 预制体对应对象池字典
     /// </summary>
     private readonly Dictionary<GameObject, GameObjectPool> _pools = new Dictionary<GameObject, GameObjectPool>();
-    
+
     /// <summary>
     /// 预制体缓存字典
     /// </summary>
@@ -23,12 +24,12 @@ public class GameObjectPoolManager : IManager
     /// 实例对应的源预制体
     /// </summary>
     private readonly Dictionary<GameObject, GameObject> _instancePrefabs = new Dictionary<GameObject, GameObject>();
-    
+
     /// <summary>
     /// 资源管理器引用
     /// </summary>
     private ResourceManager _resourceManager;
-    
+
     /// <summary>
     /// 对象池根节点
     /// </summary>
@@ -41,14 +42,16 @@ public class GameObjectPoolManager : IManager
         _poolRoot = rootObj.transform;
         _poolRoot.position = Vector3.zero;
         Object.DontDestroyOnLoad(rootObj);
-        
+
         // 获取资源管理器
         _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
-        
+
         // Debug.Log("[GameObjectPoolManager] 初始化完成");
     }
 
-    public void Update(){ }
+    public void Update()
+    {
+    }
 
     public void Release()
     {
@@ -57,24 +60,25 @@ public class GameObjectPoolManager : IManager
             pool.Clear();
 
         _pools.Clear();
-        
+
         // 清理预制体缓存
         _prefabCache.Clear();
 
         // 清理实例映射
         _instancePrefabs.Clear();
-        
+
         // 销毁根节点
         if (_poolRoot != null)
         {
             Object.Destroy(_poolRoot.gameObject);
             _poolRoot = null;
         }
-        
+
         // Debug.Log("[GameObjectPoolManager] 所有对象池已释放");
     }
 
     #region 公共方法
+
     /// <summary>
     /// 获取预制体对应对象池
     /// </summary>
@@ -87,7 +91,7 @@ public class GameObjectPoolManager : IManager
             // Debug.LogError("[GameObjectPoolManager] prefab不能为null");
             return null;
         }
-        
+
         if (!_pools.TryGetValue(prefab, out GameObjectPool pool))
         {
             pool = new GameObjectPool(prefab, _poolRoot);
@@ -121,14 +125,14 @@ public class GameObjectPoolManager : IManager
                 // Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
                 return null;
             }
-            
+
             // 在放入缓存前检查预制体是否有IPoolItem组件
             if (prefab.GetComponent<IPoolItem>() == null)
             {
                 // Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
                 return null;
             }
-            
+
             _prefabCache[prefabPath] = prefab;
         }
 
@@ -169,6 +173,29 @@ public class GameObjectPoolManager : IManager
     }
 
     /// <summary>
+    /// 取出对象（路径方式）-需要已缓存
+    /// </summary>
+    /// <param name="prefabPath"></param>
+    /// <returns></returns>
+    public GameObject Spawn(string prefabPath)
+    {
+        if (string.IsNullOrEmpty(prefabPath))
+        {
+            // Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
+            return null;
+        }
+
+        // 从缓存获取预制体，如果不存在则返回空
+        if (_prefabCache.TryGetValue(prefabPath, out var prefab))
+        {
+            GameObject obj = GetPool(prefab).Spawn();
+            return obj;
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// 回收对象
     /// </summary>
     /// <param name="obj">要回收的对象</param>
@@ -193,7 +220,7 @@ public class GameObjectPoolManager : IManager
             Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中");
             return;
         }
-        
+
         GetPool(prefab).Despawn(obj);
         _instancePrefabs.Remove(obj);
     }
@@ -214,5 +241,23 @@ public class GameObjectPoolManager : IManager
         
         // Debug.Log("[GameObjectPoolManager] 所有对象池已清空");
     }
+    
+    /// 预加载预制体
+    /// </summary>
+    /// <param name="prefabPaths"></param>
+    public async UniTask PreloadAsync(params string[] prefabPaths)
+    {
+        foreach (var prefabPath in prefabPaths)
+        {
+            if (_prefabCache.ContainsKey(prefabPath)) continue;
+            var prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
+            _prefabCache[prefabPath] = prefab;
+            
+            if (_pools.ContainsKey(prefab)) continue;
+            var gameObjectPool = new GameObjectPool(prefab, _poolRoot);
+            _pools[prefab] = gameObjectPool;
+        }
+    }
+
     #endregion
 }
