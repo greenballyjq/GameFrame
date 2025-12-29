@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -184,6 +184,8 @@ namespace GameFramework.Manager
                 return;
             }
             _instance = this as T;
+
+            DontDestroyOnLoad(gameObject);
         }
     }
 } 
