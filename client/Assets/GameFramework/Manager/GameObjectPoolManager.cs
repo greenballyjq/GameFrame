@@ -197,5 +197,22 @@ public class GameObjectPoolManager : IManager
         GetPool(prefab).Despawn(obj);
         _instancePrefabs.Remove(obj);
     }
+
+    /// <summary>
+    /// 清空所有对象池
+    /// </summary>
+    public void ClearAllPools()
+    {
+        // 遍历所有池，清空池中的对象
+        foreach (var pool in _pools.Values)
+            pool.Clear();
+
+        _pools.Clear();
+        
+        // 清理实例映射
+        _instancePrefabs.Clear();
+        
+        // Debug.Log("[GameObjectPoolManager] 所有对象池已清空");
+    }
     #endregion
 }

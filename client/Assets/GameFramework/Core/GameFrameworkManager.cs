@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Manager;
@@ -13,9 +13,6 @@ namespace GameFramework.Core
     /// </summary>
     public class GameFrameworkManager : MonoSingleton<GameFrameworkManager>
     {
-        // private static GameFrameworkManager _instance;
-        // public static GameFrameworkManager Instance => _instance;
-
         // 管理器集合
         private readonly Dictionary<Type, IManager> _managers = new Dictionary<Type, IManager>();
 
@@ -24,24 +21,6 @@ namespace GameFramework.Core
         
         // 框架是否已初始化
         public bool IsInitialized { get; private set; }
-
-        // private void Awake()
-        // {
-        //     // Debug.Log($"[GameFrameworkManager] Awake！！");
-        //     if (_instance != null)
-        //     {
-        //         Destroy(gameObject);
-        //         return;
-        //     }
-        //     
-        //     _instance = this;
-        //     DontDestroyOnLoad(gameObject);
-        // }
-
-        private void Start()
-        {
-            // InitFramework();
-        }
 
         /// <summary>
         /// 初始化框架

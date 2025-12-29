@@ -15,6 +15,43 @@ namespace GameFramework.Game
         /// <summary>
         /// 游戏配置
         /// </summary>
+        [System.Serializable]
+        public class GameConfig
+        {
+            // 游戏名称
+            public string GameName = "GameName";
+
+            // 游戏版本
+            public string GameVersion = "1.0.0";
+
+            // 游戏启动场景路径
+            public string StartScenePath = "StartScenePath";
+
+            // 默认语言
+            public SystemLanguage DefaultLanguage = SystemLanguage.ChineseSimplified;
+
+            // 目标帧率
+            public int TargetFrameRate = 60;
+
+            // 是否显示FPS
+            public bool ShowFPS = false;
+
+            // 资源加载模式
+            public ResourceManager.ResourceLoadMode ResourceLoadMode = ResourceManager.ResourceLoadMode.YooAsset;
+
+            // 是否启用CDN
+            public bool IsCDNEnabled = true;
+
+            // CDN地址
+            public string CDNUrl = "http://127.0.0.1/CDN/";
+
+            // 加载界面
+            public GameObject loading;
+        }
+
+        /// <summary>
+        /// 游戏配置
+        /// </summary>
         [SerializeField] private GameConfig _gameConfig;
 
         // 资源更新UI
@@ -433,40 +470,5 @@ namespace GameFramework.Game
         }
     }
 
-    /// <summary>
-    /// 游戏配置
-    /// </summary>
-    [System.Serializable]
-    public class GameConfig
-    {
-        // 游戏名称
-        public string GameName = "GameName";
-
-        // 游戏版本
-        public string GameVersion = "1.0.0";
-
-        // 游戏启动场景路径
-        public string StartScenePath = "StartScenePath";
-
-        // 默认语言
-        public SystemLanguage DefaultLanguage = SystemLanguage.ChineseSimplified;
-
-        // 目标帧率
-        public int TargetFrameRate = 60;
-
-        // 是否显示FPS
-        public bool ShowFPS = false;
-
-        // 资源加载模式
-        public ResourceManager.ResourceLoadMode ResourceLoadMode = ResourceManager.ResourceLoadMode.YooAsset;
-
-        // 是否启用CDN
-        public bool IsCDNEnabled = true;
-
-        // CDN地址
-        public string CDNUrl = "http://127.0.0.1/CDN/";
-
-        // 加载界面
-        public GameObject loading;
-    }
+   
 }
