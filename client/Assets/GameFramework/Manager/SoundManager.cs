@@ -46,13 +46,15 @@ namespace GameFramework.Manager
         /// </summary>
         private float _globalVolume = 1f;
 
-        public void Init()
+        public async void Init()
         {
             // 获取对象池管理器
             _poolManager = GameFrameworkManager.Instance.GetManager<GameObjectPoolManager>();
             
             // 获取资源管理器
             _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
+
+            await _poolManager.PreloadAsync(AUDIO_PLAYER_PREFAB_PATH);
 
             Debug.Log("[SoundManager] 音效管理器初始化完成");
         }
@@ -89,24 +91,20 @@ namespace GameFramework.Manager
         /// <param name="audioData">音效数据</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public async UniTask<AudioCallback> PlaySound(AudioData audioData, int loop = 1)
+        public AudioCallback PlaySound(AudioData audioData, int loop = 1)
         {
-            if (string.IsNullOrEmpty(audioData.AudioName))
-            {
-                Debug.LogError("[SoundManager] 音效名称不能为空");
-                return null;
-            }
-
             // 加载音频资源
-            AudioClip clip = await LoadAudioClip(audioData.AudioName);
+            // AudioClip clip = await LoadAudioClip(audioData.AudioName);
+            AudioClip clip = audioData.audioClip;
             if (clip == null)
             {
-                Debug.LogError($"[SoundManager] 加载音效失败: {audioData.AudioName}");
+                Debug.LogError($"[SoundManager] 获取音效失败: {audioData.audioName}");
                 return null;
             }
 
             // 从对象池获取音效播放器
-            AudioPlayer player = await GetAudioPlayer();
+            // AudioPlayer player = await GetAudioPlayerAsync();
+            AudioPlayer player = GetAudioPlayer();
             if (player == null)
             {
                 Debug.LogError("[SoundManager] 获取音效播放器失败");
@@ -114,7 +112,7 @@ namespace GameFramework.Manager
             }
 
             // 设置播放器
-            float finalVolume = audioData.Volume >= 0 ? audioData.Volume : _globalVolume;
+            float finalVolume = audioData.volume >= 0 ? audioData.volume : _globalVolume;
             
             // 注册内部回收回调
             player.OnPlayComplete += OnAudioPlayComplete;
@@ -131,24 +129,18 @@ namespace GameFramework.Manager
         /// </summary>
         /// <param name="audioData">音效数据</param>
         /// <returns></returns>
-        public async UniTask<AudioCallback> PlaySoundOneShot(AudioData audioData)
+        public AudioCallback PlaySoundOneShot(AudioData audioData)
         {
-            if (string.IsNullOrEmpty(audioData.AudioName))
-            {
-                Debug.LogError("[SoundManager] 音效名称不能为空");
-                return null;
-            }
-
             // 加载音频资源
-            AudioClip clip = await LoadAudioClip(audioData.AudioName);
+            AudioClip clip = audioData.audioClip;
             if (clip == null)
             {
-                Debug.LogError($"[SoundManager] 加载音效失败: {audioData.AudioName}");
+                Debug.LogError($"[SoundManager] 加载音效失败: {audioData.audioName}");
                 return null;
             }
 
             // 从对象池获取音效播放器
-            AudioPlayer player = await GetAudioPlayer();
+            AudioPlayer player = GetAudioPlayer();
             if (player == null)
             {
                 Debug.LogError("[SoundManager] 获取音效播放器失败");
@@ -156,7 +148,7 @@ namespace GameFramework.Manager
             }
 
             // 设置播放器
-            float finalVolume = audioData.Volume >= 0 ? audioData.Volume : _globalVolume;
+            float finalVolume = audioData.volume >= 0 ? audioData.volume : _globalVolume;
             
             // 注册内部回收回调
             player.OnPlayComplete += OnAudioPlayComplete;
@@ -168,22 +160,22 @@ namespace GameFramework.Manager
             return player.Play(clip, volume: finalVolume);
         }
 
-        /// <summary>
-        /// 加载音效资源
-        /// </summary>
-        /// <param name="audioName">音效文件名</param>
-        /// <returns></returns>
-        private async UniTask<AudioClip> LoadAudioClip(string audioName)
-        {
-            if (_audioClipCache.TryGetValue(audioName, out var audioClip))
-            {
-                return audioClip;
-            }
-            
-            audioClip = await _resourceManager.LoadAssetAsync<AudioClip>($"{AUDIO_LOAD_PATH}/{audioName}");
-            _audioClipCache[audioName] = audioClip;
-            return audioClip;
-        }
+        // /// <summary>
+        // /// 加载音效资源
+        // /// </summary>
+        // /// <param name="audioName">音效文件名</param>
+        // /// <returns></returns>
+        // private async UniTask<AudioClip> LoadAudioClip(string audioName)
+        // {
+        //     if (_audioClipCache.TryGetValue(audioName, out var audioClip))
+        //     {
+        //         return audioClip;
+        //     }
+        //     
+        //     audioClip = await _resourceManager.LoadAssetAsync<AudioClip>($"{AUDIO_LOAD_PATH}/{audioName}");
+        //     _audioClipCache[audioName] = audioClip;
+        //     return audioClip;
+        // }
 
         /// <summary>
         /// 停止指定音效播放器
@@ -247,7 +239,7 @@ namespace GameFramework.Manager
         {
             foreach (var audioName in audioNames)
             {
-                await _poolManager.PreloadAsync(audioName);
+                // await _resourceManager.PreloadAsync(audioName);
             }
         }
 
@@ -277,7 +269,7 @@ namespace GameFramework.Manager
         /// <summary>
         /// 从对象池获取音效播放器
         /// </summary>
-        private async UniTask<AudioPlayer> GetAudioPlayer()
+        private async UniTask<AudioPlayer> GetAudioPlayerAsync()
         {
             GameObject playerObj = await _poolManager.SpawnAsync(AUDIO_PLAYER_PREFAB_PATH);
             if (playerObj == null)
@@ -298,6 +290,11 @@ namespace GameFramework.Manager
             // playerObj.transform.SetParent(_soundRoot);
 
             return player;
+        }
+
+        private AudioPlayer GetAudioPlayer()
+        {
+            return _poolManager.Spawn(AUDIO_PLAYER_PREFAB_PATH).GetComponent<AudioPlayer>();
         }
         
         /// <summary>

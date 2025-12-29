@@ -1,23 +1,32 @@
 ﻿using System;
+using UnityEngine;
 
 namespace GameFramework.Core.Audio
 {
     [Serializable]
     public class AudioData
     {
-        public string AudioName { get; set; }
-        public float Volume { get; set; }
+        public string audioName;
+        public string audioDescription;
+        public AudioClip audioClip;
+        [Range(0, 1)] public float volume;
 
+        public AudioData(AudioClip audioClip, float volume)
+        {
+            this.audioClip = audioClip;
+            this.volume = volume;
+        }
+        
         public AudioData(string audioName, float volume)
         {
-            AudioName = audioName;
-            Volume = volume;
+            this.audioName = audioName;
+            this.volume = volume;
         }
 
         public AudioData(string audioName)
         {
-            AudioName = audioName;
-            Volume = 1f;
+            this.audioName = audioName;
+            volume = 1f;
         }
 
         public AudioData()
