@@ -39,6 +39,7 @@ namespace GameFramework.Core
             RegisterManager<SoundManager>();
             RegisterManager<ParticleEffectManager>();
             RegisterManager<GameObjectPoolManager>();
+            RegisterManager<GameSceneManager>();
 #if FRAMEWORK_SERIALIZE
             RegisterManager<SaveLoadManager>();
 #endif

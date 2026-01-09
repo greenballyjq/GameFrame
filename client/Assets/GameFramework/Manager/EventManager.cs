@@ -421,14 +421,15 @@ public class EventManager : IManager
         {
             if (existingDelegate is Action action)
             {
-                try
-                {
-                    action();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"[EventManager] 触发事件出错: {e.Message}");
-                }
+                // try
+                // {
+                //     action();
+                // }
+                // catch (Exception e)
+                // {
+                //     Debug.LogError($"[EventManager] 触发事件出错: {e.Message}");
+                // }
+                action();
             }
             else
             {

@@ -68,7 +68,6 @@ namespace GameFramework.Manager
                 if (audioPlayer == null || !audioPlayer.IsPlaying())
                 {
                     _activePlayers.RemoveAt(i);
-                    // _activePlayersByChannel[audioPlayer.Channel].
                 }
             }
         }
@@ -88,27 +87,46 @@ namespace GameFramework.Manager
 
         
         /// <summary>
-        /// 播放指定音效
+        /// 播放指定2D音效
         /// </summary>
         /// <param name="audioData">音效数据</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
-        /// <param name="position">音效播放位置</param>
         /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public AudioCallback PlaySound(AudioData audioData, int loop = 1, Vector3 position = default)
+        public AudioCallback PlaySound2D(AudioData audioData, int loop = 1)
         {
-            Debug.Log($"[{GetType().Name}] {position}");
-            return PlaySoundInternal(audioData, loop);
+            return PlaySound2DInternal(audioData, loop);
         }
 
         /// <summary>
-        /// 播放一次性音效
+        /// 播放一次性2D音效
         /// </summary>
         /// <param name="audioData">音效数据</param>
-        /// <param name="position">音效播放位置</param>
         /// <returns></returns>
-        public AudioCallback PlaySoundOneShot(AudioData audioData, Vector3 position = default)
+        public AudioCallback PlaySound2DOneShot(AudioData audioData)
         {
-            return PlaySoundInternal(audioData, 1);
+            return PlaySound2DInternal(audioData, 1);
+        }
+
+        /// <summary>
+        /// 播放3D世界音效（不绑定其它物体）
+        /// </summary>
+        /// <param name="audioData">音效数据</param>
+        /// <param name="position">世界位置</param>
+        /// <param name="loop">循环播放次数</param>
+        /// <returns></returns>
+        public AudioCallback PlaySound3DWorld(AudioData audioData, Vector3 position, int loop = 1)
+        {
+            return PlaySound3DWorldInternal(audioData, loop, position);
+        }
+
+        /// <summary>
+        /// 播放3D跟随物体音效（绑定其它物体）
+        /// </summary>
+        /// <param name="audioData">音效数据</param>
+        /// <returns></returns>
+        public AudioCallback PlaySound3DLocal(AudioData audioData)
+        {
+            return null;
         }
 
         /// <summary>
@@ -202,44 +220,101 @@ namespace GameFramework.Manager
         #region 私有方法
         
         /// <summary>
-        /// 播放音效内部实现
+        /// 播放2D音效内部实现
         /// </summary>
         /// <param name="audioData">音效数据</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <returns></returns>
-        private AudioCallback PlaySoundInternal(AudioData audioData, int loop)
+        private AudioCallback PlaySound2DInternal(AudioData audioData, int loop)
         {
+            var player = InitAudioPlayer(audioData);
+
             var clip = audioData.audioClip;
             if (clip == null)
             {
                 Debug.LogError($"[SoundManager] 获取音效失败: {audioData.audioName}");
                 return null;
             }
+            
+            // 设置音量
+            var finalVolume = GetFinalVolume(audioData.volume, audioData.audioChannel);
+            
+            // 播放音效（支持链式调用）
+            return player.Play(clip, audioData.audioChannel, loop, finalVolume);
+        }
 
+        /// <summary>
+        /// 播放3D世界音效内部实现
+        /// </summary>
+        /// <param name="audioData">音效数据</param>
+        /// <param name="loop">循环播放次数</param>
+        /// <param name="position">世界位置</param>
+        /// <returns></returns>
+        private AudioCallback PlaySound3DWorldInternal(AudioData audioData, int loop, Vector3 position)
+        {
+            var player = InitAudioPlayer(audioData);
+            
+            var clip = audioData.audioClip;
+            if (clip == null)
+            {
+                Debug.LogError($"[SoundManager] 获取音效失败: {audioData.audioName}");
+                return null;
+            }
+            
+            // 设置音量
+            var finalVolume = GetFinalVolume(audioData.volume, audioData.audioChannel);
+
+            player.transform.position = position;
+            
+            return player.Play(clip, audioData.audioChannel, loop, finalVolume);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private AudioCallback PlaySound3DLocalInternal(AudioData audioData, int loop)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 根据音频通道获取最终设置的音量
+        /// </summary>
+        /// <param name="volume">AudioData的Volume</param>
+        /// <param name="audioChannel">音频通道</param>
+        /// <returns></returns>
+        private float GetFinalVolume(float volume, AudioChannel audioChannel)
+        {
+            var volumeMultiplier = 1f;
+            if (_channelVolumeMultiplier.TryGetValue(audioChannel, out var multiplier))
+            {
+                volumeMultiplier = multiplier;
+            }
+            // 设置播放器
+            var finalVolume = volume * volumeMultiplier;
+            return finalVolume;
+        }
+
+        /// <summary>
+        /// 根据AudioData生成并初始化AudioPlayer
+        /// </summary>
+        /// <param name="audioData"></param>
+        /// <returns></returns>
+        private AudioPlayer InitAudioPlayer(AudioData audioData)
+        {
             // 从对象池获取音效播放器
-            // AudioPlayer player = await GetAudioPlayerAsync();
             var player = SpawnAudioPlayer();
             if (player == null)
             {
                 Debug.LogError("[SoundManager] 获取音效播放器失败");
                 return null;
             }
-
-            // 设置播放器
-            var volume = audioData.volume >= 0 ? audioData.volume : _globalVolume;
-
-            // 设置音量
-            var volumeMultiplier = 1f;
-            if (_channelVolumeMultiplier.TryGetValue(audioData.audioChannel, out var multiplier))
-            {
-                volumeMultiplier = multiplier;
-            }
-            var finalVolume = volume * volumeMultiplier;
             
             // 注册内部回收回调
             player.OnPlayComplete += OnAudioPlayComplete;
 
-            // 添加到活动列表
+            // 添加到活动列表 
             _activePlayers.Add(player);
             
             // 添加到音频通道列表
@@ -248,9 +323,8 @@ namespace GameFramework.Manager
                 _activePlayersByChannel[audioData.audioChannel] = new List<AudioPlayer>();
             }
             _activePlayersByChannel[audioData.audioChannel].Add(player);
-            
-            // 播放音效（支持链式调用）
-            return player.Play(clip, audioData.audioChannel, loop, finalVolume);
+
+            return player;
         }
 
         /// <summary>

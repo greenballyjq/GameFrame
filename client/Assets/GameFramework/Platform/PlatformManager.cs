@@ -70,7 +70,10 @@ public class PlatformManager : IManager
     private void DetectCurrentPlatform()
     {
 
-#if WEIXINMINIGAME
+#if UNITY_EDITOR
+        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
+        _currentPlatformType = PlatformType.Default;
+#elif WEIXINMINIGAME
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
         _currentPlatformType = PlatformType.WeChat;
 #elif DOUYINMINIGAME
@@ -79,11 +82,7 @@ public class PlatformManager : IManager
 #elif KUAISHOUMINIGAME
         RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
         _currentPlatformType = PlatformType.Kuaishou;
-#else
-        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
-        _currentPlatformType = PlatformType.Default;
 #endif
-
         Debug.Log($"[PlatformManager] 当前平台: {_currentPlatformType}");
     }
     

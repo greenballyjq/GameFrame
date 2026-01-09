@@ -97,6 +97,7 @@ namespace GameFramework.Core.Audio
             }
 
             _isPlaying = false;
+            
             CancelInvoke(nameof(CheckPlayComplete));
         }
 

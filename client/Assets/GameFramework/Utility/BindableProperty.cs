@@ -46,7 +46,7 @@ namespace GameFramework.Utility
         {
             _onValueChanged += onValueChanged;
         }
-
+        
         /// <summary>
         /// 移除值更改事件监听
         /// </summary>

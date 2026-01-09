@@ -36,7 +36,7 @@ public class DefaultPlatform : IPlatform
         //    ExtraData = new Dictionary<string, object>()
         //};
         
-        //success?.Invoke(result);
+        success?.Invoke("");
     }
 
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
@@ -122,16 +122,20 @@ public class DefaultPlatform : IPlatform
 
 	public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
 	{
-		throw new NotImplementedException();
-	}
+        success?.Invoke(true);
+        // throw new NotImplementedException();
+    }
 
 	public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
 	{
-		throw new NotImplementedException();
-	}
+        onTap?.Invoke(default);
+        // throw new NotImplementedException();
+        return default;
+    }
 
     public void GetUserInfo(Action<UserInfoResult> success, Action<string> fail)
     {
-        throw new NotImplementedException();
+        success?.Invoke(default);
+        // throw new NotImplementedException();
     }
 } 

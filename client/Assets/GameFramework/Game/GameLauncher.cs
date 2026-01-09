@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Manager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using YooAsset;
+using Debug = UnityEngine.Debug;
 
 namespace GameFramework.Game
 {
@@ -77,12 +80,6 @@ namespace GameFramework.Game
         /// 框架管理器
         /// </summary>
         private GameFrameworkManager _frameworkManager;
-
-        /// <summary>
-        /// 平台管理器
-        /// </summary>
-        private PlatformManager _platformManager;
-
         /// <summary>
         /// 资源管理器
         /// </summary>
@@ -96,7 +93,7 @@ namespace GameFramework.Game
         protected override async void Awake()
         {
             base.Awake();
-            await LaunchGameAsync();
+            // await LaunchGameAsync();
         }
 
         /// <summary>
@@ -104,14 +101,47 @@ namespace GameFramework.Game
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        private async UniTask LaunchGameAsync()
+        public async UniTask InitGameAsync()
         {
+            Stopwatch sw = new Stopwatch();
             Debug.Log($"[GameLauncher] 启动游戏");
 
+            sw.Start();
             // 显示游戏加载界面
             if (_gameConfig.loading) 
                 _gameConfig.loading.SetActive(true);
 
+            // 初始化框架
+            InitFramework();
+
+            // 初始化资源系统
+            await InitResourceAsync();
+
+            // 初始化游戏逻辑
+            await InitGameLogicAsync();
+            
+            // 微信登录操作
+            await PlatformLoginAsync();
+
+            // 隐藏游戏加载界面
+            if (_gameConfig.loading) 
+                _gameConfig.loading.SetActive(false);
+            
+            sw.Stop();
+
+            Debug.Log($"[{GetType().Name}] LaunchGameAsync 启动游戏异步花费：{sw.ElapsedMilliseconds / 1000f}");
+        }
+
+        public void StartGame()
+        {
+            _gameLogic.StartGame();
+        }
+
+        /// <summary>
+        /// 框架初始化
+        /// </summary>
+        private void InitFramework()
+        {
             // 初始化框架管理器
             var gameFrameworkManager = FindObjectOfType<GameFrameworkManager>();
             if (gameFrameworkManager == null)
@@ -124,76 +154,66 @@ namespace GameFramework.Game
                 _frameworkManager = GameFrameworkManager.Instance;
             }
             _frameworkManager.InitFramework();
+        }
 
-            // 初始化资源系统
-            await InitResourceAsync();
+        private async UniTask PlatformLoginAsync()
+        {
+            Debug.Log($"[GameLauncher] 登录");
+            var platformManager = _frameworkManager.GetManager<PlatformManager>();
+            platformManager.CurrentPlatform.Login(
+            async (code) =>
+            {
+                Debug.Log($"[{GetType().Name}] 微信登录成功, code:{code}");
+                // await GameServiceProxy.Instance.Login(platformManager.GetCurrentPlatform(), code);
+                await _gameLogic.Login(platformManager.GetCurrentPlatform(), code);
+                //做点别的 授权等
+                platformManager.CurrentPlatform.CheckUserAuthorization(
+                    (any) =>
+                    {
+                        
+                    },
+                    (error) =>
+                    {
+                        //未授权
+                        // RectTransform rectTransform = _startButton.GetComponent<RectTransform>();
+                        // float width = rectTransform.sizeDelta.x;
+                        // float height = rectTransform.sizeDelta.y;
+                        // platformManager.CurrentPlatform.CreateUserInfoButton((int)_startButton.transform.position.x,
+                        //     (int)_startButton.transform.position.y, (int)width, (int)height,
+                        //     (info) =>
+                        //     {
+                        //         //授权数据
+                        //         // OnStartButtonClick();
+                        //         // Debug.Log($"[UIMainMenu] 创建用户信息按钮 OnTap");
+                        //     });
+                    }
+                );
+            },
+            (error) =>
+            {
+                //失败
+                Debug.LogError($"[GameLauncher] 微信登录失败, msg: {error}");
+                // uiGameMessage.ShowMessage($"[UIMainMenu] 微信登录失败, msg: {error}");
+            });
+        }
 
+        /// <summary>
+        /// 初始化游戏逻辑类
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">GameLogic子类对象未找到</exception>
+        private async UniTask InitGameLogicAsync()
+        { 
             // 初始化游戏逻辑类
             var gameLogic = FindObjectOfType<GameLogic>();
             if (gameLogic == null)
             {
-                var gameLogicObj = new GameObject("GameLogic");
-                _gameLogic = gameLogicObj.AddComponent<GameLogic>();
                 throw new InvalidOperationException("GameLogic子类对象未找到！");
             }
+
+            Debug.Log($"[{GetType().Name}] {gameLogic.GetType().Name}");
             _gameLogic = gameLogic;
             await _gameLogic.InitGameAsync();
-
-            // 隐藏游戏加载界面
-            if (_gameConfig.loading) 
-                _gameConfig.loading.SetActive(false);
-            
-        }
-
-        private void Start()
-        {
-            // 初始化框架
-            // _frameworkManager.OnInitialized += OnFrameworkInitialized;
-        }
-
-        private void Update()
-        {
-            if (!_isInitialized)
-                return;
-
-            // 游戏逻辑更新
-        }
-
-        /// <summary>
-        /// 框架初始化完成回调
-        /// </summary>
-        [Obsolete]
-        private void OnFrameworkInitialized()
-        {
-            // Debug.Log("[GameLauncher] 开始初始化游戏启动器...");
-
-            // 获取各个管理器
-            _platformManager = _frameworkManager.GetManager<PlatformManager>();
-            // Debug.Log($"[GameLauncher] _platformManager 获取结果: {(_platformManager != null ? "成功" : "失败")}");
-
-            _resourceManager = _frameworkManager.GetManager<ResourceManager>();
-            // Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
-
-            // 根据配置设置资源加载模式
-            if (_resourceManager != null)
-            {
-                _resourceManager.SetResourceLoadMode(_gameConfig.ResourceLoadMode);
-                // Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
-            }
-            else
-            {
-                // Debug.LogError("[GameLauncher] 资源管理器为空，无法设置资源加载模式");
-            }
-
-
-            // 初始化UI
-            if (_updatePanel != null)
-                _updatePanel.SetActive(false);
-
-            if (_retryButton != null)
-                _retryButton.onClick.AddListener(RetryResourceUpdate);
-
-            InitGameAsync().Forget();
         }
 
         private async UniTask InitResourceAsync()
@@ -215,64 +235,6 @@ namespace GameFramework.Game
                 return;
             }
             _isInitialized = true;
-        }
-
-        /// <summary>
-        /// 初始化游戏
-        /// </summary>
-        private async UniTask InitGameAsync()
-        {
-            if (_gameConfig.loading)
-            {
-                _gameConfig.loading.SetActive(true);
-
-            }
-
-            // // 等待框架初始化完成
-            // while (!_frameworkManager.IsInitialized)
-            //          {
-            //              await UniTask.Delay(10);
-            //          }
-
-            // 初始化资源系统
-            bool resourceInitSuccess = await InitResourceSystemAsync();
-            if (!resourceInitSuccess)
-            {
-                Debug.LogError("[GameLauncher] 资源系统初始化失败");
-                return;
-            }
-
-            // 加载游戏启动场景(有点问题，待定)
-
-            //var sceneHandle = _resourceManager.LoadSceneAsync(_gameConfig.StartScenePath);
-            //if (sceneHandle != null)
-            //{
-            //    Debug.Log($"[GameLauncher] 开始加载场景: {_gameConfig.StartScenePath}");
-
-            //    // 等待场景加载完成
-            //    await sceneHandle;
-
-            //    if (sceneHandle.Status == YooAsset.EOperationStatus.Succeed)
-            //    {
-            //        Debug.Log($"[GameLauncher] 场景加载成功: {_gameConfig.StartScenePath}");
-            //    }
-            //    else
-            //    {
-            //        Debug.LogError($"[GameLauncher] 场景加载失败: {_gameConfig.StartScenePath}, 错误: {sceneHandle.LastError}");
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.LogError($"[GameLauncher] 无法创建场景加载句柄: {_gameConfig.StartScenePath}");
-            //    return;
-            //}
-
-            // 游戏初始化完成
-            _isInitialized = true;
-
-            // 触发初始化完成事件
-            OnInitialized?.Invoke();
         }
 
         /// <summary>

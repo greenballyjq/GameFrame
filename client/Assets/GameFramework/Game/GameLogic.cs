@@ -3,6 +3,7 @@ using GameFramework.Game;
 using GameFramework.Manager;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace GameFramework.Core
@@ -31,9 +32,15 @@ namespace GameFramework.Core
         public GameState CurrentState { get; protected set; } = GameState.None;
 
         /// <summary>
+        /// 场景对应的游戏业务管理器类型集合
+        /// </summary>
+        protected readonly Dictionary<string, List<Type>>
+            SceneToGameManagerTypes = new Dictionary<string, List<Type>>();
+
+        /// <summary>
         /// 游戏业务管理器字典
         /// </summary>
-        protected readonly Dictionary<Type, IGameManager> GameManagers = new Dictionary<Type, IGameManager>();
+        protected readonly Dictionary<Type, BaseGameManager> GameManagers = new Dictionary<Type, BaseGameManager>();
 
         protected virtual void Update()
         {
@@ -71,12 +78,18 @@ namespace GameFramework.Core
 
             // 异步等待配置管理器初始化
             await WaitForConfigManagerAsync();
+            
+            RegisterSceneGameManagers();
 
-            // 注册所有游戏业务管理器
-            RegisterGameManagers();
+            var gameSceneManager = GameFrameworkManager.Instance.GetManager<GameSceneManager>();
+            gameSceneManager.OnSceneChanged += OnSceneChanged;
+            gameSceneManager.OnSceneLoadComplete += OnSceneLoadComplete;
 
-            // 初始化所有游戏业务管理器
-            InitializeGameManagers();
+            // // 注册所有游戏业务管理器
+            // RegisterGameManagers();
+            //
+            // // 初始化所有游戏业务管理器
+            // InitializeGameManagers();
 
             // 调用游戏应用初始化钩子
             await OnGameInitAsync();
@@ -86,6 +99,31 @@ namespace GameFramework.Core
 
             // 进入准备就绪状态
             OnGameReady();
+        }
+
+        private void OnSceneChanged(string oldScene, string newScene)
+        {
+            List<Type> managerTypeList;
+            if (SceneToGameManagerTypes.TryGetValue(oldScene, out managerTypeList))
+            {
+                foreach (var type in managerTypeList)
+                {
+                    UnregisterGameManager(type);
+                }
+            }
+        }
+        
+        private void OnSceneLoadComplete(object sender, SceneLoadEventArgs e)
+        {
+            List<Type> managerTypeList;
+            if (SceneToGameManagerTypes.TryGetValue(e.SceneName, out managerTypeList))
+            {
+                foreach (var type in managerTypeList)
+                {
+                    RegisterGameManager(type);
+                }
+                InitializeGameManagers();
+            }
         }
 
         /// <summary>
@@ -171,12 +209,48 @@ namespace GameFramework.Core
         /// <summary>
         /// 获取游戏业务管理器
         /// </summary>
-        public T GetGameManager<T>() where T : class, IGameManager
+        public T GetGameManager<T>() where T : BaseGameManager
         {
             if (GameManagers.TryGetValue(typeof(T), out var manager))
                 return (T)manager;
 
             return null;
+        }
+
+        /// <summary>
+        /// 尝试获取游戏业务管理器
+        /// </summary>
+        /// <param name="manager">out 游戏业务管理器</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool TryGetGameManager<T>(out T manager) where T : BaseGameManager
+        {
+            manager = null;
+            if (GameManagers.TryGetValue(typeof(T), out var mgr))
+            {
+                manager = (T)mgr;
+                return true;
+            }
+
+            return false;
+        }
+        
+        /// <summary>
+        /// 尝试获取游戏业务管理器
+        /// </summary>
+        /// <param name="manager">out 游戏业务管理器</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool TryGetGameManager(Type type, out BaseGameManager manager) 
+        {
+            manager = null;
+            if (GameManagers.TryGetValue(type, out var mgr))
+            {
+                manager = mgr;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -214,6 +288,8 @@ namespace GameFramework.Core
         /// </summary>
         protected abstract void RegisterGameManagers();
 
+        protected abstract void RegisterSceneGameManagers();
+
         /// <summary>
         /// 注册单个游戏业务管理器
         /// </summary>
@@ -241,6 +317,50 @@ namespace GameFramework.Core
 
             GameManagers[managerType] = manager;
             Debug.Log($"[GameLogic] 注册管理器: {managerType.Name}");
+        }
+
+        protected void RegisterGameManager(Type type)
+        {
+            if (GameManagers.ContainsKey(type))                   
+            {
+                Debug.LogWarning($"[GameLogic] 管理器 {type.Name} 已注册");
+                return;
+            }
+
+            var manager = FindObjectOfType(type) as BaseGameManager;
+            if (manager == null)
+            {
+                var go = new GameObject(type.Name);
+                manager = go.AddComponent(type) as BaseGameManager;
+            }
+            
+            if (manager.DonotDestroyOnLoad)
+            {
+                DontDestroyOnLoad(manager.gameObject);
+            }
+            
+            GameManagers[type] = manager;
+            Debug.Log($"[GameLogic] 注册管理器: {type.Name}, {GameManagers.Count}");
+        }
+
+        protected void UnregisterGameManager<T>() where T : BaseGameManager
+        {
+            var managerType = typeof(T);
+            if (!GameManagers.ContainsKey(managerType)) return;
+            GameManagers[managerType].Release();
+            GameManagers.Remove(managerType);
+        }
+
+        protected void UnregisterGameManager(Type type)
+        {
+            if (!GameManagers.ContainsKey(type)) return;
+            GameManagers[type].Release();
+            GameManagers.Remove(type);
+        }
+
+        protected void RegisterSceneManager(string sceneName, List<Type> types)
+        {
+            SceneToGameManagerTypes[sceneName] = types;
         }
 
         /// <summary>
@@ -315,6 +435,13 @@ namespace GameFramework.Core
         /// 游戏应用结束钩子
         /// </summary>
         protected virtual void OnGameOver() { }
+        
+        /// <summary>
+        /// 游戏自定义登录
+        /// </summary>
+        /// <returns></returns>
+        public abstract UniTask Login(PlatformManager.PlatformType platformType, string code);
+        
         #endregion
     }
 }

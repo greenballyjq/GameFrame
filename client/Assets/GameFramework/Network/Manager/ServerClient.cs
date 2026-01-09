@@ -86,7 +86,7 @@ namespace GameFramework.Network
                 handler(postMessage, message);
             }
 
-            Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}");
+            Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}, timestamp:{DateTime.Now}");
 
 
             byte[] bodyRaw = postMessage.ToByteArray();
