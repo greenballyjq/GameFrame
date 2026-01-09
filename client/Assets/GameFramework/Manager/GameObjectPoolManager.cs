@@ -123,7 +123,7 @@ namespace GameFramework.Manager
         {
             if (string.IsNullOrEmpty(prefabPath))
             {
-                // Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
+                Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
                 return null;
             }
 
@@ -133,14 +133,14 @@ namespace GameFramework.Manager
                 prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
                 if (prefab == null)
                 {
-                    // Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
+                    Debug.LogError($"[GameObjectPoolManager] 加载预制体失败：{prefabPath}");
                     return null;
                 }
 
                 // 在放入缓存前检查预制体是否有IPoolItem组件
                 if (prefab.GetComponent<IPoolItem>() == null)
                 {
-                    // Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
+                    Debug.LogError($"[GameObjectPoolManager] 预制体 {prefab.name} 没有实现IPoolItem接口，无法放入对象池");
                     return null;
                 }
 

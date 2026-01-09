@@ -47,17 +47,6 @@ namespace GameFramework.Game
         /// </summary>
         private readonly List<IAppManager> _appManagers = new List<IAppManager>();
 
-        /// <summary>
-        /// 事件管理器
-        /// </summary>
-        private EventManager _eventManager => GetFrameworkManager<EventManager>();
-
-        private void Start()
-        {
-            // TODO: 根据需求可能是由外部调用
-            StartAppAsync().Forget();
-        }
-
         private void Update()
         {
             if (_currentState != GameAppFlowState.Running)
@@ -66,7 +55,6 @@ namespace GameFramework.Game
             float deltaTime = Time.deltaTime;
             for (int i = 0; i < _appManagers.Count; i++)
             {
-                // 调度实现了可更新接口的应用级管理器
                 if (_appManagers[i] is IAppUpdatable updatable)
                     updatable.DoUpdate(deltaTime);
             }
@@ -82,10 +70,8 @@ namespace GameFramework.Game
         {
             _currentState = GameAppFlowState.Starting;
 
-            // 等待游戏启动器初始化完成
             await WaitForGameLauncherAsync();
 
-            // 等待配置管理器初始化完成
             await WaitForConfigManagerAsync();
 
             RegisterAppManagers();
@@ -93,8 +79,6 @@ namespace GameFramework.Game
                 manager.Init();
 
             await OnAppStartAsync();
-
-            _eventManager.Trigger("AppStarted");
 
             _currentState = GameAppFlowState.Running;
         }
@@ -111,8 +95,6 @@ namespace GameFramework.Game
             for (int i = _appManagers.Count - 1; i >= 0; i--)
                 _appManagers[i].Dispose();
             _appManagers.Clear();
-
-            _eventManager.Trigger("AppExited");
 
             _currentState = GameAppFlowState.None;
         }
