@@ -38,13 +38,13 @@ namespace GameFramework.Manager
         /// 生成粒子特效
         /// </summary>
         /// <param name="effectName">粒子特效名称</param>
-        /// <param name="position">生成位置</param>
+        /// <param name="position">生成位置，为null时使用粒子默认位置</param>
         /// <param name="rotation">旋转</param>
         /// <param name="autoDestroy">是否自动销毁</param>
         /// <param name="destroyDelay">延迟销毁时间（秒）</param>
         /// <param name="parent">父物体</param>
         /// <returns>生成的粒子特效游戏对象</returns>
-        public async UniTask<GameObject> SpawnParticleEffectAsync(string effectName, Vector3 position, 
+        public async UniTask<GameObject> SpawnParticleEffectAsync(string effectName, Vector3? position = null, 
             Quaternion rotation = default, bool autoDestroy = true, float destroyDelay = 0f, Transform parent = null)
         {
             try
@@ -59,7 +59,10 @@ namespace GameFramework.Manager
                 }
 
                 // 设置位置和旋转
-                particle.transform.position = position;
+                if (position.HasValue)
+                {
+                    particle.transform.position = position.Value;
+                }
                 particle.transform.rotation = rotation == default ? Quaternion.identity : rotation;
                 
                 if (parent != null)
@@ -113,13 +116,13 @@ namespace GameFramework.Manager
         /// 同步生成粒子特效（需要预制体已缓存）
         /// </summary>
         /// <param name="effectName">粒子特效名称</param>
-        /// <param name="position">生成位置</param>
+        /// <param name="position">生成位置，为null时使用粒子默认位置</param>
         /// <param name="rotation">旋转</param>
         /// <param name="autoDestroy">是否自动销毁</param>
         /// <param name="destroyDelay">延迟销毁时间（秒）</param>
         /// <param name="parent">父物体</param>
         /// <returns>生成的粒子特效游戏对象</returns>
-        public GameObject SpawnParticleEffect(string effectName, Vector3 position, 
+        public GameObject SpawnParticleEffect(string effectName, Vector3? position = null, 
             Quaternion rotation = default, bool autoDestroy = true, float destroyDelay = -1f, Transform parent = null)
         {
             try
@@ -134,7 +137,10 @@ namespace GameFramework.Manager
                 }
 
                 // 设置位置和旋转
-                particle.transform.position = position;
+                if (position.HasValue)
+                {
+                    particle.transform.position = position.Value;
+                }
                 particle.transform.rotation = rotation == default ? Quaternion.identity : rotation;
                 
                 if (parent != null)
@@ -164,7 +170,7 @@ namespace GameFramework.Manager
                     _activeEffects.Add(activeEffect);
                 }
 
-                Debug.Log($"[ParticleEffectManager] 生成粒子特效: {effectName} at {position}");
+                Debug.Log($"[ParticleEffectManager] 生成粒子特效: {effectName} at {(position.HasValue ? position.Value.ToString() : "默认位置")}");
                 
                 return particle;
             }

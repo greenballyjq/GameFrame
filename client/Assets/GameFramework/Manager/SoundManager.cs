@@ -98,6 +98,41 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
+        /// 播放指定2D音效（通过名称）
+        /// </summary>
+        /// <param name="audioName">音效名称</param>
+        /// <param name="channel">音频通道，默认为Sound</param>
+        /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
+        /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
+        public AudioCallback PlaySound2D(string audioName, AudioChannel channel = AudioChannel.Sound, int loop = 1)
+        {
+            var audioData = new AudioData(audioName);
+            audioData.audioChannel = channel;
+            return PlaySound2D(audioData, loop);
+        }
+
+        /// <summary>
+        /// 播放指定2D音效（通过路径）
+        /// </summary>
+        /// <param name="resourcePath">Resources路径</param>
+        /// <param name="channel">音频通道，默认为Sound</param>
+        /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
+        /// <param name="volume">音量（0-1），默认为1</param>
+        /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
+        public AudioCallback PlaySound2DByPath(string resourcePath, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        {
+            var audioClip = Resources.Load<AudioClip>(resourcePath);
+            if (audioClip == null)
+            {
+                Debug.LogError($"[SoundManager] 加载音效失败，路径: {resourcePath}");
+                return null;
+            }
+            var audioData = new AudioData(audioClip, volume);
+            audioData.audioChannel = channel;
+            return PlaySound2D(audioData, loop);
+        }
+
+        /// <summary>
         /// 播放一次性2D音效
         /// </summary>
         /// <param name="audioData">音效数据</param>
