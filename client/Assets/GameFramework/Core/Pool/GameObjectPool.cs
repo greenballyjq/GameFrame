@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GameFramework.Core;
 using UnityEngine;
 
 namespace GameFramework.Core.Pool
@@ -20,14 +19,14 @@ namespace GameFramework.Core.Pool
         private readonly GameObject _prefab;
 
         /// <summary>
-        /// 父节点
+        /// 对象池根节点
         /// </summary>
-        private readonly Transform _parent;
+        private readonly Transform _poolRoot;
 
-        public GameObjectPool(GameObject prefab, Transform parent)
+        public GameObjectPool(GameObject prefab, Transform poolRoot)
         {
             _prefab = prefab;
-            _parent = parent;
+            _poolRoot = poolRoot;
         }
 
         #region 公共方法
@@ -37,12 +36,11 @@ namespace GameFramework.Core.Pool
         public GameObject Spawn()
         {
             GameObject obj = _stack.Count > 0 ? _stack.Pop() : Object.Instantiate(_prefab);
+            obj.transform.SetParent(null);
 
-            IPoolItem item = obj.GetComponent<IPoolItem>();
-            item.OnSpawned();
-            
-            obj.transform.SetParent(_parent);
-            
+            obj.SetActive(true);
+            obj.GetComponent<IPoolItem>()?.OnSpawned();
+
             return obj;
         }
 
@@ -52,11 +50,36 @@ namespace GameFramework.Core.Pool
         /// <param name="obj">要回收的对象</param>
         public void Despawn(GameObject obj)
         {
-            IPoolItem item = obj.GetComponent<IPoolItem>();
-            item.OnDespawned();
+            obj.transform.SetParent(_poolRoot);
 
-            obj.transform.SetParent(_parent);
+            obj.GetComponent<IPoolItem>()?.OnDespawned();
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localScale = Vector3.one;
+            obj.SetActive(false);
+
             _stack.Push(obj);
+        }
+
+        /// <summary>
+        /// 预热对象池
+        /// </summary>
+        /// <param name="count">预热数量</param>
+        public void Prewarm(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                GameObject obj = Object.Instantiate(_prefab);
+                obj.transform.SetParent(_poolRoot);
+
+                obj.GetComponent<IPoolItem>()?.OnDespawned();
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localRotation = Quaternion.identity;
+                obj.transform.localScale = Vector3.one;
+                obj.SetActive(false);
+
+                _stack.Push(obj);
+            }
         }
 
         /// <summary>

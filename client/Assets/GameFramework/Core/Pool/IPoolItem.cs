@@ -1,4 +1,4 @@
-﻿
+﻿    
 namespace GameFramework.Core.Pool
 {
     /// <summary>
