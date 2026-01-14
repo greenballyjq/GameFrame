@@ -151,12 +151,22 @@ namespace GameFramework.Manager
         /// <summary>
         /// 播放一次性特效，播放完自动回收（路径方式）
         /// </summary>
-        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation)
+        /// <param name="persistAcrossScenes">是否过场景不移除</param>
+        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool persistAcrossScenes = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
+            if (obj == null) return null;
+            
             obj.transform.SetPositionAndRotation(position, rotation);
+            
+            if (persistAcrossScenes)
+            {
+                Object.DontDestroyOnLoad(obj);
+            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
+            if (effect == null) return null;
+            
             var instance = RegisterInstance(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
 
             effect.Play();
@@ -185,12 +195,22 @@ namespace GameFramework.Manager
         /// <summary>
         /// 播放循环特效，需要手动停止（路径方式）
         /// </summary>
-        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation)
+        /// <param name="persistAcrossScenes">是否过场景不移除</param>
+        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool persistAcrossScenes = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
+            if (obj == null) return null;
+            
             obj.transform.SetPositionAndRotation(position, rotation);
+            
+            if (persistAcrossScenes)
+            {
+                Object.DontDestroyOnLoad(obj);
+            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
+            if (effect == null) return null;
+            
             var instance = RegisterInstance(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
 
             effect.Play();
@@ -219,12 +239,22 @@ namespace GameFramework.Manager
         /// <summary>
         /// 播放持续时间特效，到时间后停止并自动回收（路径方式）
         /// </summary>
-        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful)
+        /// <param name="persistAcrossScenes">是否过场景不移除</param>
+        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool persistAcrossScenes = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
+            if (obj == null) return null;
+            
             obj.transform.SetPositionAndRotation(position, rotation);
+            
+            if (persistAcrossScenes)
+            {
+                Object.DontDestroyOnLoad(obj);
+            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
+            if (effect == null) return null;
+            
             var instance = RegisterInstance(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
 
             effect.Play();
