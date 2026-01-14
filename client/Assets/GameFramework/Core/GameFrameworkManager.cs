@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Manager;
@@ -28,18 +28,18 @@ namespace GameFramework.Core
         public void InitFramework()
         {
             // Debug.Log("[GameFramework] 开始初始化框架...");
-
             // 注册各个管理器
-            RegisterManager<ResourceManager>();
-            // ConfigManager 由业务层独立管理，框架不注册
-            RegisterManager<PlatformManager>();
             RegisterManager<EventManager>();
+            RegisterManager<ResourceManager>();
+            RegisterManager<GameObjectPoolManager>();
+            RegisterManager<PlatformManager>();
             RegisterManager<UIManager>();
             RegisterManager<TimerManager>();
             RegisterManager<SoundManager>();
             RegisterManager<ParticleEffectManager>();
-            RegisterManager<GameObjectPoolManager>();
+            RegisterManager<EffectManager>();
             RegisterManager<GameSceneManager>();
+            // ConfigManager 由业务层独立管理，框架不注册
 #if FRAMEWORK_SERIALIZE
             RegisterManager<SaveLoadManager>();
 #endif

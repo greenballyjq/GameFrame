@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,12 +14,12 @@ namespace GameFramework.Manager
     public class ParticleEffectManager : IManager
     {
         #region 私有字段
-        
+
         /// <summary>
         /// 活跃的粒子特效列表
         /// </summary>
         private readonly List<ActiveParticleEffect> _activeEffects = new();
-        
+
         /// <summary>
         /// 对象池引用
         /// </summary>
@@ -29,11 +29,11 @@ namespace GameFramework.Manager
         /// 粒子特效加载目录路径
         /// </summary>
         private const string ParticleLoadPath = "Arts/Prefabs/Particles";
-        
+
         #endregion
 
         #region 公共方法
-        
+
         /// <summary>
         /// 生成粒子特效
         /// </summary>
@@ -44,14 +44,14 @@ namespace GameFramework.Manager
         /// <param name="destroyDelay">延迟销毁时间（秒）</param>
         /// <param name="parent">父物体</param>
         /// <returns>生成的粒子特效游戏对象</returns>
-        public async UniTask<GameObject> SpawnParticleEffectAsync(string effectName, Vector3? position = null, 
+        public async UniTask<GameObject> SpawnParticleEffectAsync(string effectName, Vector3? position = null,
             Quaternion rotation = default, bool autoDestroy = true, float destroyDelay = 0f, Transform parent = null)
         {
             try
             {
                 // 从对象池获取或创建新对象
                 var particle = await GetFromPoolAsync(effectName);
-                
+
                 if (particle == null)
                 {
                     Debug.LogError($"[ParticleEffectManager] 无法创建粒子特效: {effectName}");
@@ -64,7 +64,7 @@ namespace GameFramework.Manager
                     particle.transform.position = position.Value;
                 }
                 particle.transform.rotation = rotation == default ? Quaternion.identity : rotation;
-                
+
                 if (parent != null)
                 {
                     particle.transform.SetParent(parent);
@@ -93,7 +93,7 @@ namespace GameFramework.Manager
                 }
 
                 Debug.Log($"[ParticleEffectManager] 生成粒子特效: {effectName} at {position}");
-                
+
                 // 触发生成事件
                 // var eventManager = GameServiceLocator.EventManager;
                 // if (eventManager != null)
@@ -102,7 +102,7 @@ namespace GameFramework.Manager
                 //         effectName, particle, position, autoDestroy, destroyDelay);
                 //     eventManager.Trigger(ParticleEffectEvents.ParticleEffectSpawned, args);
                 // }
-                
+
                 return particle;
             }
             catch (Exception ex)
@@ -122,14 +122,14 @@ namespace GameFramework.Manager
         /// <param name="destroyDelay">延迟销毁时间（秒）</param>
         /// <param name="parent">父物体</param>
         /// <returns>生成的粒子特效游戏对象</returns>
-        public GameObject SpawnParticleEffect(string effectName, Vector3? position = null, 
+        public GameObject SpawnParticleEffect(string effectName, Vector3? position = null,
             Quaternion rotation = default, bool autoDestroy = true, float destroyDelay = -1f, Transform parent = null)
         {
             try
             {
                 // 从对象池获取或创建新对象
                 var particle = GetFromPool(effectName);
-                
+
                 if (particle == null)
                 {
                     Debug.LogError($"[ParticleEffectManager] 无法创建粒子特效: {effectName}");
@@ -142,7 +142,7 @@ namespace GameFramework.Manager
                     particle.transform.position = position.Value;
                 }
                 particle.transform.rotation = rotation == default ? Quaternion.identity : rotation;
-                
+
                 if (parent != null)
                 {
                     particle.transform.SetParent(parent);
@@ -171,7 +171,7 @@ namespace GameFramework.Manager
                 }
 
                 Debug.Log($"[ParticleEffectManager] 生成粒子特效: {effectName} at {(position.HasValue ? position.Value.ToString() : "默认位置")}");
-                
+
                 return particle;
             }
             catch (Exception ex)
@@ -209,9 +209,7 @@ namespace GameFramework.Manager
                 ReturnToPool(particle);
 
                 Debug.Log($"[ParticleEffectManager] 销毁粒子特效: {particle.name}");
-                
-                // 触发销毁事件
-                // TriggerParticleEffectDestroyed(effectName, particle, DestroyReason.Manual, duration);
+
             }
             catch (Exception ex)
             {
@@ -232,7 +230,7 @@ namespace GameFramework.Manager
             try
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: cancellationToken);
-                
+
                 if (!cancellationToken.IsCancellationRequested)
                 {
                     DestroyParticleEffect(particle);
@@ -282,10 +280,8 @@ namespace GameFramework.Manager
 
                 _activeEffects.Clear();
                 var clearedCount = effectsToDestroy.Count;
-            Debug.Log("[ParticleEffectManager] 已清理所有粒子特效");
-            
-            // 触发清理完成事件
-            // TriggerParticleEffectCleared(clearedCount, poolCount, ClearReason.Manual);
+                Debug.Log("[ParticleEffectManager] 已清理所有粒子特效");
+
             }
             catch (Exception ex)
             {
@@ -320,23 +316,23 @@ namespace GameFramework.Manager
                 if (currentTime >= effect.DestroyTime && effect.AutoDestroy)
                 {
                     effectsToDestroy.Add(effect);
-                }  
+                }
             }
 
             foreach (var effect in effectsToDestroy)
             {
                 _activeEffects.Remove(effect);
                 DestroyParticleEffect(effect.GameObject, false);
-            }     
+            }
         }
-         
+
         /// <summary>
         /// 释放粒子特效管理器资源
         /// </summary>
         public void Release()
         {
             ClearAllParticleEffects();
-            
+
             Debug.Log("[ParticleEffectManager] 粒子特效管理器资源释放完成");
         }
 
@@ -373,7 +369,7 @@ namespace GameFramework.Manager
         private void ReturnToPool(GameObject particle)
         {
             if (particle == null) return;
-            
+
             _gameObjectPoolManager.Despawn(particle);
         }
 
@@ -393,7 +389,7 @@ namespace GameFramework.Manager
                 {
                     maxDuration = ps.main.duration;
                 }
-                
+
                 // 考虑开始延迟
                 var totalDuration = ps.main.duration + ps.main.startDelay.constant;
                 if (totalDuration > maxDuration)
@@ -420,65 +416,6 @@ namespace GameFramework.Manager
             public float DestroyTime { get; set; }
             public bool AutoDestroy { get; set; }
         }
-
-        #endregion
-
-        #region 事件触发方法
-
-        /// <summary>
-        /// 触发粒子特效加载完成事件
-        /// </summary>
-        private void TriggerParticleEffectLoaded(string effectName, bool success, string errorMessage, long loadTimeMs)
-        {
-            // var eventManager = GameServiceLocator.EventManager;
-            // if (eventManager != null)
-            // {
-            //     var args = new ParticleEffectLoadedEventArgs(effectName, success, errorMessage, loadTimeMs);
-            //     eventManager.Trigger(ParticleEffectEvents.ParticleEffectLoaded, args);
-            // }
-        }
-
-        /// <summary>
-        /// 触发粒子特效销毁事件
-        /// </summary>
-        // private void TriggerParticleEffectDestroyed(string effectName, GameObject particleObject, 
-        //     DestroyReason reason, float duration)
-        // {
-        //     var eventManager = GameServiceLocator.EventManager;
-        //     if (eventManager != null)
-        //     {
-        //         var args = new ParticleEffectDestroyedEventArgs(effectName, particleObject, reason, duration);
-        //         eventManager.Trigger(ParticleEffectEvents.ParticleEffectDestroyed, args);
-        //     }
-        // }
-
-        /// <summary>
-        /// 触发粒子特效预加载完成事件
-        /// </summary>
-        // private void TriggerParticleEffectPreloaded(int totalCount, int successCount, int failureCount, 
-        //     long loadTimeMs, string[] effectNames)
-        // {
-        //     var eventManager = GameServiceLocator.EventManager;
-        //     if (eventManager != null)
-        //     {
-        //         var args = new ParticleEffectPreloadedEventArgs(totalCount, successCount, failureCount, 
-        //             loadTimeMs, effectNames);
-        //         eventManager.Trigger(ParticleEffectEvents.ParticleEffectPreloaded, args);
-        //     }
-        // }
-
-        /// <summary>
-        /// 触发粒子特效清理完成事件
-        /// </summary>
-        // private void TriggerParticleEffectCleared(int clearedCount, int poolCount, ClearReason reason)
-        // {
-        //     var eventManager = GameServiceLocator.EventManager;
-        //     if (eventManager != null)
-        //     {
-        //         var args = new ParticleEffectClearedEventArgs(clearedCount, poolCount, reason);
-        //         eventManager.Trigger(ParticleEffectEvents.ParticleEffectCleared, args);
-        //     }
-        // }
 
         #endregion
     }
