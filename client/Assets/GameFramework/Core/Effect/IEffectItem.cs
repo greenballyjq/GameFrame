@@ -3,38 +3,38 @@
 namespace GameFramework.Core.Effect
 {
     /// <summary>
-    /// 特效对象接口（用于统一播放、停止与结束判定）
+    /// 特效接口
     /// </summary>
     public interface IEffectItem
     {
         /// <summary>
-        /// 是否循环播放
+        /// 当前特效是否仍有可见内容
         /// </summary>
-        bool IsLoop { get; }
+        bool IsAlive { get; }
 
         /// <summary>
-        /// 开始播放
+        /// 播放特效
         /// </summary>
         void Play();
 
         /// <summary>
-        /// 软停止：停止发射/停止播放，但允许尾巴自然结束
+        /// 收尾停止
         /// </summary>
-        void StopSoft();
+        void StopGraceful();
 
         /// <summary>
-        /// 立即停止：立刻清除/终止显示
+        /// 立即停止
         /// </summary>
         void StopImmediate();
 
         /// <summary>
-        /// 是否仍在播放/是否仍有残留
+        /// 暂停特效
         /// </summary>
-        bool IsAlive();
+        void Pause();
 
         /// <summary>
-        /// 获取一次性特效的估算时长（循环返回-1）
+        /// 恢复特效
         /// </summary>
-        float GetEstimatedDuration();
+        void Resume();
     }
 }

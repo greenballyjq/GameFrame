@@ -52,14 +52,14 @@ namespace GameFramework.Game
             if (_currentState != GameAppFlowState.Running)
                 return;
 
-            float deltaTime = Time.deltaTime;
+            float dt = Time.deltaTime;
             for (int i = 0; i < _appManagers.Count; i++)
             {
                 if (_appManagers[i] is IAppUpdatable updatable)
-                    updatable.DoUpdate(deltaTime);
+                    updatable.DoUpdate(dt);
             }
 
-            OnAppRunning(deltaTime);
+            OnAppRunning(dt);
         }
 
         #region 公共方法
@@ -162,9 +162,6 @@ namespace GameFramework.Game
         /// <param name="manager">应用级管理器</param>
         protected void RegisterAppManager(IAppManager manager)
         {
-            if (_appManagers.Contains(manager))
-                return;
-
             _appManagers.Add(manager);
         }
 

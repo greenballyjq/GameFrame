@@ -5,24 +5,24 @@ using UnityEngine;
 namespace GameFramework.Core.Effect
 {
     /// <summary>
-    /// 粒子特效对象（池化）
+    /// 粒子特效对象
     /// </summary>
-    [DisallowMultipleComponent]
-    public class ParticleEffectItem : MonoBehaviour, IPoolItem, IEffectItem
+    public class ParticleEffectItem : MonoBehaviour, IEffectItem, IPoolItem
     {
         /// <summary>
-        /// 粒子系统缓存
+        /// 粒子系统数组
         /// </summary>
         private ParticleSystem[] _particleSystems;
 
         private void Awake()
         {
-            // 缓存粒子系统，包含子对象
             _particleSystems = GetComponentsInChildren<ParticleSystem>(true);
         }
 
-        #region IEffectItem
-        public bool IsLoop
+        /// <summary>
+        /// 当前特效是否仍有可见内容
+        /// </summary>
+        public bool IsAlive
         {
             get
             {
@@ -32,9 +32,10 @@ namespace GameFramework.Core.Effect
                 for (int i = 0; i < _particleSystems.Length; i++)
                 {
                     var ps = _particleSystems[i];
-                    if (ps == null) continue;
+                    if (ps == null)
+                        continue;
 
-                    if (ps.main.loop)
+                    if (ps.IsAlive(true))
                         return true;
                 }
 
@@ -42,116 +43,109 @@ namespace GameFramework.Core.Effect
             }
         }
 
+        /// <summary>
+        /// 播放特效
+        /// </summary>
         public void Play()
         {
             if (_particleSystems == null || _particleSystems.Length == 0)
                 _particleSystems = GetComponentsInChildren<ParticleSystem>(true);
 
-            // 为避免复用残留，先清再播
+            if (_particleSystems == null)
+                return;
+
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var ps = _particleSystems[i];
-                if (ps == null) continue;
+                if (ps == null)
+                    continue;
 
                 ps.Clear(true);
                 ps.Play(true);
             }
         }
 
-        public void StopSoft()
+        /// <summary>
+        /// 收尾停止
+        /// </summary>
+        public void StopGraceful()
         {
-            if (_particleSystems == null) return;
+            if (_particleSystems == null)
+                return;
 
-            // 停止发射，不清屏，允许尾巴自然结束
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var ps = _particleSystems[i];
-                if (ps == null) continue;
+                if (ps == null)
+                    continue;
 
                 ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
         }
 
+        /// <summary>
+        /// 立即停止
+        /// </summary>
         public void StopImmediate()
         {
-            if (_particleSystems == null) return;
+            if (_particleSystems == null)
+                return;
 
-            // 立即停止并清屏，确保下次复用干净
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var ps = _particleSystems[i];
-                if (ps == null) continue;
+                if (ps == null)
+                    continue;
 
                 ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 ps.Clear(true);
             }
         }
 
-        public bool IsAlive()
+        /// <summary>
+        /// 暂停特效
+        /// </summary>
+        public void Pause()
         {
-            if (_particleSystems == null) return false;
+            if (_particleSystems == null)
+                return;
 
-            // 任意一个子粒子仍存活，都视为存活
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var ps = _particleSystems[i];
-                if (ps == null) continue;
+                if (ps == null)
+                    continue;
 
-                if (ps.IsAlive(true))
-                    return true;
+                ps.Pause(true);
             }
-
-            return false;
         }
 
-        public float GetEstimatedDuration()
+        /// <summary>
+        /// 恢复特效
+        /// </summary>
+        public void Resume()
         {
-            if (_particleSystems == null || _particleSystems.Length == 0)
-                return 0f;
+            if (_particleSystems == null)
+                return;
 
-            if (IsLoop)
-                return -1f;
-
-            float max = 0f;
-
-            // 简单估算：duration + startLifetime(max)
             for (int i = 0; i < _particleSystems.Length; i++)
             {
                 var ps = _particleSystems[i];
-                if (ps == null) continue;
+                if (ps == null)
+                    continue;
 
-                var main = ps.main;
-
-                float lifetimeMax = 0f;
-                var lifetime = main.startLifetime;
-
-                if (lifetime.mode == ParticleSystemCurveMode.Constant)
-                    lifetimeMax = lifetime.constant;
-                else if (lifetime.mode == ParticleSystemCurveMode.TwoConstants)
-                    lifetimeMax = lifetime.constantMax;
-                else
-                    lifetimeMax = lifetime.constantMax;
-
-                float t = main.duration + lifetimeMax;
-                if (t > max) max = t;
+                ps.Play(true);
             }
-
-            return max;
         }
-        #endregion
 
-        #region IPoolItem
         public void OnSpawned()
         {
-            // 取出时直接播放
             Play();
         }
 
         public void OnDespawned()
         {
-            // 回收时强制清理，避免下次复用残留
             StopImmediate();
         }
-        #endregion
     }
 }
