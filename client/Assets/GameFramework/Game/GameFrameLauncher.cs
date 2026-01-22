@@ -162,8 +162,6 @@ namespace GameFramework.Core
             _isInitialized = true;
         }
         
-       
-        
         /// <summary>
         /// 初始化资源系统
         /// </summary>
@@ -260,6 +258,7 @@ namespace GameFramework.Core
                 // 网络异常，尝试使用本地版本
                 UpdateStatus("网络连接异常，尝试使用本地版本");
                 string localVersion = UnityEngine.PlayerPrefs.GetString("LastSuccessVersion", "");
+                // localVersion = "2026-01-21-969";
                 if (!string.IsNullOrEmpty(localVersion))
                 {
                     bool localSuccess = await _resourceManager.UpdatePackageManifestAsync(localVersion);

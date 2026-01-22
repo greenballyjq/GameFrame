@@ -40,12 +40,14 @@ public class YooAssetResourceLoader : IResourceLoader
         _playMode = EPlayMode.EditorSimulateMode;
 
 #elif UNITY_WEBGL
+// #elif !UNITY_EDITOR && UNITY_WEBGL
         _playMode = EPlayMode.WebPlayMode;
 #else
         _playMode = EPlayMode.HostPlayMode;
 #endif
+        // _playMode = EPlayMode.WebPlayMode;
         
-        // Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
+        Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
 
         // 创建默认资源包
         var defaultPackage = CreatePackage(DefaultPackageName);
@@ -247,11 +249,13 @@ public class YooAssetResourceLoader : IResourceLoader
             Debug.Log($"[YooAssetResourceLoader] 当前URL: {Application.absoluteURL}");
 			IRemoteServices remoteServices = new RemoteServices(_defaultHostServer, _fallbackHostServer);
 			var webInitParameters = new WebPlayModeParameters();
+            // webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
+
 			string packageRoot = "yoo";
 #if WEIXINMINIGAME
             Debug.LogError($"[YooAssetResourceLoader] WebPlayMode :WEIXINMINIGAME");
             // packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
-			//webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
+			webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
             Debug.Log($"[YooAssetResourceLoader] PackageRoot : {packageRoot}");
 #else
             // 为普通WebGL环境配置WebServerFileSystemParameters
