@@ -117,6 +117,20 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
+        /// 预加载预制体资源
+        /// </summary>
+        /// <param name="prefabPath">预制体资源路径</param>
+        public async UniTask PreloadAsync(string prefabPath)
+        {
+            if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
+            {
+                prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
+                _prefabCache[prefabPath] = prefab;
+            }
+        }
+
+
+        /// <summary>
         /// 预热对象池（路径方式）
         /// </summary>
         /// <param name="prefabPath">预制体资源路径</param>
