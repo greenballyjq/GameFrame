@@ -40,7 +40,7 @@ namespace GameFramework.Manager
         public void Init()
         {
             // 创建对象池根节点
-            GameObject rootObj = new GameObject("ObjectPoolRoot");
+            GameObject rootObj = new GameObject("GameObjectPoolRoot");
             _poolRoot = rootObj.transform;
             _poolRoot.position = Vector3.zero;
             Object.DontDestroyOnLoad(rootObj);
