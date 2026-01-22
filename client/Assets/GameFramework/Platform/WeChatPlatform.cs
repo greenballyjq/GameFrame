@@ -41,6 +41,7 @@ public class WeChatPlatform : IPlatform
 #else
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
+        
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台初始化");
 #endif
     }

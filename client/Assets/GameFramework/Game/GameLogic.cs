@@ -1,12 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
-using GameFramework.Game;
 using GameFramework.Manager;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using GameFramework.Core;
 using UnityEngine;
 
-namespace GameFramework.Core
+namespace GameFramework.Game
 {
     /// <summary>
     /// 游戏应用逻辑类
