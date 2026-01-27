@@ -163,7 +163,7 @@ public class UIManager : IManager
     /// <summary>
     /// 异步打开UI界面
     /// </summary>
-    public async Task<T> OpenUIAsync<T>(string uiName, UILayer layer = UILayer.Normal, object userData = null) where T : UIBase
+    public async Task<T> OpenUIAsync<T>(string uiName, UILayer layer = UILayer.Normal, object userData = null,bool isActive = true) where T : UIBase
     {
         // 检查界面是否已经打开
         if (_openedUIs.TryGetValue(uiName, out var existingUI))
@@ -217,7 +217,10 @@ public class UIManager : IManager
         // 初始化界面
         _openedUIs.Add(uiName, uiComponent);
         uiComponent.OnInit(userData);
-        
+
+        if(!isActive)
+            uiObj.SetActive(false);
+
         Debug.Log($"[UIManager] 打开UI界面: {uiName}");
         return uiComponent;
     }
