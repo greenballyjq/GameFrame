@@ -163,7 +163,7 @@ public class UIManager : IManager
     /// <summary>
     /// 异步打开UI界面
     /// </summary>
-    public async Task<T> OpenUIAsync<T>(string uiName, UILayer layer = UILayer.Normal, object userData = null,bool isActive = true) where T : UIBase
+    public async Task<T> OpenUIAsync<T>(string uiName, UILayer layer = UILayer.Normal,object userData = null,bool isActive = true, string path = "Assets/Arts/Prefabs/UI") where T : UIBase
     {
         // 检查界面是否已经打开
         if (_openedUIs.TryGetValue(uiName, out var existingUI))
@@ -182,7 +182,7 @@ public class UIManager : IManager
         else
         {
             // 从资源管理器加载界面预制体
-            uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"Arts/Prefabs/UI/{uiName}.prefab");
+            uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"{path}/{uiName}.prefab");
             
             if (uiPrefab == null)
             {
@@ -288,7 +288,7 @@ public class UIManager : IManager
     /// <summary>
     /// 预加载UI界面
     /// </summary>
-    public async Task PreloadUIAsync(string uiName)
+    public async Task PreloadUIAsync(string uiName,string path = "Assets/Arts/Prefabs/UI")
     {
         if (_uiPrefabCache.ContainsKey(uiName))
         {
@@ -297,7 +297,7 @@ public class UIManager : IManager
         }
         
         // 从资源管理器加载界面预制体
-        var uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"Arts/Prefabs/UI/{uiName}.prefab");
+        var uiPrefab = await _resourceManager.LoadAssetAsync<GameObject>($"{path}/{uiName}.prefab");
         
         if (uiPrefab == null)
         {

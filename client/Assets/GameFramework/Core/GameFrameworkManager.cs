@@ -75,13 +75,13 @@ namespace GameFramework.Core
             var type = typeof(T);
             if (_managers.ContainsKey(type))
             {
-                // Debug.LogWarning($"[GameFramework] 管理器 {type.Name} 已经注册");
+                Debug.LogWarning($"[GameFramework] 管理器 {type.Name} 已经注册");
                 return;
             }
 
             var manager = new T();
             _managers.Add(type, manager);
-            // Debug.Log($"[GameFramework] 注册管理器: {type.Name}");
+            Debug.Log($"[GameFramework] 注册管理器: {type.Name}");
         }
 
         /// <summary>
