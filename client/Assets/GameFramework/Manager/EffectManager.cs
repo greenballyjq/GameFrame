@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Effect;
 using System.Collections.Generic;
@@ -118,10 +118,7 @@ namespace GameFramework.Manager
 
         public void Release()
         {
-            foreach (var instance in _instances.Keys)
-                _poolManager.Despawn(instance);
-
-            _instances.Clear();
+            ClearAllEffects();
 
             Debug.Log("[EffectManager] 已释放");
         }
@@ -312,15 +309,25 @@ namespace GameFramework.Manager
         /// </summary>
         public void Recycle(GameObject obj)
         {
-            if (!_instances.TryGetValue(obj, out var instance))
+            if (_instances.TryGetValue(obj, out var instance))
             {
-                _poolManager.Despawn(obj);
-                return;
+                instance.ForceFinished = true;
+                instance.EffectItem.StopImmediate();
             }
 
-            instance.ForceFinished = true;
-            instance.EffectItem.StopImmediate();
             InternalDespawn(obj);
+        }
+
+        /// <summary>
+        /// 清理场上所有特效（回收到对象池）
+        /// </summary>
+        public void ClearAllEffects()
+        {
+            var keys = new List<GameObject>(_instances.Keys);
+            foreach (var obj in keys)
+            {
+                InternalDespawn(obj);
+            }
         }
         #endregion
 
@@ -426,7 +433,12 @@ namespace GameFramework.Manager
         /// </summary>
         private void InternalDespawn(GameObject obj)
         {
-            _instances.Remove(obj);
+            if (obj == null)
+                return;
+
+            if (!_instances.Remove(obj))
+                return;
+
             _poolManager.Despawn(obj);
         }
         #endregion
