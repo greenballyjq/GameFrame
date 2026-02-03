@@ -8,6 +8,7 @@ namespace GameFramework.Manager
 {
     /// <summary>
     /// 音效管理器 - 负责音效的加载、播放和管理
+    /// 依赖于资源管理器 ResourceManager
     /// </summary>
     public class SoundManager : IManager
     {
@@ -94,32 +95,6 @@ namespace GameFramework.Manager
 
         #region 公共方法
 
-        
-        /// <summary>
-        /// 播放指定2D音效
-        /// </summary>
-        /// <param name="audioData">音效数据</param>
-        /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
-        /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public AudioCallback PlaySound2D(AudioData audioData, int loop = 1)
-        {
-            return PlaySound2DInternal(audioData, loop);
-        }
-
-        /// <summary>
-        /// 播放指定2D音效（通过名称）
-        /// </summary>
-        /// <param name="audioName">音效名称</param>
-        /// <param name="channel">音频通道，默认为Sound</param>
-        /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
-        /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public AudioCallback PlaySound2D(string audioName, AudioChannel channel = AudioChannel.Sound, int loop = 1)
-        {
-            var audioData = new AudioData(audioName);
-            audioData.audioChannel = channel;
-            return PlaySound2D(audioData, loop);
-        }
-
         /// <summary>
         /// 播放指定2D音效（通过路径）
         /// </summary>
@@ -128,47 +103,54 @@ namespace GameFramework.Manager
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <param name="volume">音量（0-1），默认为1</param>
         /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public async UniTask<AudioCallback> PlaySound2DByPathAsync(string resourcePath, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        public async UniTask<AudioCallback> PlaySound2DAsync(string resourcePath, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
         {
-            var audioClip = await _resourceManager.LoadAssetAsync<AudioClip>(resourcePath);
+            var audioClip = await GetAudioClipAsync(resourcePath);
             if (audioClip == null)
             {
-                Debug.LogError($"[SoundManager] 加载音效失败，路径: {resourcePath}");
                 return null;
             }
+            
             var audioData = new AudioData(audioClip, volume);
             audioData.audioChannel = channel;
-            return PlaySound2D(audioData, loop);
-        }
-
-        /// <summary>
-        /// 播放一次性2D音效
-        /// </summary>
-        /// <param name="audioData">音效数据</param>
-        /// <returns></returns>
-        public AudioCallback PlaySound2DOneShot(AudioData audioData)
-        {
-            return PlaySound2DInternal(audioData, 1);
+            return PlaySound2DInternal(audioData, loop);
         }
 
         /// <summary>
         /// 播放3D世界音效（不绑定其它物体）
         /// </summary>
-        /// <param name="audioData">音效数据</param>
+        /// <param name="resourcePath">音效资源路径</param>
         /// <param name="position">世界位置</param>
+        /// <param name="channel">音频通道，默认为Sound</param>
         /// <param name="loop">循环播放次数</param>
+        /// <param name="volume">音量（0-1），默认为1</param>
         /// <returns></returns>
-        public AudioCallback PlaySound3DWorld(AudioData audioData, Vector3 position, int loop = 1)
+        public async UniTask<AudioCallback> PlaySound3DWorldAsync(string resourcePath, Vector3 position = default
+            , AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
         {
+            var audioClip = await GetAudioClipAsync(resourcePath);
+            if (audioClip == null)
+            {
+                return null;
+            }
+            
+            var audioData = new AudioData(audioClip, volume);
+            audioData.audioChannel = channel;
+
             return PlaySound3DWorldInternal(audioData, loop, position);
         }
 
         /// <summary>
-        /// 播放3D跟随物体音效（绑定其它物体）
+        /// todo 播放3D跟随物体音效（绑定其它物体）
         /// </summary>
-        /// <param name="audioData">音效数据</param>
+        /// <param name="resourcePath">音效资源路径</param>
+        /// <param name="position">世界位置</param>
+        /// <param name="channel">音频通道，默认为Sound</param>
+        /// <param name="loop">循环播放次数</param>
+        /// <param name="volume">音量（0-1），默认为1</param>
         /// <returns></returns>
-        public AudioCallback PlaySound3DLocal(AudioData audioData)
+        public AudioCallback PlaySound3DLocal(string resourcePath, Vector3 position = default
+            , AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
         {
             return null;
         }
@@ -262,6 +244,23 @@ namespace GameFramework.Manager
         #endregion
 
         #region 私有方法
+
+        /// <summary>
+        /// 获取音效Clip，根据资源路径加载
+        /// </summary>
+        /// <param name="resourcePath"></param>
+        /// <returns></returns>
+        private async UniTask<AudioClip> GetAudioClipAsync(string resourcePath)
+        {
+            var audioClip = await _resourceManager.LoadAssetAsync<AudioClip>(resourcePath);
+            if (audioClip == null)
+            {
+                Debug.LogError($"[SoundManager] 加载音效失败，路径: {resourcePath}");
+                return null;
+            }
+
+            return audioClip;
+        }
         
         /// <summary>
         /// 播放2D音效内部实现
