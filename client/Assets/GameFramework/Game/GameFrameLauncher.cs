@@ -121,15 +121,8 @@ namespace GameFramework.Core
 
             // 初始化资源系统
             await InitResourceAsync();
-
-            // 隐藏游戏加载界面
-            if (_gameConfig.loading) 
-                _gameConfig.loading.SetActive(false);
-            
         }
-        
-      
-
+       
         /// <summary>
         /// 等待初始化完成
         /// </summary>
@@ -300,7 +293,6 @@ namespace GameFramework.Core
             Debug.LogError($"[ResourceUpdateManager] 资源下载出错: {data.FileName}, 错误: {data.ErrorInfo}");
         }
 
-
         /// <summary>
         /// 更新状态文本
         /// </summary>
@@ -322,6 +314,12 @@ namespace GameFramework.Core
             
             if (_progressText != null)
                 _progressText.text = $"{(int)(progress * 100)}%";
+        }
+
+        public void HideLoading()
+        {
+            // 隐藏游戏加载界面
+            _gameConfig.loading.SetActive(false);
         }
     }
 } 

@@ -80,6 +80,8 @@ namespace GameFramework.Game
 
             await OnAppStartAsync();
 
+            GameFrameLauncher.Instance.HideLoading();
+
             _currentState = GameAppFlowState.Running;
         }
 

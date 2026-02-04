@@ -1,4 +1,4 @@
-#if WEIXINMINIGAME
+﻿#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,13 +10,22 @@ using WeChatWASM;
 /// </summary>
 public class WeChatPlatform : IPlatform
 {
-    // 是否已初始化
+    /// <summary>
+    /// 是否初始化
+    /// </summary>
     private bool _isInitialized = false;
 
-    // 保存Banner广告实例的字典（key=adUnitId）
+    /// <summary>
+    /// Banner广告实例字典
+    /// key=adUnitId
+    /// </summary>
     private Dictionary<string, WXCustomAd> _bannerAdDict = new Dictionary<string, WXCustomAd>();
 
-    // 记录Banner广告显示状态（key=adUnitId，value=是否正在显示）
+    /// <summary>
+    /// Banner广告显示状态字典
+    /// key=adUnitId
+    /// value=是否正在显示
+    /// </summary>
     private Dictionary<string, bool> _bannerShowStateDict = new Dictionary<string, bool>();
 
     /// <summary>
@@ -24,10 +33,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     public void Init()
     {
-        // Debug.Log("[WeChatPlatform] 初始化微信平台");
+        Debug.Log("[WeChatPlatform] 初始化微信平台");
 
-        // 调用微信小游戏的初始化API
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL
         try
         {
             WXInit();
