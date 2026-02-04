@@ -36,7 +36,7 @@ public class PlatformManager : IManager
         // 初始化当前平台
         InitCurrentPlatform();
         
-        Debug.Log($"[{GetType().Name}] USER_DATA_PATH: {WeChatWASM.WX.env.USER_DATA_PATH}");
+        // Debug.Log($"[{GetType().Name}] USER_DATA_PATH: {WeChatWASM.WX.env.USER_DATA_PATH}");
     }
 
     public void Update()
