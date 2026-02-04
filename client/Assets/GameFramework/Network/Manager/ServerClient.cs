@@ -18,6 +18,11 @@ namespace GameFramework.Network
         private bool isConnected = false;
         private Dictionary<Type, Func<S2C_Message, IMessage>> MessageAccessors;
         private Dictionary<Type, Action<C2S_Message, IMessage>> MessageSetters;
+        
+        /// <summary>
+        /// Session计数器，每次发送请求时自动递增
+        /// </summary>
+        private ulong sessionCounter = 0;
 
         /// <summary>
         /// 是否已连接到服务器
@@ -79,7 +84,9 @@ namespace GameFramework.Network
             //try
             //{
             var postMessage = new C2S_Message();
-            postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            // 递增 session 计数器，每次发送请求时自动加一
+            sessionCounter++;
+            postMessage.Session = sessionCounter;
             var messageType = message.GetType();
             if (MessageSetters.TryGetValue(messageType, out var handler))
             {
