@@ -93,7 +93,7 @@ namespace GameFramework.Network
                 handler(postMessage, message);
             }
 
-            Debug.LogError($"ok postMessage, type: {messageType}, message: {postMessage}, url: {httpManager._baseUrl}, timestamp:{DateTime.Now}");
+            Debug.Log($"[ServerClient] 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}, URL: {httpManager._baseUrl}, 时间: {DateTime.Now}");
 
 
             byte[] bodyRaw = postMessage.ToByteArray();
@@ -105,7 +105,7 @@ namespace GameFramework.Network
                 // 反序列化响应
                 S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
 
-                Debug.LogError($"S2C_Message内容：{wrapper.Code}, {wrapper}");
+                Debug.Log($"[ServerClient] 接收消息 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, 消息类型: {typeof(T).Name}");
 
                 if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
                 {
