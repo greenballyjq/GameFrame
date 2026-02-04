@@ -82,7 +82,7 @@ namespace GameFramework.Network
                 Debug.LogWarning($"[ServerClient] 释放时仍有 {pendingRequests.Count} 个请求未收到响应：");
                 foreach (var kvp in pendingRequests)
                 {
-                    Debug.LogWarning($"  Session: {kvp.Key}, 类型: {kvp.Value.messageType}, 发送时间: {kvp.Value.sendTime}");
+                    Debug.LogWarning($"  Session: {kvp.Key}, 类型: {kvp.Value.messageType}, 发送时间: {kvp.Value.sendTime:yyyy-MM-dd HH:mm:ss.fff}");
                 }
             }
             
@@ -114,7 +114,7 @@ namespace GameFramework.Network
             // 记录发送的请求信息
             DateTime sendTime = DateTime.Now;
             pendingRequests[postMessage.Session] = (messageType.Name, sendTime);
-            Debug.Log($"[ServerClient] 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}, URL: {httpManager._baseUrl}, 时间: {sendTime}, 待响应数: {pendingRequests.Count}");
+            Debug.Log($"[ServerClient] 时间: {sendTime:yyyy-MM-dd HH:mm:ss.fff} - 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}, URL: {httpManager._baseUrl}, 待响应数: {pendingRequests.Count}");
 
 
             byte[] bodyRaw = postMessage.ToByteArray();
@@ -141,7 +141,7 @@ namespace GameFramework.Network
                 }
                 else
                 {
-                    Debug.LogWarning($"[ServerClient] 收到未配对的响应 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, " +
+                    Debug.LogWarning($"[ServerClient] 时间: {receiveTime:yyyy-MM-dd HH:mm:ss.fff} - 收到未配对的响应 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, " +
                                     $"消息类型: {typeof(T).Name}，该 Session 可能已超时或重复响应");
                 }
 
