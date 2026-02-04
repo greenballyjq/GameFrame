@@ -43,7 +43,6 @@ public class YooAssetResourceLoader : IResourceLoader
 #else
         _playMode = EPlayMode.HostPlayMode;
 #endif
-        _playMode = EPlayMode.WebPlayMode;
 
         Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
 

@@ -191,9 +191,7 @@ namespace GameFramework.Game
             },
             (error) =>
             {
-                //失败
                 Debug.LogError($"[GameLauncher] 微信登录失败, msg: {error}");
-                // uiGameMessage.ShowMessage($"[UIMainMenu] 微信登录失败, msg: {error}");
             });
         }
 
