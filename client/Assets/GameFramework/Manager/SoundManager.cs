@@ -96,6 +96,32 @@ namespace GameFramework.Manager
         #region 公共方法
 
         /// <summary>
+        /// 播放指定2D音效（通过音频文件）
+        /// </summary>
+        /// <param name="audioClip">音频引用</param>
+        /// <param name="channel">音频通道，默认为Sound</param>
+        /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
+        /// <param name="volume">音量（0-1），默认为1</param>
+        /// <returns></returns>
+        public AudioCallback PlaySound2D(AudioClip audioClip, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        {
+            if (audioClip == null)
+            {
+                Debug.LogError($"[SoundManager] 音效文件为空，无法播放");
+                return new AudioCallback();
+            }
+            
+            var audioData = new AudioData
+            {
+                audioClip = audioClip,
+                audioChannel = channel,
+                volume = volume,
+            };
+
+            return PlaySound2DInternal(audioData, loop);
+        }
+
+        /// <summary>
         /// 播放指定2D音效（通过路径）
         /// </summary>
         /// <param name="resourcePath">资源路径</param>
@@ -108,7 +134,7 @@ namespace GameFramework.Manager
             var audioClip = await GetAudioClipAsync(resourcePath);
             if (audioClip == null)
             {
-                return null;
+                return new AudioCallback();
             }
             
             var audioData = new AudioData(audioClip, volume);
