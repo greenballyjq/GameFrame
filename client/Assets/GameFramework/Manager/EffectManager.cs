@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Effect;
 using System.Collections.Generic;
@@ -118,26 +118,23 @@ namespace GameFramework.Manager
 
         public void Release()
         {
-            foreach (var kvp in _instances)
-            {
-                GameObject obj = kvp.Key;
-                if (obj != null)
-                    _poolManager.Despawn(obj);
-            }
-
-            _instances.Clear();
+            ClearAllEffects();
 
             Debug.Log("[EffectManager] 已释放");
         }
 
         #region 公共方法
         /// <summary>
-        /// 播放一次性特效，播放完自动回收（预制体方式）
+        /// 播放一次性特效（预制体方式）
+        /// 播放完自动收尾停止
         /// </summary>
-        public GameObject PlayOneShot(GameObject prefab, Vector3 position, Quaternion rotation)
+        public GameObject PlayOneShot(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
+
+            if (dontDestroyOnLoad)
+                Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
             var instance = RegisterInstance(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
@@ -149,24 +146,18 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放一次性特效，播放完自动回收（路径方式）
+        /// 播放一次性特效（路径方式）
+        /// 播放完自动收尾停止
         /// </summary>
-        /// <param name="persistAcrossScenes">是否过场景不移除</param>
-        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool persistAcrossScenes = false)
+        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
-            if (obj == null) return null;
-            
             obj.transform.SetPositionAndRotation(position, rotation);
             
-            if (persistAcrossScenes)
-            {
+            if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
-            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            if (effect == null) return null;
-            
             var instance = RegisterInstance(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
 
             effect.Play();
@@ -176,12 +167,16 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放循环特效，需要手动停止（预制体方式）
+        /// 播放循环特效（预制体方式）
+        /// 需要手动停止
         /// </summary>
-        public GameObject PlayLoop(GameObject prefab, Vector3 position, Quaternion rotation)
+        public GameObject PlayLoop(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
+
+            if (dontDestroyOnLoad)
+                Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
             var instance = RegisterInstance(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
@@ -193,24 +188,18 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放循环特效，需要手动停止（路径方式）
+        /// 播放循环特效（路径方式）
+        /// 需要手动停止
         /// </summary>
-        /// <param name="persistAcrossScenes">是否过场景不移除</param>
-        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool persistAcrossScenes = false)
+        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
-            if (obj == null) return null;
-            
             obj.transform.SetPositionAndRotation(position, rotation);
             
-            if (persistAcrossScenes)
-            {
+            if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
-            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            if (effect == null) return null;
-            
             var instance = RegisterInstance(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
 
             effect.Play();
@@ -220,12 +209,16 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放持续时间特效，到时间后停止并自动回收（预制体方式）
+        /// 播放持续时间特效（预制体方式）
+        /// 到时间后自动停止
         /// </summary>
-        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful)
+        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
+
+            if (dontDestroyOnLoad)
+                Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
             var instance = RegisterInstance(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
@@ -237,24 +230,18 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放持续时间特效，到时间后停止并自动回收（路径方式）
+        /// 播放持续时间特效
+        /// 到时间后自动停止
         /// </summary>
-        /// <param name="persistAcrossScenes">是否过场景不移除</param>
-        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool persistAcrossScenes = false)
+        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
-            if (obj == null) return null;
-            
             obj.transform.SetPositionAndRotation(position, rotation);
             
-            if (persistAcrossScenes)
-            {
+            if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
-            }
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            if (effect == null) return null;
-            
             var instance = RegisterInstance(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
 
             effect.Play();
@@ -273,6 +260,7 @@ namespace GameFramework.Manager
 
             var effect = instance.EffectItem;
 
+            // 立即停止
             if (stopMode == EffectStopMode.Immediate)
             {
                 instance.ForceFinished = true;
@@ -317,19 +305,29 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 直接回收特效（不考虑收尾逻辑）
+        /// 直接回收特效
         /// </summary>
         public void Recycle(GameObject obj)
         {
-            if (!_instances.TryGetValue(obj, out var instance))
+            if (_instances.TryGetValue(obj, out var instance))
             {
-                _poolManager.Despawn(obj);
-                return;
+                instance.ForceFinished = true;
+                instance.EffectItem.StopImmediate();
             }
 
-            instance.ForceFinished = true;
-            instance.EffectItem.StopImmediate();
             InternalDespawn(obj);
+        }
+
+        /// <summary>
+        /// 清理场上所有特效（回收到对象池）
+        /// </summary>
+        public void ClearAllEffects()
+        {
+            var keys = new List<GameObject>(_instances.Keys);
+            foreach (var obj in keys)
+            {
+                InternalDespawn(obj);
+            }
         }
         #endregion
 
@@ -435,7 +433,12 @@ namespace GameFramework.Manager
         /// </summary>
         private void InternalDespawn(GameObject obj)
         {
-            _instances.Remove(obj);
+            if (obj == null)
+                return;
+
+            if (!_instances.Remove(obj))
+                return;
+
             _poolManager.Despawn(obj);
         }
         #endregion

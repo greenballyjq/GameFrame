@@ -1,4 +1,4 @@
-#if WEIXINMINIGAME
+﻿#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,13 +10,22 @@ using WeChatWASM;
 /// </summary>
 public class WeChatPlatform : IPlatform
 {
-    // 是否已初始化
+    /// <summary>
+    /// 是否初始化
+    /// </summary>
     private bool _isInitialized = false;
 
-    // 保存Banner广告实例的字典（key=adUnitId）
+    /// <summary>
+    /// Banner广告实例字典
+    /// key=adUnitId
+    /// </summary>
     private Dictionary<string, WXCustomAd> _bannerAdDict = new Dictionary<string, WXCustomAd>();
 
-    // 记录Banner广告显示状态（key=adUnitId，value=是否正在显示）
+    /// <summary>
+    /// Banner广告显示状态字典
+    /// key=adUnitId
+    /// value=是否正在显示
+    /// </summary>
     private Dictionary<string, bool> _bannerShowStateDict = new Dictionary<string, bool>();
 
 
@@ -30,10 +39,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     public void Init()
     {
-        // Debug.Log("[WeChatPlatform] 初始化微信平台");
+        Debug.Log("[WeChatPlatform] 初始化微信平台");
 
-        // 调用微信小游戏的初始化API
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL
         try
         {
             WXInit();
@@ -1334,5 +1342,59 @@ public class WeChatPlatform : IPlatform
         WX.NavigateToMiniProgram(navigateOption);
     }
 
+    /// <summary>
+    /// WX创建视频
+    /// </summary>
+    /// <param name="src">视频的资源地址</param>
+    /// <param name="poster">视频的封面</param>
+    public void WXCreateVideo(string src, string poster, Action<WXVideo> success, Action<string> fail = null)
+    {
+        Debug.Log("[WeChatPlatform] 微信平台创建视频");
+
+        if (!_isInitialized)
+        {
+            fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            var systemInfo = GetSystemInfo();
+
+            WXBase.CreateVideo(new WXCreateVideoParam
+            {
+                x = 0,
+                y = 0,
+
+                width = (int)systemInfo.ScreenWidth,
+                height = (int)systemInfo.ScreenHeight,
+
+                src = src,
+                poster = poster,
+
+                autoplay = true,
+                muted = false,
+
+                objectFit = "contain",
+                underGameView = false,
+
+                controls = false,
+                showProgress = false,
+                showProgressInControlMode = false,
+                enableProgressGesture = false,
+                enablePlayGesture = false,
+                showCenterPlayBtn = false,
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] 创建视频失败 errMsg:{e.Message}");
+        }
+#else
+        // 编辑器模式下模拟创建视频成功
+        success?.Invoke(WXBase.CreateVideo(new WXCreateVideoParam()));
+#endif
+    }
 }
 #endif

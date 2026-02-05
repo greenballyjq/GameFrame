@@ -121,15 +121,8 @@ namespace GameFramework.Core
 
             // 初始化资源系统
             await InitResourceAsync();
-
-            // 隐藏游戏加载界面
-            if (_gameConfig.loading) 
-                _gameConfig.loading.SetActive(false);
-            
         }
-        
-      
-
+       
         /// <summary>
         /// 等待初始化完成
         /// </summary>
@@ -144,13 +137,13 @@ namespace GameFramework.Core
        private async UniTask InitResourceAsync()
         {
             _resourceManager = _frameworkManager.GetManager<ResourceManager>();
-            // Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
+            Debug.Log($"[GameLauncher] _resourceManager 获取结果: {(_resourceManager != null ? "成功" : "失败")}");
 
             // 根据配置设置资源加载模式
             if (_resourceManager != null)
             {
                 _resourceManager.SetResourceLoadMode(_gameConfig.ResourceLoadMode);
-                // Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
+                Debug.Log($"[GameLauncher] 设置资源加载模式为: {_gameConfig.ResourceLoadMode}");
             }
 
             bool resourceInitSuccess = await InitResourceSystemAsync();
@@ -196,7 +189,6 @@ namespace GameFramework.Core
             // 尝试获取最新版本
             UpdateStatus("正在检查资源更新...");
             string latestVersion = await _resourceManager.RequestPackageVersionAsync();
-            // string latestVersion = _resourceManager.RequestPackageVersion();
             
             Debug.Log($"[ResourceManager] LatestVersion: {latestVersion}");
             
@@ -301,7 +293,6 @@ namespace GameFramework.Core
             Debug.LogError($"[ResourceUpdateManager] 资源下载出错: {data.FileName}, 错误: {data.ErrorInfo}");
         }
 
-
         /// <summary>
         /// 更新状态文本
         /// </summary>
@@ -323,6 +314,14 @@ namespace GameFramework.Core
             
             if (_progressText != null)
                 _progressText.text = $"{(int)(progress * 100)}%";
+        }
+
+        /// <summary>
+        /// 隐藏加载界面
+        /// </summary>
+        public void HideLoading()
+        {
+            _gameConfig.loading.SetActive(false);
         }
     }
 } 

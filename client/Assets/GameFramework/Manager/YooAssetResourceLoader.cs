@@ -30,7 +30,7 @@ public class YooAssetResourceLoader : IResourceLoader
     
     public async UniTask<bool> InitializeAsync()
     {
-        // Debug.Log("[YooAssetResourceLoader] 初始化YooAsset资源加载器");
+        Debug.Log("[YooAssetResourceLoader] 初始化YooAsset资源加载器");
         
         // 初始化YooAsset
         YooAssets.Initialize();
@@ -38,15 +38,13 @@ public class YooAssetResourceLoader : IResourceLoader
         // 设置运行模式
 #if UNITY_EDITOR
         _playMode = EPlayMode.EditorSimulateMode;
-
 #elif UNITY_WEBGL
-// #elif !UNITY_EDITOR && UNITY_WEBGL
         _playMode = EPlayMode.WebPlayMode;
 #else
         _playMode = EPlayMode.HostPlayMode;
 #endif
         // _playMode = EPlayMode.WebPlayMode;
-        
+
         Debug.Log($"[YooAssetResourceLoader] 当前运行模式：{_playMode}");
 
         // 创建默认资源包
@@ -249,18 +247,15 @@ public class YooAssetResourceLoader : IResourceLoader
             Debug.Log($"[YooAssetResourceLoader] 当前URL: {Application.absoluteURL}");
 			IRemoteServices remoteServices = new RemoteServices(_defaultHostServer, _fallbackHostServer);
 			var webInitParameters = new WebPlayModeParameters();
-            // webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
-
 			string packageRoot = "yoo";
 #if WEIXINMINIGAME
-            Debug.LogError($"[YooAssetResourceLoader] WebPlayMode :WEIXINMINIGAME");
-            // packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
+            Debug.Log($"[YooAssetResourceLoader] WebPlayMode :WEIXINMINIGAME");
+            packageRoot = $"{WeChatWASM.WX.env.USER_DATA_PATH}/__GAME_FILE_CACHE/yoo";
 			webInitParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, null);
             Debug.Log($"[YooAssetResourceLoader] PackageRoot : {packageRoot}");
 #else
             // 为普通WebGL环境配置WebServerFileSystemParameters
-            Debug.LogError($"[YooAssetResourceLoader] WebPlayMode :OTHER");
-            webInitParameters.WebServerFileSystemParameters = FileSystemParameters.CreateDefaultWebServerFileSystemParameters((IWebDecryptionServices)remoteServices);
+            webInitParameters.WebServerFileSystemParameters = FileSystemParameters.CreateDefaultWebServerFileSystemParameters();
 #endif
             initParameters = webInitParameters;
         }
@@ -284,15 +279,19 @@ public class RemoteServices : IRemoteServices
 
     public RemoteServices(string defaultHostServer, string fallbackHostServer)
     {
-        _defaultHostServer = defaultHostServer;
-        _fallbackHostServer = fallbackHostServer;
+        _defaultHostServer = defaultHostServer.TrimEnd('/');
+        _fallbackHostServer = fallbackHostServer.TrimEnd('/');
     }
+
     string IRemoteServices.GetRemoteMainURL(string fileName)
     {
+        fileName = fileName.TrimStart('/');
         return $"{_defaultHostServer}/{fileName}";
     }
+
     string IRemoteServices.GetRemoteFallbackURL(string fileName)
     {
+        fileName = fileName.TrimStart('/');
         return $"{_fallbackHostServer}/{fileName}";
     }
 }

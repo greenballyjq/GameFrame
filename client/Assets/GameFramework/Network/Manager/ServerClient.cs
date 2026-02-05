@@ -18,6 +18,17 @@ namespace GameFramework.Network
         private bool isConnected = false;
         private Dictionary<Type, Func<S2C_Message, IMessage>> MessageAccessors;
         private Dictionary<Type, Action<C2S_Message, IMessage>> MessageSetters;
+        
+        /// <summary>
+        /// Session计数器，每次发送请求时自动递增
+        /// </summary>
+        private ulong sessionCounter = 0;
+        
+        /// <summary>
+        /// 记录已发送但未收到响应的请求信息
+        /// Key: session, Value: 请求信息(消息类型, 发送时间)
+        /// </summary>
+        private Dictionary<ulong, (string messageType, DateTime sendTime)> pendingRequests = new Dictionary<ulong, (string, DateTime)>();
 
         /// <summary>
         /// 是否已连接到服务器
@@ -64,6 +75,18 @@ namespace GameFramework.Network
         public void Release()
         {
             // Debug.Log("[ServerClient] 释放服务器客户端");
+            
+            // 输出未完成的请求信息
+            if (pendingRequests.Count > 0)
+            {
+                Debug.LogWarning($"[ServerClient] 释放时仍有 {pendingRequests.Count} 个请求未收到响应：");
+                foreach (var kvp in pendingRequests)
+                {
+                    Debug.LogWarning($"  Session: {kvp.Key}, 类型: {kvp.Value.messageType}, 发送时间: {kvp.Value.sendTime:yyyy-MM-dd HH:mm:ss.fff}");
+                }
+            }
+            
+            pendingRequests.Clear();
             httpManager?.Release();
             isConnected = false;
         }
@@ -79,25 +102,48 @@ namespace GameFramework.Network
             //try
             //{
             var postMessage = new C2S_Message();
-            postMessage.Session = (ulong)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            // 递增 session 计数器，每次发送请求时自动加一
+            sessionCounter++;
+            postMessage.Session = sessionCounter;
             var messageType = message.GetType();
             if (MessageSetters.TryGetValue(messageType, out var handler))
             {
                 handler(postMessage, message);
             }
 
-            Debug.Log($"ok postMessage, type: {messageType}, message: {postMessage}" +
-                           $", url: {httpManager._baseUrl}, timestamp:{DateTime.Now}, Token: {httpManager.GetHeader("Authorization")}");
+            // 记录发送的请求信息
+            DateTime sendTime = DateTime.Now;
+            pendingRequests[postMessage.Session] = (messageType.Name, sendTime);
+            Debug.Log($"[ServerClient] 时间: {sendTime:yyyy-MM-dd HH:mm:ss.fff} - 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}, URL: {httpManager._baseUrl}, 待响应数: {pendingRequests.Count}");
+
 
             byte[] bodyRaw = postMessage.ToByteArray();
             var responseData = await httpManager.PostAsync(bodyRaw);
             
+            // TODO: 这里出现responseData为空的情况，需要处理
             if (responseData != null && responseData.Bytes.Length > 0)
             {
                 // 反序列化响应
                 S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
 
-                Debug.Log($"S2C_Message内容：{wrapper.Code}, {wrapper}");
+                // 检查响应的 session 是否在待响应列表中
+                DateTime receiveTime = DateTime.Now;
+                if (pendingRequests.TryGetValue(wrapper.Session, out var requestInfo))
+                {
+                    // 计算请求耗时
+                    TimeSpan elapsed = receiveTime - requestInfo.sendTime;
+                    
+                    Debug.Log($"[ServerClient] 接收消息 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, 消息类型: {typeof(T).Name}, " +
+                             $"请求类型: {requestInfo.messageType}, 耗时: {elapsed.TotalMilliseconds:F2}ms, 剩余待响应: {pendingRequests.Count - 1}");
+                    
+                    // 移除已响应的请求
+                    pendingRequests.Remove(wrapper.Session);
+                }
+                else
+                {
+                    Debug.LogWarning($"[ServerClient] 时间: {receiveTime:yyyy-MM-dd HH:mm:ss.fff} - 收到未配对的响应 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, " +
+                                    $"消息类型: {typeof(T).Name}，该 Session 可能已超时或重复响应");
+                }
 
                 if (MessageAccessors.TryGetValue(typeof(T), out var accessor))
                 {
@@ -109,7 +155,7 @@ namespace GameFramework.Network
             }
             else
             {
-                Debug.Log("[ServerClient] responseData可能为空");
+                Debug.LogError("[ServerClient] responseData可能为空，请求可能失败");
                 throw new InvalidOperationException($"ResponseData is null");
             }
         }
@@ -168,6 +214,22 @@ namespace GameFramework.Network
         public void SetHeader(string key, string value)
         {
             httpManager?.SetDefaultHeader(key, value);
+        }
+
+        /// <summary>
+        /// 获取当前待响应的请求数量
+        /// </summary>
+        public int GetPendingRequestCount()
+        {
+            return pendingRequests.Count;
+        }
+
+        /// <summary>
+        /// 获取所有待响应的请求信息（用于调试）
+        /// </summary>
+        public Dictionary<ulong, (string messageType, DateTime sendTime)> GetPendingRequests()
+        {
+            return new Dictionary<ulong, (string, DateTime)>(pendingRequests);
         }
     }
 }

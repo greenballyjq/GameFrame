@@ -90,7 +90,7 @@ namespace GameFramework.Manager
 // #if UNITY_EDITOR
 //             _tables = new cfg.Tables(s => new ByteBuf(File.ReadAllBytes($"{ConfigPath}/{s}.bytes")));
 // #elif UNITY_ANDROID || UNITY_WEBGL || UNITY_EDITOR
-            Debug.Log($"[{GetType().Name}] UNITY_WEBGL || UNITY_WEBGL 加载配置表: {ConfigPath}");
+            //Debug.Log($"[{GetType().Name}] UNITY_WEBGL || UNITY_WEBGL 加载配置表: {ConfigPath}");
             // List<ByteBuf> byteBuffs = new List<ByteBuf>();
             // foreach (var tableName in TableNames)
             // {

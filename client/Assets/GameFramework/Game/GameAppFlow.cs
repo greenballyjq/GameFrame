@@ -80,17 +80,7 @@ namespace GameFramework.Game
 
             await OnAppStartAsync();
 
-            var resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
-            var sprite = await resourceManager.LoadAssetAsync<Sprite>("Assets/ArtsTemp/UI/Sprites/Gameplay/EnergyGauge");
-
-            if (sprite)
-            {
-                Debug.Log($"[{GetType().Name}] DEBUG 加载资源成功");
-            }
-            else
-            {
-                Debug.Log($"[{GetType().Name}] DEBUG 加载资源失败");
-            }
+            GameFrameLauncher.Instance.HideLoading();
 
             _currentState = GameAppFlowState.Running;
         }

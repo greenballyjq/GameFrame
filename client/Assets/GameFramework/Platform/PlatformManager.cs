@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameFramework.Core;
 using UnityEngine;
+using WeChatWASM;
 
 /// <summary>
 /// 平台管理器 - 处理不同平台的接入
@@ -28,7 +29,7 @@ public class PlatformManager : IManager
     
     public void Init()
     {
-        // Debug.Log("[PlatformManager] 初始化平台管理器");
+         Debug.Log("[PlatformManager] 初始化平台管理器");
  
         // 自动检测并注册当前平台
         DetectCurrentPlatform();
@@ -36,7 +37,7 @@ public class PlatformManager : IManager
         // 初始化当前平台
         InitCurrentPlatform();
         
-        Debug.Log($"[{GetType().Name}] USER_DATA_PATH: {WeChatWASM.WX.env.USER_DATA_PATH}");
+        // Debug.Log($"[{GetType().Name}] USER_DATA_PATH: {WeChatWASM.WX.env.USER_DATA_PATH}");
     }
 
     public void Update()
@@ -58,12 +59,12 @@ public class PlatformManager : IManager
     {
         if (_platforms.ContainsKey(platformType))
         {
-            // Debug.LogWarning($"[PlatformManager] 平台 {platformType} 已经注册");
+             Debug.LogWarning($"[PlatformManager] 平台 {platformType} 已经注册");
             return;
         }
         
         _platforms.Add(platformType, platform);
-        // Debug.Log($"[PlatformManager] 注册平台: {platformType}");
+        Debug.Log($"[PlatformManager] 注册平台: {platformType}");
     }
     
     /// <summary>
@@ -73,8 +74,12 @@ public class PlatformManager : IManager
     {
 
 #if UNITY_EDITOR
-        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
-        _currentPlatformType = PlatformType.Default;
+        RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
+        _currentPlatformType = PlatformType.WeChat;
+        WXBase.CreateVideo(new WXCreateVideoParam()).OnPlay(() =>
+        {
+
+        });
 #elif WEIXINMINIGAME
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
         _currentPlatformType = PlatformType.WeChat;

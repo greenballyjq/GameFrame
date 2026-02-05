@@ -13,7 +13,7 @@ public class ResourcesResourceLoader : IResourceLoader
     
     public async UniTask<bool> InitializeAsync()
     {
-        // Debug.Log("[ResourcesResourceLoader] 初始化Resources资源加载器");
+        Debug.Log("[ResourcesResourceLoader] 初始化Resources资源加载器");
         
         // Resources不需要特殊的初始化过程
         _isInitialized = true;
@@ -21,14 +21,14 @@ public class ResourcesResourceLoader : IResourceLoader
         // 模拟异步操作
         await UniTask.Yield();
         
-        // Debug.Log("[ResourcesResourceLoader] Resources资源加载器初始化完成");
+        Debug.Log("[ResourcesResourceLoader] Resources资源加载器初始化完成");
         return true;
     }
     
     public void SetHostServer(string hostServer)
     {
         // Resources不使用远程服务器，忽略此设置
-        // Debug.Log($"[ResourcesResourceLoader] Resources模式不支持远程服务器设置，忽略: {hostServer}");
+        Debug.Log($"[ResourcesResourceLoader] Resources模式不支持远程服务器设置，忽略: {hostServer}");
     }
     
     public async UniTask<string> RequestPackageVersionAsync()
@@ -41,7 +41,7 @@ public class ResourcesResourceLoader : IResourceLoader
     public async UniTask<bool> UpdatePackageManifestAsync(string packageVersion)
     {
         // Resources不需要更新清单，直接返回成功
-        // Debug.Log($"[ResourcesResourceLoader] Resources模式不需要更新清单，版本: {packageVersion}");
+        Debug.Log($"[ResourcesResourceLoader] Resources模式不需要更新清单，版本: {packageVersion}");
         await UniTask.Yield();
         return true;
     }
@@ -49,7 +49,7 @@ public class ResourcesResourceLoader : IResourceLoader
     public ResourceDownloaderOperation CreateResourceDownloader()
     {
         // Resources不需要下载器，返回null或空的下载器操作
-        // Debug.Log("[ResourcesResourceLoader] Resources模式不需要下载器，返回null");
+        Debug.Log("[ResourcesResourceLoader] Resources模式不需要下载器，返回null");
         return null;
     }
     
@@ -57,7 +57,7 @@ public class ResourcesResourceLoader : IResourceLoader
     {
         if (!_isInitialized)
         {
-            // Debug.LogError("[ResourcesResourceLoader] 资源加载器未初始化");
+            Debug.LogError("[ResourcesResourceLoader] 资源加载器未初始化");
             return null;
         }
 
@@ -68,7 +68,7 @@ public class ResourcesResourceLoader : IResourceLoader
         }
 
         // 从Resources目录加载资源
-        // Debug.Log($"[ResourcesResourceLoader] 开始从Resources加载资源: {assetPath}");
+        Debug.Log($"[ResourcesResourceLoader] 开始从Resources加载资源: {assetPath}");
         
         // 移除可能的文件扩展名，Resources.Load不需要扩展名
         string resourcePath = assetPath;
@@ -90,11 +90,11 @@ public class ResourcesResourceLoader : IResourceLoader
         var asset = request.asset as T;
         if (asset == null)
         {
-            // Debug.LogError($"[ResourcesResourceLoader] 从Resources加载资源失败: {assetPath}");
+            Debug.LogError($"[ResourcesResourceLoader] 从Resources加载资源失败: {assetPath}");
         }
         else
         {
-            // Debug.Log($"[ResourcesResourceLoader] 从Resources加载资源成功: {assetPath}");
+            Debug.Log($"[ResourcesResourceLoader] 从Resources加载资源成功: {assetPath}");
         }
         
         return asset;
@@ -108,11 +108,11 @@ public class ResourcesResourceLoader : IResourceLoader
     {
         if (!_isInitialized)
         {
-            // Debug.LogError("[ResourcesResourceLoader] 资源加载器未初始化");
+            Debug.LogError("[ResourcesResourceLoader] 资源加载器未初始化");
             return;
         }
         
-        // Debug.Log($"[ResourcesResourceLoader] 直接加载场景: {scenePath}");
+        Debug.Log($"[ResourcesResourceLoader] 直接加载场景: {scenePath}");
         
         // 使用Unity的SceneManager直接加载场景
         var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Single);
@@ -126,23 +126,23 @@ public class ResourcesResourceLoader : IResourceLoader
                 await UniTask.Yield();
             }
             
-            // Debug.Log($"[ResourcesResourceLoader] 场景加载完成: {scenePath}");
+            Debug.Log($"[ResourcesResourceLoader] 场景加载完成: {scenePath}");
         }
         else
         {
-            // Debug.LogError($"[ResourcesResourceLoader] 场景加载失败: {scenePath}");
+            Debug.LogError($"[ResourcesResourceLoader] 场景加载失败: {scenePath}");
         }
     }
     
     public void UnloadAllAssets()
     {
-        // Debug.Log("[ResourcesResourceLoader] 卸载所有Resources资源");
+        Debug.Log("[ResourcesResourceLoader] 卸载所有Resources资源");
         Resources.UnloadUnusedAssets();
     }
     
     public void Release()
     {
-        // Debug.Log("[ResourcesResourceLoader] 释放Resources资源加载器");
+        Debug.Log("[ResourcesResourceLoader] 释放Resources资源加载器");
         UnloadAllAssets();
         _isInitialized = false;
     }
@@ -150,7 +150,6 @@ public class ResourcesResourceLoader : IResourceLoader
     public SceneHandle LoadSceneAsync(string scenePath, bool activateOnLoad = true, uint priority = 100)
     {
         throw new System.NotImplementedException();
-        //LoadSceneDirectAsync(scenePath, activateOnLoad);
     }
 }
 

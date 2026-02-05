@@ -39,6 +39,8 @@ namespace GameFramework.Manager
 
         public void Init()
         {
+            Debug.Log("[GameObjectPoolManager] 初始化GameObject对象池管理器");
+
             // 创建对象池根节点
             GameObject rootObj = new GameObject("GameObjectPoolRoot");
             _poolRoot = rootObj.transform;
