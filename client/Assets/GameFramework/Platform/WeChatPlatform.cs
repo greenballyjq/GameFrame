@@ -1315,5 +1315,59 @@ public class WeChatPlatform : IPlatform
         WX.NavigateToMiniProgram(navigateOption);
     }
 
+    /// <summary>
+    /// WX创建视频
+    /// </summary>
+    /// <param name="src">视频的资源地址</param>
+    /// <param name="poster">视频的封面</param>
+    public void WXCreateVideo(string src, string poster, Action<WXVideo> success, Action<string> fail = null)
+    {
+        Debug.Log("[WeChatPlatform] 微信平台创建视频");
+
+        if (!_isInitialized)
+        {
+            fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
+            return;
+        }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            var systemInfo = GetSystemInfo();
+
+            WXBase.CreateVideo(new WXCreateVideoParam
+            {
+                x = 0,
+                y = 0,
+
+                width = (int)systemInfo.ScreenWidth,
+                height = (int)systemInfo.ScreenHeight,
+
+                src = src,
+                poster = poster,
+
+                autoplay = true,
+                muted = false,
+
+                objectFit = "contain",
+                underGameView = false,
+
+                controls = false,
+                showProgress = false,
+                showProgressInControlMode = false,
+                enableProgressGesture = false,
+                enablePlayGesture = false,
+                showCenterPlayBtn = false,
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] 创建视频失败 errMsg:{e.Message}");
+        }
+#else
+        // 编辑器模式下模拟创建视频成功
+        success?.Invoke(WXBase.CreateVideo(new WXCreateVideoParam()));
+#endif
+    }
 }
 #endif

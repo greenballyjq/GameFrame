@@ -116,6 +116,13 @@ namespace GameFramework.Manager
             return PlaySound2DInternal(audioData, loop);
         }
 
+        public AudioCallback PlaySound2D(AudioClip audioClip, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        {
+            var audioData = new AudioData(audioClip, volume);
+            audioData.audioChannel = channel;
+            return PlaySound2DInternal(audioData, loop);
+        }
+
         /// <summary>
         /// 播放3D世界音效（不绑定其它物体）
         /// </summary>
