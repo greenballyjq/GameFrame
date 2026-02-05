@@ -316,9 +316,11 @@ namespace GameFramework.Core
                 _progressText.text = $"{(int)(progress * 100)}%";
         }
 
+        /// <summary>
+        /// 隐藏加载界面
+        /// </summary>
         public void HideLoading()
         {
-            // 隐藏游戏加载界面
             _gameConfig.loading.SetActive(false);
         }
     }
