@@ -78,6 +78,7 @@ namespace GameFramework.Game
             // 异步等待配置管理器初始化
             await WaitForConfigManagerAsync();
             
+            // 注册场景存在的游戏业务管理器
             RegisterSceneGameManagers();
 
             var gameSceneManager = GameFrameworkManager.Instance.GetManager<GameSceneManager>();

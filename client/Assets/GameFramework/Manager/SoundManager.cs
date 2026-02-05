@@ -41,10 +41,20 @@ namespace GameFramework.Manager
         /// </summary>
         private float _globalVolume = 1f;
         
+        /// <summary>
+        /// 音效播放器预制体
+        /// </summary>
         private GameObject _audioPlayerPrefab;
 
         public void Init()
         {
+            // todo 获取本地存储的音量与震动设置
+            float globalSoundVolume = PlayerPrefs.GetFloat("KXTZE_SoundVolume", 1f);
+            float globalMusicVolume = PlayerPrefs.GetFloat("KXTZE_MusicVolume", 1f);
+            bool isVibrateEnabled = PlayerPrefs.GetInt("KXTZE_VibrateEnabled", 1) == 1;
+            
+            // todo 设置全局音量和震动开关
+            
             // 获取对象池管理器
             _poolManager = GameFrameworkManager.Instance.GetManager<GameObjectPoolManager>();
             
@@ -93,7 +103,6 @@ namespace GameFramework.Manager
         }
 
         #region 公共方法
-
         
         /// <summary>
         /// 播放指定2D音效
@@ -164,7 +173,7 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 播放3D跟随物体音效（绑定其它物体）
+        /// todo 播放3D跟随物体音效（绑定其它物体）
         /// </summary>
         /// <param name="audioData">音效数据</param>
         /// <returns></returns>

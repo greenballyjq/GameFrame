@@ -23,8 +23,6 @@ public class HttpManager : IManager
     
     // 基础URL
     public string _baseUrl = "";
-
-
     
     /// <summary>
     /// 初始化
@@ -79,6 +77,16 @@ public class HttpManager : IManager
         {
             _defaultHeaders.Add(key, value);
         }
+    }
+
+    /// <summary>
+    /// 获取默认请求头
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public string GetHeader(string key)
+    {
+        return _defaultHeaders.GetValueOrDefault(key, "");
     }
     
     /// <summary>
