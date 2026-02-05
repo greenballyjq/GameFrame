@@ -28,6 +28,12 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     private Dictionary<string, bool> _bannerShowStateDict = new Dictionary<string, bool>();
 
+
+    private readonly Dictionary<string, string> SHARE_IMAGE_URL_DICT = new Dictionary<string, string>()
+    {
+        {"开心套只鹅", "https://mmocgame.qpic.cn/wechatgame/C7iaYsK1CibPaicuPsk8W0NwCdQibfCAtrZV7dialbDCcLEibiaY5opHjZibOyeXAgKBP9K7/0"}
+    };
+
     /// <summary>
     /// 初始化
     /// </summary>
@@ -39,6 +45,7 @@ public class WeChatPlatform : IPlatform
         try
         {
             WXInit();
+            InitShareMessage();
             _isInitialized = true;
             Debug.Log("[WeChatPlatform] 微信平台初始化成功");
         }
@@ -49,9 +56,9 @@ public class WeChatPlatform : IPlatform
 #else
         // 编辑器模式下模拟初始化成功
         _isInitialized = true;
-        
         Debug.Log("[WeChatPlatform] 编辑器模式下模拟微信平台初始化");
 #endif
+        
     }
 
     public void Update()
@@ -199,6 +206,7 @@ public class WeChatPlatform : IPlatform
     /// <param name="fail"></param>
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
     {
+        // WX.OnShareAppMessage();
         Debug.Log("[WeChatPlatform] 微信平台分享");
 
         if (!_isInitialized)
@@ -804,6 +812,25 @@ public class WeChatPlatform : IPlatform
     }
 
     /// <summary>
+    /// WX初始化分享消息
+    /// </summary>
+    private void InitShareMessage()
+    {
+        WXShareAppMessageParam param = new WXShareAppMessageParam
+        {
+            // todo 后续根据当前游戏名称来设置
+            imageUrl = SHARE_IMAGE_URL_DICT["开心套只鹅"],
+            imageUrlId = "o5TeohSWSDSWvHWXYsIwlg==",
+            title = "半夜还在玩的原因究竟是......"
+        };
+        WX.OnShareAppMessage(param, callback =>
+        {
+            callback.Invoke(param);
+            Debug.Log($"[WeChatPlatform] 分享回调: ");
+        });
+    }
+
+    /// <summary>
     /// WX登录
     /// </summary>
     /// <param name="success"></param>
@@ -1330,15 +1357,15 @@ public class WeChatPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL
         try
         {
             var systemInfo = GetSystemInfo();
 
-            WXBase.CreateVideo(new WXCreateVideoParam
+            WXVideo wxVideo = WXBase.CreateVideo(new WXCreateVideoParam
             {
-                x = 0,
-                y = 0,
+                x = 9999,
+                y = 9999,
 
                 width = (int)systemInfo.ScreenWidth,
                 height = (int)systemInfo.ScreenHeight,
@@ -1346,10 +1373,10 @@ public class WeChatPlatform : IPlatform
                 src = src,
                 poster = poster,
 
-                autoplay = true,
+                autoplay = false,
                 muted = false,
 
-                objectFit = "contain",
+                objectFit = "cover",
                 underGameView = false,
 
                 controls = false,
@@ -1359,6 +1386,8 @@ public class WeChatPlatform : IPlatform
                 enablePlayGesture = false,
                 showCenterPlayBtn = false,
             });
+
+            success?.Invoke(wxVideo);
         }
         catch (Exception e)
         {

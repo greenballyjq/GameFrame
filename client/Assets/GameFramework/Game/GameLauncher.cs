@@ -93,7 +93,7 @@ namespace GameFramework.Game
         protected override async void Awake()
         {
             base.Awake();
-            // await LaunchGameAsync();
+            await InitGameAsync();
         }
 
         /// <summary>
