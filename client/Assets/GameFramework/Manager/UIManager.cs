@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.UI;
 using GameFramework.Manager;
-using GooseCatcher;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

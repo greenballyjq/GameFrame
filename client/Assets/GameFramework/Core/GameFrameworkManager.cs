@@ -59,9 +59,30 @@ namespace GameFramework.Core
             OnInitialized?.Invoke();
         }
 
-        public async UniTask InitNetworkAsync(string gameName)
+        public async UniTask InitNetworkAsync()
         {
-            await ServiceProxy.Instance.InitAsync(gameName);
+            await ServiceProxy.Instance.InitAsync();
+        }
+
+        /// <summary>
+        /// 登录 包括平台（微信、抖音等）登录 和 后端登录
+        /// </summary>
+        public void Login()
+        {
+            var platformManager = GetManager<PlatformManager>();
+            // 1. Platform 登录
+            platformManager.CurrentPlatform.Login(async (code) =>
+            {
+                Debug.LogError($"[GameFrameworkManager] Platform 登录成功, code: {code}");
+                // 2.后端登录
+                var serverProxy = ServiceProxy.Instance;
+                await UniTask.WaitUntil(() => serverProxy.IsServerConnected);
+                Debug.Log($"[GameFrameworkManager] 当前平台：{platformManager.GetCurrentPlatform()}");
+                await serverProxy.Login(platformManager.GetCurrentPlatform(), code);
+            }, (msg) =>
+            {
+                Debug.LogError($"[GameFrameworkManager] Platform 登录失败: {msg}");
+            });
         }
 
         public async UniTask WaitForInitializationAsync()

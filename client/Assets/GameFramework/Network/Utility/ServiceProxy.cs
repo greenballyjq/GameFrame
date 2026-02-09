@@ -59,13 +59,14 @@ namespace GameFramework.Network.Utility
         private string gameAddress = "";
         private string loginAddress = "";
 
-        private string _gameName = "";
 
-        public async UniTask InitAsync(string gameName)
+        public async UniTask InitAsync()
         {
             _serverClient = new ServerClient();
             _serverClient.Init();
-            _gameName = gameName;
+            _serverClient.SetServerUrl("https://dev.sanqianpan.com:9999");
+            _serverClient.SetMessageHandler(MessageSetters, MessageAccessors);
+            
             await ConnectServerAsync();
         }
 
@@ -80,23 +81,17 @@ namespace GameFramework.Network.Utility
             var list = await _serverClient.GetMessageAsync<ServerList>("/serverlist");
             if (list != null)
             {
-                foreach (var server in list.Servers)
-                {
-                    // Debug.Log($"[GameServiceProxy] server: {server.Name} {server.Address} {server.LoginAddress}");
-                    if (server.Name.Contains(_gameName))
-                    {
-                        gameAddress = server.Address;
-                        Uri uri = new Uri(gameAddress);
-
-                        // 取出 schema + host + port
-                        string baseUrl = $"{uri.Scheme}://{uri.Host}:{uri.Port}";
-
-                        // 拼接新的路径
-                        loginAddress = baseUrl + "/login";
-                        // Debug.Log($"[GameServiceProxy] LoginAddress: {loginAddress}, gameAddress: {gameAddress}");
-                        _serverClient.SetServerUrl(loginAddress);
-                    }
-                }
+                var server = list.Servers[0];
+                gameAddress = server.Address;
+                Uri uri = new Uri(gameAddress);
+                
+                // 取出 schema + host + port
+                string baseUrl = $"{uri.Scheme}://{uri.Host}:{uri.Port}";
+                
+                // 拼接新的路径
+                loginAddress = baseUrl + "/login";
+                // Debug.Log($"[GameServiceProxy] LoginAddress: {loginAddress}, gameAddress: {gameAddress}");
+                _serverClient.SetServerUrl(loginAddress);
 
                 IsServerConnected = true;
                 // 服务器连接成功，触发回调
@@ -211,8 +206,10 @@ namespace GameFramework.Network.Utility
             var data = new C2S_Login();
             if (type == PlatformManager.PlatformType.WeChat)
             {
-                data.Wechat = new WeChat();
-                data.Wechat.Code = code;
+                data.Wechat = new WeChat
+                {
+                    Code = code
+                };
             }
             else
             {
@@ -223,7 +220,7 @@ namespace GameFramework.Network.Utility
 
             if (response != null)
             {
-                Debug.Log($"[GameServiceProxy] LoginWX 成功 {response.Token}");
+                Debug.Log($"[ServiceProxy] LoginWX 成功 {response.Token}");
 
                 // 保存token
                 _authToken = response.Token;
@@ -234,19 +231,19 @@ namespace GameFramework.Network.Utility
 
                 // _serverClient.SetHeader("Authorization", $"Bearer {_authToken}");
                 _serverClient.SetHeader("Authorization", _authToken);
-                Debug.Log($"[GameServiceProxy] 已设置Authorization header");
+                Debug.Log($"[ServiceProxy] 已设置Authorization header");
 
                 // 开始ping定时器
                 StartPingTimer();
-                Debug.Log($"[GameServiceProxy] 登录成功，已开始ping定时器");
+                Debug.Log($"[ServiceProxy] 登录成功，已开始ping定时器");
 
-                // uiGameMessage.ShowMessage("[GameServiceProxy] 登录成功");
+                // uiGameMessage.ShowMessage("[ServiceProxy] 登录成功");
                 OnClientLogined?.Invoke();
             }
             else
             {
                 // uiGameMessage.ShowMessage("[GameServiceProxy] 登录失败");
-                Debug.Log($"[GameServiceProxy] Login 失败");
+                Debug.Log($"[ServiceProxy] Login 失败");
             }
         }
 
