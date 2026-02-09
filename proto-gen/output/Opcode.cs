@@ -22,15 +22,16 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8q9QIKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
+          "CgxvcGNvZGUucHJvdG8qjgMKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
           "Eg0KCU9QX0ZhaWxlZBABEhYKEk9QX1Nlc3Npb25fRXhwaXJlZBACEhwKGE9Q",
-          "X1Nlc3Npb25fVG9rZW5fSW52YWxpZBADEhUKEU9QXzNrcF9Ob3RfRW5vdWdo",
-          "EGUSGQoVT1BfU3RhbWluYV9Ob3RfRW5vdWdoEGYSFgoST1BfSXRlbV9Ob3Rf",
-          "RW5vdWdoEGcSGQoVT1BfTWFsbEl0ZW1fTm90X0V4aXN0EGgSHwobT1BfTWFs",
-          "bEl0ZW1fQnV5X0NvdW50X0Vycm9yEGkSHQoYT1BfTG9naW5fSW52YWxpZF9B",
-          "Y2NvdW50EOkHEhkKFE9QX0xvZ2luX0F1dGhfZmFpbGVkEOoHEhoKFU9QX0xv",
-          "Z291dF9PdGhlcl9Mb2dpbhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIe",
-          "ChlPUF9Mb2dvdXRfU2VydmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
+          "X1Nlc3Npb25fVG9rZW5fSW52YWxpZBADEhcKE09QX05vX0NvbmZpZ3VyYXRp",
+          "b24QBBIVChFPUF8za3BfTm90X0Vub3VnaBBlEhkKFU9QX1N0YW1pbmFfTm90",
+          "X0Vub3VnaBBmEhYKEk9QX0l0ZW1fTm90X0Vub3VnaBBnEhkKFU9QX01hbGxJ",
+          "dGVtX05vdF9FeGlzdBBoEh8KG09QX01hbGxJdGVtX0J1eV9Db3VudF9FcnJv",
+          "chBpEh0KGE9QX0xvZ2luX0ludmFsaWRfQWNjb3VudBDpBxIZChRPUF9Mb2dp",
+          "bl9BdXRoX2ZhaWxlZBDqBxIaChVPUF9Mb2dvdXRfT3RoZXJfTG9naW4QzQgS",
+          "FgoRT1BfTG9nb3V0X1RpbWVvdXQQzggSHgoZT1BfTG9nb3V0X1NlcnZlcl9T",
+          "aHV0ZG93bhDPCGIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2C_OPCode), }, null, null));
@@ -56,6 +57,10 @@ public enum S2C_OPCode {
   /// 会话令牌无效
   /// </summary>
   [pbr::OriginalName("OP_Session_Token_Invalid")] OpSessionTokenInvalid = 3,
+  /// <summary>
+  /// 无此配置
+  /// </summary>
+  [pbr::OriginalName("OP_No_Configuration")] OpNoConfiguration = 4,
   /// <summary>
   /// 金币不足
   /// </summary>

@@ -8,36 +8,39 @@ import "item.proto";
 import "wave.proto";
 import "currency.proto";
 import "mall.proto";
+import "configuration.proto";
 
 message C2S_Message {
   uint64 session = 1; // 会话ID,不可为0,且在整个游戏过程中不能重复
   oneof msg {
-    C2S_Login login = 2;                // 请求登陆
-    C2S_Ping ping = 4;                  // 发送ping包
-    C2S_Base base_data = 5;             // 请求基础数据
-    C2S_Custom custom_data = 6;         // 请求客户端自定义数据
-    C2S_UploadCustom upload_custom = 7; // 上传客户端自定义数据
-    C2S_Item item_data = 8;             // 请求物品数据
-    C2S_WaveResult wave_result = 9;     // 上传波次结果
-    C2S_Currency currency_data = 10;    // 请求货币数据
-    C2S_Mall mall_items = 11;           // 请求商城物品列表
-    C2S_Buy buy = 12;                   // 购买道具
-    C2S_OrderList order_list = 13;      // 请求订单列表
+    C2S_Login         login         = 2; // 请求登陆
+    C2S_Ping          ping          = 4; // 发送ping包
+    C2S_Base          base_data     = 5; // 请求基础数据
+    C2S_Custom        custom_data   = 6; // 请求客户端自定义数据
+    C2S_UploadCustom  upload_custom = 7; // 上传客户端自定义数据
+    C2S_Item          item_data     = 8; // 请求物品数据
+    C2S_WaveResult    wave_result   = 9; // 上传波次结果
+    C2S_Currency      currency_data = 10; // 请求货币数据
+    C2S_Mall          mall_items    = 11; // 请求商城物品列表
+    C2S_Buy           buy           = 12; // 购买道具
+    C2S_OrderList     order_list    = 13; // 请求订单列表
+    C2S_Configuration configuration = 14; // 请求配置信息
   }
 }
 
 message S2C_Message {
   uint64 session = 1; // 透传 session
   oneof msg {
-    S2C_OPCode code = 2;            // 通用操作码
-    S2C_Login login = 3;            // 登陆消息
-    S2C_Ping ping = 5;              // ping消息
-    S2C_Base base_data = 6;         // 基础数据
-    S2C_Custom custom_data = 7;     // 客户端自定义数据
-    S2C_Item item_data = 8;         // 物品数据
-    S2C_Currency currency_data = 9; // 货币数据
-    S2C_Mall mall_items = 10;       // 商城物品列表
-    S2C_Buy buy = 11;               // 购买道具
-    S2C_OrderList order_list = 12;  // 订单列表
+    S2C_OPCode        code          = 2; // 通用操作码
+    S2C_Login         login         = 3; // 登陆消息
+    S2C_Ping          ping          = 5; // ping消息
+    S2C_Base          base_data     = 6; // 基础数据
+    S2C_Custom        custom_data   = 7; // 客户端自定义数据
+    S2C_Item          item_data     = 8; // 物品数据
+    S2C_Currency      currency_data = 9; // 货币数据
+    S2C_Mall          mall_items    = 10; // 商城物品列表
+    S2C_Buy           buy           = 11; // 购买道具
+    S2C_OrderList     order_list    = 12; // 订单列表
+    S2C_Configuration configuration = 13; // 配置信息
   }
 }

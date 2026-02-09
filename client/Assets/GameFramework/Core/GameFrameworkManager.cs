@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Manager;
 using GameFramework.Network;
+using GameFramework.Network.Utility;
 using UnityEngine;
 
 namespace GameFramework.Core
@@ -58,6 +59,11 @@ namespace GameFramework.Core
             OnInitialized?.Invoke();
         }
 
+        public async UniTask InitNetworkAsync(string gameName)
+        {
+            await ServiceProxy.Instance.InitAsync(gameName);
+        }
+
         public async UniTask WaitForInitializationAsync()
         {
             while (!IsInitialized)
@@ -65,7 +71,6 @@ namespace GameFramework.Core
                 await UniTask.Yield();
             }
         }
-        
         
         /// <summary>
         /// 注册管理器

@@ -1,21 +1,22 @@
 syntax = "proto3";
 
 enum S2C_OPCode {
-  OP_Success = 0;               // 操作成功
-  OP_Failed = 1;                // 操作失败
-  OP_Session_Expired = 2;       // 会话过期,需重新登陆
+  OP_Success               = 0; // 操作成功
+  OP_Failed                = 1; // 操作失败
+  OP_Session_Expired       = 2; // 会话过期,需重新登陆
   OP_Session_Token_Invalid = 3; // 会话令牌无效
+  OP_No_Configuration      = 4; // 无此配置
 
-  OP_3kp_Not_Enough = 101;     // 金币不足
-  OP_Stamina_Not_Enough = 102; // 体力不足
-  OP_Item_Not_Enough = 103;    // 物品不足
-  OP_MallItem_Not_Exist = 104; // 商品不存在
+  OP_3kp_Not_Enough           = 101; // 金币不足
+  OP_Stamina_Not_Enough       = 102; // 体力不足
+  OP_Item_Not_Enough          = 103; // 物品不足
+  OP_MallItem_Not_Exist       = 104; // 商品不存在
   OP_MallItem_Buy_Count_Error = 105; // 购买数量错误
 
   OP_Login_Invalid_Account = 1001; // 无效账号(手机号方式)
-  OP_Login_Auth_failed = 1002;     // 平台认证失败
+  OP_Login_Auth_failed     = 1002; // 平台认证失败
 
-  OP_Logout_Other_Login = 1101;     // 顶号
-  OP_Logout_Timeout = 1102;         // 心跳超时
+  OP_Logout_Other_Login     = 1101; // 顶号
+  OP_Logout_Timeout         = 1102; // 心跳超时
   OP_Logout_Server_Shutdown = 1103; // 服务器关闭
 }
