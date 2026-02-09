@@ -54,11 +54,11 @@ namespace GameFramework.Utility
         /// 世界坐标转屏幕坐标
         /// </summary>
         /// <param name="worldPoint">世界坐标</param>
-        /// <param name="camera">摄像机（MainCamera）</param>
+        /// <param name="mainCamera">摄像机（MainCamera）</param>
         /// <returns></returns>
-        public static Vector2 WorldPointToScreenPoint(Vector3 worldPoint, Camera camera)
+        public static Vector2 WorldPointToScreenPoint(Vector3 worldPoint, Camera mainCamera)
         {
-            Vector2 worldToScreenPoint = camera.WorldToScreenPoint(worldPoint);
+            Vector2 worldToScreenPoint = mainCamera.WorldToScreenPoint(worldPoint);
             return worldToScreenPoint;
         }
 
@@ -66,13 +66,13 @@ namespace GameFramework.Utility
         /// 屏幕坐标转世界坐标
         /// </summary>
         /// <param name="screenPoint">屏幕坐标</param>
-        /// <param name="camera">摄像机（MainCamera）</param>
+        /// <param name="mainCamera">摄像机（MainCamera）</param>
         /// <param name="planeZ">距离摄像机 Z 平面的距离</param>
         /// <returns></returns>
-        public static Vector3 ScreenPointToWorldPoint(Vector2 screenPoint, Camera camera, float planeZ)
+        public static Vector3 ScreenPointToWorldPoint(Vector2 screenPoint, Camera mainCamera, float planeZ)
         {
             Vector3 position = new Vector3(screenPoint.x, screenPoint.y, planeZ);
-            Vector3 worldPoint = camera.ScreenToWorldPoint(position);
+            Vector3 worldPoint = mainCamera.ScreenToWorldPoint(position);
             return worldPoint;
         }
 
@@ -88,6 +88,21 @@ namespace GameFramework.Utility
             Vector2 screenPoint = UiPointToScreenPoint(uiPoint, camera);
             Vector3 worldPoint = ScreenPointToWorldPoint(screenPoint, camera, planeZ);
             return worldPoint;
+        }
+
+        /// <summary>
+        /// 世界坐标转UI坐标
+        /// </summary>
+        /// <param name="rt"></param>
+        /// <param name="worldPoint"></param>
+        /// <param name="mainCamera"></param>
+        /// <param name="uiCamera"></param>
+        /// <returns></returns>
+        public static Vector3 WorldPointToUiPoint(RectTransform rt, Vector3 worldPoint, Camera mainCamera, Camera uiCamera)
+        {
+            // 1. 世界转屏幕
+            var screenPoint = WorldPointToScreenPoint(worldPoint, mainCamera);
+            return ScreenPointToUiPoint(rt, screenPoint, uiCamera);
         }
     }
 }

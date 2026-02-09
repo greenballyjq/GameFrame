@@ -1357,15 +1357,15 @@ public class WeChatPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL
         try
         {
             var systemInfo = GetSystemInfo();
 
-            WXBase.CreateVideo(new WXCreateVideoParam
+            WXVideo wxVideo = WXBase.CreateVideo(new WXCreateVideoParam
             {
-                x = 0,
-                y = 0,
+                x = 9999,
+                y = 9999,
 
                 width = (int)systemInfo.ScreenWidth,
                 height = (int)systemInfo.ScreenHeight,
@@ -1373,10 +1373,10 @@ public class WeChatPlatform : IPlatform
                 src = src,
                 poster = poster,
 
-                autoplay = true,
+                autoplay = false,
                 muted = false,
 
-                objectFit = "contain",
+                objectFit = "cover",
                 underGameView = false,
 
                 controls = false,
@@ -1386,6 +1386,8 @@ public class WeChatPlatform : IPlatform
                 enablePlayGesture = false,
                 showCenterPlayBtn = false,
             });
+
+            success?.Invoke(wxVideo);
         }
         catch (Exception e)
         {
