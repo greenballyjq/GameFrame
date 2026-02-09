@@ -81,7 +81,7 @@ namespace GameFramework.Game
             // 注册场景存在的游戏业务管理器
             RegisterSceneGameManagers();
 
-            var gameSceneManager = GameFrameworkManager.Instance.GetManager<GameSceneManager>();
+            var gameSceneManager = GameFrameworkManager.Instance.GetManager<Manager.GameSceneManager>();
             gameSceneManager.OnSceneChanged += OnSceneChanged;
             gameSceneManager.OnSceneLoadComplete += OnSceneLoadComplete;
 

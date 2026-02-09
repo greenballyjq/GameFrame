@@ -38,7 +38,7 @@ namespace GameFramework.Core
             RegisterManager<SoundManager>();
             RegisterManager<ParticleEffectManager>();
             RegisterManager<EffectManager>();
-            RegisterManager<GameSceneManager>();
+            RegisterManager<Manager.GameSceneManager>();
             // ConfigManager 由业务层独立管理，框架不注册
 #if FRAMEWORK_SERIALIZE
             RegisterManager<SaveLoadManager>();

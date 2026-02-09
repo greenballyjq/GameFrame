@@ -76,8 +76,6 @@ namespace GameFramework.Manager
             {
                 pool = new GameObjectPool(prefab, _poolRoot);
                 _pools.Add(prefab, pool);
-
-                Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
             }
 
             return pool;
@@ -167,7 +165,7 @@ namespace GameFramework.Manager
             // 检查对象是否已经被回收
             if (!obj.activeSelf)
             {
-                Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
+                //Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
                 return;
             }
 
