@@ -213,6 +213,14 @@ namespace GameFramework.Network
             MessageAccessors = messageAccessors;
         }
 
+        /// <summary>
+        /// 获取HttpManager，用于JSON等非Protobuf请求
+        /// </summary>
+        public HttpManager GetHttpManager()
+        {
+            return httpManager;
+        }
+
         public void SetHeader(string key, string value)
         {
             httpManager?.SetDefaultHeader(key, value);
