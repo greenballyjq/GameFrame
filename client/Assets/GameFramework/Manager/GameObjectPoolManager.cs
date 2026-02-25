@@ -171,11 +171,18 @@ namespace GameFramework.Manager
                 return;
             }
 
-            var prefab = _instancePrefabs[obj];
+            // fixme 添加安全检测
+            if (_instancePrefabs.TryGetValue(obj, out var prefab))
+            {
+                GetPool(prefab).Despawn(obj);
 
-            GetPool(prefab).Despawn(obj);
-
-            _instancePrefabs.Remove(obj);
+                _instancePrefabs.Remove(obj);
+            }
+            else
+            {
+                Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中，无法回收");
+            }
+            
         }
 
         /// <summary>
