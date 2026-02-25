@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "opcode.proto";
+
+// 签到请求（空消息）。
+message C2SSignIn {}
+
+// 单个签到奖励项。
+message SignInReward {
+  // 奖励资产类型（如 threekp）。
+  string asset = 1;
+  // 奖励数量。
+  uint64 amount = 2;
+  // 领取后该资产余额。
+  uint64 balance = 3;
+}
+
+// 签到响应。
+message S2CSignIn {
+  // 连续签到天数。
+  uint32 streak = 1;
+  // 本次签到日期（YYYY-MM-DD）。
+  string date = 2;
+  // 本次发放的奖励列表。
+  repeated SignInReward rewards = 3;
+}
+
+// 获取签到信息请求（空消息）。
+message C2SGetSignInInfo {}
+
+// 获取签到信息响应。
+message S2CGetSignInInfo {
+  // 连续签到天数。
+  uint32 streak = 1;
+  // 最近一次签到日期（YYYY-MM-DD）。
+  string last_date = 2;
+  // 今日是否已签到。
+  bool signed_today = 3;
+}
+
+// 社交域根请求（/social）。
+message C2SSocial {
+  // 请求序号（客户端自增，服务端原样回传）。
+  uint64 session = 1;
+  // 具体社交子请求。
+  oneof msg {
+    // 签到。
+    C2SSignIn sign_in = 2;
+    // 获取签到信息。
+    C2SGetSignInInfo get_sign_in_info = 3;
+  }
+}
+
+// 社交域根响应（/social）。
+message S2CSocial {
+  // 对应请求的 session。
+  uint64 session = 1;
+  // 通用错误码（OP_SUCCESS 表示成功）。
+  S2COpcode code = 99;
+  // 具体社交子响应。
+  oneof msg {
+    // 签到响应。
+    S2CSignIn sign_in = 2;
+    // 获取签到信息响应。
+    S2CGetSignInInfo get_sign_in_info = 3;
+  }
+}

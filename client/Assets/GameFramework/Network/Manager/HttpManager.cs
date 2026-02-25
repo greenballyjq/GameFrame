@@ -33,7 +33,7 @@ public class HttpManager : IManager
         
         // 设置默认请求头
         _defaultHeaders.Clear();
-        _defaultHeaders.Add("Content-Type", "application/json");
+        _defaultHeaders.Add("Content-Type", "application/x-protobuf");
         // 加入Access-Control-Allow-Origin，解决跨域问题
         _defaultHeaders.Add("Access-Control-Allow-Origin", "*");
     }
@@ -128,9 +128,8 @@ public class HttpManager : IManager
     
 
     /// <summary>
-    /// 发送POST请求（字节数据）
+    /// 发送POST请求（字节数据，POST到baseUrl）
     /// </summary>
-    /// <param name="url">请求URL</param>
     /// <param name="data">字节数据</param>
     /// <param name="headers">自定义请求头</param>
     /// <param name="timeout">超时时间</param>
@@ -138,8 +137,22 @@ public class HttpManager : IManager
     /// <returns>HTTP响应</returns>
     public async UniTask<HttpResponse> PostAsync(byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
     {
-        string fullUrl = GetFullUrl("");
-        
+        return await PostAsync("", data, headers, timeout, retryCount);
+    }
+
+    /// <summary>
+    /// 发送POST请求（字节数据，POST到baseUrl + endpoint）
+    /// </summary>
+    /// <param name="endpoint">API端点路径（如 "/auth"、"/user"）</param>
+    /// <param name="data">字节数据</param>
+    /// <param name="headers">自定义请求头</param>
+    /// <param name="timeout">超时时间</param>
+    /// <param name="retryCount">重试次数</param>
+    /// <returns>HTTP响应</returns>
+    public async UniTask<HttpResponse> PostAsync(string endpoint, byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
+    {
+        string fullUrl = GetFullUrl(endpoint);
+
         UnityWebRequest request = new UnityWebRequest(fullUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(data);
         request.uploadHandler.contentType = "application/x-protobuf";
@@ -153,7 +166,7 @@ public class HttpManager : IManager
         }
         headers["Content-Type"] = "application/x-protobuf";
         headers["Accept"] = "application/x-protobuf";
-        
+
         return await SendRequestAsync(request, headers, timeout, retryCount);
     }
     

@@ -1,68 +1,179 @@
-# 小游戏网络通信说明文档
+# TinyServer 协议与客户端接入指南
 
-## 主要协议文件
+本文档面向客户端开发同学，目标是让你可以按步骤完成从“拉服”到“全业务通信”的接入。
 
-### etcd.proto
-> 服务器列表协议, 用于获取可登录的游戏服务器信息。
+## 1. 协议文件总览
 
-### message.proto
-> 定义了客户端和服务器上行/下行的协议结构
-* C2S_Message 表示上行, 即客户端到服务器的协议。分为请求数据和执行操作。
-* S2C_Message 表示下行, 即服务器到客户端的协议。分为下发数据和反馈结果。
-* session 字段是一个透传参数, 即服务器不会改变它，原样返回。但客户端需保证每个请求都必须不一样。
-* 游戏内的任何协议都不能直接发送，必须嵌入 msg 字段中才可以通信。
+`proto` 目录包含以下协议：
 
-### login.proto
-> 登陆协议, 是客户端和游戏服务器通信的第一条协议。
+- `auth.proto`：认证域（登录、发验证码、选账号）。
+- `user.proto`：用户域（资料、心跳、绑定手机、资产、登出）。
+- `social.proto`：社交域（签到与签到信息）。
+- `payment.proto`：支付域（商城、下单、订单列表）。
+- `game.proto`：游戏域（基础数据、自定义数据、进度、结算、配置）。
+- `opcode.proto`：统一错误码。
 
-### opcode.proto
-> 错误码协议，用于反馈客户端操作结果。
+> 服务列表返回体使用 `etcd.ServerList`，通常由独立 serverlist 服务提供。
 
-### ping.proto
-> 心跳包协议，正常登录戏后，客户端应定时发送心跳包给务器,服务器超过一定时间未收到客户端的心跳包，则认为客户端离线，后续通信需重新登录。
+## 2. 通信规范（必须遵守）
 
-### base.proto
-> 玩家基础信息协议
+### 2.1 传输协议
 
-### item.proto
-> 物品协议, 一般会把金币，体力等资源类也定义为具有固定id的物品。
+- 使用 HTTPS + Protobuf（二进制）短连接请求。
+- 请求方法：`POST`。
 
-### custom.proto
-> 客户端自定义数据协议, 一般服务器不关心，仅仅做存储，所以上传数据设定为序列化后的binary数据。
+### 2.2 根消息约定
 
-### record.proto
-> 服务器使用，通信过程不涉及。
+每个业务域都使用根消息：
 
-## 通信方式
-> 小游戏由于交互少的特点，我们采取短连接的方式来作为游戏主要通信方式，即使用 http 通信协议。
+- 认证域：`C2SAuth` / `S2CAuth`
+- 用户域：`C2SUser` / `S2CUser`
+- 社交域：`C2SSocial` / `S2CSocial`
+- 支付域：`C2SPayment` / `S2CPayment`
+- 游戏域：`C2SGame` / `S2CGame`
 
-## 客户端和服务器完整交互过程
+根消息中统一包含：
 
-### 1. 获取服务器列表
-开发服接口: https://dev.sanqianpan.com:9999/serverlist
-返回 etcd.ServerList 消息结构，解析获得想登录的游戏服务器地址信息。
+- `session`：客户端请求流水号（建议从 1 开始单调递增）。
+- `oneof msg`：本次请求的具体子消息。
 
-### 2. 登陆游戏
-登陆地址: etcd.Server 的 login_address 字段, 步骤1获得。
-发送登陆协议到登陆地址，成功会收到一个 token 用于后续通信，失败则会收到相应的 opcode 反馈。
+服务端会在响应中回传同一个 `session`，用于请求/响应对齐。
 
-### 3. 正常游戏
-游戏地址: etcd.Server 的 address 字段, 步骤1获得。
-通信令牌: S2C_Login 的 token 字段，步骤2获得。
-将通信令牌放在 header 的 "Authorization" 中, 后续每个通信都要携带令牌。
+### 2.3 认证头
 
-## 游戏内已实现的协议（持续更新）
-- [x] etcd.proto
-- [x] message.proto
-- [x] opcode.proto
-- [x] base.proto
-- [x] ping.proto
-- [x] custom.proto
-- [x] login.proto
-- [x] currency.proto
-- [x] wave.proto
-- [ ] item.proto(需道具表)
-- [x] mall.proto
+- 登录成功后，从 `S2CAuth.login.token` 获取会话令牌。
+- 后续请求（`/user` `/social` `/payment` `/game`）都需带请求头：
 
-## 注意
-> 上面的协议和通信过程仅限于目前开发阶段，后续根据业务需求可能会相应调整。
+```text
+Authorization: <token>
+```
+
+### 2.4 错误码
+
+- 每个根响应都有 `code` 字段，类型为 `S2COpcode`。
+- `OP_SUCCESS` 表示成功。
+- 非成功时，通常仅处理 `code` 即可，不要依赖对应子消息一定存在。
+
+## 3. Step-by-step 接入流程
+
+以下流程按真实接入顺序给出，建议严格照此落地。
+
+### Step 1：拉取服务器列表
+
+1. 请求 serverlist 地址（例如：`https://dev.sanqianpan.com:9999/serverlist`）。
+2. 解析 `etcd.ServerList`。
+3. 选定一个目标服务器，读取：
+	- `login_address`：用于 `/auth`
+	- `address`：用于 `/user` `/social` `/payment` `/game`
+
+### Step 2：发送短信验证码（短信登录场景）
+
+1. 向 `/auth` 发送 `C2SAuth`，`msg=send_sms`。
+2. 子消息使用 `C2SSendSMS`：
+	- `phone`：手机号
+	- `usage`：验证码用途（推荐 `login`）
+3. 收到 `S2CAuth.send_sms` 后检查：
+	- 根 `code == OP_SUCCESS`
+	- `send_sms.success == true`
+
+### Step 3：登录并拿 token
+
+1. 向 `/auth` 发送 `C2SAuth`，`msg=login`。
+2. 子消息使用 `C2SLogin`：
+	- 在 `platform` oneof 中按实际平台填充（如 `sms`）
+	- `game_id` 填目标游戏 ID（会写入服务端会话）
+3. 收到 `S2CAuth.login` 后保存：
+	- `token`
+	- `uuid`
+
+### Step 4：进入业务域通信
+
+使用 `address` 作为 host，并带 `Authorization` 请求头。
+
+#### 4.1 用户域 `/user`
+
+常用顺序：
+
+1. `get_profile`
+2. `get_assets`
+3. `heartbeat`（建议定时）
+
+#### 4.2 游戏域 `/game`
+
+建议顺序：
+
+1. `base_data`
+2. `custom_data`
+3. `progress_data`
+4. `wave_result`（上报本次 `point_gain/threekp_gain`）
+5. 再次 `progress_data`（校验累计结果）
+6. `configuration`（按配置名拉取）
+
+#### 4.3 支付域 `/payment`
+
+建议顺序：
+
+1. `mall`：拉商品
+2. `order_list`：拉历史订单
+3. `buy`：下单（`item_id/count/phone/address`）
+4. 再次 `order_list`：确认订单变化
+
+> 注意：商城可见商品与可购买性由登录会话中的 `game_id` 决定，客户端无需在 `mall` 请求里传游戏类型。
+
+#### 4.4 社交域 `/social`
+
+建议顺序：
+
+1. `get_sign_in_info`
+2. `sign_in`
+3. 再次 `get_sign_in_info`
+
+### Step 5：登出
+
+向 `/user` 发送 `logout`，成功后清理本地 token 与会话态。
+
+## 4. 客户端实现建议
+
+### 4.1 SDK 封装建议
+
+建议封装一个统一发送函数：
+
+1. 组装根消息（填 `session` + 子消息）。
+2. Protobuf 编码。
+3. 发 HTTP POST（可选加 `Authorization`）。
+4. 解码根响应。
+5. 先判断 `code`，再处理子消息。
+
+### 4.2 重试策略
+
+- 网络错误可做有限次重试（建议指数退避）。
+- `OP_SESSION_EXPIRED` / `OP_SESSION_TOKEN_INVALID`：触发重新登录。
+- 业务错误码（如资产不足）不应盲目重试。
+
+### 4.3 日志建议
+
+联调阶段建议打印：
+
+- 请求域名与路径
+- 请求 `session`
+- 根响应 `code`
+- 子消息关键字段（如 token、uuid、order_id）
+
+## 5. 联调验收清单（建议）
+
+- [ ] 能成功拉到 serverlist 并解析出 `login_address/address`
+- [ ] `/auth send_sms` 成功
+- [ ] `/auth login` 成功并拿到 token
+- [ ] `/user get_assets` 成功返回 threekp
+- [ ] `/game wave_result` 后 `progress_data.point` 正常累加
+- [ ] `/payment buy` 成功并可在 `order_list` 看到新订单
+- [ ] `/social sign_in` 行为符合预期（已签到当天会失败）
+- [ ] `/user logout` 成功
+
+## 6. 版本维护约定
+
+- 修改字段语义时，同步更新对应 `.proto` 注释与本文档。
+- 新增业务消息时，补充：
+  - 请求/响应字段说明
+  - 推荐调用时序
+  - 失败码与处理建议

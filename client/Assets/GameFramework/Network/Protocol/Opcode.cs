@@ -22,80 +22,92 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8q9QIKClMyQ19PUENvZGUSDgoKT1BfU3VjY2VzcxAA",
-          "Eg0KCU9QX0ZhaWxlZBABEhYKEk9QX1Nlc3Npb25fRXhwaXJlZBACEhwKGE9Q",
-          "X1Nlc3Npb25fVG9rZW5fSW52YWxpZBADEhUKEU9QXzNrcF9Ob3RfRW5vdWdo",
-          "EGUSGQoVT1BfU3RhbWluYV9Ob3RfRW5vdWdoEGYSFgoST1BfSXRlbV9Ob3Rf",
-          "RW5vdWdoEGcSGQoVT1BfTWFsbEl0ZW1fTm90X0V4aXN0EGgSHwobT1BfTWFs",
-          "bEl0ZW1fQnV5X0NvdW50X0Vycm9yEGkSHQoYT1BfTG9naW5fSW52YWxpZF9B",
-          "Y2NvdW50EOkHEhkKFE9QX0xvZ2luX0F1dGhfZmFpbGVkEOoHEhoKFU9QX0xv",
-          "Z291dF9PdGhlcl9Mb2dpbhDNCBIWChFPUF9Mb2dvdXRfVGltZW91dBDOCBIe",
-          "ChlPUF9Mb2dvdXRfU2VydmVyX1NodXRkb3duEM8IYgZwcm90bzM="));
+          "CgxvcGNvZGUucHJvdG8qpQMKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
+          "DQoJT1BfRkFJTEVEEAESFgoST1BfU0VTU0lPTl9FWFBJUkVEEAISHAoYT1Bf",
+          "U0VTU0lPTl9UT0tFTl9JTlZBTElEEAMSFwoTT1BfTk9fQ09ORklHVVJBVElP",
+          "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIVChFPUF8zS1BfTk9UX0VOT1VH",
+          "SBBlEhkKFU9QX1NUQU1JTkFfTk9UX0VOT1VHSBBmEhYKEk9QX0lURU1fTk9U",
+          "X0VOT1VHSBBnEhoKFk9QX01BTExfSVRFTV9OT1RfRVhJU1QQaBIgChxPUF9N",
+          "QUxMX0lURU1fQlVZX0NPVU5UX0VSUk9SEGkSHQoYT1BfTE9HSU5fSU5WQUxJ",
+          "RF9BQ0NPVU5UEOkHEhkKFE9QX0xPR0lOX0FVVEhfRkFJTEVEEOoHEhoKFU9Q",
+          "X0xPR09VVF9PVEhFUl9MT0dJThDNCBIWChFPUF9MT0dPVVRfVElNRU9VVBDO",
+          "CBIeChlPUF9MT0dPVVRfU0VSVkVSX1NIVVRET1dOEM8IYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2C_OPCode), }, null, null));
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2COpcode), }, null, null));
   }
   #endregion
 
 }
 #region Enums
-public enum S2C_OPCode {
+/// <summary>
+/// 服务端通用返回码。
+/// </summary>
+public enum S2COpcode {
   /// <summary>
-  /// 操作成功
+  /// 操作成功。
   /// </summary>
-  [pbr::OriginalName("OP_Success")] OpSuccess = 0,
+  [pbr::OriginalName("OP_SUCCESS")] OpSuccess = 0,
   /// <summary>
-  /// 操作失败
+  /// 操作失败。
   /// </summary>
-  [pbr::OriginalName("OP_Failed")] OpFailed = 1,
+  [pbr::OriginalName("OP_FAILED")] OpFailed = 1,
   /// <summary>
-  /// 会话过期,需重新登陆
+  /// 会话过期，需重新登录。
   /// </summary>
-  [pbr::OriginalName("OP_Session_Expired")] OpSessionExpired = 2,
+  [pbr::OriginalName("OP_SESSION_EXPIRED")] OpSessionExpired = 2,
   /// <summary>
-  /// 会话令牌无效
+  /// 会话令牌无效。
   /// </summary>
-  [pbr::OriginalName("OP_Session_Token_Invalid")] OpSessionTokenInvalid = 3,
+  [pbr::OriginalName("OP_SESSION_TOKEN_INVALID")] OpSessionTokenInvalid = 3,
   /// <summary>
-  /// 金币不足
+  /// 配置不存在。
   /// </summary>
-  [pbr::OriginalName("OP_3kp_Not_Enough")] Op3KpNotEnough = 101,
+  [pbr::OriginalName("OP_NO_CONFIGURATION")] OpNoConfiguration = 4,
   /// <summary>
-  /// 体力不足
+  /// 参数无效。
   /// </summary>
-  [pbr::OriginalName("OP_Stamina_Not_Enough")] OpStaminaNotEnough = 102,
+  [pbr::OriginalName("OP_PARAM_INVALID")] OpParamInvalid = 5,
   /// <summary>
-  /// 物品不足
+  /// threekp 余额不足。
   /// </summary>
-  [pbr::OriginalName("OP_Item_Not_Enough")] OpItemNotEnough = 103,
+  [pbr::OriginalName("OP_3KP_NOT_ENOUGH")] Op3KpNotEnough = 101,
   /// <summary>
-  /// 商品不存在
+  /// 体力不足。
   /// </summary>
-  [pbr::OriginalName("OP_MallItem_Not_Exist")] OpMallItemNotExist = 104,
+  [pbr::OriginalName("OP_STAMINA_NOT_ENOUGH")] OpStaminaNotEnough = 102,
   /// <summary>
-  /// 购买数量错误
+  /// 物品不足。
   /// </summary>
-  [pbr::OriginalName("OP_MallItem_Buy_Count_Error")] OpMallItemBuyCountError = 105,
+  [pbr::OriginalName("OP_ITEM_NOT_ENOUGH")] OpItemNotEnough = 103,
   /// <summary>
-  /// 无效账号(手机号方式)
+  /// 商品不存在。
   /// </summary>
-  [pbr::OriginalName("OP_Login_Invalid_Account")] OpLoginInvalidAccount = 1001,
+  [pbr::OriginalName("OP_MALL_ITEM_NOT_EXIST")] OpMallItemNotExist = 104,
   /// <summary>
-  /// 平台认证失败
+  /// 商品购买数量非法。
   /// </summary>
-  [pbr::OriginalName("OP_Login_Auth_failed")] OpLoginAuthFailed = 1002,
+  [pbr::OriginalName("OP_MALL_ITEM_BUY_COUNT_ERROR")] OpMallItemBuyCountError = 105,
   /// <summary>
-  /// 顶号
+  /// 无效账号（手机号登录场景）。
   /// </summary>
-  [pbr::OriginalName("OP_Logout_Other_Login")] OpLogoutOtherLogin = 1101,
+  [pbr::OriginalName("OP_LOGIN_INVALID_ACCOUNT")] OpLoginInvalidAccount = 1001,
   /// <summary>
-  /// 心跳超时
+  /// 平台认证失败。
   /// </summary>
-  [pbr::OriginalName("OP_Logout_Timeout")] OpLogoutTimeout = 1102,
+  [pbr::OriginalName("OP_LOGIN_AUTH_FAILED")] OpLoginAuthFailed = 1002,
   /// <summary>
-  /// 服务器关闭
+  /// 账号在其他设备登录，当前会话被顶下线。
   /// </summary>
-  [pbr::OriginalName("OP_Logout_Server_Shutdown")] OpLogoutServerShutdown = 1103,
+  [pbr::OriginalName("OP_LOGOUT_OTHER_LOGIN")] OpLogoutOtherLogin = 1101,
+  /// <summary>
+  /// 心跳超时下线。
+  /// </summary>
+  [pbr::OriginalName("OP_LOGOUT_TIMEOUT")] OpLogoutTimeout = 1102,
+  /// <summary>
+  /// 服务器关闭导致下线。
+  /// </summary>
+  [pbr::OriginalName("OP_LOGOUT_SERVER_SHUTDOWN")] OpLogoutServerShutdown = 1103,
 }
 
 #endregion

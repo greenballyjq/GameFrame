@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+import "opcode.proto";
+
+// 道具数据容器（道具 ID -> 数量）。
+message PlayerItem {
+  // 玩家道具映射表。
+  map<string, uint64> items = 1;
+}
+
+// 自定义数据容器（键 -> 二进制数据）。
+message CustomData {
+  // 自定义数据映射表。
+  map<string, bytes> datas = 1;
+}
+
+// 进度数据。
+message ProgressData {
+  // 当前游戏累计积分（按 uuid+game_id 维度）。
+  uint64 point = 1;
+}
+
+// 拉取基础数据请求（空消息）。
+message C2SBaseData {}
+
+// 拉取基础数据响应。
+message S2CBaseData {
+  // 创建时间（Unix 秒级时间戳）。
+  uint64 createtime = 1;
+  // 最近登录时间（Unix 秒级时间戳）。
+  uint64 lastlogin = 2;
+}
+
+// 拉取自定义数据请求（空消息）。
+message C2SCustomData {}
+
+// 拉取自定义数据响应。
+message S2CCustomData {
+  // 自定义数据内容。
+  CustomData custom = 1;
+}
+
+// 上传单条自定义数据请求。
+message C2SUploadCustomData {
+  // 自定义数据类型键。
+  string type = 1;
+  // 自定义数据内容（二进制）。
+  bytes data = 2;
+}
+
+// 拉取道具数据请求（空消息）。
+message C2SItemData {}
+
+// 拉取道具数据响应。
+message S2CItemData {
+  // 道具数据。
+  PlayerItem item = 1;
+}
+
+// 道具增量更新推送。
+message S2CItemUpdate {
+  // 变更后的道具映射。
+  map<string, uint64> items = 1;
+}
+
+// 关卡结算上报请求。
+message C2SWaveResult {
+  // 关卡/波次 ID。
+  uint32 wave_id = 1;
+  // 本次新增积分。
+  uint64 point_gain = 2;
+  // 本次新增 3K 币（由客户端上报）。
+  uint64 threekp_gain = 3;
+}
+
+// 关卡结算上报响应。
+message S2CWaveResult {
+  // 结算后的累计积分。
+  uint64 point_total = 1;
+  // 结算后的 3K 币总量。
+  uint64 threekp_total = 2;
+}
+
+// 拉取进度数据请求（空消息）。
+message C2SProgressData {}
+
+// 拉取进度数据响应。
+message S2CProgressData {
+  // 当前进度数据。
+  ProgressData progress = 1;
+}
+
+// 拉取业务配置请求。
+message C2SConfiguration {
+  // 配置名（如 hlg_daily_config）。
+  string name = 1;
+}
+
+// 拉取业务配置响应。
+message S2CConfiguration {
+  // 配置内容（通常为 JSON 字符串）。
+  string data = 1;
+}
+
+// 游戏域根请求（/game）。
+message C2SGame {
+  // 请求序号（客户端自增，服务端原样回传）。
+  uint64 session = 1;
+  // 具体游戏子请求。
+  oneof msg {
+    // 拉取基础数据。
+    C2SBaseData base_data = 2;
+    // 拉取自定义数据。
+    C2SCustomData custom_data = 3;
+    // 上传自定义数据。
+    C2SUploadCustomData upload_custom_data = 4;
+    // 拉取道具数据。
+    C2SItemData item_data = 5;
+    // 上报关卡结算。
+    C2SWaveResult wave_result = 6;
+    // 拉取进度数据。
+    C2SProgressData progress_data = 7;
+    // 拉取业务配置。
+    C2SConfiguration configuration = 8;
+  }
+}
+
+// 游戏域根响应（/game）。
+message S2CGame {
+  // 对应请求的 session。
+  uint64 session = 1;
+  // 通用错误码（OP_SUCCESS 表示成功）。
+  S2COpcode code = 99;
+  // 具体游戏子响应。
+  oneof msg {
+    // 拉取基础数据响应。
+    S2CBaseData base_data = 2;
+    // 拉取自定义数据响应。
+    S2CCustomData custom_data = 3;
+    // 拉取道具数据响应。
+    S2CItemData item_data = 4;
+    // 道具增量更新推送。
+    S2CItemUpdate item_update = 5;
+    // 关卡结算响应。
+    S2CWaveResult wave_result = 6;
+    // 拉取进度数据响应。
+    S2CProgressData progress_data = 7;
+    // 拉取业务配置响应。
+    S2CConfiguration configuration = 8;
+  }
+}

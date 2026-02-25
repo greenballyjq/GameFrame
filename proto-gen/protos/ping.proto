@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-message C2S_Ping {
-  uint64 clienttime = 1; // 客户端时间戳
-}
-
-message S2C_Ping {
-  uint64 servertime = 1; // 服务器时间戳
-};

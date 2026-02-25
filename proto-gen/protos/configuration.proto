@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-message C2S_Configuration {
-    string name = 1; // 配置名称
-}
-
-message S2C_Configuration {
-  string data = 1; // json 格式，具体定义和 web 一致
-}

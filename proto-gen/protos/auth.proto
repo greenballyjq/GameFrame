@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+import "opcode.proto";
+
+// 微信登录参数。
+message WeChat {
+  // 微信登录 code（由客户端 SDK 获取）。
+  string code = 1;
+}
+
+// 微信小程序登录参数。
+message WeChatMiniProgram {
+  // 微信小程序登录 code。
+  string code = 1;
+}
+
+// 抖音登录参数。
+message TikTok {
+  // 抖音授权 code。
+  string code = 1;
+  // 抖音匿名标识（匿名登录或风控场景使用）。
+  string anonymous_code = 2;
+}
+
+// 快手登录参数。
+message KuaiShou {
+  // 快手授权 code。
+  string code = 1;
+}
+
+// 短信登录参数。
+message SMS {
+  // 手机号。
+  string phone = 1;
+  // 短信验证码。
+  string code = 2;
+}
+
+// 可选账号信息（用于多账号场景选择角色）。
+message AccountInfo {
+  // 账号唯一 ID。
+  string uuid = 1;
+  // 账号平台（wechat/sms/tiktok 等）。
+  string platform = 2;
+  // 昵称。
+  string nickname = 3;
+  // 头像 URL。
+  string avatar = 4;
+  // 账号创建时间（Unix 秒级时间戳）。
+  uint64 created_time = 5;
+}
+
+// 登录请求体。
+message C2SLogin {
+  // 登录平台参数（同一时间只能选择一个平台）。
+  oneof platform {
+    // 微信登录。
+    WeChat wechat = 1;
+    // 微信小程序登录。
+    WeChatMiniProgram wechat_mini = 2;
+    // 抖音登录。
+    TikTok tiktok = 3;
+    // 快手登录。
+    KuaiShou kuaishou = 4;
+    // 短信登录。
+    SMS sms = 5;
+  }
+  // 目标游戏 ID（服务端写入会话，后续 payment/game 会用到）。
+  string game_id = 6;
+}
+
+// 登录响应体。
+message S2CLogin {
+  // 会话令牌，后续请求需放入 Authorization 请求头。
+  string token = 1;
+  // 当前登录账号 uuid。
+  string uuid = 2;
+  // 是否为新用户。
+  bool is_new = 3;
+  // 账号列表（多账号场景使用，单账号时通常为空）。
+  repeated AccountInfo accounts = 4;
+}
+
+// 发送短信验证码请求体。
+message C2SSendSMS {
+  // 手机号。
+  string phone = 1;
+  // 验证码用途（如 login/bind_phone），用于服务端按场景限流与校验。
+  string usage = 2;
+}
+
+// 发送短信验证码响应体。
+message S2CSendSMS {
+  // 是否发送成功。
+  bool success = 1;
+  // 结果描述。
+  string message = 2;
+  // 调试验证码（开发环境可能返回，正式环境应关闭）。
+  string code = 3;
+}
+
+// 选择账号请求体。
+message C2SSelectAccount {
+  // 要选择登录的账号 uuid。
+  string uuid = 1;
+}
+
+// 选择账号响应体。
+message S2CSelectAccount {
+  // 新会话令牌。
+  string token = 1;
+  // 已选择的账号 uuid。
+  string uuid = 2;
+}
+
+// 认证域根请求（/auth）。
+message C2SAuth {
+  // 请求序号（客户端自增，服务端原样回传）。
+  uint64 session = 1;
+  // 具体认证子请求。
+  oneof msg {
+    // 登录。
+    C2SLogin login = 2;
+    // 发送短信验证码。
+    C2SSendSMS send_sms = 3;
+    // 选择账号。
+    C2SSelectAccount select_account = 4;
+  }
+}
+
+// 认证域根响应（/auth）。
+message S2CAuth {
+  // 对应请求的 session。
+  uint64 session = 1;
+  // 通用错误码（OP_SUCCESS 表示成功）。
+  S2COpcode code = 99;
+  // 具体认证子响应。
+  oneof msg {
+    // 登录响应。
+    S2CLogin login = 2;
+    // 发送短信响应。
+    S2CSendSMS send_sms = 3;
+    // 选择账号响应。
+    S2CSelectAccount select_account = 4;
+  }
+}

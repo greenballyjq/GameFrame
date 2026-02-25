@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+import "opcode.proto";
+
+// 用户资料。
+message UserProfile {
+  // 用户唯一 ID。
+  string uuid = 1;
+  // 绑定手机号。
+  string phone = 2;
+  // 登录平台。
+  string platform = 3;
+  // 昵称。
+  string nickname = 4;
+  // 头像 URL。
+  string avatar = 5;
+  // 账号创建时间（Unix 秒级时间戳）。
+  uint64 create_time = 6;
+  // 累计在线时长（秒）。
+  uint64 total_online_seconds = 7;
+  // 用户资料中的展示金币字段（非 threekp 支付货币）。
+  uint64 gold = 8;
+}
+
+// 获取用户资料请求（空消息）。
+message C2SGetProfile {}
+
+// 获取用户资料响应。
+message S2CGetProfile {
+  // 用户资料。
+  UserProfile profile = 1;
+}
+
+// 心跳请求。
+message C2SHeartbeat {
+  // 客户端当前时间（Unix 秒级时间戳）。
+  uint64 client_time = 1;
+}
+
+// 心跳响应。
+message S2CHeartbeat {
+  // 服务端当前时间（Unix 秒级时间戳）。
+  uint64 server_time = 1;
+  // 累计在线时长（秒）。
+  uint64 total_online_seconds = 2;
+}
+
+// 绑定手机号请求。
+message C2SBindPhone {
+  // 要绑定的手机号。
+  string phone = 1;
+  // 短信验证码。
+  string code = 2;
+}
+
+// 绑定手机号响应。
+message S2CBindPhone {
+  // 是否绑定成功。
+  bool success = 1;
+  // 结果描述。
+  string message = 2;
+}
+
+// 获取资产请求（空消息）。
+message C2SGetAssets {}
+
+// 获取资产响应。
+message S2CGetAssets {
+  // 账号级货币 threekp 余额。
+  uint64 threekp = 1;
+}
+
+// 登出请求（空消息）。
+message C2SLogout {}
+
+// 登出响应。
+message S2CLogout {
+  // 是否登出成功。
+  bool success = 1;
+}
+
+// 用户域根请求（/user）。
+message C2SUser {
+  // 请求序号（客户端自增，服务端原样回传）。
+  uint64 session = 1;
+  // 具体用户子请求。
+  oneof msg {
+    // 获取资料。
+    C2SGetProfile get_profile = 2;
+    // 心跳。
+    C2SHeartbeat heartbeat = 3;
+    // 绑定手机号。
+    C2SBindPhone bind_phone = 4;
+    // 获取资产。
+    C2SGetAssets get_assets = 5;
+    // 登出。
+    C2SLogout logout = 6;
+  }
+}
+
+// 用户域根响应（/user）。
+message S2CUser {
+  // 对应请求的 session。
+  uint64 session = 1;
+  // 通用错误码（OP_SUCCESS 表示成功）。
+  S2COpcode code = 99;
+  // 具体用户子响应。
+  oneof msg {
+    // 获取资料响应。
+    S2CGetProfile get_profile = 2;
+    // 心跳响应。
+    S2CHeartbeat heartbeat = 3;
+    // 绑定手机号响应。
+    S2CBindPhone bind_phone = 4;
+    // 获取资产响应。
+    S2CGetAssets get_assets = 5;
+    // 登出响应。
+    S2CLogout logout = 6;
+  }
+}
