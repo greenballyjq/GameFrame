@@ -228,7 +228,7 @@ namespace GameFramework.Manager
             _currentLoader.UnloadAllAssets();
         }
 
-        public void Update()
+        public void DoUpdate(float dt)
         {
             // 根据需要更新当前加载器
         }

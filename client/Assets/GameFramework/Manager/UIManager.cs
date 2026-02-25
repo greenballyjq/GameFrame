@@ -61,7 +61,7 @@ public class UIManager : IManager
         CreateUIRoot();
     }
 
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 更新所有已打开的界面
         foreach (var ui in _openedUIs.Values)

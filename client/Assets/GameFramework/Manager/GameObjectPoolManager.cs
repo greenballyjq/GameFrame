@@ -50,7 +50,7 @@ namespace GameFramework.Manager
             Debug.Log("[GameObjectPoolManager] 初始化完成");
         }
 
-        public void Update() { }
+        public void DoUpdate(float dt) { }
 
         public void Release()
         {
@@ -157,17 +157,12 @@ namespace GameFramework.Manager
         {
             GetPool(prefab).Prewarm(count);
         }
-
-        /// <summary>
-        /// 回收对象
-        /// </summary>
-        /// <param name="obj">要回收的对象</param>
         public void Despawn(GameObject obj)
         {
             // 检查对象是否已经被回收
             if (!obj.activeSelf)
             {
-                Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
+                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 重复回收");
                 return;
             }
 

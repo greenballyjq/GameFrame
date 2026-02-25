@@ -130,7 +130,7 @@ namespace GameFramework.Core
             // 更新所有管理器
             foreach (var manager in _managers.Values)
             {
-                manager.Update();
+                manager.DoUpdate(Time.deltaTime);
             }
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameFramework.Core;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class EventManager : IManager
         // Debug.Log("[EventManager] 初始化事件管理器");
     }
 
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 事件管理器无需更新
     }
