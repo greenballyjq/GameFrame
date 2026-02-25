@@ -175,7 +175,7 @@ namespace GameFramework.Manager
             }
             else
             {
-                Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中，无法回收");
+                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中，无法回收");
             }
             
         }
