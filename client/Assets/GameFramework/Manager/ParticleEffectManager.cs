@@ -305,7 +305,7 @@ namespace GameFramework.Manager
         /// <summary>
         /// 更新粒子特效管理器
         /// </summary>
-        public void Update()
+        public void DoUpdate(float dt)
         {
             // 检查并销毁过期的粒子特效
             var currentTime = Time.time;

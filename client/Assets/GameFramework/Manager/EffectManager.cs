@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Effect;
 using System.Collections.Generic;
@@ -44,9 +44,9 @@ namespace GameFramework.Manager
     }
 
     /// <summary>
-    /// 特效实例状态
+    /// 特效运行时
     /// </summary>
-    internal class EffectInstance
+    internal class EffectRuntime
     {
         /// <summary>
         /// 特效对象
@@ -54,7 +54,7 @@ namespace GameFramework.Manager
         public GameObject GameObject;
 
         /// <summary>
-        /// 特效接口
+        /// 特效项组件
         /// </summary>
         public IEffectItem EffectItem;
 
@@ -64,29 +64,24 @@ namespace GameFramework.Manager
         public EffectPlayType PlayType;
 
         /// <summary>
-        /// 特效停止模式
+        /// 停止模式
         /// </summary>
-        public EffectStopMode DurationEndMode;
+        public EffectStopMode StopMode;
 
         /// <summary>
-        /// 持续时间
+        /// 持续时间（仅对持续时间特效有效）
         /// </summary>
         public float Duration;
 
         /// <summary>
-        /// 累计有效播放时间
+        /// 累计有效播放时间（仅对持续时间特效有效）
         /// </summary>
         public float Elapsed;
 
         /// <summary>
-        /// 是否已经请求收尾停止
+        /// 是否请求停止
         /// </summary>
-        public bool RequestedGracefulStop;
-
-        /// <summary>
-        /// 是否已经被外部强制结束
-        /// </summary>
-        public bool ForceFinished;
+        public bool IsRequestedStop;
 
         /// <summary>
         /// 是否处于暂停状态
@@ -100,35 +95,81 @@ namespace GameFramework.Manager
     public class EffectManager : IManager
     {
         /// <summary>
-        /// 对象池管理器引用
+        /// 对象池管理器
         /// </summary>
         private GameObjectPoolManager _poolManager => GameFrameworkManager.Instance.GetManager<GameObjectPoolManager>();
 
         /// <summary>
-        /// 正在播放的特效实例
+        /// 活跃特效字典
         /// </summary>
-        private readonly Dictionary<GameObject, EffectInstance> _instances = new Dictionary<GameObject, EffectInstance>();
+        private readonly Dictionary<GameObject, EffectRuntime> _activeEffects = new Dictionary<GameObject, EffectRuntime>();
+
+        /// <summary>
+        /// 待回收特效列表
+        /// </summary>
+        private readonly List<GameObject> _pendingDespawnEffects = new List<GameObject>();
 
         public void Init()
         {
             Debug.Log("[EffectManager] 初始化完成");
         }
 
-        public void Update() { }
+        public void DoUpdate(float dt)
+        {
+            _pendingDespawnEffects.Clear();
+
+            foreach (var kvp in _activeEffects)
+            {
+                var obj = kvp.Key;
+                var effectRuntime = kvp.Value;
+                var effectItem = effectRuntime.EffectItem;
+
+                bool shouldDespawn = false;
+
+                if (effectRuntime.IsRequestedStop)
+                {
+                    shouldDespawn = !effectItem.IsAlive;
+                }
+                else
+                {
+                    switch (effectRuntime.PlayType)
+                    {
+                        case EffectPlayType.OneShot:
+                            shouldDespawn = !effectItem.IsAlive;
+                            break;
+
+                        case EffectPlayType.Duration:
+                            if (!effectRuntime.IsPaused)
+                                effectRuntime.Elapsed += dt;
+                            if (effectRuntime.Elapsed >= effectRuntime.Duration)
+                            {
+                                effectItem.Stop(effectRuntime.StopMode);
+                                effectRuntime.IsRequestedStop = true;
+                                shouldDespawn = !effectItem.IsAlive;
+                            }
+                            break;
+                    }
+                }
+
+                if (shouldDespawn)
+                    _pendingDespawnEffects.Add(obj);
+            }
+
+            foreach (var obj in _pendingDespawnEffects)
+                InternalDespawn(obj);
+        }
 
         public void Release()
         {
-            ClearAllEffects();
-
             Debug.Log("[EffectManager] 已释放");
         }
 
         #region 公共方法
         /// <summary>
         /// 播放一次性特效（预制体方式）
-        /// 播放完自动收尾停止
+        /// 默认播放完自动收尾停止
         /// </summary>
-        public GameObject PlayOneShot(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
+        public GameObject PlayOneShot(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -137,19 +178,18 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
 
         /// <summary>
         /// 播放一次性特效（路径方式）
-        /// 播放完自动收尾停止
+        /// 默认播放完自动收尾停止
         /// </summary>
-        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
+        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -158,10 +198,9 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
@@ -170,7 +209,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（预制体方式）
         /// 需要手动停止
         /// </summary>
-        public GameObject PlayLoop(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
+        public GameObject PlayLoop(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -179,10 +218,9 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
@@ -191,7 +229,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（路径方式）
         /// 需要手动停止
         /// </summary>
-        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = false)
+        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -200,19 +238,18 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
 
         /// <summary>
         /// 播放持续时间特效（预制体方式）
-        /// 到时间后自动停止
+        /// 到时间后默认自动收尾停止
         /// </summary>
-        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
+        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = true)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -221,19 +258,18 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
 
         /// <summary>
         /// 播放持续时间特效
-        /// 到时间后自动停止
+        /// 到时间后默认自动收尾停止
         /// </summary>
-        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
+        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = true)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -242,10 +278,9 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterInstance(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
 
             effect.Play();
-            RunLifetime(instance).Forget();
 
             return obj;
         }
@@ -253,25 +288,16 @@ namespace GameFramework.Manager
         /// <summary>
         /// 停止特效
         /// </summary>
+        /// <param name="obj">特效对象</param>
+        /// <param name="stopMode">停止模式</param>
         public void Stop(GameObject obj, EffectStopMode stopMode = EffectStopMode.Graceful)
         {
-            if (!_instances.TryGetValue(obj, out var instance))
+            if (!_activeEffects.TryGetValue(obj, out var instance))
                 return;
 
-            var effect = instance.EffectItem;
+            instance.IsRequestedStop = true;
 
-            // 立即停止
-            if (stopMode == EffectStopMode.Immediate)
-            {
-                instance.ForceFinished = true;
-                effect.StopImmediate();
-                InternalDespawn(obj);
-                return;
-            }
-
-            // 收尾停止
-            instance.RequestedGracefulStop = true;
-            effect.StopGraceful();
+            instance.EffectItem.Stop(stopMode);
         }
 
         /// <summary>
@@ -279,13 +305,11 @@ namespace GameFramework.Manager
         /// </summary>
         public void Pause(GameObject obj)
         {
-            if (!_instances.TryGetValue(obj, out var instance))
-                return;
-
-            if (instance.IsPaused)
+            if (!_activeEffects.TryGetValue(obj, out var instance))
                 return;
 
             instance.IsPaused = true;
+
             instance.EffectItem.Pause();
         }
 
@@ -294,38 +318,26 @@ namespace GameFramework.Manager
         /// </summary>
         public void Resume(GameObject obj)
         {
-            if (!_instances.TryGetValue(obj, out var instance))
-                return;
-
-            if (!instance.IsPaused)
+            if (!_activeEffects.TryGetValue(obj, out var instance))
                 return;
 
             instance.IsPaused = false;
+
             instance.EffectItem.Resume();
         }
 
         /// <summary>
-        /// 直接回收特效
-        /// </summary>
-        public void Recycle(GameObject obj)
-        {
-            if (_instances.TryGetValue(obj, out var instance))
-            {
-                instance.ForceFinished = true;
-                instance.EffectItem.StopImmediate();
-            }
-
-            InternalDespawn(obj);
-        }
-
-        /// <summary>
-        /// 清理场上所有特效（回收到对象池）
+        /// 清理场上所有特效
         /// </summary>
         public void ClearAllEffects()
         {
-            var keys = new List<GameObject>(_instances.Keys);
-            foreach (var obj in keys)
+            _pendingDespawnEffects.Clear();
+            _pendingDespawnEffects.AddRange(_activeEffects.Keys);
+
+            foreach (var obj in _pendingDespawnEffects)
             {
+                if (_activeEffects.TryGetValue(obj, out var instance))
+                    instance.EffectItem.Stop(EffectStopMode.Immediate);
                 InternalDespawn(obj);
             }
         }
@@ -333,110 +345,33 @@ namespace GameFramework.Manager
 
         #region 私有方法
         /// <summary>
-        /// 注册特效实例
+        /// 注册特效
         /// </summary>
-        private EffectInstance RegisterInstance(GameObject obj, IEffectItem effect, EffectPlayType playType, float duration, EffectStopMode endMode)
+        private EffectRuntime RegisterEffect(GameObject obj, IEffectItem effect, EffectPlayType playType, float duration, EffectStopMode endMode)
         {
-            var instance = new EffectInstance
+            var instance = new EffectRuntime
             {
                 GameObject = obj,
                 EffectItem = effect,
                 PlayType = playType,
                 Duration = duration,
-                DurationEndMode = endMode,
+                StopMode = endMode,
                 Elapsed = 0f,
-                RequestedGracefulStop = false,
-                ForceFinished = false,
+                IsRequestedStop = false,
                 IsPaused = false
             };
 
-            _instances[obj] = instance;
+            _activeEffects[obj] = instance;
+
             return instance;
         }
 
         /// <summary>
-        /// 生命周期协程
-        /// </summary>
-        private async UniTaskVoid RunLifetime(EffectInstance instance)
-        {
-            var obj = instance.GameObject;
-            var effect = instance.EffectItem;
-
-            switch (instance.PlayType)
-            {
-                case EffectPlayType.OneShot:
-                    while (!instance.ForceFinished && effect.IsAlive)
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-
-                    if (!instance.ForceFinished)
-                        InternalDespawn(obj);
-                    break;
-
-                case EffectPlayType.Duration:
-                    // 根据有效播放时间判断是否到达持续时间
-                    while (!instance.ForceFinished &&
-                           !instance.RequestedGracefulStop &&
-                           instance.Elapsed < instance.Duration)
-                    {
-                        if (!instance.IsPaused)
-                            instance.Elapsed += Time.deltaTime;
-
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-                    }
-
-                    if (instance.ForceFinished)
-                        break;
-
-                    // 根据endMode决定如何结束
-                    if (!instance.RequestedGracefulStop)
-                    {
-                        // 立即停止
-                        if (instance.DurationEndMode == EffectStopMode.Immediate)
-                        {
-                            instance.ForceFinished = true;
-                            effect.StopImmediate();
-                            InternalDespawn(obj);
-                            break;
-                        }
-
-                        instance.RequestedGracefulStop = true;
-                        effect.StopGraceful();
-                    }
-
-                    // 收尾停止
-                    while (!instance.ForceFinished && effect.IsAlive)
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-
-                    if (!instance.ForceFinished)
-                        InternalDespawn(obj);
-                    break;
-
-                case EffectPlayType.Loop:
-                    // 等待外部请求收尾停止或强制结束
-                    while (!instance.ForceFinished && !instance.RequestedGracefulStop)
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-
-                    if (instance.ForceFinished)
-                        break;
-
-                    while (!instance.ForceFinished && effect.IsAlive)
-                        await UniTask.Yield(PlayerLoopTiming.Update);
-
-                    if (!instance.ForceFinished)
-                        InternalDespawn(obj);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 内部回收对象
+        /// 回收特效
         /// </summary>
         private void InternalDespawn(GameObject obj)
         {
-            if (obj == null)
-                return;
-
-            if (!_instances.Remove(obj))
+            if (!_activeEffects.Remove(obj))
                 return;
 
             _poolManager.Despawn(obj);
@@ -444,3 +379,4 @@ namespace GameFramework.Manager
         #endregion
     }
 }
+    

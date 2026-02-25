@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
@@ -64,9 +64,9 @@ namespace GameFramework.Network
         /// <summary>
         /// 更新
         /// </summary>
-        public void Update()
+        public void DoUpdate(float dt)
         {
-            httpManager?.Update();
+            httpManager?.DoUpdate(dt);
         }
 
         /// <summary>

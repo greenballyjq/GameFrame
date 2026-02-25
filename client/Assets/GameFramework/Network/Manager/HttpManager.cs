@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,7 +41,7 @@ public class HttpManager : IManager
     /// <summary>
     /// 更新
     /// </summary>
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 无需每帧更新
     }
