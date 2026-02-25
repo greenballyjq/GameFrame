@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -329,7 +329,7 @@ namespace GameFramework.Manager
             // 计时管理器无初始化逻辑
         }
 
-        public void Update()
+        public void DoUpdate(float dt)
         {
             // 计时管理器无更新逻辑
         }

@@ -40,7 +40,7 @@ public class PlatformManager : IManager
         // Debug.Log($"[{GetType().Name}] USER_DATA_PATH: {WeChatWASM.WX.env.USER_DATA_PATH}");
     }
 
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 更新当前平台
         CurrentPlatform?.Update();

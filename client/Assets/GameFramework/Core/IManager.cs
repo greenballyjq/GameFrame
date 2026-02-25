@@ -1,4 +1,4 @@
-namespace GameFramework.Core
+﻿namespace GameFramework.Core
 {
     /// <summary>
     /// 管理器接口
@@ -13,7 +13,7 @@ namespace GameFramework.Core
         /// <summary>
         /// 更新
         /// </summary>
-        void Update();
+        void DoUpdate(float dt);
         
         /// <summary>
         /// 释放

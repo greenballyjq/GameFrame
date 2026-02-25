@@ -49,7 +49,7 @@ namespace GameFramework.Manager
         /// <summary>
         /// 框架管理器接口实现
         /// </summary>
-        public virtual void Update()
+        public virtual void DoUpdate(float dt)
         {
             // 配置管理器通常不需要每帧更新
         }

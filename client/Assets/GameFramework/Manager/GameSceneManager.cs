@@ -94,7 +94,7 @@ namespace GameFramework.Manager
             // Debug.Log($"[GameSceneManager] 场景管理器初始化完成，当前场景: {_currentSceneName}");
         }
 
-        public void Update()
+        public void DoUpdate(float dt)
         {
             // 检查场景加载进度
             if (_isLoading && _currentLoadOperation != null && !_currentLoadOperation.isDone)

@@ -118,6 +118,7 @@ namespace GameFramework.Core
                 _frameworkManager = GameFrameworkManager.Instance;
             }
             _frameworkManager.InitFramework();
+            await _frameworkManager.InitNetworkAsync();
 
             // 初始化资源系统
             await InitResourceAsync();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
@@ -64,9 +64,9 @@ namespace GameFramework.Network
         /// <summary>
         /// 更新
         /// </summary>
-        public void Update()
+        public void DoUpdate(float dt)
         {
-            httpManager?.Update();
+            httpManager?.DoUpdate(dt);
         }
 
         /// <summary>
@@ -108,14 +108,15 @@ namespace GameFramework.Network
             var messageType = message.GetType();
             if (MessageSetters.TryGetValue(messageType, out var handler))
             {
+                Debug.Log($"[ServerClient] MessageSetters: {messageType}");
                 handler(postMessage, message);
             }
 
             // 记录发送的请求信息
             DateTime sendTime = DateTime.Now;
             pendingRequests[postMessage.Session] = (messageType.Name, sendTime);
-            Debug.Log($"[ServerClient] 时间: {sendTime:yyyy-MM-dd HH:mm:ss.fff} - 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}, URL: {httpManager._baseUrl}, 待响应数: {pendingRequests.Count}");
-
+            Debug.Log($"[ServerClient] 时间: {sendTime:yyyy-MM-dd HH:mm:ss.fff} - 发送消息 - Session: {postMessage.Session}, 类型: {messageType.Name}" +
+                      $", URL: {httpManager._baseUrl}, 待响应数: {pendingRequests.Count}");
 
             byte[] bodyRaw = postMessage.ToByteArray();
             var responseData = await httpManager.PostAsync(bodyRaw);
@@ -125,6 +126,7 @@ namespace GameFramework.Network
             {
                 // 反序列化响应
                 S2C_Message wrapper = S2C_Message.Parser.ParseFrom(responseData.Bytes);
+                Debug.Log($"[ServerClient] wrapper: {wrapper.Code}");
 
                 // 检查响应的 session 是否在待响应列表中
                 DateTime receiveTime = DateTime.Now;
@@ -132,8 +134,8 @@ namespace GameFramework.Network
                 {
                     // 计算请求耗时
                     TimeSpan elapsed = receiveTime - requestInfo.sendTime;
-                    
-                    Debug.Log($"[ServerClient] 接收消息 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, 消息类型: {typeof(T).Name}, " +
+                        
+                        Debug.Log($"[ServerClient] 接收消息 - Session: {wrapper.Session}, 状态码: {wrapper.Code}, 消息类型: {typeof(T).Name}, " +
                              $"请求类型: {requestInfo.messageType}, 耗时: {elapsed.TotalMilliseconds:F2}ms, 剩余待响应: {pendingRequests.Count - 1}");
                     
                     // 移除已响应的请求
@@ -209,6 +211,14 @@ namespace GameFramework.Network
         {
             MessageSetters = messageSetters;
             MessageAccessors = messageAccessors;
+        }
+
+        /// <summary>
+        /// 获取HttpManager，用于JSON等非Protobuf请求
+        /// </summary>
+        public HttpManager GetHttpManager()
+        {
+            return httpManager;
         }
 
         public void SetHeader(string key, string value)

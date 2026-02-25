@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,7 +41,7 @@ public class HttpManager : IManager
     /// <summary>
     /// 更新
     /// </summary>
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 无需每帧更新
     }
@@ -161,6 +161,36 @@ public class HttpManager : IManager
     
 
     
+    /// <summary>
+    /// 发送POST请求（JSON字符串）
+    /// </summary>
+    /// <param name="url">请求路径（如 "/sign"），为空则用 baseUrl</param>
+    /// <param name="json">JSON字符串</param>
+    /// <param name="headers">自定义请求头</param>
+    /// <param name="timeout">超时时间</param>
+    /// <param name="retryCount">重试次数</param>
+    /// <returns>HTTP响应</returns>
+    public async UniTask<HttpResponse> PostJsonAsync(string url, string json, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
+    {
+        string fullUrl = GetFullUrl(url);
+
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+
+        UnityWebRequest request = new UnityWebRequest(fullUrl, "POST");
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.uploadHandler.contentType = "application/json";
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        if (headers == null)
+        {
+            headers = new Dictionary<string, string>();
+        }
+        headers["Content-Type"] = "application/json";
+        headers["Accept"] = "application/json";
+
+        return await SendRequestAsync(request, headers, timeout, retryCount);
+    }
+
     /// <summary>
     /// 获取完整URL
     /// </summary>

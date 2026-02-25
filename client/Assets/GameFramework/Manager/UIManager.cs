@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.UI;
 using GameFramework.Manager;
-using GooseCatcher;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -62,7 +61,7 @@ public class UIManager : IManager
         CreateUIRoot();
     }
 
-    public void Update()
+    public void DoUpdate(float dt)
     {
         // 更新所有已打开的界面
         foreach (var ui in _openedUIs.Values)

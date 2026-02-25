@@ -24,30 +24,32 @@ public static partial class MessageReflection {
         string.Concat(
           "Cg1tZXNzYWdlLnByb3RvGgxvcGNvZGUucHJvdG8aC2xvZ2luLnByb3RvGgpw",
           "aW5nLnByb3RvGgpiYXNlLnByb3RvGgxjdXN0b20ucHJvdG8aCml0ZW0ucHJv",
-          "dG8aCndhdmUucHJvdG8aDmN1cnJlbmN5LnByb3RvGgptYWxsLnByb3RvIp0D",
-          "CgtDMlNfTWVzc2FnZRIPCgdzZXNzaW9uGAEgASgEEhsKBWxvZ2luGAIgASgL",
-          "MgouQzJTX0xvZ2luSAASGQoEcGluZxgEIAEoCzIJLkMyU19QaW5nSAASHgoJ",
-          "YmFzZV9kYXRhGAUgASgLMgkuQzJTX0Jhc2VIABIiCgtjdXN0b21fZGF0YRgG",
-          "IAEoCzILLkMyU19DdXN0b21IABIqCg11cGxvYWRfY3VzdG9tGAcgASgLMhEu",
-          "QzJTX1VwbG9hZEN1c3RvbUgAEh4KCWl0ZW1fZGF0YRgIIAEoCzIJLkMyU19J",
-          "dGVtSAASJgoLd2F2ZV9yZXN1bHQYCSABKAsyDy5DMlNfV2F2ZVJlc3VsdEgA",
-          "EiYKDWN1cnJlbmN5X2RhdGEYCiABKAsyDS5DMlNfQ3VycmVuY3lIABIfCgpt",
-          "YWxsX2l0ZW1zGAsgASgLMgkuQzJTX01hbGxIABIXCgNidXkYDCABKAsyCC5D",
-          "MlNfQnV5SAASJAoKb3JkZXJfbGlzdBgNIAEoCzIOLkMyU19PcmRlckxpc3RI",
-          "AEIFCgNtc2ci5gIKC1MyQ19NZXNzYWdlEg8KB3Nlc3Npb24YASABKAQSGwoE",
-          "Y29kZRgCIAEoDjILLlMyQ19PUENvZGVIABIbCgVsb2dpbhgDIAEoCzIKLlMy",
-          "Q19Mb2dpbkgAEhkKBHBpbmcYBSABKAsyCS5TMkNfUGluZ0gAEh4KCWJhc2Vf",
-          "ZGF0YRgGIAEoCzIJLlMyQ19CYXNlSAASIgoLY3VzdG9tX2RhdGEYByABKAsy",
-          "Cy5TMkNfQ3VzdG9tSAASHgoJaXRlbV9kYXRhGAggASgLMgkuUzJDX0l0ZW1I",
-          "ABImCg1jdXJyZW5jeV9kYXRhGAkgASgLMg0uUzJDX0N1cnJlbmN5SAASHwoK",
-          "bWFsbF9pdGVtcxgKIAEoCzIJLlMyQ19NYWxsSAASFwoDYnV5GAsgASgLMggu",
-          "UzJDX0J1eUgAEiQKCm9yZGVyX2xpc3QYDCABKAsyDi5TMkNfT3JkZXJMaXN0",
-          "SABCBQoDbXNnYgZwcm90bzM="));
+          "dG8aCndhdmUucHJvdG8aDmN1cnJlbmN5LnByb3RvGgptYWxsLnByb3RvGhNj",
+          "b25maWd1cmF0aW9uLnByb3RvIsoDCgtDMlNfTWVzc2FnZRIPCgdzZXNzaW9u",
+          "GAEgASgEEhsKBWxvZ2luGAIgASgLMgouQzJTX0xvZ2luSAASGQoEcGluZxgE",
+          "IAEoCzIJLkMyU19QaW5nSAASHgoJYmFzZV9kYXRhGAUgASgLMgkuQzJTX0Jh",
+          "c2VIABIiCgtjdXN0b21fZGF0YRgGIAEoCzILLkMyU19DdXN0b21IABIqCg11",
+          "cGxvYWRfY3VzdG9tGAcgASgLMhEuQzJTX1VwbG9hZEN1c3RvbUgAEh4KCWl0",
+          "ZW1fZGF0YRgIIAEoCzIJLkMyU19JdGVtSAASJgoLd2F2ZV9yZXN1bHQYCSAB",
+          "KAsyDy5DMlNfV2F2ZVJlc3VsdEgAEiYKDWN1cnJlbmN5X2RhdGEYCiABKAsy",
+          "DS5DMlNfQ3VycmVuY3lIABIfCgptYWxsX2l0ZW1zGAsgASgLMgkuQzJTX01h",
+          "bGxIABIXCgNidXkYDCABKAsyCC5DMlNfQnV5SAASJAoKb3JkZXJfbGlzdBgN",
+          "IAEoCzIOLkMyU19PcmRlckxpc3RIABIrCg1jb25maWd1cmF0aW9uGA4gASgL",
+          "MhIuQzJTX0NvbmZpZ3VyYXRpb25IAEIFCgNtc2cikwMKC1MyQ19NZXNzYWdl",
+          "Eg8KB3Nlc3Npb24YASABKAQSGwoEY29kZRgCIAEoDjILLlMyQ19PUENvZGVI",
+          "ABIbCgVsb2dpbhgDIAEoCzIKLlMyQ19Mb2dpbkgAEhkKBHBpbmcYBSABKAsy",
+          "CS5TMkNfUGluZ0gAEh4KCWJhc2VfZGF0YRgGIAEoCzIJLlMyQ19CYXNlSAAS",
+          "IgoLY3VzdG9tX2RhdGEYByABKAsyCy5TMkNfQ3VzdG9tSAASHgoJaXRlbV9k",
+          "YXRhGAggASgLMgkuUzJDX0l0ZW1IABImCg1jdXJyZW5jeV9kYXRhGAkgASgL",
+          "Mg0uUzJDX0N1cnJlbmN5SAASHwoKbWFsbF9pdGVtcxgKIAEoCzIJLlMyQ19N",
+          "YWxsSAASFwoDYnV5GAsgASgLMgguUzJDX0J1eUgAEiQKCm9yZGVyX2xpc3QY",
+          "DCABKAsyDi5TMkNfT3JkZXJMaXN0SAASKwoNY29uZmlndXJhdGlvbhgNIAEo",
+          "CzISLlMyQ19Db25maWd1cmF0aW9uSABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::CustomReflection.Descriptor, global::ItemReflection.Descriptor, global::WaveReflection.Descriptor, global::CurrencyReflection.Descriptor, global::MallReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, global::LoginReflection.Descriptor, global::PingReflection.Descriptor, global::BaseReflection.Descriptor, global::CustomReflection.Descriptor, global::ItemReflection.Descriptor, global::WaveReflection.Descriptor, global::CurrencyReflection.Descriptor, global::MallReflection.Descriptor, global::ConfigurationReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Ping", "BaseData", "CustomData", "UploadCustom", "ItemData", "WaveResult", "CurrencyData", "MallItems", "Buy", "OrderList" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Ping", "BaseData", "CustomData", "ItemData", "CurrencyData", "MallItems", "Buy", "OrderList" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_Message), global::C2S_Message.Parser, new[]{ "Session", "Login", "Ping", "BaseData", "CustomData", "UploadCustom", "ItemData", "WaveResult", "CurrencyData", "MallItems", "Buy", "OrderList", "Configuration" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_Message), global::S2C_Message.Parser, new[]{ "Session", "Code", "Login", "Ping", "BaseData", "CustomData", "ItemData", "CurrencyData", "MallItems", "Buy", "OrderList", "Configuration" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -122,6 +124,9 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
         break;
       case MsgOneofCase.OrderList:
         OrderList = other.OrderList.Clone();
+        break;
+      case MsgOneofCase.Configuration:
+        Configuration = other.Configuration.Clone();
         break;
     }
 
@@ -314,6 +319,21 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
   }
 
+  /// <summary>Field number for the "configuration" field.</summary>
+  public const int ConfigurationFieldNumber = 14;
+  /// <summary>
+  /// 请求配置信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2S_Configuration Configuration {
+    get { return msgCase_ == MsgOneofCase.Configuration ? (global::C2S_Configuration) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Configuration;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -329,6 +349,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     MallItems = 11,
     Buy = 12,
     OrderList = 13,
+    Configuration = 14,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -371,6 +392,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     if (!object.Equals(MallItems, other.MallItems)) return false;
     if (!object.Equals(Buy, other.Buy)) return false;
     if (!object.Equals(OrderList, other.OrderList)) return false;
+    if (!object.Equals(Configuration, other.Configuration)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -391,6 +413,7 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     if (msgCase_ == MsgOneofCase.MallItems) hash ^= MallItems.GetHashCode();
     if (msgCase_ == MsgOneofCase.Buy) hash ^= Buy.GetHashCode();
     if (msgCase_ == MsgOneofCase.OrderList) hash ^= OrderList.GetHashCode();
+    if (msgCase_ == MsgOneofCase.Configuration) hash ^= Configuration.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -458,6 +481,10 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(106);
       output.WriteMessage(OrderList);
     }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      output.WriteRawTag(114);
+      output.WriteMessage(Configuration);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -516,6 +543,10 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
       output.WriteRawTag(106);
       output.WriteMessage(OrderList);
     }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      output.WriteRawTag(114);
+      output.WriteMessage(Configuration);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -561,6 +592,9 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
     }
     if (msgCase_ == MsgOneofCase.OrderList) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(OrderList);
+    }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Configuration);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -643,6 +677,12 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           OrderList = new global::C2S_OrderList();
         }
         OrderList.MergeFrom(other.OrderList);
+        break;
+      case MsgOneofCase.Configuration:
+        if (Configuration == null) {
+          Configuration = new global::C2S_Configuration();
+        }
+        Configuration.MergeFrom(other.Configuration);
         break;
     }
 
@@ -764,6 +804,15 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           OrderList = subBuilder;
           break;
         }
+        case 114: {
+          global::C2S_Configuration subBuilder = new global::C2S_Configuration();
+          if (msgCase_ == MsgOneofCase.Configuration) {
+            subBuilder.MergeFrom(Configuration);
+          }
+          input.ReadMessage(subBuilder);
+          Configuration = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -882,6 +931,15 @@ public sealed partial class C2S_Message : pb::IMessage<C2S_Message>
           OrderList = subBuilder;
           break;
         }
+        case 114: {
+          global::C2S_Configuration subBuilder = new global::C2S_Configuration();
+          if (msgCase_ == MsgOneofCase.Configuration) {
+            subBuilder.MergeFrom(Configuration);
+          }
+          input.ReadMessage(subBuilder);
+          Configuration = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -954,6 +1012,9 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
         break;
       case MsgOneofCase.OrderList:
         OrderList = other.OrderList.Clone();
+        break;
+      case MsgOneofCase.Configuration:
+        Configuration = other.Configuration.Clone();
         break;
     }
 
@@ -1131,6 +1192,21 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
   }
 
+  /// <summary>Field number for the "configuration" field.</summary>
+  public const int ConfigurationFieldNumber = 13;
+  /// <summary>
+  /// 配置信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2C_Configuration Configuration {
+    get { return msgCase_ == MsgOneofCase.Configuration ? (global::S2C_Configuration) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Configuration;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -1145,6 +1221,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     MallItems = 10,
     Buy = 11,
     OrderList = 12,
+    Configuration = 13,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1186,6 +1263,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (!object.Equals(MallItems, other.MallItems)) return false;
     if (!object.Equals(Buy, other.Buy)) return false;
     if (!object.Equals(OrderList, other.OrderList)) return false;
+    if (!object.Equals(Configuration, other.Configuration)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -1205,6 +1283,7 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     if (msgCase_ == MsgOneofCase.MallItems) hash ^= MallItems.GetHashCode();
     if (msgCase_ == MsgOneofCase.Buy) hash ^= Buy.GetHashCode();
     if (msgCase_ == MsgOneofCase.OrderList) hash ^= OrderList.GetHashCode();
+    if (msgCase_ == MsgOneofCase.Configuration) hash ^= Configuration.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -1268,6 +1347,10 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(98);
       output.WriteMessage(OrderList);
     }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      output.WriteRawTag(106);
+      output.WriteMessage(Configuration);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1322,6 +1405,10 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
       output.WriteRawTag(98);
       output.WriteMessage(OrderList);
     }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      output.WriteRawTag(106);
+      output.WriteMessage(Configuration);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1364,6 +1451,9 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
     }
     if (msgCase_ == MsgOneofCase.OrderList) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(OrderList);
+    }
+    if (msgCase_ == MsgOneofCase.Configuration) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Configuration);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1437,6 +1527,12 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           OrderList = new global::S2C_OrderList();
         }
         OrderList.MergeFrom(other.OrderList);
+        break;
+      case MsgOneofCase.Configuration:
+        if (Configuration == null) {
+          Configuration = new global::S2C_Configuration();
+        }
+        Configuration.MergeFrom(other.Configuration);
         break;
     }
 
@@ -1545,6 +1641,15 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           OrderList = subBuilder;
           break;
         }
+        case 106: {
+          global::S2C_Configuration subBuilder = new global::S2C_Configuration();
+          if (msgCase_ == MsgOneofCase.Configuration) {
+            subBuilder.MergeFrom(Configuration);
+          }
+          input.ReadMessage(subBuilder);
+          Configuration = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -1648,6 +1753,15 @@ public sealed partial class S2C_Message : pb::IMessage<S2C_Message>
           }
           input.ReadMessage(subBuilder);
           OrderList = subBuilder;
+          break;
+        }
+        case 106: {
+          global::S2C_Configuration subBuilder = new global::S2C_Configuration();
+          if (msgCase_ == MsgOneofCase.Configuration) {
+            subBuilder.MergeFrom(Configuration);
+          }
+          input.ReadMessage(subBuilder);
+          Configuration = subBuilder;
           break;
         }
       }

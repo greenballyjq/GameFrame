@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GooseCatcher
+namespace GameFramework.Utility
 {
     public class ScreenAdapter : MonoBehaviour
     {

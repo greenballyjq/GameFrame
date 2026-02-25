@@ -50,7 +50,7 @@ namespace GameFramework.Manager
             Debug.Log("[GameObjectPoolManager] 初始化完成");
         }
 
-        public void Update() { }
+        public void DoUpdate(float dt) { }
 
         public void Release()
         {
@@ -76,6 +76,8 @@ namespace GameFramework.Manager
             {
                 pool = new GameObjectPool(prefab, _poolRoot);
                 _pools.Add(prefab, pool);
+
+                Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
             }
 
             return pool;
@@ -155,25 +157,27 @@ namespace GameFramework.Manager
         {
             GetPool(prefab).Prewarm(count);
         }
-
-        /// <summary>
-        /// 回收对象
-        /// </summary>
-        /// <param name="obj">要回收的对象</param>
         public void Despawn(GameObject obj)
         {
             // 检查对象是否已经被回收
             if (!obj.activeSelf)
             {
-                //Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
+                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 重复回收");
                 return;
             }
 
-            var prefab = _instancePrefabs[obj];
+            // fixme 添加安全检测
+            if (_instancePrefabs.TryGetValue(obj, out var prefab))
+            {
+                GetPool(prefab).Despawn(obj);
 
-            GetPool(prefab).Despawn(obj);
-
-            _instancePrefabs.Remove(obj);
+                _instancePrefabs.Remove(obj);
+            }
+            else
+            {
+                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中，无法回收");
+            }
+            
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace GameFramework.Manager
             _audioPlayerPrefab.transform.SetParent(_poolManager.PoolRoot);
         }
 
-        public void Update()
+        public void DoUpdate(float dt)
         {
             // 清理已完成的播放器
             for (int i = _activePlayers.Count - 1; i >= 0; i--)
