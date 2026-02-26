@@ -84,6 +84,11 @@ namespace GameFramework.Manager
         public bool IsRequestedStop;
 
         /// <summary>
+        /// 是否处于停止状态
+        /// </summary>
+        public bool IsStopping;
+
+        /// <summary>
         /// 是否处于暂停状态
         /// </summary>
         public bool IsPaused;
@@ -105,9 +110,9 @@ namespace GameFramework.Manager
         private readonly Dictionary<GameObject, EffectRuntime> _activeEffects = new Dictionary<GameObject, EffectRuntime>();
 
         /// <summary>
-        /// 待回收特效列表
+        /// 待回收特效集合
         /// </summary>
-        private readonly List<GameObject> _pendingDespawnEffects = new List<GameObject>();
+        private readonly HashSet<GameObject> _pendingDespawnEffects = new HashSet<GameObject>();
 
         public void Init()
         {
@@ -126,30 +131,50 @@ namespace GameFramework.Manager
 
                 bool shouldDespawn = false;
 
-                if (effectRuntime.IsRequestedStop)
-                {
-                    shouldDespawn = !effectItem.IsAlive;
-                }
-                else
+                // 等待特效播放结束
+                if (!effectRuntime.IsStopping)
                 {
                     switch (effectRuntime.PlayType)
                     {
                         case EffectPlayType.OneShot:
-                            shouldDespawn = !effectItem.IsAlive;
+                            if (effectRuntime.IsRequestedStop || !effectItem.IsAlive)
+                            {
+                                effectRuntime.IsStopping = true;
+                            }
+                            break;
+
+                        case EffectPlayType.Loop:
+                            if (effectRuntime.IsRequestedStop)
+                            {
+                                effectRuntime.IsStopping = true;
+                            }
                             break;
 
                         case EffectPlayType.Duration:
-                            if (!effectRuntime.IsPaused)
-                                effectRuntime.Elapsed += dt;
-                            if (effectRuntime.Elapsed >= effectRuntime.Duration)
+                            if (effectRuntime.IsRequestedStop)
                             {
-                                effectItem.Stop(effectRuntime.StopMode);
-                                effectRuntime.IsRequestedStop = true;
-                                shouldDespawn = !effectItem.IsAlive;
+                                effectRuntime.IsStopping = true;
+                            }
+                            else
+                            {
+                                if (!effectRuntime.IsPaused)
+                                {
+                                    effectRuntime.Elapsed += dt;
+                                }
+
+                                if (effectRuntime.Elapsed >= effectRuntime.Duration)
+                                {
+                                    effectItem.Stop(effectRuntime.StopMode);
+                                    effectRuntime.IsStopping = true;
+                                }
                             }
                             break;
                     }
                 }
+
+                // 等待特效收尾结束
+                if (effectRuntime.IsStopping && !effectItem.IsAlive)
+                    shouldDespawn = true;
 
                 if (shouldDespawn)
                     _pendingDespawnEffects.Add(obj);
@@ -157,6 +182,8 @@ namespace GameFramework.Manager
 
             foreach (var obj in _pendingDespawnEffects)
                 InternalDespawn(obj);
+
+            _pendingDespawnEffects.Clear();
         }
 
         public void Release()
@@ -332,14 +359,17 @@ namespace GameFramework.Manager
         public void ClearAllEffects()
         {
             _pendingDespawnEffects.Clear();
-            _pendingDespawnEffects.AddRange(_activeEffects.Keys);
+
+            foreach (var kvp in _activeEffects)
+            {
+                kvp.Value.EffectItem.Stop(EffectStopMode.Immediate);
+                _pendingDespawnEffects.Add(kvp.Key);
+            }
 
             foreach (var obj in _pendingDespawnEffects)
-            {
-                if (_activeEffects.TryGetValue(obj, out var instance))
-                    instance.EffectItem.Stop(EffectStopMode.Immediate);
                 InternalDespawn(obj);
-            }
+
+            _pendingDespawnEffects.Clear();
         }
         #endregion
 
@@ -358,6 +388,7 @@ namespace GameFramework.Manager
                 StopMode = endMode,
                 Elapsed = 0f,
                 IsRequestedStop = false,
+                IsStopping = false,
                 IsPaused = false
             };
 
@@ -371,6 +402,9 @@ namespace GameFramework.Manager
         /// </summary>
         private void InternalDespawn(GameObject obj)
         {
+            if (obj == null)
+                return;
+
             if (!_activeEffects.Remove(obj))
                 return;
 

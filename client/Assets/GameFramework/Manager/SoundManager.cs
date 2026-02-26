@@ -7,11 +7,32 @@ using Cysharp.Threading.Tasks;
 namespace GameFramework.Manager
 {
     /// <summary>
-    /// 音效管理器 - 负责音效的加载、播放和管理
-    /// 依赖于资源管理器 ResourceManager
+    /// 音频通道
+    /// </summary>
+    public enum AudioChannel
+    {
+        /// <summary>
+        /// 人声
+        /// </summary>
+        Voice,
+
+        /// <summary>
+        /// 背景音乐
+        /// </summary>
+        Bgm,
+
+        /// <summary>
+        /// 音效
+        /// </summary>
+        Sound
+    }
+
+    /// <summary>
+    /// 音效管理器 
     /// </summary>
     public class SoundManager : IManager
     {
+
         /// <summary>
         /// 正在播放的音效播放器列表
         /// </summary>
@@ -223,15 +244,41 @@ namespace GameFramework.Manager
         /// </summary>
         public void StopAll()
         {
+            ClearAllSounds();
+        }
+
+        /// <summary>
+        /// 清理所有音效（强制停止并回收）
+        /// </summary>
+        public void ClearAllSounds()
+        {
             for (int i = _activePlayers.Count - 1; i >= 0; i--)
             {
-                if (_activePlayers[i] != null)
+                var player = _activePlayers[i];
+                if (player == null)
                 {
-                    _activePlayers[i].Stop();
-                    _poolManager.Despawn(_activePlayers[i].gameObject);
+                    continue;
                 }
+
+                // 取消回调，避免 Stop() 触发回调导致重复回收
+                player.OnPlayComplete -= OnAudioPlayComplete;
+
+                player.Stop();
+
+                if (_activePlayersByChannel.TryGetValue(player.Channel, out var players))
+                {
+                    players.Remove(player);
+                }
+
+                _poolManager.Despawn(player.gameObject);
             }
+
             _activePlayers.Clear();
+
+            foreach (var item in _activePlayersByChannel)
+            {
+                item.Value.Clear();
+            }
         }
 
         /// <summary>
@@ -339,15 +386,6 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private AudioCallback PlaySound3DLocalInternal(AudioData audioData, int loop)
-        {
-            return null;
-        }
-
-        /// <summary>
         /// 根据音频通道获取最终设置的音量
         /// </summary>
         /// <param name="volume">AudioData的Volume</param>
@@ -430,13 +468,5 @@ namespace GameFramework.Manager
         #endregion
     }
     
-    /// <summary>
-    /// 音频通道
-    /// </summary>
-    public enum AudioChannel
-    {
-        Voice, // 人声
-        Bgm, // 背景音乐
-        Sound // 音效
-    }
+   
 }
