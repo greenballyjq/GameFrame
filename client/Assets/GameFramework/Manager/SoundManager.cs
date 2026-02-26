@@ -314,6 +314,21 @@ namespace GameFramework.Manager
             return _activePlayers.Count;
         }
 
+        /// <summary>
+        /// 根据对应的通道获取播放器数量
+        /// </summary>
+        /// <param name="channel">音频通道</param>
+        /// <returns></returns>
+        public int GetActivePlayerCountByChannel(AudioChannel channel)
+        {
+            if (_activePlayersByChannel.TryGetValue(channel, out var players))
+            {
+                return players.Count;
+            }
+
+            return 0;
+        }
+
         #endregion
 
         #region 私有方法
