@@ -236,7 +236,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（预制体方式）
         /// 需要手动停止
         /// </summary>
-        public GameObject PlayLoop(GameObject prefab, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
+        public GameObject PlayLoop(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
