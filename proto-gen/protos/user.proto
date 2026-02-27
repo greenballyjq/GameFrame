@@ -126,6 +126,26 @@ message C2SDeleteAddress {
   uint64 id = 1;
 }
 
+// 更新收件地址请求。
+message C2SUpdateAddress {
+  // 要更新的地址 ID。
+  uint64 id = 1;
+  // 收件人姓名。
+  string name = 2;
+  // 收件人手机号。
+  string phone = 3;
+  // 详细地址。
+  string address = 4;
+  // 是否设为默认地址。
+  bool is_default = 5;
+}
+
+// 更新收件地址响应。
+message S2CUpdateAddress {
+  // 更新后的地址信息。
+  AddressInfo address_info = 1;
+}
+
 // 用户域根请求（/user）。
 message C2SUser {
   // 请求序号（客户端自增，服务端原样回传）。
@@ -148,6 +168,8 @@ message C2SUser {
     C2SGetAddresses get_addresses = 8;
     // 删除收件地址。
     C2SDeleteAddress delete_address = 9;
+    // 更新收件地址。
+    C2SUpdateAddress update_address = 10;
   }
 }
 
@@ -175,5 +197,7 @@ message S2CUser {
     S2CGetAddresses get_addresses = 8;
     // 删除收件地址响应（成功返回 OP_SUCCESS，失败返回错误码）。
     S2CLogout delete_address = 9;
+    // 更新收件地址响应。
+    S2CUpdateAddress update_address = 10;
   }
 }

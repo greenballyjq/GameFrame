@@ -57,6 +57,12 @@ message S2CItemData {
   PlayerItem item = 1;
 }
 
+// 客户端上报道具消耗请求。
+message C2SItemUpdate {
+  // 消耗的道具映射表（道具 ID -> 消耗数量）。
+  map<string, uint64> items = 1;
+}
+
 // 道具增量更新推送。
 message S2CItemUpdate {
   // 变更后的道具映射。
@@ -122,6 +128,8 @@ message C2SGame {
     C2SProgressData progress_data = 7;
     // 拉取业务配置。
     C2SConfiguration configuration = 8;
+    // 上报道具消耗。
+    C2SItemUpdate item_update = 9;
   }
 }
 
