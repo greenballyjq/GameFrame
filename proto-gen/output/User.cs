@@ -34,17 +34,30 @@ public static partial class UserReflection {
           "DFMyQ0JpbmRQaG9uZRIPCgdzdWNjZXNzGAEgASgIEg8KB21lc3NhZ2UYAiAB",
           "KAkiDgoMQzJTR2V0QXNzZXRzIh8KDFMyQ0dldEFzc2V0cxIPCgd0aHJlZWtw",
           "GAEgASgEIgsKCUMyU0xvZ291dCIcCglTMkNMb2dvdXQSDwoHc3VjY2VzcxgB",
-          "IAEoCCLUAQoHQzJTVXNlchIPCgdzZXNzaW9uGAEgASgEEiUKC2dldF9wcm9m",
-          "aWxlGAIgASgLMg4uQzJTR2V0UHJvZmlsZUgAEiIKCWhlYXJ0YmVhdBgDIAEo",
-          "CzINLkMyU0hlYXJ0YmVhdEgAEiMKCmJpbmRfcGhvbmUYBCABKAsyDS5DMlNC",
-          "aW5kUGhvbmVIABIjCgpnZXRfYXNzZXRzGAUgASgLMg0uQzJTR2V0QXNzZXRz",
-          "SAASHAoGbG9nb3V0GAYgASgLMgouQzJTTG9nb3V0SABCBQoDbXNnIu4BCgdT",
-          "MkNVc2VyEg8KB3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEoDjIKLlMyQ09w",
-          "Y29kZRIlCgtnZXRfcHJvZmlsZRgCIAEoCzIOLlMyQ0dldFByb2ZpbGVIABIi",
-          "CgloZWFydGJlYXQYAyABKAsyDS5TMkNIZWFydGJlYXRIABIjCgpiaW5kX3Bo",
-          "b25lGAQgASgLMg0uUzJDQmluZFBob25lSAASIwoKZ2V0X2Fzc2V0cxgFIAEo",
-          "CzINLlMyQ0dldEFzc2V0c0gAEhwKBmxvZ291dBgGIAEoCzIKLlMyQ0xvZ291",
-          "dEgAQgUKA21zZ2IGcHJvdG8z"));
+          "IAEoCCJbCgtBZGRyZXNzSW5mbxIKCgJpZBgBIAEoBBIMCgRuYW1lGAIgASgJ",
+          "Eg0KBXBob25lGAMgASgJEg8KB2FkZHJlc3MYBCABKAkSEgoKaXNfZGVmYXVs",
+          "dBgFIAEoCCJRCg1DMlNBZGRBZGRyZXNzEgwKBG5hbWUYASABKAkSDQoFcGhv",
+          "bmUYAiABKAkSDwoHYWRkcmVzcxgDIAEoCRISCgppc19kZWZhdWx0GAQgASgI",
+          "IjMKDVMyQ0FkZEFkZHJlc3MSIgoMYWRkcmVzc19pbmZvGAEgASgLMgwuQWRk",
+          "cmVzc0luZm8iEQoPQzJTR2V0QWRkcmVzc2VzIjIKD1MyQ0dldEFkZHJlc3Nl",
+          "cxIfCglhZGRyZXNzZXMYASADKAsyDC5BZGRyZXNzSW5mbyIeChBDMlNEZWxl",
+          "dGVBZGRyZXNzEgoKAmlkGAEgASgEItMCCgdDMlNVc2VyEg8KB3Nlc3Npb24Y",
+          "ASABKAQSJQoLZ2V0X3Byb2ZpbGUYAiABKAsyDi5DMlNHZXRQcm9maWxlSAAS",
+          "IgoJaGVhcnRiZWF0GAMgASgLMg0uQzJTSGVhcnRiZWF0SAASIwoKYmluZF9w",
+          "aG9uZRgEIAEoCzINLkMyU0JpbmRQaG9uZUgAEiMKCmdldF9hc3NldHMYBSAB",
+          "KAsyDS5DMlNHZXRBc3NldHNIABIcCgZsb2dvdXQYBiABKAsyCi5DMlNMb2dv",
+          "dXRIABIlCgthZGRfYWRkcmVzcxgHIAEoCzIOLkMyU0FkZEFkZHJlc3NIABIp",
+          "Cg1nZXRfYWRkcmVzc2VzGAggASgLMhAuQzJTR2V0QWRkcmVzc2VzSAASKwoO",
+          "ZGVsZXRlX2FkZHJlc3MYCSABKAsyES5DMlNEZWxldGVBZGRyZXNzSABCBQoD",
+          "bXNnIuYCCgdTMkNVc2VyEg8KB3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEo",
+          "DjIKLlMyQ09wY29kZRIlCgtnZXRfcHJvZmlsZRgCIAEoCzIOLlMyQ0dldFBy",
+          "b2ZpbGVIABIiCgloZWFydGJlYXQYAyABKAsyDS5TMkNIZWFydGJlYXRIABIj",
+          "CgpiaW5kX3Bob25lGAQgASgLMg0uUzJDQmluZFBob25lSAASIwoKZ2V0X2Fz",
+          "c2V0cxgFIAEoCzINLlMyQ0dldEFzc2V0c0gAEhwKBmxvZ291dBgGIAEoCzIK",
+          "LlMyQ0xvZ291dEgAEiUKC2FkZF9hZGRyZXNzGAcgASgLMg4uUzJDQWRkQWRk",
+          "cmVzc0gAEikKDWdldF9hZGRyZXNzZXMYCCABKAsyEC5TMkNHZXRBZGRyZXNz",
+          "ZXNIABIkCg5kZWxldGVfYWRkcmVzcxgJIAEoCzIKLlMyQ0xvZ291dEgAQgUK",
+          "A21zZ2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -59,8 +72,14 @@ public static partial class UserReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetAssets), global::S2CGetAssets.Parser, new[]{ "Threekp" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SLogout), global::C2SLogout.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CLogout), global::S2CLogout.Parser, new[]{ "Success" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SUser), global::C2SUser.Parser, new[]{ "Session", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CUser), global::S2CUser.Parser, new[]{ "Session", "Code", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::AddressInfo), global::AddressInfo.Parser, new[]{ "Id", "Name", "Phone", "Address", "IsDefault" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SAddAddress), global::C2SAddAddress.Parser, new[]{ "Name", "Phone", "Address", "IsDefault" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CAddAddress), global::S2CAddAddress.Parser, new[]{ "AddressInfo" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SGetAddresses), global::C2SGetAddresses.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetAddresses), global::S2CGetAddresses.Parser, new[]{ "Addresses" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SDeleteAddress), global::C2SDeleteAddress.Parser, new[]{ "Id" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SUser), global::C2SUser.Parser, new[]{ "Session", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CUser), global::S2CUser.Parser, new[]{ "Session", "Code", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -2502,6 +2521,1414 @@ public sealed partial class S2CLogout : pb::IMessage<S2CLogout>
 }
 
 /// <summary>
+/// 收件地址信息。
+/// </summary>
+public sealed partial class AddressInfo : pb::IMessage<AddressInfo>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<AddressInfo> _parser = new pb::MessageParser<AddressInfo>(() => new AddressInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<AddressInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[11]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public AddressInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public AddressInfo(AddressInfo other) : this() {
+    id_ = other.id_;
+    name_ = other.name_;
+    phone_ = other.phone_;
+    address_ = other.address_;
+    isDefault_ = other.isDefault_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public AddressInfo Clone() {
+    return new AddressInfo(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private ulong id_;
+  /// <summary>
+  /// 地址 ID（删除时使用）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public ulong Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "name" field.</summary>
+  public const int NameFieldNumber = 2;
+  private string name_ = "";
+  /// <summary>
+  /// 收件人姓名。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Name {
+    get { return name_; }
+    set {
+      name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "phone" field.</summary>
+  public const int PhoneFieldNumber = 3;
+  private string phone_ = "";
+  /// <summary>
+  /// 收件人手机号。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Phone {
+    get { return phone_; }
+    set {
+      phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "address" field.</summary>
+  public const int AddressFieldNumber = 4;
+  private string address_ = "";
+  /// <summary>
+  /// 详细地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Address {
+    get { return address_; }
+    set {
+      address_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "is_default" field.</summary>
+  public const int IsDefaultFieldNumber = 5;
+  private bool isDefault_;
+  /// <summary>
+  /// 是否为默认地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsDefault {
+    get { return isDefault_; }
+    set {
+      isDefault_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as AddressInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(AddressInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (Name != other.Name) return false;
+    if (Phone != other.Phone) return false;
+    if (Address != other.Address) return false;
+    if (IsDefault != other.IsDefault) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id != 0UL) hash ^= Id.GetHashCode();
+    if (Name.Length != 0) hash ^= Name.GetHashCode();
+    if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+    if (Address.Length != 0) hash ^= Address.GetHashCode();
+    if (IsDefault != false) hash ^= IsDefault.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Id != 0UL) {
+      output.WriteRawTag(8);
+      output.WriteUInt64(Id);
+    }
+    if (Name.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Name);
+    }
+    if (Phone.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Phone);
+    }
+    if (Address.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Address);
+    }
+    if (IsDefault != false) {
+      output.WriteRawTag(40);
+      output.WriteBool(IsDefault);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Id != 0UL) {
+      output.WriteRawTag(8);
+      output.WriteUInt64(Id);
+    }
+    if (Name.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Name);
+    }
+    if (Phone.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Phone);
+    }
+    if (Address.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Address);
+    }
+    if (IsDefault != false) {
+      output.WriteRawTag(40);
+      output.WriteBool(IsDefault);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id != 0UL) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+    }
+    if (Name.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+    }
+    if (Phone.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+    }
+    if (Address.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
+    }
+    if (IsDefault != false) {
+      size += 1 + 1;
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(AddressInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id != 0UL) {
+      Id = other.Id;
+    }
+    if (other.Name.Length != 0) {
+      Name = other.Name;
+    }
+    if (other.Phone.Length != 0) {
+      Phone = other.Phone;
+    }
+    if (other.Address.Length != 0) {
+      Address = other.Address;
+    }
+    if (other.IsDefault != false) {
+      IsDefault = other.IsDefault;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = input.ReadUInt64();
+          break;
+        }
+        case 18: {
+          Name = input.ReadString();
+          break;
+        }
+        case 26: {
+          Phone = input.ReadString();
+          break;
+        }
+        case 34: {
+          Address = input.ReadString();
+          break;
+        }
+        case 40: {
+          IsDefault = input.ReadBool();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          Id = input.ReadUInt64();
+          break;
+        }
+        case 18: {
+          Name = input.ReadString();
+          break;
+        }
+        case 26: {
+          Phone = input.ReadString();
+          break;
+        }
+        case 34: {
+          Address = input.ReadString();
+          break;
+        }
+        case 40: {
+          IsDefault = input.ReadBool();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 添加收件地址请求。
+/// </summary>
+public sealed partial class C2SAddAddress : pb::IMessage<C2SAddAddress>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SAddAddress> _parser = new pb::MessageParser<C2SAddAddress>(() => new C2SAddAddress());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SAddAddress> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[12]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SAddAddress() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SAddAddress(C2SAddAddress other) : this() {
+    name_ = other.name_;
+    phone_ = other.phone_;
+    address_ = other.address_;
+    isDefault_ = other.isDefault_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SAddAddress Clone() {
+    return new C2SAddAddress(this);
+  }
+
+  /// <summary>Field number for the "name" field.</summary>
+  public const int NameFieldNumber = 1;
+  private string name_ = "";
+  /// <summary>
+  /// 收件人姓名。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Name {
+    get { return name_; }
+    set {
+      name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "phone" field.</summary>
+  public const int PhoneFieldNumber = 2;
+  private string phone_ = "";
+  /// <summary>
+  /// 收件人手机号。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Phone {
+    get { return phone_; }
+    set {
+      phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "address" field.</summary>
+  public const int AddressFieldNumber = 3;
+  private string address_ = "";
+  /// <summary>
+  /// 详细地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Address {
+    get { return address_; }
+    set {
+      address_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "is_default" field.</summary>
+  public const int IsDefaultFieldNumber = 4;
+  private bool isDefault_;
+  /// <summary>
+  /// 是否设为默认地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsDefault {
+    get { return isDefault_; }
+    set {
+      isDefault_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SAddAddress);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SAddAddress other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Name != other.Name) return false;
+    if (Phone != other.Phone) return false;
+    if (Address != other.Address) return false;
+    if (IsDefault != other.IsDefault) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Name.Length != 0) hash ^= Name.GetHashCode();
+    if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+    if (Address.Length != 0) hash ^= Address.GetHashCode();
+    if (IsDefault != false) hash ^= IsDefault.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Name.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Name);
+    }
+    if (Phone.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Phone);
+    }
+    if (Address.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Address);
+    }
+    if (IsDefault != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(IsDefault);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Name.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Name);
+    }
+    if (Phone.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Phone);
+    }
+    if (Address.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Address);
+    }
+    if (IsDefault != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(IsDefault);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Name.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+    }
+    if (Phone.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+    }
+    if (Address.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
+    }
+    if (IsDefault != false) {
+      size += 1 + 1;
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SAddAddress other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Name.Length != 0) {
+      Name = other.Name;
+    }
+    if (other.Phone.Length != 0) {
+      Phone = other.Phone;
+    }
+    if (other.Address.Length != 0) {
+      Address = other.Address;
+    }
+    if (other.IsDefault != false) {
+      IsDefault = other.IsDefault;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Name = input.ReadString();
+          break;
+        }
+        case 18: {
+          Phone = input.ReadString();
+          break;
+        }
+        case 26: {
+          Address = input.ReadString();
+          break;
+        }
+        case 32: {
+          IsDefault = input.ReadBool();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Name = input.ReadString();
+          break;
+        }
+        case 18: {
+          Phone = input.ReadString();
+          break;
+        }
+        case 26: {
+          Address = input.ReadString();
+          break;
+        }
+        case 32: {
+          IsDefault = input.ReadBool();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 添加收件地址响应。
+/// </summary>
+public sealed partial class S2CAddAddress : pb::IMessage<S2CAddAddress>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<S2CAddAddress> _parser = new pb::MessageParser<S2CAddAddress>(() => new S2CAddAddress());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<S2CAddAddress> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[13]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CAddAddress() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CAddAddress(S2CAddAddress other) : this() {
+    addressInfo_ = other.addressInfo_ != null ? other.addressInfo_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CAddAddress Clone() {
+    return new S2CAddAddress(this);
+  }
+
+  /// <summary>Field number for the "address_info" field.</summary>
+  public const int AddressInfoFieldNumber = 1;
+  private global::AddressInfo addressInfo_;
+  /// <summary>
+  /// 新建的地址信息。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::AddressInfo AddressInfo {
+    get { return addressInfo_; }
+    set {
+      addressInfo_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as S2CAddAddress);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(S2CAddAddress other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(AddressInfo, other.AddressInfo)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (addressInfo_ != null) hash ^= AddressInfo.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (addressInfo_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(AddressInfo);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (addressInfo_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(AddressInfo);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (addressInfo_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(AddressInfo);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(S2CAddAddress other) {
+    if (other == null) {
+      return;
+    }
+    if (other.addressInfo_ != null) {
+      if (addressInfo_ == null) {
+        AddressInfo = new global::AddressInfo();
+      }
+      AddressInfo.MergeFrom(other.AddressInfo);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (addressInfo_ == null) {
+            AddressInfo = new global::AddressInfo();
+          }
+          input.ReadMessage(AddressInfo);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          if (addressInfo_ == null) {
+            AddressInfo = new global::AddressInfo();
+          }
+          input.ReadMessage(AddressInfo);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 获取收件地址列表请求（空消息）。
+/// </summary>
+public sealed partial class C2SGetAddresses : pb::IMessage<C2SGetAddresses>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SGetAddresses> _parser = new pb::MessageParser<C2SGetAddresses>(() => new C2SGetAddresses());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SGetAddresses> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[14]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SGetAddresses() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SGetAddresses(C2SGetAddresses other) : this() {
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SGetAddresses Clone() {
+    return new C2SGetAddresses(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SGetAddresses);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SGetAddresses other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SGetAddresses other) {
+    if (other == null) {
+      return;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 获取收件地址列表响应。
+/// </summary>
+public sealed partial class S2CGetAddresses : pb::IMessage<S2CGetAddresses>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<S2CGetAddresses> _parser = new pb::MessageParser<S2CGetAddresses>(() => new S2CGetAddresses());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<S2CGetAddresses> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[15]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CGetAddresses() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CGetAddresses(S2CGetAddresses other) : this() {
+    addresses_ = other.addresses_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CGetAddresses Clone() {
+    return new S2CGetAddresses(this);
+  }
+
+  /// <summary>Field number for the "addresses" field.</summary>
+  public const int AddressesFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::AddressInfo> _repeated_addresses_codec
+      = pb::FieldCodec.ForMessage(10, global::AddressInfo.Parser);
+  private readonly pbc::RepeatedField<global::AddressInfo> addresses_ = new pbc::RepeatedField<global::AddressInfo>();
+  /// <summary>
+  /// 地址列表（最多 10 条）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::AddressInfo> Addresses {
+    get { return addresses_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as S2CGetAddresses);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(S2CGetAddresses other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!addresses_.Equals(other.addresses_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= addresses_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    addresses_.WriteTo(output, _repeated_addresses_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    addresses_.WriteTo(ref output, _repeated_addresses_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    size += addresses_.CalculateSize(_repeated_addresses_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(S2CGetAddresses other) {
+    if (other == null) {
+      return;
+    }
+    addresses_.Add(other.addresses_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          addresses_.AddEntriesFrom(input, _repeated_addresses_codec);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          addresses_.AddEntriesFrom(ref input, _repeated_addresses_codec);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 删除收件地址请求。
+/// </summary>
+public sealed partial class C2SDeleteAddress : pb::IMessage<C2SDeleteAddress>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SDeleteAddress> _parser = new pb::MessageParser<C2SDeleteAddress>(() => new C2SDeleteAddress());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SDeleteAddress> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[16]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SDeleteAddress() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SDeleteAddress(C2SDeleteAddress other) : this() {
+    id_ = other.id_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SDeleteAddress Clone() {
+    return new C2SDeleteAddress(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private ulong id_;
+  /// <summary>
+  /// 要删除的地址 ID。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public ulong Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SDeleteAddress);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SDeleteAddress other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id != 0UL) hash ^= Id.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Id != 0UL) {
+      output.WriteRawTag(8);
+      output.WriteUInt64(Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Id != 0UL) {
+      output.WriteRawTag(8);
+      output.WriteUInt64(Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id != 0UL) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SDeleteAddress other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id != 0UL) {
+      Id = other.Id;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = input.ReadUInt64();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          Id = input.ReadUInt64();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 用户域根请求（/user）。
 /// </summary>
 public sealed partial class C2SUser : pb::IMessage<C2SUser>
@@ -2518,7 +3945,7 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::UserReflection.Descriptor.MessageTypes[11]; }
+    get { return global::UserReflection.Descriptor.MessageTypes[17]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2554,6 +3981,15 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
         break;
       case MsgOneofCase.Logout:
         Logout = other.Logout.Clone();
+        break;
+      case MsgOneofCase.AddAddress:
+        AddAddress = other.AddAddress.Clone();
+        break;
+      case MsgOneofCase.GetAddresses:
+        GetAddresses = other.GetAddresses.Clone();
+        break;
+      case MsgOneofCase.DeleteAddress:
+        DeleteAddress = other.DeleteAddress.Clone();
         break;
     }
 
@@ -2656,6 +4092,51 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     }
   }
 
+  /// <summary>Field number for the "add_address" field.</summary>
+  public const int AddAddressFieldNumber = 7;
+  /// <summary>
+  /// 添加收件地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2SAddAddress AddAddress {
+    get { return msgCase_ == MsgOneofCase.AddAddress ? (global::C2SAddAddress) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.AddAddress;
+    }
+  }
+
+  /// <summary>Field number for the "get_addresses" field.</summary>
+  public const int GetAddressesFieldNumber = 8;
+  /// <summary>
+  /// 获取收件地址列表。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2SGetAddresses GetAddresses {
+    get { return msgCase_ == MsgOneofCase.GetAddresses ? (global::C2SGetAddresses) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.GetAddresses;
+    }
+  }
+
+  /// <summary>Field number for the "delete_address" field.</summary>
+  public const int DeleteAddressFieldNumber = 9;
+  /// <summary>
+  /// 删除收件地址。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2SDeleteAddress DeleteAddress {
+    get { return msgCase_ == MsgOneofCase.DeleteAddress ? (global::C2SDeleteAddress) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.DeleteAddress;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -2665,6 +4146,9 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     BindPhone = 4,
     GetAssets = 5,
     Logout = 6,
+    AddAddress = 7,
+    GetAddresses = 8,
+    DeleteAddress = 9,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2701,6 +4185,9 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     if (!object.Equals(BindPhone, other.BindPhone)) return false;
     if (!object.Equals(GetAssets, other.GetAssets)) return false;
     if (!object.Equals(Logout, other.Logout)) return false;
+    if (!object.Equals(AddAddress, other.AddAddress)) return false;
+    if (!object.Equals(GetAddresses, other.GetAddresses)) return false;
+    if (!object.Equals(DeleteAddress, other.DeleteAddress)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -2715,6 +4202,9 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     if (msgCase_ == MsgOneofCase.BindPhone) hash ^= BindPhone.GetHashCode();
     if (msgCase_ == MsgOneofCase.GetAssets) hash ^= GetAssets.GetHashCode();
     if (msgCase_ == MsgOneofCase.Logout) hash ^= Logout.GetHashCode();
+    if (msgCase_ == MsgOneofCase.AddAddress) hash ^= AddAddress.GetHashCode();
+    if (msgCase_ == MsgOneofCase.GetAddresses) hash ^= GetAddresses.GetHashCode();
+    if (msgCase_ == MsgOneofCase.DeleteAddress) hash ^= DeleteAddress.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -2758,6 +4248,18 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
       output.WriteRawTag(50);
       output.WriteMessage(Logout);
     }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      output.WriteRawTag(58);
+      output.WriteMessage(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      output.WriteRawTag(66);
+      output.WriteMessage(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      output.WriteRawTag(74);
+      output.WriteMessage(DeleteAddress);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2792,6 +4294,18 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
       output.WriteRawTag(50);
       output.WriteMessage(Logout);
     }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      output.WriteRawTag(58);
+      output.WriteMessage(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      output.WriteRawTag(66);
+      output.WriteMessage(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      output.WriteRawTag(74);
+      output.WriteMessage(DeleteAddress);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -2819,6 +4333,15 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     }
     if (msgCase_ == MsgOneofCase.Logout) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Logout);
+    }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteAddress);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2865,6 +4388,24 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           Logout = new global::C2SLogout();
         }
         Logout.MergeFrom(other.Logout);
+        break;
+      case MsgOneofCase.AddAddress:
+        if (AddAddress == null) {
+          AddAddress = new global::C2SAddAddress();
+        }
+        AddAddress.MergeFrom(other.AddAddress);
+        break;
+      case MsgOneofCase.GetAddresses:
+        if (GetAddresses == null) {
+          GetAddresses = new global::C2SGetAddresses();
+        }
+        GetAddresses.MergeFrom(other.GetAddresses);
+        break;
+      case MsgOneofCase.DeleteAddress:
+        if (DeleteAddress == null) {
+          DeleteAddress = new global::C2SDeleteAddress();
+        }
+        DeleteAddress.MergeFrom(other.DeleteAddress);
         break;
     }
 
@@ -2932,6 +4473,33 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           Logout = subBuilder;
           break;
         }
+        case 58: {
+          global::C2SAddAddress subBuilder = new global::C2SAddAddress();
+          if (msgCase_ == MsgOneofCase.AddAddress) {
+            subBuilder.MergeFrom(AddAddress);
+          }
+          input.ReadMessage(subBuilder);
+          AddAddress = subBuilder;
+          break;
+        }
+        case 66: {
+          global::C2SGetAddresses subBuilder = new global::C2SGetAddresses();
+          if (msgCase_ == MsgOneofCase.GetAddresses) {
+            subBuilder.MergeFrom(GetAddresses);
+          }
+          input.ReadMessage(subBuilder);
+          GetAddresses = subBuilder;
+          break;
+        }
+        case 74: {
+          global::C2SDeleteAddress subBuilder = new global::C2SDeleteAddress();
+          if (msgCase_ == MsgOneofCase.DeleteAddress) {
+            subBuilder.MergeFrom(DeleteAddress);
+          }
+          input.ReadMessage(subBuilder);
+          DeleteAddress = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -2996,6 +4564,33 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           Logout = subBuilder;
           break;
         }
+        case 58: {
+          global::C2SAddAddress subBuilder = new global::C2SAddAddress();
+          if (msgCase_ == MsgOneofCase.AddAddress) {
+            subBuilder.MergeFrom(AddAddress);
+          }
+          input.ReadMessage(subBuilder);
+          AddAddress = subBuilder;
+          break;
+        }
+        case 66: {
+          global::C2SGetAddresses subBuilder = new global::C2SGetAddresses();
+          if (msgCase_ == MsgOneofCase.GetAddresses) {
+            subBuilder.MergeFrom(GetAddresses);
+          }
+          input.ReadMessage(subBuilder);
+          GetAddresses = subBuilder;
+          break;
+        }
+        case 74: {
+          global::C2SDeleteAddress subBuilder = new global::C2SDeleteAddress();
+          if (msgCase_ == MsgOneofCase.DeleteAddress) {
+            subBuilder.MergeFrom(DeleteAddress);
+          }
+          input.ReadMessage(subBuilder);
+          DeleteAddress = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -3020,7 +4615,7 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::UserReflection.Descriptor.MessageTypes[12]; }
+    get { return global::UserReflection.Descriptor.MessageTypes[18]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3057,6 +4652,15 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
         break;
       case MsgOneofCase.Logout:
         Logout = other.Logout.Clone();
+        break;
+      case MsgOneofCase.AddAddress:
+        AddAddress = other.AddAddress.Clone();
+        break;
+      case MsgOneofCase.GetAddresses:
+        GetAddresses = other.GetAddresses.Clone();
+        break;
+      case MsgOneofCase.DeleteAddress:
+        DeleteAddress = other.DeleteAddress.Clone();
         break;
     }
 
@@ -3174,6 +4778,51 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     }
   }
 
+  /// <summary>Field number for the "add_address" field.</summary>
+  public const int AddAddressFieldNumber = 7;
+  /// <summary>
+  /// 添加收件地址响应。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2CAddAddress AddAddress {
+    get { return msgCase_ == MsgOneofCase.AddAddress ? (global::S2CAddAddress) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.AddAddress;
+    }
+  }
+
+  /// <summary>Field number for the "get_addresses" field.</summary>
+  public const int GetAddressesFieldNumber = 8;
+  /// <summary>
+  /// 获取收件地址列表响应。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2CGetAddresses GetAddresses {
+    get { return msgCase_ == MsgOneofCase.GetAddresses ? (global::S2CGetAddresses) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.GetAddresses;
+    }
+  }
+
+  /// <summary>Field number for the "delete_address" field.</summary>
+  public const int DeleteAddressFieldNumber = 9;
+  /// <summary>
+  /// 删除收件地址响应（成功返回 OP_SUCCESS，失败返回错误码）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2CLogout DeleteAddress {
+    get { return msgCase_ == MsgOneofCase.DeleteAddress ? (global::S2CLogout) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.DeleteAddress;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -3183,6 +4832,9 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     BindPhone = 4,
     GetAssets = 5,
     Logout = 6,
+    AddAddress = 7,
+    GetAddresses = 8,
+    DeleteAddress = 9,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3220,6 +4872,9 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     if (!object.Equals(BindPhone, other.BindPhone)) return false;
     if (!object.Equals(GetAssets, other.GetAssets)) return false;
     if (!object.Equals(Logout, other.Logout)) return false;
+    if (!object.Equals(AddAddress, other.AddAddress)) return false;
+    if (!object.Equals(GetAddresses, other.GetAddresses)) return false;
+    if (!object.Equals(DeleteAddress, other.DeleteAddress)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -3235,6 +4890,9 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     if (msgCase_ == MsgOneofCase.BindPhone) hash ^= BindPhone.GetHashCode();
     if (msgCase_ == MsgOneofCase.GetAssets) hash ^= GetAssets.GetHashCode();
     if (msgCase_ == MsgOneofCase.Logout) hash ^= Logout.GetHashCode();
+    if (msgCase_ == MsgOneofCase.AddAddress) hash ^= AddAddress.GetHashCode();
+    if (msgCase_ == MsgOneofCase.GetAddresses) hash ^= GetAddresses.GetHashCode();
+    if (msgCase_ == MsgOneofCase.DeleteAddress) hash ^= DeleteAddress.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -3278,6 +4936,18 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
       output.WriteRawTag(50);
       output.WriteMessage(Logout);
     }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      output.WriteRawTag(58);
+      output.WriteMessage(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      output.WriteRawTag(66);
+      output.WriteMessage(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      output.WriteRawTag(74);
+      output.WriteMessage(DeleteAddress);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -3316,6 +4986,18 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
       output.WriteRawTag(50);
       output.WriteMessage(Logout);
     }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      output.WriteRawTag(58);
+      output.WriteMessage(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      output.WriteRawTag(66);
+      output.WriteMessage(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      output.WriteRawTag(74);
+      output.WriteMessage(DeleteAddress);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -3350,6 +5032,15 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     }
     if (msgCase_ == MsgOneofCase.Logout) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Logout);
+    }
+    if (msgCase_ == MsgOneofCase.AddAddress) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(AddAddress);
+    }
+    if (msgCase_ == MsgOneofCase.GetAddresses) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(GetAddresses);
+    }
+    if (msgCase_ == MsgOneofCase.DeleteAddress) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteAddress);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -3399,6 +5090,24 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           Logout = new global::S2CLogout();
         }
         Logout.MergeFrom(other.Logout);
+        break;
+      case MsgOneofCase.AddAddress:
+        if (AddAddress == null) {
+          AddAddress = new global::S2CAddAddress();
+        }
+        AddAddress.MergeFrom(other.AddAddress);
+        break;
+      case MsgOneofCase.GetAddresses:
+        if (GetAddresses == null) {
+          GetAddresses = new global::S2CGetAddresses();
+        }
+        GetAddresses.MergeFrom(other.GetAddresses);
+        break;
+      case MsgOneofCase.DeleteAddress:
+        if (DeleteAddress == null) {
+          DeleteAddress = new global::S2CLogout();
+        }
+        DeleteAddress.MergeFrom(other.DeleteAddress);
         break;
     }
 
@@ -3464,6 +5173,33 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           }
           input.ReadMessage(subBuilder);
           Logout = subBuilder;
+          break;
+        }
+        case 58: {
+          global::S2CAddAddress subBuilder = new global::S2CAddAddress();
+          if (msgCase_ == MsgOneofCase.AddAddress) {
+            subBuilder.MergeFrom(AddAddress);
+          }
+          input.ReadMessage(subBuilder);
+          AddAddress = subBuilder;
+          break;
+        }
+        case 66: {
+          global::S2CGetAddresses subBuilder = new global::S2CGetAddresses();
+          if (msgCase_ == MsgOneofCase.GetAddresses) {
+            subBuilder.MergeFrom(GetAddresses);
+          }
+          input.ReadMessage(subBuilder);
+          GetAddresses = subBuilder;
+          break;
+        }
+        case 74: {
+          global::S2CLogout subBuilder = new global::S2CLogout();
+          if (msgCase_ == MsgOneofCase.DeleteAddress) {
+            subBuilder.MergeFrom(DeleteAddress);
+          }
+          input.ReadMessage(subBuilder);
+          DeleteAddress = subBuilder;
           break;
         }
         case 792: {
@@ -3532,6 +5268,33 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           }
           input.ReadMessage(subBuilder);
           Logout = subBuilder;
+          break;
+        }
+        case 58: {
+          global::S2CAddAddress subBuilder = new global::S2CAddAddress();
+          if (msgCase_ == MsgOneofCase.AddAddress) {
+            subBuilder.MergeFrom(AddAddress);
+          }
+          input.ReadMessage(subBuilder);
+          AddAddress = subBuilder;
+          break;
+        }
+        case 66: {
+          global::S2CGetAddresses subBuilder = new global::S2CGetAddresses();
+          if (msgCase_ == MsgOneofCase.GetAddresses) {
+            subBuilder.MergeFrom(GetAddresses);
+          }
+          input.ReadMessage(subBuilder);
+          GetAddresses = subBuilder;
+          break;
+        }
+        case 74: {
+          global::S2CLogout subBuilder = new global::S2CLogout();
+          if (msgCase_ == MsgOneofCase.DeleteAddress) {
+            subBuilder.MergeFrom(DeleteAddress);
+          }
+          input.ReadMessage(subBuilder);
+          DeleteAddress = subBuilder;
           break;
         }
         case 792: {
