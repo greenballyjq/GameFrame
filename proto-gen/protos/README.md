@@ -105,9 +105,13 @@ Authorization: <token>
 1. `base_data`
 2. `custom_data`
 3. `progress_data`
-4. `wave_result`（上报本次 `point_gain/threekp_gain`）
+4. `wave_result`（上报本次 `point_gain/threekp_gain/win`）
 5. 再次 `progress_data`（校验累计结果）
-6. `configuration`（按配置名拉取）
+6. `battle_history`（查询最近 10 场战绩）
+7. `gold_gain`（上报金币获得，携带 `gold_gain/source_type/source_id`）
+8. `configuration`（按配置名拉取）
+
+> `wave_result` 现在多了一个 `win` 字段（bool），客户端需上报战斗胜负。每次结算成功后服务端自动按 `uuid+game_id` 写入一条战绩，超过 10 条自动裁剪。`battle_history` 为空请求，响应 `S2CBattleHistory.records` 按时间倒序返回最近 10 条。
 
 #### 4.3 支付域 `/payment`
 
@@ -166,6 +170,7 @@ Authorization: <token>
 - [ ] `/auth login` 成功并拿到 token
 - [ ] `/user get_assets` 成功返回 threekp
 - [ ] `/game wave_result` 后 `progress_data.point` 正常累加
+- [ ] `/game battle_history` 返回最近战绩且不超过 10 条
 - [ ] `/payment buy` 成功并可在 `order_list` 看到新订单
 - [ ] `/social sign_in` 行为符合预期（已签到当天会失败）
 - [ ] `/user logout` 成功

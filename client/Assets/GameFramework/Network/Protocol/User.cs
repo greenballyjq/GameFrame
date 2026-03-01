@@ -256,7 +256,7 @@ public sealed partial class UserProfile : pb::IMessage<UserProfile>
   public const int GoldFieldNumber = 8;
   private ulong gold_;
   /// <summary>
-  /// 用户资料中的展示金币字段（非 threekp 支付货币）。
+  /// 用户资料中的展示金币字段（等同 3kp ）。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]

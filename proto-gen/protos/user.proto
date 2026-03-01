@@ -18,7 +18,7 @@ message UserProfile {
   uint64 create_time = 6;
   // 累计在线时长（秒）。
   uint64 total_online_seconds = 7;
-  // 用户资料中的展示金币字段（非 threekp 支付货币）。
+  // 用户资料中的展示金币字段（等同 3kp ）。
   uint64 gold = 8;
 }
 

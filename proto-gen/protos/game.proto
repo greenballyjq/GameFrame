@@ -77,6 +77,8 @@ message C2SWaveResult {
   uint64 point_gain = 2;
   // 本次新增 3K 币（由客户端上报）。
   uint64 threekp_gain = 3;
+  // 战斗结果：true=胜利，false=失败。
+  bool win = 4;
 }
 
 // 关卡结算上报响应。
@@ -85,6 +87,45 @@ message S2CWaveResult {
   uint64 point_total = 1;
   // 结算后的 3K 币总量。
   uint64 threekp_total = 2;
+}
+
+// 单条战绩记录。
+message BattleRecord {
+  // 关卡/波次 ID。
+  uint32 wave_id = 1;
+  // 战斗结果：true=胜利，false=失败。
+  bool win = 2;
+  // 本次获得的 3K 币。
+  uint64 gold_gain = 3;
+  // 本次获得的积分。
+  uint64 point_gain = 4;
+  // 结算时间（Unix 秒级时间戳）。
+  uint64 timestamp = 5;
+}
+
+// 查询最近战绩请求（空消息）。
+message C2SBattleHistory {}
+
+// 查询最近战绩响应。
+message S2CBattleHistory {
+  // 最近战绩列表（按时间倒序，最多 10 条）。
+  repeated BattleRecord records = 1;
+}
+
+// 客户端上报金币获得请求。
+message C2SGoldGain {
+  // 本次获得金币（3K 币）数量。
+  uint64 gold_gain = 1;
+  // 获得来源类型（如 kill_monster）。
+  string source_type = 2;
+  // 来源标识（可选，如怪物ID/关卡ID）。
+  string source_id = 3;
+}
+
+// 客户端上报金币获得响应。
+message S2CGoldGain {
+  // 变更后的 3K 币总量。
+  uint64 threekp_total = 1;
 }
 
 // 拉取进度数据请求（空消息）。
@@ -130,6 +171,10 @@ message C2SGame {
     C2SConfiguration configuration = 8;
     // 上报道具消耗。
     C2SItemUpdate item_update = 9;
+    // 查询最近战绩。
+    C2SBattleHistory battle_history = 10;
+    // 上报金币获得。
+    C2SGoldGain gold_gain = 11;
   }
 }
 
@@ -155,5 +200,9 @@ message S2CGame {
     S2CProgressData progress_data = 7;
     // 拉取业务配置响应。
     S2CConfiguration configuration = 8;
+    // 查询最近战绩响应。
+    S2CBattleHistory battle_history = 9;
+    // 上报金币获得响应。
+    S2CGoldGain gold_gain = 10;
   }
 }
