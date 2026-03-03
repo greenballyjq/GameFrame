@@ -79,6 +79,8 @@ message C2SWaveResult {
   uint64 threekp_gain = 3;
   // 战斗结果：true=胜利，false=失败。
   bool win = 4;
+  // 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  string ad_custom_id = 5;
 }
 
 // 关卡结算上报响应。

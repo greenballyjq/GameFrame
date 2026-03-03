@@ -14,6 +14,10 @@ enum S2COpcode {
   OP_NO_CONFIGURATION = 4;
   // 参数无效。
   OP_PARAM_INVALID = 5;
+  // 广告服务端验证结果未就绪，请稍后重试。
+  OP_WXAD_VERIFY_PENDING = 6;
+  // 广告验证重试次数超限。
+  OP_WXAD_RETRY_LIMIT_EXCEEDED = 7;
 
   // threekp 余额不足。
   OP_3KP_NOT_ENOUGH = 101;
