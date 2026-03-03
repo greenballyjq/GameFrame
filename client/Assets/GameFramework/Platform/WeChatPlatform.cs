@@ -27,8 +27,7 @@ public class WeChatPlatform : IPlatform
     /// value=是否正在显示
     /// </summary>
     private Dictionary<string, bool> _bannerShowStateDict = new Dictionary<string, bool>();
-
-
+    
     private readonly Dictionary<string, string> SHARE_IMAGE_URL_DICT = new Dictionary<string, string>()
     {
         {"开心套只鹅", "https://mmocgame.qpic.cn/wechatgame/C7iaYsK1CibPaicuPsk8W0NwCdQibfCAtrZV7dialbDCcLEibiaY5opHjZibOyeXAgKBP9K7/0"}
@@ -247,8 +246,9 @@ public class WeChatPlatform : IPlatform
     /// <param name="adType"></param>
     /// <param name="adId"></param>
     /// <param name="success"></param>
+    /// <param name="close"></param>
     /// <param name="fail"></param>
-    public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
+    public void ShowAd(AdType adType, string adId, Action success, Action<AdResult> close, Action<string> fail)
     {
         Debug.Log($"[WeChatPlatform] 微信平台显示广告 adType:{adType} adId:{adId}");
 
@@ -258,7 +258,8 @@ public class WeChatPlatform : IPlatform
             return;
         }
 
-        #if UNITY_WEBGL && !UNITY_EDITOR
+        // #if UNITY_WEBGL && !UNITY_EDITOR
+        #if true
         try
         {
             // 根据广告类型调用不同的API
@@ -269,13 +270,9 @@ public class WeChatPlatform : IPlatform
                     WXShowBannerAd(
                         adId,
                         () => {
-                            AdResult result = new AdResult 
-                            { 
-                                IsCompleted = true, 
-                                AdId = adId 
-                            };
-                            success?.Invoke(result);
+                            success?.Invoke();
                         },
+                        close,
                         (error) => {
                             fail?.Invoke(error);
                         }
@@ -287,13 +284,9 @@ public class WeChatPlatform : IPlatform
                     WXShowInterstitialAd(
                         adId,
                         () => {
-                            var result = new AdResult 
-                            { 
-                                IsCompleted = true, 
-                                AdId = adId 
-                            };
-                            success?.Invoke(result);
+                            success?.Invoke();
                         },
+                        close,
                         (error) => {
                             fail?.Invoke(error);
                         }
@@ -305,13 +298,9 @@ public class WeChatPlatform : IPlatform
                     WXShowRewardedAd(
                         adId,
                         () => {
-                            var result = new AdResult 
-                            { 
-                                IsCompleted = true, 
-                                AdId = adId 
-                            };
-                            success?.Invoke(result);
+                            success?.Invoke();
                         },
+                        close,
                         (error) => {
                             fail?.Invoke(error);
                         }
@@ -339,12 +328,13 @@ public class WeChatPlatform : IPlatform
     }
 
     #region Banner广告相关
+    
     /// <summary>
     /// 显示Banner广告
     /// </summary>
     public void ShowBannerAd(string adId, Action success, Action<string> fail)
     {
-        WXShowBannerAd(adId, success, fail);
+        WXShowBannerAd(adId, success, null, fail);
     }
 
     /// <summary>
@@ -887,8 +877,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     /// <param name="adId"></param>
     /// <param name="success"></param>
+    /// <param name="close"></param>
     /// <param name="fail"></param>
-    private void WXShowBannerAd(string adId, Action success, Action<string> fail)
+    private void WXShowBannerAd(string adId, Action success, Action<AdResult> close, Action<string> fail)
     {
         // 检查是否已存在该adId的Banner实例，存在则直接显示
         if (_bannerAdDict.TryGetValue(adId, out WXCustomAd existingBannerAd))
@@ -983,6 +974,14 @@ public class WeChatPlatform : IPlatform
         {
             Debug.Log($"[WeChatPlatform] Banner广告关闭 adId:{adId}");
 
+            var adResult = new AdResult
+            {
+                IsCompleted = true,
+                AdId = adId,
+            };
+
+            close?.Invoke(adResult);
+
             // 清理事件与实例
             bannerAd.OffLoad(loadAction);
             bannerAd.OffError(errorAction);
@@ -1017,8 +1016,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     /// <param name="adId"></param>
     /// <param name="success"></param>
+    /// <param name="close"></param>
     /// <param name="fail"></param>
-    public void WXShowInterstitialAd(string adId, Action success, Action<string> fail)
+    public void WXShowInterstitialAd(string adId, Action success, Action<AdResult> close, Action<string> fail)
     {
         // 构建插屏广告参数
         WXCreateInterstitialAdParam createAdParam = new WXCreateInterstitialAdParam
@@ -1046,6 +1046,12 @@ public class WeChatPlatform : IPlatform
         {
             Debug.Log($"[WeChatPlatform] 插屏广告关闭 adId:{adId}");
             success?.Invoke();
+            
+            close?.Invoke(new AdResult
+            {
+                IsCompleted = true,
+                AdId = adId,
+            });
 
             // 清理所有事件监听
             interstitialAd.OffClose(closeAction);
@@ -1102,8 +1108,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     /// <param name="adId"></param>
     /// <param name="success"></param>
+    /// <param name="close"></param>
     /// <param name="fail"></param>
-    public void WXShowRewardedAd(string adId, Action success, Action<string> fail)
+    public void WXShowRewardedAd(string adId, Action success, Action<AdResult> close, Action<string> fail)
     {
         // 构建激励广告参数
         WXCreateRewardedVideoAdParam createAdParam = new WXCreateRewardedVideoAdParam
@@ -1135,6 +1142,17 @@ public class WeChatPlatform : IPlatform
             rewardedAd.OffError(errorAction);
             rewardedAd.OffLoad(loadAction);
 
+            bool isCompleted = false;
+
+            isCompleted = closeRes.isEnded;
+
+            var adResult = new AdResult
+            {
+                IsCompleted = isCompleted,
+                AdId = adId,
+            };
+            close?.Invoke(adResult);
+
             // 判断是否完整观看
             if (closeRes.isEnded)
             {
@@ -1164,7 +1182,7 @@ public class WeChatPlatform : IPlatform
         loadAction = (loadRes) =>
         {
             Debug.Log($"[WeChatPlatform] 激励广告加载完成 adId:{adId}");
-            rewardedAd.Show(showSuccessAction, showFailAction);
+            // rewardedAd.Show(showSuccessAction, showFailAction);
         };
         rewardedAd.OnLoad(loadAction);
 
@@ -1181,7 +1199,11 @@ public class WeChatPlatform : IPlatform
         };
 
         // 发起广告加载请求
-        rewardedAd.Load((loadSuccessRes) => Debug.Log($"[WeChatPlatform] 激励广告加载请求成功 adId:{adId}"),null);
+        rewardedAd.Load((loadSuccessRes) =>
+        {
+            Debug.Log($"[WeChatPlatform] 激励广告加载请求成功 adId:{adId}");
+            rewardedAd.Show(showSuccessAction, showFailAction);
+        },null);
     }
 
     private void WXPay(string orderId, string amount, string desc, Action<string> success, Action<string> fail)

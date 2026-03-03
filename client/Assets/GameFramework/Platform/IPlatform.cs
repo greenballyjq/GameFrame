@@ -70,8 +70,9 @@ public interface IPlatform
     /// <param name="adType">广告类型</param>
     /// <param name="adId">广告ID</param>
     /// <param name="success">成功回调</param>
+    /// <param name="close">关闭广告回调</param>
     /// <param name="fail">失败回调</param>
-    void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail);
+    void ShowAd(AdType adType, string adId, Action success, Action<AdResult> close, Action<string> fail);
 
     /// <summary>
     /// 支付

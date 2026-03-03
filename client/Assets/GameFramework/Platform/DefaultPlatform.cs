@@ -47,18 +47,18 @@ public class DefaultPlatform : IPlatform
         success?.Invoke();
     }
 
-    public void ShowAd(AdType adType, string adId, Action<AdResult> success, Action<string> fail)
+    public void ShowAd(AdType adType, string adId, Action success, Action<AdResult> close, Action<string> fail)
     {
         Debug.Log($"[DefaultPlatform] 默认平台显示广告: {adType}, ID: {adId}");
+        //
+        // // 模拟广告完成
+        // var result = new AdResult
+        // {
+        //     IsCompleted = true,
+        //     AdId = adId
+        // };
         
-        // 模拟广告完成
-        var result = new AdResult
-        {
-            IsCompleted = true,
-            AdId = adId
-        };
-        
-        success?.Invoke(result);
+        success?.Invoke();
     }
 
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
