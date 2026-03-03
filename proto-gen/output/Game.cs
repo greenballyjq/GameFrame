@@ -37,39 +37,40 @@ public static partial class GameReflection {
           "YXRlLkl0ZW1zRW50cnkaLAoKSXRlbXNFbnRyeRILCgNrZXkYASABKAkSDQoF",
           "dmFsdWUYAiABKAQ6AjgBImcKDVMyQ0l0ZW1VcGRhdGUSKAoFaXRlbXMYASAD",
           "KAsyGS5TMkNJdGVtVXBkYXRlLkl0ZW1zRW50cnkaLAoKSXRlbXNFbnRyeRIL",
-          "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAQ6AjgBIlcKDUMyU1dhdmVSZXN1",
+          "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAQ6AjgBIm0KDUMyU1dhdmVSZXN1",
           "bHQSDwoHd2F2ZV9pZBgBIAEoDRISCgpwb2ludF9nYWluGAIgASgEEhQKDHRo",
-          "cmVla3BfZ2FpbhgDIAEoBBILCgN3aW4YBCABKAgiOwoNUzJDV2F2ZVJlc3Vs",
-          "dBITCgtwb2ludF90b3RhbBgBIAEoBBIVCg10aHJlZWtwX3RvdGFsGAIgASgE",
-          "ImYKDEJhdHRsZVJlY29yZBIPCgd3YXZlX2lkGAEgASgNEgsKA3dpbhgCIAEo",
-          "CBIRCglnb2xkX2dhaW4YAyABKAQSEgoKcG9pbnRfZ2FpbhgEIAEoBBIRCgl0",
-          "aW1lc3RhbXAYBSABKAQiEgoQQzJTQmF0dGxlSGlzdG9yeSIyChBTMkNCYXR0",
-          "bGVIaXN0b3J5Eh4KB3JlY29yZHMYASADKAsyDS5CYXR0bGVSZWNvcmQiSAoL",
-          "QzJTR29sZEdhaW4SEQoJZ29sZF9nYWluGAEgASgEEhMKC3NvdXJjZV90eXBl",
-          "GAIgASgJEhEKCXNvdXJjZV9pZBgDIAEoCSIkCgtTMkNHb2xkR2FpbhIVCg10",
-          "aHJlZWtwX3RvdGFsGAEgASgEIhEKD0MyU1Byb2dyZXNzRGF0YSIyCg9TMkNQ",
-          "cm9ncmVzc0RhdGESHwoIcHJvZ3Jlc3MYASABKAsyDS5Qcm9ncmVzc0RhdGEi",
-          "IAoQQzJTQ29uZmlndXJhdGlvbhIMCgRuYW1lGAEgASgJIiAKEFMyQ0NvbmZp",
-          "Z3VyYXRpb24SDAoEZGF0YRgBIAEoCSK3AwoHQzJTR2FtZRIPCgdzZXNzaW9u",
-          "GAEgASgEEiEKCWJhc2VfZGF0YRgCIAEoCzIMLkMyU0Jhc2VEYXRhSAASJQoL",
-          "Y3VzdG9tX2RhdGEYAyABKAsyDi5DMlNDdXN0b21EYXRhSAASMgoSdXBsb2Fk",
-          "X2N1c3RvbV9kYXRhGAQgASgLMhQuQzJTVXBsb2FkQ3VzdG9tRGF0YUgAEiEK",
-          "CWl0ZW1fZGF0YRgFIAEoCzIMLkMyU0l0ZW1EYXRhSAASJQoLd2F2ZV9yZXN1",
-          "bHQYBiABKAsyDi5DMlNXYXZlUmVzdWx0SAASKQoNcHJvZ3Jlc3NfZGF0YRgH",
-          "IAEoCzIQLkMyU1Byb2dyZXNzRGF0YUgAEioKDWNvbmZpZ3VyYXRpb24YCCAB",
-          "KAsyES5DMlNDb25maWd1cmF0aW9uSAASJQoLaXRlbV91cGRhdGUYCSABKAsy",
-          "Di5DMlNJdGVtVXBkYXRlSAASKwoOYmF0dGxlX2hpc3RvcnkYCiABKAsyES5D",
-          "MlNCYXR0bGVIaXN0b3J5SAASIQoJZ29sZF9nYWluGAsgASgLMgwuQzJTR29s",
-          "ZEdhaW5IAEIFCgNtc2cinQMKB1MyQ0dhbWUSDwoHc2Vzc2lvbhgBIAEoBBIY",
-          "CgRjb2RlGGMgASgOMgouUzJDT3Bjb2RlEiEKCWJhc2VfZGF0YRgCIAEoCzIM",
-          "LlMyQ0Jhc2VEYXRhSAASJQoLY3VzdG9tX2RhdGEYAyABKAsyDi5TMkNDdXN0",
-          "b21EYXRhSAASIQoJaXRlbV9kYXRhGAQgASgLMgwuUzJDSXRlbURhdGFIABIl",
-          "CgtpdGVtX3VwZGF0ZRgFIAEoCzIOLlMyQ0l0ZW1VcGRhdGVIABIlCgt3YXZl",
-          "X3Jlc3VsdBgGIAEoCzIOLlMyQ1dhdmVSZXN1bHRIABIpCg1wcm9ncmVzc19k",
-          "YXRhGAcgASgLMhAuUzJDUHJvZ3Jlc3NEYXRhSAASKgoNY29uZmlndXJhdGlv",
-          "bhgIIAEoCzIRLlMyQ0NvbmZpZ3VyYXRpb25IABIrCg5iYXR0bGVfaGlzdG9y",
-          "eRgJIAEoCzIRLlMyQ0JhdHRsZUhpc3RvcnlIABIhCglnb2xkX2dhaW4YCiAB",
-          "KAsyDC5TMkNHb2xkR2FpbkgAQgUKA21zZ2IGcHJvdG8z"));
+          "cmVla3BfZ2FpbhgDIAEoBBILCgN3aW4YBCABKAgSFAoMYWRfY3VzdG9tX2lk",
+          "GAUgASgJIjsKDVMyQ1dhdmVSZXN1bHQSEwoLcG9pbnRfdG90YWwYASABKAQS",
+          "FQoNdGhyZWVrcF90b3RhbBgCIAEoBCJmCgxCYXR0bGVSZWNvcmQSDwoHd2F2",
+          "ZV9pZBgBIAEoDRILCgN3aW4YAiABKAgSEQoJZ29sZF9nYWluGAMgASgEEhIK",
+          "CnBvaW50X2dhaW4YBCABKAQSEQoJdGltZXN0YW1wGAUgASgEIhIKEEMyU0Jh",
+          "dHRsZUhpc3RvcnkiMgoQUzJDQmF0dGxlSGlzdG9yeRIeCgdyZWNvcmRzGAEg",
+          "AygLMg0uQmF0dGxlUmVjb3JkIkgKC0MyU0dvbGRHYWluEhEKCWdvbGRfZ2Fp",
+          "bhgBIAEoBBITCgtzb3VyY2VfdHlwZRgCIAEoCRIRCglzb3VyY2VfaWQYAyAB",
+          "KAkiJAoLUzJDR29sZEdhaW4SFQoNdGhyZWVrcF90b3RhbBgBIAEoBCIRCg9D",
+          "MlNQcm9ncmVzc0RhdGEiMgoPUzJDUHJvZ3Jlc3NEYXRhEh8KCHByb2dyZXNz",
+          "GAEgASgLMg0uUHJvZ3Jlc3NEYXRhIiAKEEMyU0NvbmZpZ3VyYXRpb24SDAoE",
+          "bmFtZRgBIAEoCSIgChBTMkNDb25maWd1cmF0aW9uEgwKBGRhdGEYASABKAki",
+          "twMKB0MyU0dhbWUSDwoHc2Vzc2lvbhgBIAEoBBIhCgliYXNlX2RhdGEYAiAB",
+          "KAsyDC5DMlNCYXNlRGF0YUgAEiUKC2N1c3RvbV9kYXRhGAMgASgLMg4uQzJT",
+          "Q3VzdG9tRGF0YUgAEjIKEnVwbG9hZF9jdXN0b21fZGF0YRgEIAEoCzIULkMy",
+          "U1VwbG9hZEN1c3RvbURhdGFIABIhCglpdGVtX2RhdGEYBSABKAsyDC5DMlNJ",
+          "dGVtRGF0YUgAEiUKC3dhdmVfcmVzdWx0GAYgASgLMg4uQzJTV2F2ZVJlc3Vs",
+          "dEgAEikKDXByb2dyZXNzX2RhdGEYByABKAsyEC5DMlNQcm9ncmVzc0RhdGFI",
+          "ABIqCg1jb25maWd1cmF0aW9uGAggASgLMhEuQzJTQ29uZmlndXJhdGlvbkgA",
+          "EiUKC2l0ZW1fdXBkYXRlGAkgASgLMg4uQzJTSXRlbVVwZGF0ZUgAEisKDmJh",
+          "dHRsZV9oaXN0b3J5GAogASgLMhEuQzJTQmF0dGxlSGlzdG9yeUgAEiEKCWdv",
+          "bGRfZ2FpbhgLIAEoCzIMLkMyU0dvbGRHYWluSABCBQoDbXNnIp0DCgdTMkNH",
+          "YW1lEg8KB3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEoDjIKLlMyQ09wY29k",
+          "ZRIhCgliYXNlX2RhdGEYAiABKAsyDC5TMkNCYXNlRGF0YUgAEiUKC2N1c3Rv",
+          "bV9kYXRhGAMgASgLMg4uUzJDQ3VzdG9tRGF0YUgAEiEKCWl0ZW1fZGF0YRgE",
+          "IAEoCzIMLlMyQ0l0ZW1EYXRhSAASJQoLaXRlbV91cGRhdGUYBSABKAsyDi5T",
+          "MkNJdGVtVXBkYXRlSAASJQoLd2F2ZV9yZXN1bHQYBiABKAsyDi5TMkNXYXZl",
+          "UmVzdWx0SAASKQoNcHJvZ3Jlc3NfZGF0YRgHIAEoCzIQLlMyQ1Byb2dyZXNz",
+          "RGF0YUgAEioKDWNvbmZpZ3VyYXRpb24YCCABKAsyES5TMkNDb25maWd1cmF0",
+          "aW9uSAASKwoOYmF0dGxlX2hpc3RvcnkYCSABKAsyES5TMkNCYXR0bGVIaXN0",
+          "b3J5SAASIQoJZ29sZF9nYWluGAogASgLMgwuUzJDR29sZEdhaW5IAEIFCgNt",
+          "c2diBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -85,7 +86,7 @@ public static partial class GameReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CItemData), global::S2CItemData.Parser, new[]{ "Item" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SItemUpdate), global::C2SItemUpdate.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CItemUpdate), global::S2CItemUpdate.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SWaveResult), global::C2SWaveResult.Parser, new[]{ "WaveId", "PointGain", "ThreekpGain", "Win" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SWaveResult), global::C2SWaveResult.Parser, new[]{ "WaveId", "PointGain", "ThreekpGain", "Win", "AdCustomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CWaveResult), global::S2CWaveResult.Parser, new[]{ "PointTotal", "ThreekpTotal" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::BattleRecord), global::BattleRecord.Parser, new[]{ "WaveId", "Win", "GoldGain", "PointGain", "Timestamp" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SBattleHistory), global::C2SBattleHistory.Parser, null, null, null, null, null),
@@ -2419,6 +2420,7 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     pointGain_ = other.pointGain_;
     threekpGain_ = other.threekpGain_;
     win_ = other.win_;
+    adCustomId_ = other.adCustomId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2488,6 +2490,21 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     }
   }
 
+  /// <summary>Field number for the "ad_custom_id" field.</summary>
+  public const int AdCustomIdFieldNumber = 5;
+  private string adCustomId_ = "";
+  /// <summary>
+  /// 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AdCustomId {
+    get { return adCustomId_; }
+    set {
+      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -2507,6 +2524,7 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     if (PointGain != other.PointGain) return false;
     if (ThreekpGain != other.ThreekpGain) return false;
     if (Win != other.Win) return false;
+    if (AdCustomId != other.AdCustomId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2518,6 +2536,7 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     if (PointGain != 0UL) hash ^= PointGain.GetHashCode();
     if (ThreekpGain != 0UL) hash ^= ThreekpGain.GetHashCode();
     if (Win != false) hash ^= Win.GetHashCode();
+    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2552,6 +2571,10 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
       output.WriteRawTag(32);
       output.WriteBool(Win);
     }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2578,6 +2601,10 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
       output.WriteRawTag(32);
       output.WriteBool(Win);
     }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -2599,6 +2626,9 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     }
     if (Win != false) {
       size += 1 + 1;
+    }
+    if (AdCustomId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2623,6 +2653,9 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
     }
     if (other.Win != false) {
       Win = other.Win;
+    }
+    if (other.AdCustomId.Length != 0) {
+      AdCustomId = other.AdCustomId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -2655,6 +2688,10 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
           Win = input.ReadBool();
           break;
         }
+        case 42: {
+          AdCustomId = input.ReadString();
+          break;
+        }
       }
     }
   #endif
@@ -2684,6 +2721,10 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
         }
         case 32: {
           Win = input.ReadBool();
+          break;
+        }
+        case 42: {
+          AdCustomId = input.ReadString();
           break;
         }
       }

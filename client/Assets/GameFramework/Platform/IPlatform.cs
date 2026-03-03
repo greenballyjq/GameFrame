@@ -171,6 +171,8 @@ public class AdResult
 {
     public bool IsCompleted { get; set; }
     public string AdId { get; set; }
+    public int AdSeq { get; set; }
+    public string CustomData { get; set; }
 }
 
 /// <summary>

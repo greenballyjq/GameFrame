@@ -20,6 +20,9 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     private bool _isInitialized = false;
 
+    private int _rewardAdSeq;
+    private bool _isRewardAdShowing;
+
     /// <summary>
     /// Banner广告实例字典
     /// key=adUnitId
@@ -337,13 +340,21 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     public void ShowRewardAd(string adId, string userId, Action success, Action<AdResult> close, Action<string> fail)
     {
-        Debug.Log($"[WeChatPlatform] 显示激励广告(服务端验证) adId:{adId} userId:{userId}");
-
         if (!_isInitialized)
         {
             fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
             return;
         }
+
+        if (_isRewardAdShowing)
+        {
+            fail?.Invoke("[WeChatPlatform] 激励广告正在播放中，请勿重复调用");
+            return;
+        }
+
+        _rewardAdSeq++;
+        _isRewardAdShowing = true;
+        Debug.Log($"[WeChatPlatform] 显示激励广告(服务端验证) adId:{adId} userId:{userId} seq:{_rewardAdSeq}");
 
         try
         {
@@ -351,6 +362,7 @@ public class WeChatPlatform : IPlatform
         }
         catch (Exception e)
         {
+            _isRewardAdShowing = false;
             fail?.Invoke($"[WeChatPlatform] 激励广告(服务端验证)失败 errMsg:{e.Message}");
         }
     }
@@ -1161,9 +1173,14 @@ public class WeChatPlatform : IPlatform
 #if UNITY_WEBGL && !UNITY_EDITOR
             try
             {
-                string json = JsonUtility.ToJson(new ServerSideVerificationParam { userId = userId });
+                var param = new ServerSideVerificationParam
+                {
+                    userId = userId,
+                    customData = $"ad_{_rewardAdSeq}",
+                };
+                string json = JsonUtility.ToJson(param);
                 WXSetAdServerSideVerificationData(adId, json);
-                Debug.Log($"[WeChatPlatform] 已设置服务端验证数据 adId:{adId} userId:{userId}");
+                Debug.Log($"[WeChatPlatform] 已设置服务端验证数据 adId:{adId} userId:{userId} customData:{param.customData}");
             }
             catch (Exception e)
             {
@@ -1182,39 +1199,40 @@ public class WeChatPlatform : IPlatform
         // 激励广告关闭事件
         closeAction = (closeRes) =>
         {
-            // 清理所有事件监听
+            _isRewardAdShowing = false;
+
             rewardedAd.OffClose(closeAction);
             rewardedAd.OffError(errorAction);
             rewardedAd.OffLoad(loadAction);
 
-            bool isCompleted = false;
-
-            isCompleted = closeRes.isEnded;
-
+            string customData = $"ad_{_rewardAdSeq}";
             var adResult = new AdResult
             {
-                IsCompleted = isCompleted,
+                IsCompleted = closeRes.isEnded,
                 AdId = adId,
+                AdSeq = _rewardAdSeq,
+                CustomData = closeRes.isEnded ? customData : null,
             };
             close?.Invoke(adResult);
 
-            // 判断是否完整观看
             if (closeRes.isEnded)
             {
-                Debug.Log($"[WeChatPlatform] 激励广告完整观看 adId:{adId}");
+                Debug.Log($"[WeChatPlatform] 激励广告完整观看 adId:{adId} seq:{_rewardAdSeq}");
                 success?.Invoke();
             }
             else
             {
                 fail?.Invoke($"[WeChatPlatform] 激励广告未完整观看 adId:{adId}");
             }
+
         };
         rewardedAd.OnClose(closeAction);
 
         // 激励广告错误事件
         errorAction = (errorRes) =>
         {
-            // 清理所有事件监听
+            _isRewardAdShowing = false;
+
             rewardedAd.OffClose(closeAction);
             rewardedAd.OffError(errorAction);
             rewardedAd.OffLoad(loadAction);
@@ -1470,6 +1488,7 @@ public class WeChatPlatform : IPlatform
     private class ServerSideVerificationParam
     {
         public string userId;
+        public string customData;
     }
 }
 #endif

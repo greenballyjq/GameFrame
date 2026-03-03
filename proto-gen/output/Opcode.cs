@@ -22,16 +22,18 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8qpQMKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
+          "CgxvcGNvZGUucHJvdG8q4wMKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
           "DQoJT1BfRkFJTEVEEAESFgoST1BfU0VTU0lPTl9FWFBJUkVEEAISHAoYT1Bf",
           "U0VTU0lPTl9UT0tFTl9JTlZBTElEEAMSFwoTT1BfTk9fQ09ORklHVVJBVElP",
-          "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIVChFPUF8zS1BfTk9UX0VOT1VH",
-          "SBBlEhkKFU9QX1NUQU1JTkFfTk9UX0VOT1VHSBBmEhYKEk9QX0lURU1fTk9U",
-          "X0VOT1VHSBBnEhoKFk9QX01BTExfSVRFTV9OT1RfRVhJU1QQaBIgChxPUF9N",
-          "QUxMX0lURU1fQlVZX0NPVU5UX0VSUk9SEGkSHQoYT1BfTE9HSU5fSU5WQUxJ",
-          "RF9BQ0NPVU5UEOkHEhkKFE9QX0xPR0lOX0FVVEhfRkFJTEVEEOoHEhoKFU9Q",
-          "X0xPR09VVF9PVEhFUl9MT0dJThDNCBIWChFPUF9MT0dPVVRfVElNRU9VVBDO",
-          "CBIeChlPUF9MT0dPVVRfU0VSVkVSX1NIVVRET1dOEM8IYgZwcm90bzM="));
+          "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIaChZPUF9XWEFEX1ZFUklGWV9Q",
+          "RU5ESU5HEAYSIAocT1BfV1hBRF9SRVRSWV9MSU1JVF9FWENFRURFRBAHEhUK",
+          "EU9QXzNLUF9OT1RfRU5PVUdIEGUSGQoVT1BfU1RBTUlOQV9OT1RfRU5PVUdI",
+          "EGYSFgoST1BfSVRFTV9OT1RfRU5PVUdIEGcSGgoWT1BfTUFMTF9JVEVNX05P",
+          "VF9FWElTVBBoEiAKHE9QX01BTExfSVRFTV9CVVlfQ09VTlRfRVJST1IQaRId",
+          "ChhPUF9MT0dJTl9JTlZBTElEX0FDQ09VTlQQ6QcSGQoUT1BfTE9HSU5fQVVU",
+          "SF9GQUlMRUQQ6gcSGgoVT1BfTE9HT1VUX09USEVSX0xPR0lOEM0IEhYKEU9Q",
+          "X0xPR09VVF9USU1FT1VUEM4IEh4KGU9QX0xPR09VVF9TRVJWRVJfU0hVVERP",
+          "V04QzwhiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2COpcode), }, null, null));
@@ -68,6 +70,14 @@ public enum S2COpcode {
   /// 参数无效。
   /// </summary>
   [pbr::OriginalName("OP_PARAM_INVALID")] OpParamInvalid = 5,
+  /// <summary>
+  /// 广告服务端验证结果未就绪，请稍后重试。
+  /// </summary>
+  [pbr::OriginalName("OP_WXAD_VERIFY_PENDING")] OpWxadVerifyPending = 6,
+  /// <summary>
+  /// 广告验证重试次数超限。
+  /// </summary>
+  [pbr::OriginalName("OP_WXAD_RETRY_LIMIT_EXCEEDED")] OpWxadRetryLimitExceeded = 7,
   /// <summary>
   /// threekp 余额不足。
   /// </summary>
