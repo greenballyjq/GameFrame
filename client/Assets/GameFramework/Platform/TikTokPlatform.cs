@@ -269,6 +269,17 @@ public class TikTokPlatform : IPlatform
 #endif
     }
 
+    public void ShowRewardAd(string adId, string userId, Action success, Action<AdResult> close, Action<string> fail)
+    {
+        Debug.Log($"[TikTokPlatform] 显示激励广告(服务端验证) adId:{adId} userId:{userId}");
+        TTShowRewardedAd(adId, 
+            () => {
+                success?.Invoke();
+                close?.Invoke(new AdResult { IsCompleted = true, AdId = adId });
+            }, 
+            fail);
+    }
+
     /// <summary>
     /// 隐藏Banner广告
     /// </summary>

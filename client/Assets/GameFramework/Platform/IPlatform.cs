@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,6 +73,16 @@ public interface IPlatform
     /// <param name="close">关闭广告回调</param>
     /// <param name="fail">失败回调</param>
     void ShowAd(AdType adType, string adId, Action success, Action<AdResult> close, Action<string> fail);
+
+    /// <summary>
+    /// 显示激励广告（带服务端验证）
+    /// </summary>
+    /// <param name="adId">广告ID</param>
+    /// <param name="userId">用户ID，用于服务端验证</param>
+    /// <param name="success">完整观看成功回调</param>
+    /// <param name="close">关闭广告回调</param>
+    /// <param name="fail">失败回调</param>
+    void ShowRewardAd(string adId, string userId, Action success, Action<AdResult> close, Action<string> fail);
 
     /// <summary>
     /// 支付

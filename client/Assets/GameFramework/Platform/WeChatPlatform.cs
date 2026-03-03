@@ -1,6 +1,7 @@
-﻿#if WEIXINMINIGAME
+#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 using WeChatWASM;
@@ -10,6 +11,10 @@ using WeChatWASM;
 /// </summary>
 public class WeChatPlatform : IPlatform
 {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern void WXSetAdServerSideVerificationData(string adUnitId, string conf);
+#endif
     /// <summary>
     /// 是否初始化
     /// </summary>
@@ -325,6 +330,29 @@ public class WeChatPlatform : IPlatform
         });
         
 #endif
+    }
+
+    /// <summary>
+    /// 显示激励广告（带服务端验证，基础库 >= v3.10.3）
+    /// </summary>
+    public void ShowRewardAd(string adId, string userId, Action success, Action<AdResult> close, Action<string> fail)
+    {
+        Debug.Log($"[WeChatPlatform] 显示激励广告(服务端验证) adId:{adId} userId:{userId}");
+
+        if (!_isInitialized)
+        {
+            fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
+            return;
+        }
+
+        try
+        {
+            WXShowRewardedAd(adId, success, close, fail, userId);
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] 激励广告(服务端验证)失败 errMsg:{e.Message}");
+        }
     }
 
     #region Banner广告相关
@@ -1110,7 +1138,7 @@ public class WeChatPlatform : IPlatform
     /// <param name="success"></param>
     /// <param name="close"></param>
     /// <param name="fail"></param>
-    public void WXShowRewardedAd(string adId, Action success, Action<AdResult> close, Action<string> fail)
+    public void WXShowRewardedAd(string adId, Action success, Action<AdResult> close, Action<string> fail, string userId = null)
     {
         // 构建激励广告参数
         WXCreateRewardedVideoAdParam createAdParam = new WXCreateRewardedVideoAdParam
@@ -1125,6 +1153,23 @@ public class WeChatPlatform : IPlatform
         {
             fail?.Invoke($"[WeChatPlatform] 激励广告创建失败 adId:{adId}");
             return;
+        }
+
+        // 设置服务端验证数据（基础库 >= v3.10.3）
+        if (!string.IsNullOrEmpty(userId))
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            try
+            {
+                string json = JsonUtility.ToJson(new ServerSideVerificationParam { userId = userId });
+                WXSetAdServerSideVerificationData(adId, json);
+                Debug.Log($"[WeChatPlatform] 已设置服务端验证数据 adId:{adId} userId:{userId}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[WeChatPlatform] 设置服务端验证数据失败（可能基础库版本低于v3.10.3） errMsg:{e.Message}");
+            }
+#endif
         }
 
         // 提前声明所有事件
@@ -1384,7 +1429,7 @@ public class WeChatPlatform : IPlatform
         {
             var systemInfo = GetSystemInfo();
 
-            WXVideo wxVideo = WXBase.CreateVideo(new WXCreateVideoParam
+            WXVideo wxVideo = WXBase.CreateVideo(new CreateVideoOption
             {
                 x = 9999,
                 y = 9999,
@@ -1417,8 +1462,14 @@ public class WeChatPlatform : IPlatform
         }
 #else
         // 编辑器模式下模拟创建视频成功
-        success?.Invoke(WXBase.CreateVideo(new WXCreateVideoParam()));
+        success?.Invoke(WXBase.CreateVideo(new CreateVideoOption()));
 #endif
+    }
+
+    [Serializable]
+    private class ServerSideVerificationParam
+    {
+        public string userId;
     }
 }
 #endif

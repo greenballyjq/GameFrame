@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GameFramework.Core;
 using UnityEngine;
@@ -76,7 +76,7 @@ public class PlatformManager : IManager
 #if UNITY_EDITOR
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
         _currentPlatformType = PlatformType.WeChat;
-        WXBase.CreateVideo(new WXCreateVideoParam()).OnPlay(() =>
+        WXBase.CreateVideo(new CreateVideoOption()).OnPlay(() =>
         {
 
         });

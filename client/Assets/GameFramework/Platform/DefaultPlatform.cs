@@ -61,6 +61,13 @@ public class DefaultPlatform : IPlatform
         success?.Invoke();
     }
 
+    public void ShowRewardAd(string adId, string userId, Action success, Action<AdResult> close, Action<string> fail)
+    {
+        Debug.Log($"[DefaultPlatform] 默认平台显示激励广告(服务端验证): ID: {adId}, userId: {userId}");
+        success?.Invoke();
+        close?.Invoke(new AdResult { IsCompleted = true, AdId = adId });
+    }
+
     public void Pay(PayInfo payInfo, Action<PayResult> success, Action<string> fail)
     {
         Debug.Log($"[DefaultPlatform] 默认平台支付: {payInfo.Amount} {payInfo.Currency}");
