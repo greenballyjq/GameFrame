@@ -22,27 +22,28 @@ public static partial class SocialReflection {
   static SocialReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgxzb2NpYWwucHJvdG8aDG9wY29kZS5wcm90byILCglDMlNTaWduSW4iPgoM",
-          "U2lnbkluUmV3YXJkEg0KBWFzc2V0GAEgASgJEg4KBmFtb3VudBgCIAEoBBIP",
-          "CgdiYWxhbmNlGAMgASgEIkkKCVMyQ1NpZ25JbhIOCgZzdHJlYWsYASABKA0S",
-          "DAoEZGF0ZRgCIAEoCRIeCgdyZXdhcmRzGAMgAygLMg0uU2lnbkluUmV3YXJk",
-          "IhIKEEMyU0dldFNpZ25JbkluZm8iSwoQUzJDR2V0U2lnbkluSW5mbxIOCgZz",
-          "dHJlYWsYASABKA0SEQoJbGFzdF9kYXRlGAIgASgJEhQKDHNpZ25lZF90b2Rh",
-          "eRgDIAEoCCJxCglDMlNTb2NpYWwSDwoHc2Vzc2lvbhgBIAEoBBIdCgdzaWdu",
-          "X2luGAIgASgLMgouQzJTU2lnbkluSAASLQoQZ2V0X3NpZ25faW5faW5mbxgD",
-          "IAEoCzIRLkMyU0dldFNpZ25JbkluZm9IAEIFCgNtc2ciiwEKCVMyQ1NvY2lh",
-          "bBIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUS",
-          "HQoHc2lnbl9pbhgCIAEoCzIKLlMyQ1NpZ25JbkgAEi0KEGdldF9zaWduX2lu",
-          "X2luZm8YAyABKAsyES5TMkNHZXRTaWduSW5JbmZvSABCBQoDbXNnYgZwcm90",
-          "bzM="));
+          "Cgxzb2NpYWwucHJvdG8aDG9wY29kZS5wcm90byI2CglDMlNTaWduSW4SEwoL",
+          "c2lnbl9pbl9kYXkYASABKA0SFAoMYWRfY3VzdG9tX2lkGAIgASgJIj4KDFNp",
+          "Z25JblJld2FyZBINCgVhc3NldBgBIAEoCRIOCgZhbW91bnQYAiABKAQSDwoH",
+          "YmFsYW5jZRgDIAEoBCJOCglTMkNTaWduSW4SEwoLc2lnbl9pbl9kYXkYASAB",
+          "KA0SDAoEZGF0ZRgCIAEoCRIeCgdyZXdhcmRzGAMgAygLMg0uU2lnbkluUmV3",
+          "YXJkIhIKEEMyU0dldFNpZ25JbkluZm8iYAoQUzJDR2V0U2lnbkluSW5mbxIO",
+          "CgZzdHJlYWsYASABKA0SEwoLc2lnbmVkX2RheXMYBCADKA0SEQoJbGFzdF9k",
+          "YXRlGAIgASgJEhQKDHNpZ25lZF90b2RheRgDIAEoCCJxCglDMlNTb2NpYWwS",
+          "DwoHc2Vzc2lvbhgBIAEoBBIdCgdzaWduX2luGAIgASgLMgouQzJTU2lnbklu",
+          "SAASLQoQZ2V0X3NpZ25faW5faW5mbxgDIAEoCzIRLkMyU0dldFNpZ25Jbklu",
+          "Zm9IAEIFCgNtc2ciiwEKCVMyQ1NvY2lhbBIPCgdzZXNzaW9uGAEgASgEEhgK",
+          "BGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSHQoHc2lnbl9pbhgCIAEoCzIKLlMy",
+          "Q1NpZ25JbkgAEi0KEGdldF9zaWduX2luX2luZm8YAyABKAsyES5TMkNHZXRT",
+          "aWduSW5JbmZvSABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SSignIn), global::C2SSignIn.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SSignIn), global::C2SSignIn.Parser, new[]{ "SignInDay", "AdCustomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SignInReward), global::SignInReward.Parser, new[]{ "Asset", "Amount", "Balance" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn), global::S2CSignIn.Parser, new[]{ "Streak", "Date", "Rewards" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn), global::S2CSignIn.Parser, new[]{ "SignInDay", "Date", "Rewards" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SGetSignInInfo), global::C2SGetSignInInfo.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Streak", "LastDate", "SignedToday" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Streak", "SignedDays", "LastDate", "SignedToday" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SSocial), global::C2SSocial.Parser, new[]{ "Session", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CSocial), global::S2CSocial.Parser, new[]{ "Session", "Code", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null)
         }));
@@ -52,7 +53,7 @@ public static partial class SocialReflection {
 }
 #region Messages
 /// <summary>
-/// 签到请求（空消息）。
+/// 签到请求。
 /// </summary>
 public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -88,6 +89,8 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public C2SSignIn(C2SSignIn other) : this() {
+    signInDay_ = other.signInDay_;
+    adCustomId_ = other.adCustomId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -95,6 +98,36 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public C2SSignIn Clone() {
     return new C2SSignIn(this);
+  }
+
+  /// <summary>Field number for the "sign_in_day" field.</summary>
+  public const int SignInDayFieldNumber = 1;
+  private uint signInDay_;
+  /// <summary>
+  /// 本次签到目标天数（用于补签，可非连续）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public uint SignInDay {
+    get { return signInDay_; }
+    set {
+      signInDay_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "ad_custom_id" field.</summary>
+  public const int AdCustomIdFieldNumber = 2;
+  private string adCustomId_ = "";
+  /// <summary>
+  /// 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AdCustomId {
+    get { return adCustomId_; }
+    set {
+      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -112,6 +145,8 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (SignInDay != other.SignInDay) return false;
+    if (AdCustomId != other.AdCustomId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -119,6 +154,8 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
+    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -137,6 +174,14 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (SignInDay != 0) {
+      output.WriteRawTag(8);
+      output.WriteUInt32(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -147,6 +192,14 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (SignInDay != 0) {
+      output.WriteRawTag(8);
+      output.WriteUInt32(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -157,6 +210,12 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (SignInDay != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -168,6 +227,12 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   public void MergeFrom(C2SSignIn other) {
     if (other == null) {
       return;
+    }
+    if (other.SignInDay != 0) {
+      SignInDay = other.SignInDay;
+    }
+    if (other.AdCustomId.Length != 0) {
+      AdCustomId = other.AdCustomId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -184,6 +249,14 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
+        case 8: {
+          SignInDay = input.ReadUInt32();
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
       }
     }
   #endif
@@ -199,6 +272,14 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
+        case 8: {
+          SignInDay = input.ReadUInt32();
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
       }
     }
   }
@@ -518,7 +599,7 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2CSignIn(S2CSignIn other) : this() {
-    streak_ = other.streak_;
+    signInDay_ = other.signInDay_;
     date_ = other.date_;
     rewards_ = other.rewards_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -530,18 +611,18 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
     return new S2CSignIn(this);
   }
 
-  /// <summary>Field number for the "streak" field.</summary>
-  public const int StreakFieldNumber = 1;
-  private uint streak_;
+  /// <summary>Field number for the "sign_in_day" field.</summary>
+  public const int SignInDayFieldNumber = 1;
+  private uint signInDay_;
   /// <summary>
-  /// 连续签到天数。
+  /// 当前签到天数（本次签到的是第几天）。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint Streak {
-    get { return streak_; }
+  public uint SignInDay {
+    get { return signInDay_; }
     set {
-      streak_ = value;
+      signInDay_ = value;
     }
   }
 
@@ -589,7 +670,7 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Streak != other.Streak) return false;
+    if (SignInDay != other.SignInDay) return false;
     if (Date != other.Date) return false;
     if(!rewards_.Equals(other.rewards_)) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -599,7 +680,7 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (Streak != 0) hash ^= Streak.GetHashCode();
+    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
     if (Date.Length != 0) hash ^= Date.GetHashCode();
     hash ^= rewards_.GetHashCode();
     if (_unknownFields != null) {
@@ -620,9 +701,9 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (Streak != 0) {
+    if (SignInDay != 0) {
       output.WriteRawTag(8);
-      output.WriteUInt32(Streak);
+      output.WriteUInt32(SignInDay);
     }
     if (Date.Length != 0) {
       output.WriteRawTag(18);
@@ -639,9 +720,9 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Streak != 0) {
+    if (SignInDay != 0) {
       output.WriteRawTag(8);
-      output.WriteUInt32(Streak);
+      output.WriteUInt32(SignInDay);
     }
     if (Date.Length != 0) {
       output.WriteRawTag(18);
@@ -658,8 +739,8 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (Streak != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Streak);
+    if (SignInDay != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
     }
     if (Date.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Date);
@@ -677,8 +758,8 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
     if (other == null) {
       return;
     }
-    if (other.Streak != 0) {
-      Streak = other.Streak;
+    if (other.SignInDay != 0) {
+      SignInDay = other.SignInDay;
     }
     if (other.Date.Length != 0) {
       Date = other.Date;
@@ -700,7 +781,7 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          Streak = input.ReadUInt32();
+          SignInDay = input.ReadUInt32();
           break;
         }
         case 18: {
@@ -727,7 +808,7 @@ public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          Streak = input.ReadUInt32();
+          SignInDay = input.ReadUInt32();
           break;
         }
         case 18: {
@@ -938,6 +1019,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2CGetSignInInfo(S2CGetSignInInfo other) : this() {
     streak_ = other.streak_;
+    signedDays_ = other.signedDays_.Clone();
     lastDate_ = other.lastDate_;
     signedToday_ = other.signedToday_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -962,6 +1044,20 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     set {
       streak_ = value;
     }
+  }
+
+  /// <summary>Field number for the "signed_days" field.</summary>
+  public const int SignedDaysFieldNumber = 4;
+  private static readonly pb::FieldCodec<uint> _repeated_signedDays_codec
+      = pb::FieldCodec.ForUInt32(34);
+  private readonly pbc::RepeatedField<uint> signedDays_ = new pbc::RepeatedField<uint>();
+  /// <summary>
+  /// 已签到的天数列表（支持跳着签到）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<uint> SignedDays {
+    get { return signedDays_; }
   }
 
   /// <summary>Field number for the "last_date" field.</summary>
@@ -1010,6 +1106,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
       return true;
     }
     if (Streak != other.Streak) return false;
+    if(!signedDays_.Equals(other.signedDays_)) return false;
     if (LastDate != other.LastDate) return false;
     if (SignedToday != other.SignedToday) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -1020,6 +1117,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   public override int GetHashCode() {
     int hash = 1;
     if (Streak != 0) hash ^= Streak.GetHashCode();
+    hash ^= signedDays_.GetHashCode();
     if (LastDate.Length != 0) hash ^= LastDate.GetHashCode();
     if (SignedToday != false) hash ^= SignedToday.GetHashCode();
     if (_unknownFields != null) {
@@ -1052,6 +1150,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
       output.WriteRawTag(24);
       output.WriteBool(SignedToday);
     }
+    signedDays_.WriteTo(output, _repeated_signedDays_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1074,6 +1173,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
       output.WriteRawTag(24);
       output.WriteBool(SignedToday);
     }
+    signedDays_.WriteTo(ref output, _repeated_signedDays_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1087,6 +1187,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     if (Streak != 0) {
       size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Streak);
     }
+    size += signedDays_.CalculateSize(_repeated_signedDays_codec);
     if (LastDate.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(LastDate);
     }
@@ -1108,6 +1209,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     if (other.Streak != 0) {
       Streak = other.Streak;
     }
+    signedDays_.Add(other.signedDays_);
     if (other.LastDate.Length != 0) {
       LastDate = other.LastDate;
     }
@@ -1141,6 +1243,11 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
           SignedToday = input.ReadBool();
           break;
         }
+        case 34:
+        case 32: {
+          signedDays_.AddEntriesFrom(input, _repeated_signedDays_codec);
+          break;
+        }
       }
     }
   #endif
@@ -1166,6 +1273,11 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
         }
         case 24: {
           SignedToday = input.ReadBool();
+          break;
+        }
+        case 34:
+        case 32: {
+          signedDays_.AddEntriesFrom(ref input, _repeated_signedDays_codec);
           break;
         }
       }

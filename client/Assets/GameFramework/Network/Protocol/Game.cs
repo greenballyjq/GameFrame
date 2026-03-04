@@ -35,42 +35,48 @@ public static partial class GameReflection {
           "YXRhIigKC1MyQ0l0ZW1EYXRhEhkKBGl0ZW0YASABKAsyCy5QbGF5ZXJJdGVt",
           "ImcKDUMyU0l0ZW1VcGRhdGUSKAoFaXRlbXMYASADKAsyGS5DMlNJdGVtVXBk",
           "YXRlLkl0ZW1zRW50cnkaLAoKSXRlbXNFbnRyeRILCgNrZXkYASABKAkSDQoF",
-          "dmFsdWUYAiABKAQ6AjgBImcKDVMyQ0l0ZW1VcGRhdGUSKAoFaXRlbXMYASAD",
-          "KAsyGS5TMkNJdGVtVXBkYXRlLkl0ZW1zRW50cnkaLAoKSXRlbXNFbnRyeRIL",
-          "CgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAQ6AjgBIm0KDUMyU1dhdmVSZXN1",
-          "bHQSDwoHd2F2ZV9pZBgBIAEoDRISCgpwb2ludF9nYWluGAIgASgEEhQKDHRo",
-          "cmVla3BfZ2FpbhgDIAEoBBILCgN3aW4YBCABKAgSFAoMYWRfY3VzdG9tX2lk",
-          "GAUgASgJIjsKDVMyQ1dhdmVSZXN1bHQSEwoLcG9pbnRfdG90YWwYASABKAQS",
-          "FQoNdGhyZWVrcF90b3RhbBgCIAEoBCJmCgxCYXR0bGVSZWNvcmQSDwoHd2F2",
-          "ZV9pZBgBIAEoDRILCgN3aW4YAiABKAgSEQoJZ29sZF9nYWluGAMgASgEEhIK",
-          "CnBvaW50X2dhaW4YBCABKAQSEQoJdGltZXN0YW1wGAUgASgEIhIKEEMyU0Jh",
-          "dHRsZUhpc3RvcnkiMgoQUzJDQmF0dGxlSGlzdG9yeRIeCgdyZWNvcmRzGAEg",
-          "AygLMg0uQmF0dGxlUmVjb3JkIkgKC0MyU0dvbGRHYWluEhEKCWdvbGRfZ2Fp",
-          "bhgBIAEoBBITCgtzb3VyY2VfdHlwZRgCIAEoCRIRCglzb3VyY2VfaWQYAyAB",
-          "KAkiJAoLUzJDR29sZEdhaW4SFQoNdGhyZWVrcF90b3RhbBgBIAEoBCIRCg9D",
-          "MlNQcm9ncmVzc0RhdGEiMgoPUzJDUHJvZ3Jlc3NEYXRhEh8KCHByb2dyZXNz",
-          "GAEgASgLMg0uUHJvZ3Jlc3NEYXRhIiAKEEMyU0NvbmZpZ3VyYXRpb24SDAoE",
-          "bmFtZRgBIAEoCSIgChBTMkNDb25maWd1cmF0aW9uEgwKBGRhdGEYASABKAki",
-          "twMKB0MyU0dhbWUSDwoHc2Vzc2lvbhgBIAEoBBIhCgliYXNlX2RhdGEYAiAB",
-          "KAsyDC5DMlNCYXNlRGF0YUgAEiUKC2N1c3RvbV9kYXRhGAMgASgLMg4uQzJT",
-          "Q3VzdG9tRGF0YUgAEjIKEnVwbG9hZF9jdXN0b21fZGF0YRgEIAEoCzIULkMy",
-          "U1VwbG9hZEN1c3RvbURhdGFIABIhCglpdGVtX2RhdGEYBSABKAsyDC5DMlNJ",
-          "dGVtRGF0YUgAEiUKC3dhdmVfcmVzdWx0GAYgASgLMg4uQzJTV2F2ZVJlc3Vs",
-          "dEgAEikKDXByb2dyZXNzX2RhdGEYByABKAsyEC5DMlNQcm9ncmVzc0RhdGFI",
-          "ABIqCg1jb25maWd1cmF0aW9uGAggASgLMhEuQzJTQ29uZmlndXJhdGlvbkgA",
-          "EiUKC2l0ZW1fdXBkYXRlGAkgASgLMg4uQzJTSXRlbVVwZGF0ZUgAEisKDmJh",
-          "dHRsZV9oaXN0b3J5GAogASgLMhEuQzJTQmF0dGxlSGlzdG9yeUgAEiEKCWdv",
-          "bGRfZ2FpbhgLIAEoCzIMLkMyU0dvbGRHYWluSABCBQoDbXNnIp0DCgdTMkNH",
-          "YW1lEg8KB3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEoDjIKLlMyQ09wY29k",
-          "ZRIhCgliYXNlX2RhdGEYAiABKAsyDC5TMkNCYXNlRGF0YUgAEiUKC2N1c3Rv",
-          "bV9kYXRhGAMgASgLMg4uUzJDQ3VzdG9tRGF0YUgAEiEKCWl0ZW1fZGF0YRgE",
-          "IAEoCzIMLlMyQ0l0ZW1EYXRhSAASJQoLaXRlbV91cGRhdGUYBSABKAsyDi5T",
-          "MkNJdGVtVXBkYXRlSAASJQoLd2F2ZV9yZXN1bHQYBiABKAsyDi5TMkNXYXZl",
-          "UmVzdWx0SAASKQoNcHJvZ3Jlc3NfZGF0YRgHIAEoCzIQLlMyQ1Byb2dyZXNz",
-          "RGF0YUgAEioKDWNvbmZpZ3VyYXRpb24YCCABKAsyES5TMkNDb25maWd1cmF0",
-          "aW9uSAASKwoOYmF0dGxlX2hpc3RvcnkYCSABKAsyES5TMkNCYXR0bGVIaXN0",
-          "b3J5SAASIQoJZ29sZF9nYWluGAogASgLMgwuUzJDR29sZEdhaW5IAEIFCgNt",
-          "c2diBnByb3RvMw=="));
+          "dmFsdWUYAiABKAQ6AjgBIncKCkMyU0l0ZW1BZGQSJQoFaXRlbXMYASADKAsy",
+          "Fi5DMlNJdGVtQWRkLkl0ZW1zRW50cnkSFAoMYWRfY3VzdG9tX2lkGAIgASgJ",
+          "GiwKCkl0ZW1zRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgEOgI4",
+          "ASJhCgpTMkNJdGVtQWRkEiUKBWl0ZW1zGAEgAygLMhYuUzJDSXRlbUFkZC5J",
+          "dGVtc0VudHJ5GiwKCkl0ZW1zRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVl",
+          "GAIgASgEOgI4ASJnCg1TMkNJdGVtVXBkYXRlEigKBWl0ZW1zGAEgAygLMhku",
+          "UzJDSXRlbVVwZGF0ZS5JdGVtc0VudHJ5GiwKCkl0ZW1zRW50cnkSCwoDa2V5",
+          "GAEgASgJEg0KBXZhbHVlGAIgASgEOgI4ASJtCg1DMlNXYXZlUmVzdWx0Eg8K",
+          "B3dhdmVfaWQYASABKA0SEgoKcG9pbnRfZ2FpbhgCIAEoBBIUCgx0aHJlZWtw",
+          "X2dhaW4YAyABKAQSCwoDd2luGAQgASgIEhQKDGFkX2N1c3RvbV9pZBgFIAEo",
+          "CSI7Cg1TMkNXYXZlUmVzdWx0EhMKC3BvaW50X3RvdGFsGAEgASgEEhUKDXRo",
+          "cmVla3BfdG90YWwYAiABKAQiZgoMQmF0dGxlUmVjb3JkEg8KB3dhdmVfaWQY",
+          "ASABKA0SCwoDd2luGAIgASgIEhEKCWdvbGRfZ2FpbhgDIAEoBBISCgpwb2lu",
+          "dF9nYWluGAQgASgEEhEKCXRpbWVzdGFtcBgFIAEoBCISChBDMlNCYXR0bGVI",
+          "aXN0b3J5IjIKEFMyQ0JhdHRsZUhpc3RvcnkSHgoHcmVjb3JkcxgBIAMoCzIN",
+          "LkJhdHRsZVJlY29yZCJICgtDMlNHb2xkR2FpbhIRCglnb2xkX2dhaW4YASAB",
+          "KAQSEwoLc291cmNlX3R5cGUYAiABKAkSEQoJc291cmNlX2lkGAMgASgJIiQK",
+          "C1MyQ0dvbGRHYWluEhUKDXRocmVla3BfdG90YWwYASABKAQiEQoPQzJTUHJv",
+          "Z3Jlc3NEYXRhIjIKD1MyQ1Byb2dyZXNzRGF0YRIfCghwcm9ncmVzcxgBIAEo",
+          "CzINLlByb2dyZXNzRGF0YSIgChBDMlNDb25maWd1cmF0aW9uEgwKBG5hbWUY",
+          "ASABKAkiIAoQUzJDQ29uZmlndXJhdGlvbhIMCgRkYXRhGAEgASgJItgDCgdD",
+          "MlNHYW1lEg8KB3Nlc3Npb24YASABKAQSIQoJYmFzZV9kYXRhGAIgASgLMgwu",
+          "QzJTQmFzZURhdGFIABIlCgtjdXN0b21fZGF0YRgDIAEoCzIOLkMyU0N1c3Rv",
+          "bURhdGFIABIyChJ1cGxvYWRfY3VzdG9tX2RhdGEYBCABKAsyFC5DMlNVcGxv",
+          "YWRDdXN0b21EYXRhSAASIQoJaXRlbV9kYXRhGAUgASgLMgwuQzJTSXRlbURh",
+          "dGFIABIlCgt3YXZlX3Jlc3VsdBgGIAEoCzIOLkMyU1dhdmVSZXN1bHRIABIp",
+          "Cg1wcm9ncmVzc19kYXRhGAcgASgLMhAuQzJTUHJvZ3Jlc3NEYXRhSAASKgoN",
+          "Y29uZmlndXJhdGlvbhgIIAEoCzIRLkMyU0NvbmZpZ3VyYXRpb25IABIlCgtp",
+          "dGVtX3VwZGF0ZRgJIAEoCzIOLkMyU0l0ZW1VcGRhdGVIABIrCg5iYXR0bGVf",
+          "aGlzdG9yeRgKIAEoCzIRLkMyU0JhdHRsZUhpc3RvcnlIABIhCglnb2xkX2dh",
+          "aW4YCyABKAsyDC5DMlNHb2xkR2FpbkgAEh8KCGl0ZW1fYWRkGAwgASgLMgsu",
+          "QzJTSXRlbUFkZEgAQgUKA21zZyK+AwoHUzJDR2FtZRIPCgdzZXNzaW9uGAEg",
+          "ASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSIQoJYmFzZV9kYXRhGAIg",
+          "ASgLMgwuUzJDQmFzZURhdGFIABIlCgtjdXN0b21fZGF0YRgDIAEoCzIOLlMy",
+          "Q0N1c3RvbURhdGFIABIhCglpdGVtX2RhdGEYBCABKAsyDC5TMkNJdGVtRGF0",
+          "YUgAEiUKC2l0ZW1fdXBkYXRlGAUgASgLMg4uUzJDSXRlbVVwZGF0ZUgAEiUK",
+          "C3dhdmVfcmVzdWx0GAYgASgLMg4uUzJDV2F2ZVJlc3VsdEgAEikKDXByb2dy",
+          "ZXNzX2RhdGEYByABKAsyEC5TMkNQcm9ncmVzc0RhdGFIABIqCg1jb25maWd1",
+          "cmF0aW9uGAggASgLMhEuUzJDQ29uZmlndXJhdGlvbkgAEisKDmJhdHRsZV9o",
+          "aXN0b3J5GAkgASgLMhEuUzJDQmF0dGxlSGlzdG9yeUgAEiEKCWdvbGRfZ2Fp",
+          "bhgKIAEoCzIMLlMyQ0dvbGRHYWluSAASHwoIaXRlbV9hZGQYCyABKAsyCy5T",
+          "MkNJdGVtQWRkSABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -85,6 +91,8 @@ public static partial class GameReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SItemData), global::C2SItemData.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CItemData), global::S2CItemData.Parser, new[]{ "Item" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SItemUpdate), global::C2SItemUpdate.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SItemAdd), global::C2SItemAdd.Parser, new[]{ "Items", "AdCustomId" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CItemAdd), global::S2CItemAdd.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CItemUpdate), global::S2CItemUpdate.Parser, new[]{ "Items" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SWaveResult), global::C2SWaveResult.Parser, new[]{ "WaveId", "PointGain", "ThreekpGain", "Win", "AdCustomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CWaveResult), global::S2CWaveResult.Parser, new[]{ "PointTotal", "ThreekpTotal" }, null, null, null, null),
@@ -97,8 +105,8 @@ public static partial class GameReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CProgressData), global::S2CProgressData.Parser, new[]{ "Progress" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SConfiguration), global::C2SConfiguration.Parser, new[]{ "Name" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CConfiguration), global::S2CConfiguration.Parser, new[]{ "Data" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SGame), global::C2SGame.Parser, new[]{ "Session", "BaseData", "CustomData", "UploadCustomData", "ItemData", "WaveResult", "ProgressData", "Configuration", "ItemUpdate", "BattleHistory", "GoldGain" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGame), global::S2CGame.Parser, new[]{ "Session", "Code", "BaseData", "CustomData", "ItemData", "ItemUpdate", "WaveResult", "ProgressData", "Configuration", "BattleHistory", "GoldGain" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SGame), global::C2SGame.Parser, new[]{ "Session", "BaseData", "CustomData", "UploadCustomData", "ItemData", "WaveResult", "ProgressData", "Configuration", "ItemUpdate", "BattleHistory", "GoldGain", "ItemAdd" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGame), global::S2CGame.Parser, new[]{ "Session", "Code", "BaseData", "CustomData", "ItemData", "ItemUpdate", "WaveResult", "ProgressData", "Configuration", "BattleHistory", "GoldGain", "ItemAdd" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -2196,6 +2204,414 @@ public sealed partial class C2SItemUpdate : pb::IMessage<C2SItemUpdate>
 }
 
 /// <summary>
+/// 客户端上报道具新增请求（如看广告获得奖励）。
+/// </summary>
+public sealed partial class C2SItemAdd : pb::IMessage<C2SItemAdd>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SItemAdd> _parser = new pb::MessageParser<C2SItemAdd>(() => new C2SItemAdd());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SItemAdd> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameReflection.Descriptor.MessageTypes[11]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SItemAdd() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SItemAdd(C2SItemAdd other) : this() {
+    items_ = other.items_.Clone();
+    adCustomId_ = other.adCustomId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SItemAdd Clone() {
+    return new C2SItemAdd(this);
+  }
+
+  /// <summary>Field number for the "items" field.</summary>
+  public const int ItemsFieldNumber = 1;
+  private static readonly pbc::MapField<string, ulong>.Codec _map_items_codec
+      = new pbc::MapField<string, ulong>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt64(16, 0UL), 10);
+  private readonly pbc::MapField<string, ulong> items_ = new pbc::MapField<string, ulong>();
+  /// <summary>
+  /// 新增的道具映射表（道具 ID -> 新增数量）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::MapField<string, ulong> Items {
+    get { return items_; }
+  }
+
+  /// <summary>Field number for the "ad_custom_id" field.</summary>
+  public const int AdCustomIdFieldNumber = 2;
+  private string adCustomId_ = "";
+  /// <summary>
+  /// 广告交易自定义ID
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AdCustomId {
+    get { return adCustomId_; }
+    set {
+      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SItemAdd);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SItemAdd other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!Items.Equals(other.Items)) return false;
+    if (AdCustomId != other.AdCustomId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= Items.GetHashCode();
+    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    items_.WriteTo(output, _map_items_codec);
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    items_.WriteTo(ref output, _map_items_codec);
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    size += items_.CalculateSize(_map_items_codec);
+    if (AdCustomId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SItemAdd other) {
+    if (other == null) {
+      return;
+    }
+    items_.Add(other.items_);
+    if (other.AdCustomId.Length != 0) {
+      AdCustomId = other.AdCustomId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          items_.AddEntriesFrom(input, _map_items_codec);
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          items_.AddEntriesFrom(ref input, _map_items_codec);
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 客户端上报道具新增响应。
+/// </summary>
+public sealed partial class S2CItemAdd : pb::IMessage<S2CItemAdd>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<S2CItemAdd> _parser = new pb::MessageParser<S2CItemAdd>(() => new S2CItemAdd());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<S2CItemAdd> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameReflection.Descriptor.MessageTypes[12]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CItemAdd() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CItemAdd(S2CItemAdd other) : this() {
+    items_ = other.items_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CItemAdd Clone() {
+    return new S2CItemAdd(this);
+  }
+
+  /// <summary>Field number for the "items" field.</summary>
+  public const int ItemsFieldNumber = 1;
+  private static readonly pbc::MapField<string, ulong>.Codec _map_items_codec
+      = new pbc::MapField<string, ulong>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt64(16, 0UL), 10);
+  private readonly pbc::MapField<string, ulong> items_ = new pbc::MapField<string, ulong>();
+  /// <summary>
+  /// 变更后的道具映射。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::MapField<string, ulong> Items {
+    get { return items_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as S2CItemAdd);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(S2CItemAdd other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!Items.Equals(other.Items)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= Items.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    items_.WriteTo(output, _map_items_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    items_.WriteTo(ref output, _map_items_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    size += items_.CalculateSize(_map_items_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(S2CItemAdd other) {
+    if (other == null) {
+      return;
+    }
+    items_.Add(other.items_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          items_.AddEntriesFrom(input, _map_items_codec);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          items_.AddEntriesFrom(ref input, _map_items_codec);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 道具增量更新推送。
 /// </summary>
 public sealed partial class S2CItemUpdate : pb::IMessage<S2CItemUpdate>
@@ -2212,7 +2628,7 @@ public sealed partial class S2CItemUpdate : pb::IMessage<S2CItemUpdate>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[11]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[13]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2396,7 +2812,7 @@ public sealed partial class C2SWaveResult : pb::IMessage<C2SWaveResult>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[12]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[14]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2751,7 +3167,7 @@ public sealed partial class S2CWaveResult : pb::IMessage<S2CWaveResult>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[13]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[15]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2986,7 +3402,7 @@ public sealed partial class BattleRecord : pb::IMessage<BattleRecord>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[14]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[16]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3341,7 +3757,7 @@ public sealed partial class C2SBattleHistory : pb::IMessage<C2SBattleHistory>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[15]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[17]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3496,7 +3912,7 @@ public sealed partial class S2CBattleHistory : pb::IMessage<S2CBattleHistory>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[16]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[18]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3680,7 +4096,7 @@ public sealed partial class C2SGoldGain : pb::IMessage<C2SGoldGain>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[17]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[19]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3955,7 +4371,7 @@ public sealed partial class S2CGoldGain : pb::IMessage<S2CGoldGain>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[18]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[20]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4150,7 +4566,7 @@ public sealed partial class C2SProgressData : pb::IMessage<C2SProgressData>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[19]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[21]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4305,7 +4721,7 @@ public sealed partial class S2CProgressData : pb::IMessage<S2CProgressData>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[20]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[22]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4509,7 +4925,7 @@ public sealed partial class C2SConfiguration : pb::IMessage<C2SConfiguration>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[21]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[23]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4704,7 +5120,7 @@ public sealed partial class S2CConfiguration : pb::IMessage<S2CConfiguration>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[22]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[24]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4899,7 +5315,7 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[23]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[25]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4950,6 +5366,9 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
         break;
       case MsgOneofCase.GoldGain:
         GoldGain = other.GoldGain.Clone();
+        break;
+      case MsgOneofCase.ItemAdd:
+        ItemAdd = other.ItemAdd.Clone();
         break;
     }
 
@@ -5127,6 +5546,21 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
     }
   }
 
+  /// <summary>Field number for the "item_add" field.</summary>
+  public const int ItemAddFieldNumber = 12;
+  /// <summary>
+  /// 上报道具新增（如广告奖励）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2SItemAdd ItemAdd {
+    get { return msgCase_ == MsgOneofCase.ItemAdd ? (global::C2SItemAdd) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ItemAdd;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -5141,6 +5575,7 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
     ItemUpdate = 9,
     BattleHistory = 10,
     GoldGain = 11,
+    ItemAdd = 12,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5182,6 +5617,7 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
     if (!object.Equals(ItemUpdate, other.ItemUpdate)) return false;
     if (!object.Equals(BattleHistory, other.BattleHistory)) return false;
     if (!object.Equals(GoldGain, other.GoldGain)) return false;
+    if (!object.Equals(ItemAdd, other.ItemAdd)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -5201,6 +5637,7 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
     if (msgCase_ == MsgOneofCase.ItemUpdate) hash ^= ItemUpdate.GetHashCode();
     if (msgCase_ == MsgOneofCase.BattleHistory) hash ^= BattleHistory.GetHashCode();
     if (msgCase_ == MsgOneofCase.GoldGain) hash ^= GoldGain.GetHashCode();
+    if (msgCase_ == MsgOneofCase.ItemAdd) hash ^= ItemAdd.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -5264,6 +5701,10 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
       output.WriteRawTag(90);
       output.WriteMessage(GoldGain);
     }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      output.WriteRawTag(98);
+      output.WriteMessage(ItemAdd);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -5318,6 +5759,10 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
       output.WriteRawTag(90);
       output.WriteMessage(GoldGain);
     }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      output.WriteRawTag(98);
+      output.WriteMessage(ItemAdd);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -5360,6 +5805,9 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
     }
     if (msgCase_ == MsgOneofCase.GoldGain) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(GoldGain);
+    }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemAdd);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -5436,6 +5884,12 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
           GoldGain = new global::C2SGoldGain();
         }
         GoldGain.MergeFrom(other.GoldGain);
+        break;
+      case MsgOneofCase.ItemAdd:
+        if (ItemAdd == null) {
+          ItemAdd = new global::C2SItemAdd();
+        }
+        ItemAdd.MergeFrom(other.ItemAdd);
         break;
     }
 
@@ -5548,6 +6002,15 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
           GoldGain = subBuilder;
           break;
         }
+        case 98: {
+          global::C2SItemAdd subBuilder = new global::C2SItemAdd();
+          if (msgCase_ == MsgOneofCase.ItemAdd) {
+            subBuilder.MergeFrom(ItemAdd);
+          }
+          input.ReadMessage(subBuilder);
+          ItemAdd = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -5657,6 +6120,15 @@ public sealed partial class C2SGame : pb::IMessage<C2SGame>
           GoldGain = subBuilder;
           break;
         }
+        case 98: {
+          global::C2SItemAdd subBuilder = new global::C2SItemAdd();
+          if (msgCase_ == MsgOneofCase.ItemAdd) {
+            subBuilder.MergeFrom(ItemAdd);
+          }
+          input.ReadMessage(subBuilder);
+          ItemAdd = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -5681,7 +6153,7 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameReflection.Descriptor.MessageTypes[24]; }
+    get { return global::GameReflection.Descriptor.MessageTypes[26]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5730,6 +6202,9 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
         break;
       case MsgOneofCase.GoldGain:
         GoldGain = other.GoldGain.Clone();
+        break;
+      case MsgOneofCase.ItemAdd:
+        ItemAdd = other.ItemAdd.Clone();
         break;
     }
 
@@ -5907,6 +6382,21 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
     }
   }
 
+  /// <summary>Field number for the "item_add" field.</summary>
+  public const int ItemAddFieldNumber = 11;
+  /// <summary>
+  /// 上报道具新增响应。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2CItemAdd ItemAdd {
+    get { return msgCase_ == MsgOneofCase.ItemAdd ? (global::S2CItemAdd) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.ItemAdd;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -5920,6 +6410,7 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
     Configuration = 8,
     BattleHistory = 9,
     GoldGain = 10,
+    ItemAdd = 11,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5961,6 +6452,7 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
     if (!object.Equals(Configuration, other.Configuration)) return false;
     if (!object.Equals(BattleHistory, other.BattleHistory)) return false;
     if (!object.Equals(GoldGain, other.GoldGain)) return false;
+    if (!object.Equals(ItemAdd, other.ItemAdd)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -5980,6 +6472,7 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
     if (msgCase_ == MsgOneofCase.Configuration) hash ^= Configuration.GetHashCode();
     if (msgCase_ == MsgOneofCase.BattleHistory) hash ^= BattleHistory.GetHashCode();
     if (msgCase_ == MsgOneofCase.GoldGain) hash ^= GoldGain.GetHashCode();
+    if (msgCase_ == MsgOneofCase.ItemAdd) hash ^= ItemAdd.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -6039,6 +6532,10 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
       output.WriteRawTag(82);
       output.WriteMessage(GoldGain);
     }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      output.WriteRawTag(90);
+      output.WriteMessage(ItemAdd);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -6093,6 +6590,10 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
       output.WriteRawTag(82);
       output.WriteMessage(GoldGain);
     }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      output.WriteRawTag(90);
+      output.WriteMessage(ItemAdd);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -6139,6 +6640,9 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
     }
     if (msgCase_ == MsgOneofCase.GoldGain) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(GoldGain);
+    }
+    if (msgCase_ == MsgOneofCase.ItemAdd) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemAdd);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -6212,6 +6716,12 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
           GoldGain = new global::S2CGoldGain();
         }
         GoldGain.MergeFrom(other.GoldGain);
+        break;
+      case MsgOneofCase.ItemAdd:
+        if (ItemAdd == null) {
+          ItemAdd = new global::S2CItemAdd();
+        }
+        ItemAdd.MergeFrom(other.ItemAdd);
         break;
     }
 
@@ -6313,6 +6823,15 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
           }
           input.ReadMessage(subBuilder);
           GoldGain = subBuilder;
+          break;
+        }
+        case 90: {
+          global::S2CItemAdd subBuilder = new global::S2CItemAdd();
+          if (msgCase_ == MsgOneofCase.ItemAdd) {
+            subBuilder.MergeFrom(ItemAdd);
+          }
+          input.ReadMessage(subBuilder);
+          ItemAdd = subBuilder;
           break;
         }
         case 792: {
@@ -6417,6 +6936,15 @@ public sealed partial class S2CGame : pb::IMessage<S2CGame>
           }
           input.ReadMessage(subBuilder);
           GoldGain = subBuilder;
+          break;
+        }
+        case 90: {
+          global::S2CItemAdd subBuilder = new global::S2CItemAdd();
+          if (msgCase_ == MsgOneofCase.ItemAdd) {
+            subBuilder.MergeFrom(ItemAdd);
+          }
+          input.ReadMessage(subBuilder);
+          ItemAdd = subBuilder;
           break;
         }
         case 792: {

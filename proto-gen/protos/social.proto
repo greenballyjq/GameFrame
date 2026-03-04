@@ -2,8 +2,13 @@ syntax = "proto3";
 
 import "opcode.proto";
 
-// 签到请求（空消息）。
-message C2SSignIn {}
+// 签到请求。
+message C2SSignIn {
+  // 本次签到目标天数（用于补签，可非连续）。
+  uint32 sign_in_day = 1;
+  // 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  string ad_custom_id = 2;
+}
 
 // 单个签到奖励项。
 message SignInReward {
@@ -17,8 +22,8 @@ message SignInReward {
 
 // 签到响应。
 message S2CSignIn {
-  // 连续签到天数。
-  uint32 streak = 1;
+  // 当前签到天数（本次签到的是第几天）。
+  uint32 sign_in_day = 1;
   // 本次签到日期（YYYY-MM-DD）。
   string date = 2;
   // 本次发放的奖励列表。
@@ -32,6 +37,8 @@ message C2SGetSignInInfo {}
 message S2CGetSignInInfo {
   // 连续签到天数。
   uint32 streak = 1;
+  // 已签到的天数列表（支持跳着签到）。
+  repeated uint32 signed_days = 4;
   // 最近一次签到日期（YYYY-MM-DD）。
   string last_date = 2;
   // 今日是否已签到。

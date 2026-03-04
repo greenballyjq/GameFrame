@@ -18,6 +18,10 @@ enum S2COpcode {
   OP_WXAD_VERIFY_PENDING = 6;
   // 广告验证重试次数超限。
   OP_WXAD_RETRY_LIMIT_EXCEEDED = 7;
+  // 跳签后仅支持当日签到，补签需先看广告。
+  OP_SIGNIN_RESIGN_REQUIRED = 8;
+  // 该日期已签到。
+  OP_SIGNIN_ALREADY_DONE = 9;
 
   // threekp 余额不足。
   OP_3KP_NOT_ENOUGH = 101;

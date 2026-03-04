@@ -23,23 +23,23 @@ public static partial class PaymentReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cg1wYXltZW50LnByb3RvGgxvcGNvZGUucHJvdG8iCQoHQzJTTWFsbCIYCgdT",
-          "MkNNYWxsEg0KBWl0ZW1zGAEgASgJIkgKBkMyU0J1eRIPCgdpdGVtX2lkGAEg",
+          "MkNNYWxsEg0KBWl0ZW1zGAEgASgJIl4KBkMyU0J1eRIPCgdpdGVtX2lkGAEg",
           "ASgJEg0KBWNvdW50GAIgASgNEg8KB2FkZHJlc3MYAyABKAkSDQoFcGhvbmUY",
-          "BCABKAkiGgoGUzJDQnV5EhAKCG9yZGVyX2lkGAEgASgJIg4KDEMyU09yZGVy",
-          "TGlzdCIfCgxTMkNPcmRlckxpc3QSDwoHY29udGVudBgBIAEoCSJ7CgpDMlNQ",
-          "YXltZW50Eg8KB3Nlc3Npb24YASABKAQSGAoEbWFsbBgCIAEoCzIILkMyU01h",
-          "bGxIABIWCgNidXkYAyABKAsyBy5DMlNCdXlIABIjCgpvcmRlcl9saXN0GAQg",
-          "ASgLMg0uQzJTT3JkZXJMaXN0SABCBQoDbXNnIpUBCgpTMkNQYXltZW50Eg8K",
-          "B3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEoDjIKLlMyQ09wY29kZRIYCgRt",
-          "YWxsGAIgASgLMgguUzJDTWFsbEgAEhYKA2J1eRgDIAEoCzIHLlMyQ0J1eUgA",
-          "EiMKCm9yZGVyX2xpc3QYBCABKAsyDS5TMkNPcmRlckxpc3RIAEIFCgNtc2di",
-          "BnByb3RvMw=="));
+          "BCABKAkSFAoMYWRfY3VzdG9tX2lkGAUgASgJIhoKBlMyQ0J1eRIQCghvcmRl",
+          "cl9pZBgBIAEoCSIOCgxDMlNPcmRlckxpc3QiHwoMUzJDT3JkZXJMaXN0Eg8K",
+          "B2NvbnRlbnQYASABKAkiewoKQzJTUGF5bWVudBIPCgdzZXNzaW9uGAEgASgE",
+          "EhgKBG1hbGwYAiABKAsyCC5DMlNNYWxsSAASFgoDYnV5GAMgASgLMgcuQzJT",
+          "QnV5SAASIwoKb3JkZXJfbGlzdBgEIAEoCzINLkMyU09yZGVyTGlzdEgAQgUK",
+          "A21zZyKVAQoKUzJDUGF5bWVudBIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUY",
+          "YyABKA4yCi5TMkNPcGNvZGUSGAoEbWFsbBgCIAEoCzIILlMyQ01hbGxIABIW",
+          "CgNidXkYAyABKAsyBy5TMkNCdXlIABIjCgpvcmRlcl9saXN0GAQgASgLMg0u",
+          "UzJDT3JkZXJMaXN0SABCBQoDbXNnYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SMall), global::C2SMall.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CMall), global::S2CMall.Parser, new[]{ "Items" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SBuy), global::C2SBuy.Parser, new[]{ "ItemId", "Count", "Address", "Phone" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SBuy), global::C2SBuy.Parser, new[]{ "ItemId", "Count", "Address", "Phone", "AdCustomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CBuy), global::S2CBuy.Parser, new[]{ "OrderId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SOrderList), global::C2SOrderList.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2COrderList), global::S2COrderList.Parser, new[]{ "Content" }, null, null, null, null),
@@ -442,6 +442,7 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     count_ = other.count_;
     address_ = other.address_;
     phone_ = other.phone_;
+    adCustomId_ = other.adCustomId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -511,6 +512,21 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     }
   }
 
+  /// <summary>Field number for the "ad_custom_id" field.</summary>
+  public const int AdCustomIdFieldNumber = 5;
+  private string adCustomId_ = "";
+  /// <summary>
+  /// 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AdCustomId {
+    get { return adCustomId_; }
+    set {
+      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -530,6 +546,7 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     if (Count != other.Count) return false;
     if (Address != other.Address) return false;
     if (Phone != other.Phone) return false;
+    if (AdCustomId != other.AdCustomId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -541,6 +558,7 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     if (Count != 0) hash ^= Count.GetHashCode();
     if (Address.Length != 0) hash ^= Address.GetHashCode();
     if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -575,6 +593,10 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
       output.WriteRawTag(34);
       output.WriteString(Phone);
     }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -601,6 +623,10 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
       output.WriteRawTag(34);
       output.WriteString(Phone);
     }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(AdCustomId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -622,6 +648,9 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     }
     if (Phone.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+    }
+    if (AdCustomId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -646,6 +675,9 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
     }
     if (other.Phone.Length != 0) {
       Phone = other.Phone;
+    }
+    if (other.AdCustomId.Length != 0) {
+      AdCustomId = other.AdCustomId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -678,6 +710,10 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
           Phone = input.ReadString();
           break;
         }
+        case 42: {
+          AdCustomId = input.ReadString();
+          break;
+        }
       }
     }
   #endif
@@ -707,6 +743,10 @@ public sealed partial class C2SBuy : pb::IMessage<C2SBuy>
         }
         case 34: {
           Phone = input.ReadString();
+          break;
+        }
+        case 42: {
+          AdCustomId = input.ReadString();
           break;
         }
       }

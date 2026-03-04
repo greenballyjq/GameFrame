@@ -21,6 +21,8 @@ message C2SBuy {
   string address = 3;
   // 联系手机号。
   string phone = 4;
+  // 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  string ad_custom_id = 5;
 }
 
 // 下单购买响应。

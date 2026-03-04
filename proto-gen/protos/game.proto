@@ -63,6 +63,20 @@ message C2SItemUpdate {
   map<string, uint64> items = 1;
 }
 
+// 客户端上报道具新增请求（如看广告获得奖励）。
+message C2SItemAdd {
+  // 新增的道具映射表（道具 ID -> 新增数量）。
+  map<string, uint64> items = 1;
+  // 广告交易自定义ID
+  string ad_custom_id = 2;
+}
+
+// 客户端上报道具新增响应。
+message S2CItemAdd {
+  // 变更后的道具映射。
+  map<string, uint64> items = 1;
+}
+
 // 道具增量更新推送。
 message S2CItemUpdate {
   // 变更后的道具映射。
@@ -177,6 +191,8 @@ message C2SGame {
     C2SBattleHistory battle_history = 10;
     // 上报金币获得。
     C2SGoldGain gold_gain = 11;
+    // 上报道具新增（如广告奖励）。
+    C2SItemAdd item_add = 12;
   }
 }
 
@@ -206,5 +222,7 @@ message S2CGame {
     S2CBattleHistory battle_history = 9;
     // 上报金币获得响应。
     S2CGoldGain gold_gain = 10;
+    // 上报道具新增响应。
+    S2CItemAdd item_add = 11;
   }
 }

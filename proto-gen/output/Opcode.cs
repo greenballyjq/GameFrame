@@ -22,18 +22,19 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8q4wMKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
+          "CgxvcGNvZGUucHJvdG8qngQKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
           "DQoJT1BfRkFJTEVEEAESFgoST1BfU0VTU0lPTl9FWFBJUkVEEAISHAoYT1Bf",
           "U0VTU0lPTl9UT0tFTl9JTlZBTElEEAMSFwoTT1BfTk9fQ09ORklHVVJBVElP",
           "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIaChZPUF9XWEFEX1ZFUklGWV9Q",
-          "RU5ESU5HEAYSIAocT1BfV1hBRF9SRVRSWV9MSU1JVF9FWENFRURFRBAHEhUK",
-          "EU9QXzNLUF9OT1RfRU5PVUdIEGUSGQoVT1BfU1RBTUlOQV9OT1RfRU5PVUdI",
-          "EGYSFgoST1BfSVRFTV9OT1RfRU5PVUdIEGcSGgoWT1BfTUFMTF9JVEVNX05P",
-          "VF9FWElTVBBoEiAKHE9QX01BTExfSVRFTV9CVVlfQ09VTlRfRVJST1IQaRId",
-          "ChhPUF9MT0dJTl9JTlZBTElEX0FDQ09VTlQQ6QcSGQoUT1BfTE9HSU5fQVVU",
-          "SF9GQUlMRUQQ6gcSGgoVT1BfTE9HT1VUX09USEVSX0xPR0lOEM0IEhYKEU9Q",
-          "X0xPR09VVF9USU1FT1VUEM4IEh4KGU9QX0xPR09VVF9TRVJWRVJfU0hVVERP",
-          "V04QzwhiBnByb3RvMw=="));
+          "RU5ESU5HEAYSIAocT1BfV1hBRF9SRVRSWV9MSU1JVF9FWENFRURFRBAHEh0K",
+          "GU9QX1NJR05JTl9SRVNJR05fUkVRVUlSRUQQCBIaChZPUF9TSUdOSU5fQUxS",
+          "RUFEWV9ET05FEAkSFQoRT1BfM0tQX05PVF9FTk9VR0gQZRIZChVPUF9TVEFN",
+          "SU5BX05PVF9FTk9VR0gQZhIWChJPUF9JVEVNX05PVF9FTk9VR0gQZxIaChZP",
+          "UF9NQUxMX0lURU1fTk9UX0VYSVNUEGgSIAocT1BfTUFMTF9JVEVNX0JVWV9D",
+          "T1VOVF9FUlJPUhBpEh0KGE9QX0xPR0lOX0lOVkFMSURfQUNDT1VOVBDpBxIZ",
+          "ChRPUF9MT0dJTl9BVVRIX0ZBSUxFRBDqBxIaChVPUF9MT0dPVVRfT1RIRVJf",
+          "TE9HSU4QzQgSFgoRT1BfTE9HT1VUX1RJTUVPVVQQzggSHgoZT1BfTE9HT1VU",
+          "X1NFUlZFUl9TSFVURE9XThDPCGIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2COpcode), }, null, null));
@@ -78,6 +79,14 @@ public enum S2COpcode {
   /// 广告验证重试次数超限。
   /// </summary>
   [pbr::OriginalName("OP_WXAD_RETRY_LIMIT_EXCEEDED")] OpWxadRetryLimitExceeded = 7,
+  /// <summary>
+  /// 跳签后仅支持当日签到，补签需先看广告。
+  /// </summary>
+  [pbr::OriginalName("OP_SIGNIN_RESIGN_REQUIRED")] OpSigninResignRequired = 8,
+  /// <summary>
+  /// 该日期已签到。
+  /// </summary>
+  [pbr::OriginalName("OP_SIGNIN_ALREADY_DONE")] OpSigninAlreadyDone = 9,
   /// <summary>
   /// threekp 余额不足。
   /// </summary>
