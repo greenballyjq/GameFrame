@@ -216,7 +216,7 @@ namespace GameFramework.Manager
         /// 播放一次性特效（路径方式）
         /// 默认播放完自动收尾停止
         /// </summary>
-        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
+        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -256,7 +256,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（路径方式）
         /// 需要手动停止
         /// </summary>
-        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position, Quaternion rotation, bool dontDestroyOnLoad = true)
+        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
