@@ -43,6 +43,8 @@ message S2CGetSignInInfo {
   string last_date = 2;
   // 今日是否已签到。
   bool signed_today = 3;
+  // 当前签到天数（当前是第几天签到）。
+  uint32 sign_in_day = 5;
 }
 
 // 社交域根请求（/social）。
