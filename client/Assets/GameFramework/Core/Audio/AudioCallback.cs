@@ -4,20 +4,20 @@ namespace GameFramework.Core.Audio
 {
     public class AudioCallback
     {
-        private Action _onCompleteCallback;
+        private Action<AudioPlayer> _onCompleteCallback;
         
-        public void AddCallback(Action callback) => _onCompleteCallback += callback;
+        public void AddCallback(Action<AudioPlayer> callback) => _onCompleteCallback += callback;
 
-        public AudioCallback WithCallback(Action callback)
+        public AudioCallback WithCallback(Action<AudioPlayer> callback)
         {
             _onCompleteCallback += callback;
             return this;
         }
 
-        public void RemoveCallback(Action callback) => _onCompleteCallback -= callback;
+        public void RemoveCallback(Action<AudioPlayer> callback) => _onCompleteCallback -= callback;
         
         public void ClearCallback() => _onCompleteCallback = null;
         
-        public void InvokeCallback() => _onCompleteCallback?.Invoke();
+        public void InvokeCallback(AudioPlayer player) => _onCompleteCallback?.Invoke(player);
     }
 }

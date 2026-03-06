@@ -171,7 +171,7 @@ namespace GameFramework.Core.Audio
                 _isPlaying = false;
                 
                 // 触发链式回调
-                _audioCallback?.InvokeCallback();
+                _audioCallback?.InvokeCallback(this);
                 // 触发事件
                 OnPlayComplete?.Invoke(this);
             }
