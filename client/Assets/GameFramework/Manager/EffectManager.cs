@@ -196,7 +196,7 @@ namespace GameFramework.Manager
         /// 播放一次性特效（预制体方式）
         /// 默认播放完自动收尾停止
         /// </summary>
-        public GameObject PlayOneShot(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
+        public GameObject PlayOneShot(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -216,7 +216,7 @@ namespace GameFramework.Manager
         /// 播放一次性特效（路径方式）
         /// 默认播放完自动收尾停止
         /// </summary>
-        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
+        public async UniTask<GameObject> PlayOneShotAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -236,7 +236,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（预制体方式）
         /// 需要手动停止
         /// </summary>
-        public GameObject PlayLoop(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
+        public GameObject PlayLoop(GameObject prefab, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -256,7 +256,7 @@ namespace GameFramework.Manager
         /// 播放循环特效（路径方式）
         /// 需要手动停止
         /// </summary>
-        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = true)
+        public async UniTask<GameObject> PlayLoopAsync(string prefabPath, Vector3 position = default, Quaternion rotation = default, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -276,7 +276,7 @@ namespace GameFramework.Manager
         /// 播放持续时间特效（预制体方式）
         /// 到时间后默认自动收尾停止
         /// </summary>
-        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = true)
+        public GameObject PlayForDuration(GameObject prefab, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
         {
             GameObject obj = _poolManager.Spawn(prefab);
             obj.transform.SetPositionAndRotation(position, rotation);
@@ -296,7 +296,7 @@ namespace GameFramework.Manager
         /// 播放持续时间特效
         /// 到时间后默认自动收尾停止
         /// </summary>
-        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = true)
+        public async UniTask<GameObject> PlayForDurationAsync(string prefabPath, Vector3 position, Quaternion rotation, float duration, EffectStopMode endMode = EffectStopMode.Graceful, bool dontDestroyOnLoad = false)
         {
             GameObject obj = await _poolManager.SpawnAsync(prefabPath);
             obj.transform.SetPositionAndRotation(position, rotation);
