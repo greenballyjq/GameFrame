@@ -1447,23 +1447,47 @@ public class WeChatPlatform : IPlatform
         {
             var systemInfo = GetSystemInfo();
 
+            // WXVideo wxVideo = WXBase.CreateVideo(new WXCreateVideoParam
+            // {
+            //     x = 9999,
+            //     y = 9999,
+            //
+            //     width = (int)systemInfo.ScreenWidth,
+            //     height = (int)systemInfo.ScreenHeight,
+            //
+            //     src = src,
+            //     poster = poster,
+            //
+            //     autoplay = false,
+            //     muted = false,
+            //
+            //     objectFit = "cover",
+            //     underGameView = false,
+            //
+            //     controls = false,
+            //     showProgress = false,
+            //     showProgressInControlMode = false,
+            //     enableProgressGesture = false,
+            //     enablePlayGesture = false,
+            //     showCenterPlayBtn = false,
+            // });
             WXVideo wxVideo = WXBase.CreateVideo(new CreateVideoOption
             {
                 x = 9999,
                 y = 9999,
-
+            
                 width = (int)systemInfo.ScreenWidth,
                 height = (int)systemInfo.ScreenHeight,
-
+            
                 src = src,
                 poster = poster,
-
+            
                 autoplay = false,
                 muted = false,
-
+            
                 objectFit = "cover",
                 underGameView = false,
-
+            
                 controls = false,
                 showProgress = false,
                 showProgressInControlMode = false,

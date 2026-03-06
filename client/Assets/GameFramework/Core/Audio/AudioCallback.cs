@@ -31,7 +31,7 @@ namespace GameFramework.Core.Audio
         {
             if (callback == null) return UniTask.CompletedTask;
             var tcs = new UniTaskCompletionSource();
-            callback.AddCallback(() => tcs.TrySetResult());
+            callback.AddCallback((audioPlayer) => tcs.TrySetResult());
             return tcs.Task;
         }
     }
