@@ -27,15 +27,16 @@ public static partial class SocialReflection {
           "Z25JblJld2FyZBINCgVhc3NldBgBIAEoCRIOCgZhbW91bnQYAiABKAQSDwoH",
           "YmFsYW5jZRgDIAEoBCJOCglTMkNTaWduSW4SEwoLc2lnbl9pbl9kYXkYASAB",
           "KA0SDAoEZGF0ZRgCIAEoCRIeCgdyZXdhcmRzGAMgAygLMg0uU2lnbkluUmV3",
-          "YXJkIhIKEEMyU0dldFNpZ25JbkluZm8iYAoQUzJDR2V0U2lnbkluSW5mbxIO",
+          "YXJkIhIKEEMyU0dldFNpZ25JbkluZm8idQoQUzJDR2V0U2lnbkluSW5mbxIO",
           "CgZzdHJlYWsYASABKA0SEwoLc2lnbmVkX2RheXMYBCADKA0SEQoJbGFzdF9k",
-          "YXRlGAIgASgJEhQKDHNpZ25lZF90b2RheRgDIAEoCCJxCglDMlNTb2NpYWwS",
-          "DwoHc2Vzc2lvbhgBIAEoBBIdCgdzaWduX2luGAIgASgLMgouQzJTU2lnbklu",
-          "SAASLQoQZ2V0X3NpZ25faW5faW5mbxgDIAEoCzIRLkMyU0dldFNpZ25Jbklu",
-          "Zm9IAEIFCgNtc2ciiwEKCVMyQ1NvY2lhbBIPCgdzZXNzaW9uGAEgASgEEhgK",
-          "BGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSHQoHc2lnbl9pbhgCIAEoCzIKLlMy",
-          "Q1NpZ25JbkgAEi0KEGdldF9zaWduX2luX2luZm8YAyABKAsyES5TMkNHZXRT",
-          "aWduSW5JbmZvSABCBQoDbXNnYgZwcm90bzM="));
+          "YXRlGAIgASgJEhQKDHNpZ25lZF90b2RheRgDIAEoCBITCgtzaWduX2luX2Rh",
+          "eRgFIAEoDSJxCglDMlNTb2NpYWwSDwoHc2Vzc2lvbhgBIAEoBBIdCgdzaWdu",
+          "X2luGAIgASgLMgouQzJTU2lnbkluSAASLQoQZ2V0X3NpZ25faW5faW5mbxgD",
+          "IAEoCzIRLkMyU0dldFNpZ25JbkluZm9IAEIFCgNtc2ciiwEKCVMyQ1NvY2lh",
+          "bBIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUS",
+          "HQoHc2lnbl9pbhgCIAEoCzIKLlMyQ1NpZ25JbkgAEi0KEGdldF9zaWduX2lu",
+          "X2luZm8YAyABKAsyES5TMkNHZXRTaWduSW5JbmZvSABCBQoDbXNnYgZwcm90",
+          "bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -43,7 +44,7 @@ public static partial class SocialReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::SignInReward), global::SignInReward.Parser, new[]{ "Asset", "Amount", "Balance" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn), global::S2CSignIn.Parser, new[]{ "SignInDay", "Date", "Rewards" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SGetSignInInfo), global::C2SGetSignInInfo.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Streak", "SignedDays", "LastDate", "SignedToday" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Streak", "SignedDays", "LastDate", "SignedToday", "SignInDay" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SSocial), global::C2SSocial.Parser, new[]{ "Session", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CSocial), global::S2CSocial.Parser, new[]{ "Session", "Code", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null)
         }));
@@ -1022,6 +1023,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     signedDays_ = other.signedDays_.Clone();
     lastDate_ = other.lastDate_;
     signedToday_ = other.signedToday_;
+    signInDay_ = other.signInDay_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1090,6 +1092,21 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     }
   }
 
+  /// <summary>Field number for the "sign_in_day" field.</summary>
+  public const int SignInDayFieldNumber = 5;
+  private uint signInDay_;
+  /// <summary>
+  /// 当前签到天数（当前是第几天签到）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public uint SignInDay {
+    get { return signInDay_; }
+    set {
+      signInDay_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -1109,6 +1126,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     if(!signedDays_.Equals(other.signedDays_)) return false;
     if (LastDate != other.LastDate) return false;
     if (SignedToday != other.SignedToday) return false;
+    if (SignInDay != other.SignInDay) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1120,6 +1138,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     hash ^= signedDays_.GetHashCode();
     if (LastDate.Length != 0) hash ^= LastDate.GetHashCode();
     if (SignedToday != false) hash ^= SignedToday.GetHashCode();
+    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1151,6 +1170,10 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
       output.WriteBool(SignedToday);
     }
     signedDays_.WriteTo(output, _repeated_signedDays_codec);
+    if (SignInDay != 0) {
+      output.WriteRawTag(40);
+      output.WriteUInt32(SignInDay);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1174,6 +1197,10 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
       output.WriteBool(SignedToday);
     }
     signedDays_.WriteTo(ref output, _repeated_signedDays_codec);
+    if (SignInDay != 0) {
+      output.WriteRawTag(40);
+      output.WriteUInt32(SignInDay);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1193,6 +1220,9 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     }
     if (SignedToday != false) {
       size += 1 + 1;
+    }
+    if (SignInDay != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1215,6 +1245,9 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     }
     if (other.SignedToday != false) {
       SignedToday = other.SignedToday;
+    }
+    if (other.SignInDay != 0) {
+      SignInDay = other.SignInDay;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1248,6 +1281,10 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
           signedDays_.AddEntriesFrom(input, _repeated_signedDays_codec);
           break;
         }
+        case 40: {
+          SignInDay = input.ReadUInt32();
+          break;
+        }
       }
     }
   #endif
@@ -1278,6 +1315,10 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
         case 34:
         case 32: {
           signedDays_.AddEntriesFrom(ref input, _repeated_signedDays_codec);
+          break;
+        }
+        case 40: {
+          SignInDay = input.ReadUInt32();
           break;
         }
       }
