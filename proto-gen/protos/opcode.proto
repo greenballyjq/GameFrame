@@ -33,6 +33,8 @@ enum S2COpcode {
   OP_MALL_ITEM_NOT_EXIST = 104;
   // 商品购买数量非法。
   OP_MALL_ITEM_BUY_COUNT_ERROR = 105;
+  // 商品处于购买冷却中。
+  OP_MALL_ITEM_COOLDOWN = 106;
 
   // 无效账号（手机号登录场景）。
   OP_LOGIN_INVALID_ACCOUNT = 1001;

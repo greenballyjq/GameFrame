@@ -9,6 +9,8 @@ message C2SMall {}
 message S2CMall {
   // 商品列表 JSON 字符串。
   string items = 1;
+  // 处于冷却中的商品映射：key 为 item_id，value 为冷却到期 UTC 时间戳（秒）。
+  map<string, uint64> cooldown_items = 2;
 }
 
 // 下单购买请求。
