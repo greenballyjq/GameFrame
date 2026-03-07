@@ -22,23 +22,26 @@ public static partial class PaymentReflection {
   static PaymentReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg1wYXltZW50LnByb3RvGgxvcGNvZGUucHJvdG8iCQoHQzJTTWFsbCIYCgdT",
-          "MkNNYWxsEg0KBWl0ZW1zGAEgASgJIl4KBkMyU0J1eRIPCgdpdGVtX2lkGAEg",
-          "ASgJEg0KBWNvdW50GAIgASgNEg8KB2FkZHJlc3MYAyABKAkSDQoFcGhvbmUY",
-          "BCABKAkSFAoMYWRfY3VzdG9tX2lkGAUgASgJIhoKBlMyQ0J1eRIQCghvcmRl",
-          "cl9pZBgBIAEoCSIOCgxDMlNPcmRlckxpc3QiHwoMUzJDT3JkZXJMaXN0Eg8K",
-          "B2NvbnRlbnQYASABKAkiewoKQzJTUGF5bWVudBIPCgdzZXNzaW9uGAEgASgE",
-          "EhgKBG1hbGwYAiABKAsyCC5DMlNNYWxsSAASFgoDYnV5GAMgASgLMgcuQzJT",
-          "QnV5SAASIwoKb3JkZXJfbGlzdBgEIAEoCzINLkMyU09yZGVyTGlzdEgAQgUK",
-          "A21zZyKVAQoKUzJDUGF5bWVudBIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUY",
-          "YyABKA4yCi5TMkNPcGNvZGUSGAoEbWFsbBgCIAEoCzIILlMyQ01hbGxIABIW",
-          "CgNidXkYAyABKAsyBy5TMkNCdXlIABIjCgpvcmRlcl9saXN0GAQgASgLMg0u",
-          "UzJDT3JkZXJMaXN0SABCBQoDbXNnYgZwcm90bzM="));
+          "Cg1wYXltZW50LnByb3RvGgxvcGNvZGUucHJvdG8iCQoHQzJTTWFsbCKDAQoH",
+          "UzJDTWFsbBINCgVpdGVtcxgBIAEoCRIzCg5jb29sZG93bl9pdGVtcxgCIAMo",
+          "CzIbLlMyQ01hbGwuQ29vbGRvd25JdGVtc0VudHJ5GjQKEkNvb2xkb3duSXRl",
+          "bXNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAQ6AjgBIl4KBkMy",
+          "U0J1eRIPCgdpdGVtX2lkGAEgASgJEg0KBWNvdW50GAIgASgNEg8KB2FkZHJl",
+          "c3MYAyABKAkSDQoFcGhvbmUYBCABKAkSFAoMYWRfY3VzdG9tX2lkGAUgASgJ",
+          "IhoKBlMyQ0J1eRIQCghvcmRlcl9pZBgBIAEoCSIOCgxDMlNPcmRlckxpc3Qi",
+          "HwoMUzJDT3JkZXJMaXN0Eg8KB2NvbnRlbnQYASABKAkiewoKQzJTUGF5bWVu",
+          "dBIPCgdzZXNzaW9uGAEgASgEEhgKBG1hbGwYAiABKAsyCC5DMlNNYWxsSAAS",
+          "FgoDYnV5GAMgASgLMgcuQzJTQnV5SAASIwoKb3JkZXJfbGlzdBgEIAEoCzIN",
+          "LkMyU09yZGVyTGlzdEgAQgUKA21zZyKVAQoKUzJDUGF5bWVudBIPCgdzZXNz",
+          "aW9uGAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSGAoEbWFsbBgC",
+          "IAEoCzIILlMyQ01hbGxIABIWCgNidXkYAyABKAsyBy5TMkNCdXlIABIjCgpv",
+          "cmRlcl9saXN0GAQgASgLMg0uUzJDT3JkZXJMaXN0SABCBQoDbXNnYgZwcm90",
+          "bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SMall), global::C2SMall.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CMall), global::S2CMall.Parser, new[]{ "Items" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CMall), global::S2CMall.Parser, new[]{ "Items", "CooldownItems" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SBuy), global::C2SBuy.Parser, new[]{ "ItemId", "Count", "Address", "Phone", "AdCustomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CBuy), global::S2CBuy.Parser, new[]{ "OrderId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SOrderList), global::C2SOrderList.Parser, null, null, null, null, null),
@@ -244,6 +247,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2CMall(S2CMall other) : this() {
     items_ = other.items_;
+    cooldownItems_ = other.cooldownItems_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -268,6 +272,20 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
     }
   }
 
+  /// <summary>Field number for the "cooldown_items" field.</summary>
+  public const int CooldownItemsFieldNumber = 2;
+  private static readonly pbc::MapField<string, ulong>.Codec _map_cooldownItems_codec
+      = new pbc::MapField<string, ulong>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt64(16, 0UL), 18);
+  private readonly pbc::MapField<string, ulong> cooldownItems_ = new pbc::MapField<string, ulong>();
+  /// <summary>
+  /// 处于冷却中的商品映射：key 为 item_id，value 为冷却到期 UTC 时间戳（秒）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::MapField<string, ulong> CooldownItems {
+    get { return cooldownItems_; }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -284,6 +302,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
       return true;
     }
     if (Items != other.Items) return false;
+    if (!CooldownItems.Equals(other.CooldownItems)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -292,6 +311,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
   public override int GetHashCode() {
     int hash = 1;
     if (Items.Length != 0) hash ^= Items.GetHashCode();
+    hash ^= CooldownItems.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -314,6 +334,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
       output.WriteRawTag(10);
       output.WriteString(Items);
     }
+    cooldownItems_.WriteTo(output, _map_cooldownItems_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -328,6 +349,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
       output.WriteRawTag(10);
       output.WriteString(Items);
     }
+    cooldownItems_.WriteTo(ref output, _map_cooldownItems_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -341,6 +363,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
     if (Items.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Items);
     }
+    size += cooldownItems_.CalculateSize(_map_cooldownItems_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -356,6 +379,7 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
     if (other.Items.Length != 0) {
       Items = other.Items;
     }
+    cooldownItems_.Add(other.cooldownItems_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -375,6 +399,10 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
           Items = input.ReadString();
           break;
         }
+        case 18: {
+          cooldownItems_.AddEntriesFrom(input, _map_cooldownItems_codec);
+          break;
+        }
       }
     }
   #endif
@@ -392,6 +420,10 @@ public sealed partial class S2CMall : pb::IMessage<S2CMall>
           break;
         case 10: {
           Items = input.ReadString();
+          break;
+        }
+        case 18: {
+          cooldownItems_.AddEntriesFrom(ref input, _map_cooldownItems_codec);
           break;
         }
       }

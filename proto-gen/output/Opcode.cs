@@ -22,7 +22,7 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8qngQKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
+          "CgxvcGNvZGUucHJvdG8quQQKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
           "DQoJT1BfRkFJTEVEEAESFgoST1BfU0VTU0lPTl9FWFBJUkVEEAISHAoYT1Bf",
           "U0VTU0lPTl9UT0tFTl9JTlZBTElEEAMSFwoTT1BfTk9fQ09ORklHVVJBVElP",
           "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIaChZPUF9XWEFEX1ZFUklGWV9Q",
@@ -31,10 +31,11 @@ public static partial class OpcodeReflection {
           "RUFEWV9ET05FEAkSFQoRT1BfM0tQX05PVF9FTk9VR0gQZRIZChVPUF9TVEFN",
           "SU5BX05PVF9FTk9VR0gQZhIWChJPUF9JVEVNX05PVF9FTk9VR0gQZxIaChZP",
           "UF9NQUxMX0lURU1fTk9UX0VYSVNUEGgSIAocT1BfTUFMTF9JVEVNX0JVWV9D",
-          "T1VOVF9FUlJPUhBpEh0KGE9QX0xPR0lOX0lOVkFMSURfQUNDT1VOVBDpBxIZ",
-          "ChRPUF9MT0dJTl9BVVRIX0ZBSUxFRBDqBxIaChVPUF9MT0dPVVRfT1RIRVJf",
-          "TE9HSU4QzQgSFgoRT1BfTE9HT1VUX1RJTUVPVVQQzggSHgoZT1BfTE9HT1VU",
-          "X1NFUlZFUl9TSFVURE9XThDPCGIGcHJvdG8z"));
+          "T1VOVF9FUlJPUhBpEhkKFU9QX01BTExfSVRFTV9DT09MRE9XThBqEh0KGE9Q",
+          "X0xPR0lOX0lOVkFMSURfQUNDT1VOVBDpBxIZChRPUF9MT0dJTl9BVVRIX0ZB",
+          "SUxFRBDqBxIaChVPUF9MT0dPVVRfT1RIRVJfTE9HSU4QzQgSFgoRT1BfTE9H",
+          "T1VUX1RJTUVPVVQQzggSHgoZT1BfTE9HT1VUX1NFUlZFUl9TSFVURE9XThDP",
+          "CGIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2COpcode), }, null, null));
@@ -107,6 +108,10 @@ public enum S2COpcode {
   /// 商品购买数量非法。
   /// </summary>
   [pbr::OriginalName("OP_MALL_ITEM_BUY_COUNT_ERROR")] OpMallItemBuyCountError = 105,
+  /// <summary>
+  /// 商品处于购买冷却中。
+  /// </summary>
+  [pbr::OriginalName("OP_MALL_ITEM_COOLDOWN")] OpMallItemCooldown = 106,
   /// <summary>
   /// 无效账号（手机号登录场景）。
   /// </summary>
