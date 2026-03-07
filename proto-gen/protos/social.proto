@@ -1,50 +1,65 @@
 syntax = "proto3";
-
 import "opcode.proto";
+
+// 签到类型
+enum SignInType {
+  SIGN_IN_SEVEN = 0; // 七日签到
+  SIGN_IN_MONTH = 1; // 月度签到
+}
+
+// 签到数据
+message SignInData {
+  // 首次签到日期（YYYY-MM-DD）。
+  string first_signin_date = 1;
+  // 最近一次签到日期（YYYY-MM-DD）。
+  string last_date = 2;
+  // 签到数据(从首签日开始的签到记录列表，1=已签到，0=未签到)
+  repeated uint32 signed_days = 3;
+  // 当前7天循环周期的起始日期（YYYY-MM-DD），用于前端展示本周进度。
+  string cycle_start_date = 4;
+}
+
+// 获取签到信息请求（空消息）。
+message C2SGetSignInInfo {
+  // 签到类型（默认为七日签到）。
+  SignInType type = 1;
+}
+
+// 获取签到信息响应。
+message S2CGetSignInInfo {
+  // 签到类型（默认为七日签到）。
+  SignInType type = 1;
+  // 签到数据。
+  SignInData data = 2;
+}
 
 // 签到请求。
 message C2SSignIn {
-  // 本次签到目标天数（用于补签，可非连续）。
-  uint32 sign_in_day = 1;
+  // 本次签到目标（0=今日，-1=补签昨日, 以此类推, 暂定不可大于0）
+  int32 sign_in_day = 1;
   // 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
   string ad_custom_id = 2;
-}
-
-// 单个签到奖励项。
-message SignInReward {
-  // 奖励资产类型（如 threekp）。
-  string asset = 1;
-  // 奖励数量。
-  uint64 amount = 2;
-  // 领取后该资产余额。
-  uint64 balance = 3;
+  // 签到类型（默认为七日签到）。
+  SignInType type = 3;
 }
 
 // 签到响应。
 message S2CSignIn {
-  // 当前签到天数（本次签到的是第几天）。
-  uint32 sign_in_day = 1;
-  // 本次签到日期（YYYY-MM-DD）。
-  string date = 2;
+  message SignInReward {
+  // 奖励资产类型（如 threekp）。
+    string asset = 1;
+  // 奖励数量。
+    uint64 amount = 2;
+  // 领取后该资产余额。
+    uint64 balance = 3;
+  }
+
+  // 签到类型（默认为七日签到）。
+  SignInType type = 1;
   // 本次发放的奖励列表。
-  repeated SignInReward rewards = 3;
-}
-
-// 获取签到信息请求（空消息）。
-message C2SGetSignInInfo {}
-
-// 获取签到信息响应。
-message S2CGetSignInInfo {
-  // 连续签到天数。
-  uint32 streak = 1;
-  // 已签到的天数列表（支持跳着签到）。
-  repeated uint32 signed_days = 4;
-  // 最近一次签到日期（YYYY-MM-DD）。
-  string last_date = 2;
-  // 今日是否已签到。
-  bool signed_today = 3;
-  // 当前签到天数（当前是第几天签到）。
-  uint32 sign_in_day = 5;
+  repeated SignInReward rewards = 2;
+  // 签到数据。
+  SignInData data = 3;
 }
 
 // 社交域根请求（/social）。

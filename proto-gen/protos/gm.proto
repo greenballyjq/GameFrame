@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+import "opcode.proto";
+import "social.proto";
+
+// GM 修改签到首签日期请求
+message C2SGMSetSigninFirstDate {
+  // 目标用户 UUID（可选，不填则修改当前用户）
+  string uuid = 1;
+  // 新的首签日期（YYYY-MM-DD），不能超过今日
+  string first_signin_date = 2;
+  // 签到类型（默认为七日签到）
+  SignInType type = 3;
+}
+
+// GM 修改签到首签日期响应
+message S2CGMSetSigninFirstDate {
+  // 签到类型（与请求一致）
+  SignInType type = 1;
+  // 修改后的签到数据
+  SignInData data = 2;
+}
+
+// GM 设置广告验证标记请求
+message C2SGMSetAdVerify {
+  // 目标用户 UUID（可选，不填则设置当前用户）
+  string uuid = 1;
+  // 广告自定义 ID
+  string ad_custom_id = 2;
+  // 是否设置为已验证（true=设置，false=删除）
+  bool verified = 3;
+}
+
+// GM 设置广告验证标记响应
+message S2CGMSetAdVerify {
+  // 广告自定义 ID
+  string ad_custom_id = 1;
+  // 验证状态
+  bool verified = 2;
+}
+
+// GM 域根请求（/gm）
+message C2SGM {
+  // 请求序号（客户端自增，服务端原样回传）
+  uint64 session = 1;
+  // 具体 GM 子请求
+  oneof msg {
+    // 设置签到首签日期
+    C2SGMSetSigninFirstDate set_signin_first_date = 2;
+    // 设置广告验证标记
+    C2SGMSetAdVerify set_ad_verify = 3;
+  }
+}
+
+// GM 域根响应（/gm）
+message S2CGM {
+  // 对应请求的 session
+  uint64 session = 1;
+  // 通用错误码（OP_SUCCESS 表示成功）
+  S2COpcode code = 99;
+  // 具体 GM 子响应
+  oneof msg {
+    // 设置签到首签日期响应
+    S2CGMSetSigninFirstDate set_signin_first_date = 2;
+    // 设置广告验证标记响应
+    S2CGMSetAdVerify set_ad_verify = 3;
+  }
+}

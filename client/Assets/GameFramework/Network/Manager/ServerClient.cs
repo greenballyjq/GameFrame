@@ -26,8 +26,8 @@ namespace GameFramework.Network
         /// 记录已发送但未收到响应的请求信息
         /// Key: session, Value: 请求信息(消息类型, 发送时间)
         /// </summary>
-        private Dictionary<ulong, (string messageType, DateTime sendTime)> pendingRequests =
-            new Dictionary<ulong, (string, DateTime)>();
+        private Dictionary<ulong, (string messageType, string endpoint, DateTime sendTime)> pendingRequests =
+            new Dictionary<ulong, (string, string, DateTime)>();
 
         /// <summary>
         /// 是否已连接到服务器
@@ -85,7 +85,7 @@ namespace GameFramework.Network
                 foreach (var kvp in pendingRequests)
                 {
                     Debug.LogWarning(
-                        $"  Session: {kvp.Key}, 类型: {kvp.Value.messageType}, 发送时间: {kvp.Value.sendTime:yyyy-MM-dd HH:mm:ss.fff}");
+                        $"  [{kvp.Key}] {kvp.Value.messageType} -> {kvp.Value.endpoint} (sent: {kvp.Value.sendTime:HH:mm:ss.fff})");
                 }
             }
 
@@ -110,11 +110,10 @@ namespace GameFramework.Network
             // 记录发送的请求信息
             ulong session = sessionCounter; // 当前session（调用方已调用NextSession）
             DateTime sendTime = DateTime.Now;
-            pendingRequests[session] = (requestType, sendTime);
+            pendingRequests[session] = (requestType, endpoint, sendTime);
             Debug.Log(
-                $"[ServerClient] 时间: {sendTime:yyyy-MM-dd HH:mm:ss.fff} - 发送消息 - Session: {session}, 类型: {requestType}" +
-                $", URL: {httpManager._baseUrl}{endpoint}, 待响应数: {pendingRequests.Count}" +
-                $"\n[ServerClient] 请求内容: {JsonFormatter.Default.Format(rootRequest)}");
+                $"[ServerClient] >>> [{session}] {requestType} -> {endpoint} (pending:{pendingRequests.Count})\n" +
+                $"{JsonFormatter.Default.Format(rootRequest)}");
 
             // 序列化并发送
             byte[] bodyRaw = rootRequest.ToByteArray();
@@ -127,15 +126,13 @@ namespace GameFramework.Network
                 TResponse result = parser.ParseFrom(responseData.Bytes);
 
                 // 跟踪请求耗时
-                DateTime receiveTime = DateTime.Now;
                 if (pendingRequests.TryGetValue(session, out var requestInfo))
                 {
-                    TimeSpan elapsed = receiveTime - requestInfo.sendTime;
-                    Debug.Log(
-                        $"[ServerClient] 接收消息 - Session: {session}, 类型: {typeof(TResponse).Name}, " +
-                        $"请求类型: {requestInfo.messageType}, 耗时: {elapsed.TotalMilliseconds:F2}ms, 剩余待响应: {pendingRequests.Count - 1}" +
-                        $"\n[ServerClient] 响应内容: {JsonFormatter.Default.Format(result)}");
+                    double elapsed = (DateTime.Now - requestInfo.sendTime).TotalMilliseconds;
                     pendingRequests.Remove(session);
+                    Debug.Log(
+                        $"[ServerClient] <<< [{session}] {typeof(TResponse).Name} <- {requestInfo.endpoint} ({elapsed:F0}ms, pending:{pendingRequests.Count})\n" +
+                        $"{JsonFormatter.Default.Format(result)}");
                 }
 
                 isConnected = true;
@@ -193,9 +190,9 @@ namespace GameFramework.Network
         /// <summary>
         /// 获取所有待响应的请求信息（用于调试）
         /// </summary>
-        public Dictionary<ulong, (string messageType, DateTime sendTime)> GetPendingRequests()
+        public Dictionary<ulong, (string messageType, string endpoint, DateTime sendTime)> GetPendingRequests()
         {
-            return new Dictionary<ulong, (string, DateTime)>(pendingRequests);
+            return new Dictionary<ulong, (string, string, DateTime)>(pendingRequests);
         }
     }
 }

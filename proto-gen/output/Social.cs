@@ -22,29 +22,33 @@ public static partial class SocialReflection {
   static SocialReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgxzb2NpYWwucHJvdG8aDG9wY29kZS5wcm90byI2CglDMlNTaWduSW4SEwoL",
-          "c2lnbl9pbl9kYXkYASABKA0SFAoMYWRfY3VzdG9tX2lkGAIgASgJIj4KDFNp",
-          "Z25JblJld2FyZBINCgVhc3NldBgBIAEoCRIOCgZhbW91bnQYAiABKAQSDwoH",
-          "YmFsYW5jZRgDIAEoBCJOCglTMkNTaWduSW4SEwoLc2lnbl9pbl9kYXkYASAB",
-          "KA0SDAoEZGF0ZRgCIAEoCRIeCgdyZXdhcmRzGAMgAygLMg0uU2lnbkluUmV3",
-          "YXJkIhIKEEMyU0dldFNpZ25JbkluZm8idQoQUzJDR2V0U2lnbkluSW5mbxIO",
-          "CgZzdHJlYWsYASABKA0SEwoLc2lnbmVkX2RheXMYBCADKA0SEQoJbGFzdF9k",
-          "YXRlGAIgASgJEhQKDHNpZ25lZF90b2RheRgDIAEoCBITCgtzaWduX2luX2Rh",
-          "eRgFIAEoDSJxCglDMlNTb2NpYWwSDwoHc2Vzc2lvbhgBIAEoBBIdCgdzaWdu",
-          "X2luGAIgASgLMgouQzJTU2lnbkluSAASLQoQZ2V0X3NpZ25faW5faW5mbxgD",
-          "IAEoCzIRLkMyU0dldFNpZ25JbkluZm9IAEIFCgNtc2ciiwEKCVMyQ1NvY2lh",
-          "bBIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUS",
-          "HQoHc2lnbl9pbhgCIAEoCzIKLlMyQ1NpZ25JbkgAEi0KEGdldF9zaWduX2lu",
-          "X2luZm8YAyABKAsyES5TMkNHZXRTaWduSW5JbmZvSABCBQoDbXNnYgZwcm90",
-          "bzM="));
+          "Cgxzb2NpYWwucHJvdG8aDG9wY29kZS5wcm90byJpCgpTaWduSW5EYXRhEhkK",
+          "EWZpcnN0X3NpZ25pbl9kYXRlGAEgASgJEhEKCWxhc3RfZGF0ZRgCIAEoCRIT",
+          "CgtzaWduZWRfZGF5cxgDIAMoDRIYChBjeWNsZV9zdGFydF9kYXRlGAQgASgJ",
+          "Ii0KEEMyU0dldFNpZ25JbkluZm8SGQoEdHlwZRgBIAEoDjILLlNpZ25JblR5",
+          "cGUiSAoQUzJDR2V0U2lnbkluSW5mbxIZCgR0eXBlGAEgASgOMgsuU2lnbklu",
+          "VHlwZRIZCgRkYXRhGAIgASgLMgsuU2lnbkluRGF0YSJRCglDMlNTaWduSW4S",
+          "EwoLc2lnbl9pbl9kYXkYASABKAUSFAoMYWRfY3VzdG9tX2lkGAIgASgJEhkK",
+          "BHR5cGUYAyABKA4yCy5TaWduSW5UeXBlIqsBCglTMkNTaWduSW4SGQoEdHlw",
+          "ZRgBIAEoDjILLlNpZ25JblR5cGUSKAoHcmV3YXJkcxgCIAMoCzIXLlMyQ1Np",
+          "Z25Jbi5TaWduSW5SZXdhcmQSGQoEZGF0YRgDIAEoCzILLlNpZ25JbkRhdGEa",
+          "PgoMU2lnbkluUmV3YXJkEg0KBWFzc2V0GAEgASgJEg4KBmFtb3VudBgCIAEo",
+          "BBIPCgdiYWxhbmNlGAMgASgEInEKCUMyU1NvY2lhbBIPCgdzZXNzaW9uGAEg",
+          "ASgEEh0KB3NpZ25faW4YAiABKAsyCi5DMlNTaWduSW5IABItChBnZXRfc2ln",
+          "bl9pbl9pbmZvGAMgASgLMhEuQzJTR2V0U2lnbkluSW5mb0gAQgUKA21zZyKL",
+          "AQoJUzJDU29jaWFsEg8KB3Nlc3Npb24YASABKAQSGAoEY29kZRhjIAEoDjIK",
+          "LlMyQ09wY29kZRIdCgdzaWduX2luGAIgASgLMgouUzJDU2lnbkluSAASLQoQ",
+          "Z2V0X3NpZ25faW5faW5mbxgDIAEoCzIRLlMyQ0dldFNpZ25JbkluZm9IAEIF",
+          "CgNtc2cqMgoKU2lnbkluVHlwZRIRCg1TSUdOX0lOX1NFVkVOEAASEQoNU0lH",
+          "Tl9JTl9NT05USBABYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
-        new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SSignIn), global::C2SSignIn.Parser, new[]{ "SignInDay", "AdCustomId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::SignInReward), global::SignInReward.Parser, new[]{ "Asset", "Amount", "Balance" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn), global::S2CSignIn.Parser, new[]{ "SignInDay", "Date", "Rewards" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SGetSignInInfo), global::C2SGetSignInInfo.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Streak", "SignedDays", "LastDate", "SignedToday", "SignInDay" }, null, null, null, null),
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::SignInType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(typeof(global::SignInData), global::SignInData.Parser, new[]{ "FirstSigninDate", "LastDate", "SignedDays", "CycleStartDate" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SGetSignInInfo), global::C2SGetSignInInfo.Parser, new[]{ "Type" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CGetSignInInfo), global::S2CGetSignInInfo.Parser, new[]{ "Type", "Data" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SSignIn), global::C2SSignIn.Parser, new[]{ "SignInDay", "AdCustomId", "Type" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn), global::S2CSignIn.Parser, new[]{ "Type", "Rewards", "Data" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2CSignIn.Types.SignInReward), global::S2CSignIn.Types.SignInReward.Parser, new[]{ "Asset", "Amount", "Balance" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SSocial), global::C2SSocial.Parser, new[]{ "Session", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CSocial), global::S2CSocial.Parser, new[]{ "Session", "Code", "SignIn", "GetSignInInfo" }, new[]{ "Msg" }, null, null, null)
         }));
@@ -52,20 +56,37 @@ public static partial class SocialReflection {
   #endregion
 
 }
+#region Enums
+/// <summary>
+/// 签到类型
+/// </summary>
+public enum SignInType {
+  /// <summary>
+  /// 七日签到
+  /// </summary>
+  [pbr::OriginalName("SIGN_IN_SEVEN")] SignInSeven = 0,
+  /// <summary>
+  /// 月度签到
+  /// </summary>
+  [pbr::OriginalName("SIGN_IN_MONTH")] SignInMonth = 1,
+}
+
+#endregion
+
 #region Messages
 /// <summary>
-/// 签到请求。
+/// 签到数据
 /// </summary>
-public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
+public sealed partial class SignInData : pb::IMessage<SignInData>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
 #endif
 {
-  private static readonly pb::MessageParser<C2SSignIn> _parser = new pb::MessageParser<C2SSignIn>(() => new C2SSignIn());
+  private static readonly pb::MessageParser<SignInData> _parser = new pb::MessageParser<SignInData>(() => new SignInData());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<C2SSignIn> Parser { get { return _parser; } }
+  public static pb::MessageParser<SignInData> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -81,7 +102,7 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public C2SSignIn() {
+  public SignInData() {
     OnConstruction();
   }
 
@@ -89,65 +110,98 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public C2SSignIn(C2SSignIn other) : this() {
-    signInDay_ = other.signInDay_;
-    adCustomId_ = other.adCustomId_;
+  public SignInData(SignInData other) : this() {
+    firstSigninDate_ = other.firstSigninDate_;
+    lastDate_ = other.lastDate_;
+    signedDays_ = other.signedDays_.Clone();
+    cycleStartDate_ = other.cycleStartDate_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public C2SSignIn Clone() {
-    return new C2SSignIn(this);
+  public SignInData Clone() {
+    return new SignInData(this);
   }
 
-  /// <summary>Field number for the "sign_in_day" field.</summary>
-  public const int SignInDayFieldNumber = 1;
-  private uint signInDay_;
+  /// <summary>Field number for the "first_signin_date" field.</summary>
+  public const int FirstSigninDateFieldNumber = 1;
+  private string firstSigninDate_ = "";
   /// <summary>
-  /// 本次签到目标天数（用于补签，可非连续）。
+  /// 首次签到日期（YYYY-MM-DD）。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint SignInDay {
-    get { return signInDay_; }
+  public string FirstSigninDate {
+    get { return firstSigninDate_; }
     set {
-      signInDay_ = value;
+      firstSigninDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
-  /// <summary>Field number for the "ad_custom_id" field.</summary>
-  public const int AdCustomIdFieldNumber = 2;
-  private string adCustomId_ = "";
+  /// <summary>Field number for the "last_date" field.</summary>
+  public const int LastDateFieldNumber = 2;
+  private string lastDate_ = "";
   /// <summary>
-  /// 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  /// 最近一次签到日期（YYYY-MM-DD）。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string AdCustomId {
-    get { return adCustomId_; }
+  public string LastDate {
+    get { return lastDate_; }
     set {
-      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      lastDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "signed_days" field.</summary>
+  public const int SignedDaysFieldNumber = 3;
+  private static readonly pb::FieldCodec<uint> _repeated_signedDays_codec
+      = pb::FieldCodec.ForUInt32(26);
+  private readonly pbc::RepeatedField<uint> signedDays_ = new pbc::RepeatedField<uint>();
+  /// <summary>
+  /// 签到数据(从首签日开始的签到记录列表，1=已签到，0=未签到)
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<uint> SignedDays {
+    get { return signedDays_; }
+  }
+
+  /// <summary>Field number for the "cycle_start_date" field.</summary>
+  public const int CycleStartDateFieldNumber = 4;
+  private string cycleStartDate_ = "";
+  /// <summary>
+  /// 当前7天循环周期的起始日期（YYYY-MM-DD），用于前端展示本周进度。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string CycleStartDate {
+    get { return cycleStartDate_; }
+    set {
+      cycleStartDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
-    return Equals(other as C2SSignIn);
+    return Equals(other as SignInData);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(C2SSignIn other) {
+  public bool Equals(SignInData other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (SignInDay != other.SignInDay) return false;
-    if (AdCustomId != other.AdCustomId) return false;
+    if (FirstSigninDate != other.FirstSigninDate) return false;
+    if (LastDate != other.LastDate) return false;
+    if(!signedDays_.Equals(other.signedDays_)) return false;
+    if (CycleStartDate != other.CycleStartDate) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -155,8 +209,10 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
-    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
+    if (FirstSigninDate.Length != 0) hash ^= FirstSigninDate.GetHashCode();
+    if (LastDate.Length != 0) hash ^= LastDate.GetHashCode();
+    hash ^= signedDays_.GetHashCode();
+    if (CycleStartDate.Length != 0) hash ^= CycleStartDate.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -175,13 +231,18 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (SignInDay != 0) {
-      output.WriteRawTag(8);
-      output.WriteUInt32(SignInDay);
+    if (FirstSigninDate.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(FirstSigninDate);
     }
-    if (AdCustomId.Length != 0) {
+    if (LastDate.Length != 0) {
       output.WriteRawTag(18);
-      output.WriteString(AdCustomId);
+      output.WriteString(LastDate);
+    }
+    signedDays_.WriteTo(output, _repeated_signedDays_codec);
+    if (CycleStartDate.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(CycleStartDate);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -193,13 +254,18 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (SignInDay != 0) {
-      output.WriteRawTag(8);
-      output.WriteUInt32(SignInDay);
+    if (FirstSigninDate.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(FirstSigninDate);
     }
-    if (AdCustomId.Length != 0) {
+    if (LastDate.Length != 0) {
       output.WriteRawTag(18);
-      output.WriteString(AdCustomId);
+      output.WriteString(LastDate);
+    }
+    signedDays_.WriteTo(ref output, _repeated_signedDays_codec);
+    if (CycleStartDate.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(CycleStartDate);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -211,275 +277,15 @@ public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (SignInDay != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
+    if (FirstSigninDate.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(FirstSigninDate);
     }
-    if (AdCustomId.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
+    if (LastDate.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(LastDate);
     }
-    if (_unknownFields != null) {
-      size += _unknownFields.CalculateSize();
-    }
-    return size;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(C2SSignIn other) {
-    if (other == null) {
-      return;
-    }
-    if (other.SignInDay != 0) {
-      SignInDay = other.SignInDay;
-    }
-    if (other.AdCustomId.Length != 0) {
-      AdCustomId = other.AdCustomId;
-    }
-    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(pb::CodedInputStream input) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    input.ReadRawMessage(this);
-  #else
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-        case 8: {
-          SignInDay = input.ReadUInt32();
-          break;
-        }
-        case 18: {
-          AdCustomId = input.ReadString();
-          break;
-        }
-      }
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-          break;
-        case 8: {
-          SignInDay = input.ReadUInt32();
-          break;
-        }
-        case 18: {
-          AdCustomId = input.ReadString();
-          break;
-        }
-      }
-    }
-  }
-  #endif
-
-}
-
-/// <summary>
-/// 单个签到奖励项。
-/// </summary>
-public sealed partial class SignInReward : pb::IMessage<SignInReward>
-#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    , pb::IBufferMessage
-#endif
-{
-  private static readonly pb::MessageParser<SignInReward> _parser = new pb::MessageParser<SignInReward>(() => new SignInReward());
-  private pb::UnknownFieldSet _unknownFields;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<SignInReward> Parser { get { return _parser; } }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pbr::MessageDescriptor Descriptor {
-    get { return global::SocialReflection.Descriptor.MessageTypes[1]; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  pbr::MessageDescriptor pb::IMessage.Descriptor {
-    get { return Descriptor; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public SignInReward() {
-    OnConstruction();
-  }
-
-  partial void OnConstruction();
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public SignInReward(SignInReward other) : this() {
-    asset_ = other.asset_;
-    amount_ = other.amount_;
-    balance_ = other.balance_;
-    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public SignInReward Clone() {
-    return new SignInReward(this);
-  }
-
-  /// <summary>Field number for the "asset" field.</summary>
-  public const int AssetFieldNumber = 1;
-  private string asset_ = "";
-  /// <summary>
-  /// 奖励资产类型（如 threekp）。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string Asset {
-    get { return asset_; }
-    set {
-      asset_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "amount" field.</summary>
-  public const int AmountFieldNumber = 2;
-  private ulong amount_;
-  /// <summary>
-  /// 奖励数量。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Amount {
-    get { return amount_; }
-    set {
-      amount_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "balance" field.</summary>
-  public const int BalanceFieldNumber = 3;
-  private ulong balance_;
-  /// <summary>
-  /// 领取后该资产余额。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Balance {
-    get { return balance_; }
-    set {
-      balance_ = value;
-    }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override bool Equals(object other) {
-    return Equals(other as SignInReward);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(SignInReward other) {
-    if (ReferenceEquals(other, null)) {
-      return false;
-    }
-    if (ReferenceEquals(other, this)) {
-      return true;
-    }
-    if (Asset != other.Asset) return false;
-    if (Amount != other.Amount) return false;
-    if (Balance != other.Balance) return false;
-    return Equals(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override int GetHashCode() {
-    int hash = 1;
-    if (Asset.Length != 0) hash ^= Asset.GetHashCode();
-    if (Amount != 0UL) hash ^= Amount.GetHashCode();
-    if (Balance != 0UL) hash ^= Balance.GetHashCode();
-    if (_unknownFields != null) {
-      hash ^= _unknownFields.GetHashCode();
-    }
-    return hash;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override string ToString() {
-    return pb::JsonFormatter.ToDiagnosticString(this);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void WriteTo(pb::CodedOutputStream output) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    output.WriteRawMessage(this);
-  #else
-    if (Asset.Length != 0) {
-      output.WriteRawTag(10);
-      output.WriteString(Asset);
-    }
-    if (Amount != 0UL) {
-      output.WriteRawTag(16);
-      output.WriteUInt64(Amount);
-    }
-    if (Balance != 0UL) {
-      output.WriteRawTag(24);
-      output.WriteUInt64(Balance);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(output);
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Asset.Length != 0) {
-      output.WriteRawTag(10);
-      output.WriteString(Asset);
-    }
-    if (Amount != 0UL) {
-      output.WriteRawTag(16);
-      output.WriteUInt64(Amount);
-    }
-    if (Balance != 0UL) {
-      output.WriteRawTag(24);
-      output.WriteUInt64(Balance);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(ref output);
-    }
-  }
-  #endif
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int CalculateSize() {
-    int size = 0;
-    if (Asset.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Asset);
-    }
-    if (Amount != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Amount);
-    }
-    if (Balance != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Balance);
+    size += signedDays_.CalculateSize(_repeated_signedDays_codec);
+    if (CycleStartDate.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(CycleStartDate);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -489,18 +295,19 @@ public sealed partial class SignInReward : pb::IMessage<SignInReward>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(SignInReward other) {
+  public void MergeFrom(SignInData other) {
     if (other == null) {
       return;
     }
-    if (other.Asset.Length != 0) {
-      Asset = other.Asset;
+    if (other.FirstSigninDate.Length != 0) {
+      FirstSigninDate = other.FirstSigninDate;
     }
-    if (other.Amount != 0UL) {
-      Amount = other.Amount;
+    if (other.LastDate.Length != 0) {
+      LastDate = other.LastDate;
     }
-    if (other.Balance != 0UL) {
-      Balance = other.Balance;
+    signedDays_.Add(other.signedDays_);
+    if (other.CycleStartDate.Length != 0) {
+      CycleStartDate = other.CycleStartDate;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -518,15 +325,20 @@ public sealed partial class SignInReward : pb::IMessage<SignInReward>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          Asset = input.ReadString();
+          FirstSigninDate = input.ReadString();
           break;
         }
-        case 16: {
-          Amount = input.ReadUInt64();
+        case 18: {
+          LastDate = input.ReadString();
           break;
         }
+        case 26:
         case 24: {
-          Balance = input.ReadUInt64();
+          signedDays_.AddEntriesFrom(input, _repeated_signedDays_codec);
+          break;
+        }
+        case 34: {
+          CycleStartDate = input.ReadString();
           break;
         }
       }
@@ -545,279 +357,20 @@ public sealed partial class SignInReward : pb::IMessage<SignInReward>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 10: {
-          Asset = input.ReadString();
+          FirstSigninDate = input.ReadString();
           break;
         }
-        case 16: {
-          Amount = input.ReadUInt64();
+        case 18: {
+          LastDate = input.ReadString();
           break;
         }
+        case 26:
         case 24: {
-          Balance = input.ReadUInt64();
+          signedDays_.AddEntriesFrom(ref input, _repeated_signedDays_codec);
           break;
         }
-      }
-    }
-  }
-  #endif
-
-}
-
-/// <summary>
-/// 签到响应。
-/// </summary>
-public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
-#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    , pb::IBufferMessage
-#endif
-{
-  private static readonly pb::MessageParser<S2CSignIn> _parser = new pb::MessageParser<S2CSignIn>(() => new S2CSignIn());
-  private pb::UnknownFieldSet _unknownFields;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<S2CSignIn> Parser { get { return _parser; } }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pbr::MessageDescriptor Descriptor {
-    get { return global::SocialReflection.Descriptor.MessageTypes[2]; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  pbr::MessageDescriptor pb::IMessage.Descriptor {
-    get { return Descriptor; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public S2CSignIn() {
-    OnConstruction();
-  }
-
-  partial void OnConstruction();
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public S2CSignIn(S2CSignIn other) : this() {
-    signInDay_ = other.signInDay_;
-    date_ = other.date_;
-    rewards_ = other.rewards_.Clone();
-    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public S2CSignIn Clone() {
-    return new S2CSignIn(this);
-  }
-
-  /// <summary>Field number for the "sign_in_day" field.</summary>
-  public const int SignInDayFieldNumber = 1;
-  private uint signInDay_;
-  /// <summary>
-  /// 当前签到天数（本次签到的是第几天）。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint SignInDay {
-    get { return signInDay_; }
-    set {
-      signInDay_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "date" field.</summary>
-  public const int DateFieldNumber = 2;
-  private string date_ = "";
-  /// <summary>
-  /// 本次签到日期（YYYY-MM-DD）。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string Date {
-    get { return date_; }
-    set {
-      date_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "rewards" field.</summary>
-  public const int RewardsFieldNumber = 3;
-  private static readonly pb::FieldCodec<global::SignInReward> _repeated_rewards_codec
-      = pb::FieldCodec.ForMessage(26, global::SignInReward.Parser);
-  private readonly pbc::RepeatedField<global::SignInReward> rewards_ = new pbc::RepeatedField<global::SignInReward>();
-  /// <summary>
-  /// 本次发放的奖励列表。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::RepeatedField<global::SignInReward> Rewards {
-    get { return rewards_; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override bool Equals(object other) {
-    return Equals(other as S2CSignIn);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(S2CSignIn other) {
-    if (ReferenceEquals(other, null)) {
-      return false;
-    }
-    if (ReferenceEquals(other, this)) {
-      return true;
-    }
-    if (SignInDay != other.SignInDay) return false;
-    if (Date != other.Date) return false;
-    if(!rewards_.Equals(other.rewards_)) return false;
-    return Equals(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override int GetHashCode() {
-    int hash = 1;
-    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
-    if (Date.Length != 0) hash ^= Date.GetHashCode();
-    hash ^= rewards_.GetHashCode();
-    if (_unknownFields != null) {
-      hash ^= _unknownFields.GetHashCode();
-    }
-    return hash;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override string ToString() {
-    return pb::JsonFormatter.ToDiagnosticString(this);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void WriteTo(pb::CodedOutputStream output) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    output.WriteRawMessage(this);
-  #else
-    if (SignInDay != 0) {
-      output.WriteRawTag(8);
-      output.WriteUInt32(SignInDay);
-    }
-    if (Date.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(Date);
-    }
-    rewards_.WriteTo(output, _repeated_rewards_codec);
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(output);
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (SignInDay != 0) {
-      output.WriteRawTag(8);
-      output.WriteUInt32(SignInDay);
-    }
-    if (Date.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(Date);
-    }
-    rewards_.WriteTo(ref output, _repeated_rewards_codec);
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(ref output);
-    }
-  }
-  #endif
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int CalculateSize() {
-    int size = 0;
-    if (SignInDay != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
-    }
-    if (Date.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Date);
-    }
-    size += rewards_.CalculateSize(_repeated_rewards_codec);
-    if (_unknownFields != null) {
-      size += _unknownFields.CalculateSize();
-    }
-    return size;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(S2CSignIn other) {
-    if (other == null) {
-      return;
-    }
-    if (other.SignInDay != 0) {
-      SignInDay = other.SignInDay;
-    }
-    if (other.Date.Length != 0) {
-      Date = other.Date;
-    }
-    rewards_.Add(other.rewards_);
-    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(pb::CodedInputStream input) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    input.ReadRawMessage(this);
-  #else
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-        case 8: {
-          SignInDay = input.ReadUInt32();
-          break;
-        }
-        case 18: {
-          Date = input.ReadString();
-          break;
-        }
-        case 26: {
-          rewards_.AddEntriesFrom(input, _repeated_rewards_codec);
-          break;
-        }
-      }
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-          break;
-        case 8: {
-          SignInDay = input.ReadUInt32();
-          break;
-        }
-        case 18: {
-          Date = input.ReadString();
-          break;
-        }
-        case 26: {
-          rewards_.AddEntriesFrom(ref input, _repeated_rewards_codec);
+        case 34: {
+          CycleStartDate = input.ReadString();
           break;
         }
       }
@@ -844,7 +397,7 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::SocialReflection.Descriptor.MessageTypes[3]; }
+    get { return global::SocialReflection.Descriptor.MessageTypes[1]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -864,6 +417,7 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public C2SGetSignInInfo(C2SGetSignInInfo other) : this() {
+    type_ = other.type_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -871,6 +425,21 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public C2SGetSignInInfo Clone() {
     return new C2SGetSignInInfo(this);
+  }
+
+  /// <summary>Field number for the "type" field.</summary>
+  public const int TypeFieldNumber = 1;
+  private global::SignInType type_ = global::SignInType.SignInSeven;
+  /// <summary>
+  /// 签到类型（默认为七日签到）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::SignInType Type {
+    get { return type_; }
+    set {
+      type_ = value;
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -888,6 +457,7 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (Type != other.Type) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -895,6 +465,7 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (Type != global::SignInType.SignInSeven) hash ^= Type.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -913,6 +484,10 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Type);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -923,6 +498,10 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Type);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -933,6 +512,9 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (Type != global::SignInType.SignInSeven) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -944,6 +526,9 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
   public void MergeFrom(C2SGetSignInInfo other) {
     if (other == null) {
       return;
+    }
+    if (other.Type != global::SignInType.SignInSeven) {
+      Type = other.Type;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -960,6 +545,10 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
+        case 8: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
       }
     }
   #endif
@@ -975,6 +564,10 @@ public sealed partial class C2SGetSignInInfo : pb::IMessage<C2SGetSignInInfo>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
+        case 8: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
       }
     }
   }
@@ -999,7 +592,7 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::SocialReflection.Descriptor.MessageTypes[4]; }
+    get { return global::SocialReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1019,11 +612,8 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public S2CGetSignInInfo(S2CGetSignInInfo other) : this() {
-    streak_ = other.streak_;
-    signedDays_ = other.signedDays_.Clone();
-    lastDate_ = other.lastDate_;
-    signedToday_ = other.signedToday_;
-    signInDay_ = other.signInDay_;
+    type_ = other.type_;
+    data_ = other.data_ != null ? other.data_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1033,77 +623,33 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     return new S2CGetSignInInfo(this);
   }
 
-  /// <summary>Field number for the "streak" field.</summary>
-  public const int StreakFieldNumber = 1;
-  private uint streak_;
+  /// <summary>Field number for the "type" field.</summary>
+  public const int TypeFieldNumber = 1;
+  private global::SignInType type_ = global::SignInType.SignInSeven;
   /// <summary>
-  /// 连续签到天数。
+  /// 签到类型（默认为七日签到）。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint Streak {
-    get { return streak_; }
+  public global::SignInType Type {
+    get { return type_; }
     set {
-      streak_ = value;
+      type_ = value;
     }
   }
 
-  /// <summary>Field number for the "signed_days" field.</summary>
-  public const int SignedDaysFieldNumber = 4;
-  private static readonly pb::FieldCodec<uint> _repeated_signedDays_codec
-      = pb::FieldCodec.ForUInt32(34);
-  private readonly pbc::RepeatedField<uint> signedDays_ = new pbc::RepeatedField<uint>();
+  /// <summary>Field number for the "data" field.</summary>
+  public const int DataFieldNumber = 2;
+  private global::SignInData data_;
   /// <summary>
-  /// 已签到的天数列表（支持跳着签到）。
+  /// 签到数据。
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::RepeatedField<uint> SignedDays {
-    get { return signedDays_; }
-  }
-
-  /// <summary>Field number for the "last_date" field.</summary>
-  public const int LastDateFieldNumber = 2;
-  private string lastDate_ = "";
-  /// <summary>
-  /// 最近一次签到日期（YYYY-MM-DD）。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string LastDate {
-    get { return lastDate_; }
+  public global::SignInData Data {
+    get { return data_; }
     set {
-      lastDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "signed_today" field.</summary>
-  public const int SignedTodayFieldNumber = 3;
-  private bool signedToday_;
-  /// <summary>
-  /// 今日是否已签到。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool SignedToday {
-    get { return signedToday_; }
-    set {
-      signedToday_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "sign_in_day" field.</summary>
-  public const int SignInDayFieldNumber = 5;
-  private uint signInDay_;
-  /// <summary>
-  /// 当前签到天数（当前是第几天签到）。
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint SignInDay {
-    get { return signInDay_; }
-    set {
-      signInDay_ = value;
+      data_ = value;
     }
   }
 
@@ -1122,11 +668,8 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Streak != other.Streak) return false;
-    if(!signedDays_.Equals(other.signedDays_)) return false;
-    if (LastDate != other.LastDate) return false;
-    if (SignedToday != other.SignedToday) return false;
-    if (SignInDay != other.SignInDay) return false;
+    if (Type != other.Type) return false;
+    if (!object.Equals(Data, other.Data)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1134,11 +677,8 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (Streak != 0) hash ^= Streak.GetHashCode();
-    hash ^= signedDays_.GetHashCode();
-    if (LastDate.Length != 0) hash ^= LastDate.GetHashCode();
-    if (SignedToday != false) hash ^= SignedToday.GetHashCode();
-    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
+    if (Type != global::SignInType.SignInSeven) hash ^= Type.GetHashCode();
+    if (data_ != null) hash ^= Data.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1157,22 +697,13 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (Streak != 0) {
+    if (Type != global::SignInType.SignInSeven) {
       output.WriteRawTag(8);
-      output.WriteUInt32(Streak);
+      output.WriteEnum((int) Type);
     }
-    if (LastDate.Length != 0) {
+    if (data_ != null) {
       output.WriteRawTag(18);
-      output.WriteString(LastDate);
-    }
-    if (SignedToday != false) {
-      output.WriteRawTag(24);
-      output.WriteBool(SignedToday);
-    }
-    signedDays_.WriteTo(output, _repeated_signedDays_codec);
-    if (SignInDay != 0) {
-      output.WriteRawTag(40);
-      output.WriteUInt32(SignInDay);
+      output.WriteMessage(Data);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1184,22 +715,13 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Streak != 0) {
+    if (Type != global::SignInType.SignInSeven) {
       output.WriteRawTag(8);
-      output.WriteUInt32(Streak);
+      output.WriteEnum((int) Type);
     }
-    if (LastDate.Length != 0) {
+    if (data_ != null) {
       output.WriteRawTag(18);
-      output.WriteString(LastDate);
-    }
-    if (SignedToday != false) {
-      output.WriteRawTag(24);
-      output.WriteBool(SignedToday);
-    }
-    signedDays_.WriteTo(ref output, _repeated_signedDays_codec);
-    if (SignInDay != 0) {
-      output.WriteRawTag(40);
-      output.WriteUInt32(SignInDay);
+      output.WriteMessage(Data);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -1211,18 +733,11 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (Streak != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Streak);
+    if (Type != global::SignInType.SignInSeven) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
     }
-    size += signedDays_.CalculateSize(_repeated_signedDays_codec);
-    if (LastDate.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(LastDate);
-    }
-    if (SignedToday != false) {
-      size += 1 + 1;
-    }
-    if (SignInDay != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SignInDay);
+    if (data_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Data);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1236,18 +751,14 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
     if (other == null) {
       return;
     }
-    if (other.Streak != 0) {
-      Streak = other.Streak;
+    if (other.Type != global::SignInType.SignInSeven) {
+      Type = other.Type;
     }
-    signedDays_.Add(other.signedDays_);
-    if (other.LastDate.Length != 0) {
-      LastDate = other.LastDate;
-    }
-    if (other.SignedToday != false) {
-      SignedToday = other.SignedToday;
-    }
-    if (other.SignInDay != 0) {
-      SignInDay = other.SignInDay;
+    if (other.data_ != null) {
+      if (data_ == null) {
+        Data = new global::SignInData();
+      }
+      Data.MergeFrom(other.Data);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1265,24 +776,14 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          Streak = input.ReadUInt32();
+          Type = (global::SignInType) input.ReadEnum();
           break;
         }
         case 18: {
-          LastDate = input.ReadString();
-          break;
-        }
-        case 24: {
-          SignedToday = input.ReadBool();
-          break;
-        }
-        case 34:
-        case 32: {
-          signedDays_.AddEntriesFrom(input, _repeated_signedDays_codec);
-          break;
-        }
-        case 40: {
-          SignInDay = input.ReadUInt32();
+          if (data_ == null) {
+            Data = new global::SignInData();
+          }
+          input.ReadMessage(Data);
           break;
         }
       }
@@ -1301,30 +802,848 @@ public sealed partial class S2CGetSignInInfo : pb::IMessage<S2CGetSignInInfo>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          Streak = input.ReadUInt32();
+          Type = (global::SignInType) input.ReadEnum();
           break;
         }
         case 18: {
-          LastDate = input.ReadString();
-          break;
-        }
-        case 24: {
-          SignedToday = input.ReadBool();
-          break;
-        }
-        case 34:
-        case 32: {
-          signedDays_.AddEntriesFrom(ref input, _repeated_signedDays_codec);
-          break;
-        }
-        case 40: {
-          SignInDay = input.ReadUInt32();
+          if (data_ == null) {
+            Data = new global::SignInData();
+          }
+          input.ReadMessage(Data);
           break;
         }
       }
     }
   }
   #endif
+
+}
+
+/// <summary>
+/// 签到请求。
+/// </summary>
+public sealed partial class C2SSignIn : pb::IMessage<C2SSignIn>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SSignIn> _parser = new pb::MessageParser<C2SSignIn>(() => new C2SSignIn());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SSignIn> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::SocialReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SSignIn() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SSignIn(C2SSignIn other) : this() {
+    signInDay_ = other.signInDay_;
+    adCustomId_ = other.adCustomId_;
+    type_ = other.type_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SSignIn Clone() {
+    return new C2SSignIn(this);
+  }
+
+  /// <summary>Field number for the "sign_in_day" field.</summary>
+  public const int SignInDayFieldNumber = 1;
+  private int signInDay_;
+  /// <summary>
+  /// 本次签到目标（0=今日，-1=补签昨日, 以此类推, 暂定不可大于0）
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int SignInDay {
+    get { return signInDay_; }
+    set {
+      signInDay_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "ad_custom_id" field.</summary>
+  public const int AdCustomIdFieldNumber = 2;
+  private string adCustomId_ = "";
+  /// <summary>
+  /// 广告交易自定义ID（如观看了广告则上报，服务端可据此发放奖励）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string AdCustomId {
+    get { return adCustomId_; }
+    set {
+      adCustomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "type" field.</summary>
+  public const int TypeFieldNumber = 3;
+  private global::SignInType type_ = global::SignInType.SignInSeven;
+  /// <summary>
+  /// 签到类型（默认为七日签到）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::SignInType Type {
+    get { return type_; }
+    set {
+      type_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SSignIn);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SSignIn other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SignInDay != other.SignInDay) return false;
+    if (AdCustomId != other.AdCustomId) return false;
+    if (Type != other.Type) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SignInDay != 0) hash ^= SignInDay.GetHashCode();
+    if (AdCustomId.Length != 0) hash ^= AdCustomId.GetHashCode();
+    if (Type != global::SignInType.SignInSeven) hash ^= Type.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (SignInDay != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(24);
+      output.WriteEnum((int) Type);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (SignInDay != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(AdCustomId);
+    }
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(24);
+      output.WriteEnum((int) Type);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (SignInDay != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(SignInDay);
+    }
+    if (AdCustomId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(AdCustomId);
+    }
+    if (Type != global::SignInType.SignInSeven) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SSignIn other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SignInDay != 0) {
+      SignInDay = other.SignInDay;
+    }
+    if (other.AdCustomId.Length != 0) {
+      AdCustomId = other.AdCustomId;
+    }
+    if (other.Type != global::SignInType.SignInSeven) {
+      Type = other.Type;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          SignInDay = input.ReadInt32();
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
+        case 24: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          SignInDay = input.ReadInt32();
+          break;
+        }
+        case 18: {
+          AdCustomId = input.ReadString();
+          break;
+        }
+        case 24: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 签到响应。
+/// </summary>
+public sealed partial class S2CSignIn : pb::IMessage<S2CSignIn>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<S2CSignIn> _parser = new pb::MessageParser<S2CSignIn>(() => new S2CSignIn());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<S2CSignIn> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::SocialReflection.Descriptor.MessageTypes[4]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CSignIn() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CSignIn(S2CSignIn other) : this() {
+    type_ = other.type_;
+    rewards_ = other.rewards_.Clone();
+    data_ = other.data_ != null ? other.data_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CSignIn Clone() {
+    return new S2CSignIn(this);
+  }
+
+  /// <summary>Field number for the "type" field.</summary>
+  public const int TypeFieldNumber = 1;
+  private global::SignInType type_ = global::SignInType.SignInSeven;
+  /// <summary>
+  /// 签到类型（默认为七日签到）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::SignInType Type {
+    get { return type_; }
+    set {
+      type_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rewards" field.</summary>
+  public const int RewardsFieldNumber = 2;
+  private static readonly pb::FieldCodec<global::S2CSignIn.Types.SignInReward> _repeated_rewards_codec
+      = pb::FieldCodec.ForMessage(18, global::S2CSignIn.Types.SignInReward.Parser);
+  private readonly pbc::RepeatedField<global::S2CSignIn.Types.SignInReward> rewards_ = new pbc::RepeatedField<global::S2CSignIn.Types.SignInReward>();
+  /// <summary>
+  /// 本次发放的奖励列表。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::S2CSignIn.Types.SignInReward> Rewards {
+    get { return rewards_; }
+  }
+
+  /// <summary>Field number for the "data" field.</summary>
+  public const int DataFieldNumber = 3;
+  private global::SignInData data_;
+  /// <summary>
+  /// 签到数据。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::SignInData Data {
+    get { return data_; }
+    set {
+      data_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as S2CSignIn);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(S2CSignIn other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Type != other.Type) return false;
+    if(!rewards_.Equals(other.rewards_)) return false;
+    if (!object.Equals(Data, other.Data)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Type != global::SignInType.SignInSeven) hash ^= Type.GetHashCode();
+    hash ^= rewards_.GetHashCode();
+    if (data_ != null) hash ^= Data.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Type);
+    }
+    rewards_.WriteTo(output, _repeated_rewards_codec);
+    if (data_ != null) {
+      output.WriteRawTag(26);
+      output.WriteMessage(Data);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Type != global::SignInType.SignInSeven) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Type);
+    }
+    rewards_.WriteTo(ref output, _repeated_rewards_codec);
+    if (data_ != null) {
+      output.WriteRawTag(26);
+      output.WriteMessage(Data);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Type != global::SignInType.SignInSeven) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+    }
+    size += rewards_.CalculateSize(_repeated_rewards_codec);
+    if (data_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Data);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(S2CSignIn other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Type != global::SignInType.SignInSeven) {
+      Type = other.Type;
+    }
+    rewards_.Add(other.rewards_);
+    if (other.data_ != null) {
+      if (data_ == null) {
+        Data = new global::SignInData();
+      }
+      Data.MergeFrom(other.Data);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
+        case 18: {
+          rewards_.AddEntriesFrom(input, _repeated_rewards_codec);
+          break;
+        }
+        case 26: {
+          if (data_ == null) {
+            Data = new global::SignInData();
+          }
+          input.ReadMessage(Data);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          Type = (global::SignInType) input.ReadEnum();
+          break;
+        }
+        case 18: {
+          rewards_.AddEntriesFrom(ref input, _repeated_rewards_codec);
+          break;
+        }
+        case 26: {
+          if (data_ == null) {
+            Data = new global::SignInData();
+          }
+          input.ReadMessage(Data);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+  #region Nested types
+  /// <summary>Container for nested types declared in the S2CSignIn message type.</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static partial class Types {
+    public sealed partial class SignInReward : pb::IMessage<SignInReward>
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+        , pb::IBufferMessage
+    #endif
+    {
+      private static readonly pb::MessageParser<SignInReward> _parser = new pb::MessageParser<SignInReward>(() => new SignInReward());
+      private pb::UnknownFieldSet _unknownFields;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public static pb::MessageParser<SignInReward> Parser { get { return _parser; } }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public static pbr::MessageDescriptor Descriptor {
+        get { return global::S2CSignIn.Descriptor.NestedTypes[0]; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      pbr::MessageDescriptor pb::IMessage.Descriptor {
+        get { return Descriptor; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public SignInReward() {
+        OnConstruction();
+      }
+
+      partial void OnConstruction();
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public SignInReward(SignInReward other) : this() {
+        asset_ = other.asset_;
+        amount_ = other.amount_;
+        balance_ = other.balance_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public SignInReward Clone() {
+        return new SignInReward(this);
+      }
+
+      /// <summary>Field number for the "asset" field.</summary>
+      public const int AssetFieldNumber = 1;
+      private string asset_ = "";
+      /// <summary>
+      /// 奖励资产类型（如 threekp）。
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public string Asset {
+        get { return asset_; }
+        set {
+          asset_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+      }
+
+      /// <summary>Field number for the "amount" field.</summary>
+      public const int AmountFieldNumber = 2;
+      private ulong amount_;
+      /// <summary>
+      /// 奖励数量。
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public ulong Amount {
+        get { return amount_; }
+        set {
+          amount_ = value;
+        }
+      }
+
+      /// <summary>Field number for the "balance" field.</summary>
+      public const int BalanceFieldNumber = 3;
+      private ulong balance_;
+      /// <summary>
+      /// 领取后该资产余额。
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public ulong Balance {
+        get { return balance_; }
+        set {
+          balance_ = value;
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public override bool Equals(object other) {
+        return Equals(other as SignInReward);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public bool Equals(SignInReward other) {
+        if (ReferenceEquals(other, null)) {
+          return false;
+        }
+        if (ReferenceEquals(other, this)) {
+          return true;
+        }
+        if (Asset != other.Asset) return false;
+        if (Amount != other.Amount) return false;
+        if (Balance != other.Balance) return false;
+        return Equals(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public override int GetHashCode() {
+        int hash = 1;
+        if (Asset.Length != 0) hash ^= Asset.GetHashCode();
+        if (Amount != 0UL) hash ^= Amount.GetHashCode();
+        if (Balance != 0UL) hash ^= Balance.GetHashCode();
+        if (_unknownFields != null) {
+          hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public override string ToString() {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public void WriteTo(pb::CodedOutputStream output) {
+      #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+        output.WriteRawMessage(this);
+      #else
+        if (Asset.Length != 0) {
+          output.WriteRawTag(10);
+          output.WriteString(Asset);
+        }
+        if (Amount != 0UL) {
+          output.WriteRawTag(16);
+          output.WriteUInt64(Amount);
+        }
+        if (Balance != 0UL) {
+          output.WriteRawTag(24);
+          output.WriteUInt64(Balance);
+        }
+        if (_unknownFields != null) {
+          _unknownFields.WriteTo(output);
+        }
+      #endif
+      }
+
+      #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+        if (Asset.Length != 0) {
+          output.WriteRawTag(10);
+          output.WriteString(Asset);
+        }
+        if (Amount != 0UL) {
+          output.WriteRawTag(16);
+          output.WriteUInt64(Amount);
+        }
+        if (Balance != 0UL) {
+          output.WriteRawTag(24);
+          output.WriteUInt64(Balance);
+        }
+        if (_unknownFields != null) {
+          _unknownFields.WriteTo(ref output);
+        }
+      }
+      #endif
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public int CalculateSize() {
+        int size = 0;
+        if (Asset.Length != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeStringSize(Asset);
+        }
+        if (Amount != 0UL) {
+          size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Amount);
+        }
+        if (Balance != 0UL) {
+          size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Balance);
+        }
+        if (_unknownFields != null) {
+          size += _unknownFields.CalculateSize();
+        }
+        return size;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public void MergeFrom(SignInReward other) {
+        if (other == null) {
+          return;
+        }
+        if (other.Asset.Length != 0) {
+          Asset = other.Asset;
+        }
+        if (other.Amount != 0UL) {
+          Amount = other.Amount;
+        }
+        if (other.Balance != 0UL) {
+          Balance = other.Balance;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public void MergeFrom(pb::CodedInputStream input) {
+      #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+        input.ReadRawMessage(this);
+      #else
+        uint tag;
+        while ((tag = input.ReadTag()) != 0) {
+          switch(tag) {
+            default:
+              _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+              break;
+            case 10: {
+              Asset = input.ReadString();
+              break;
+            }
+            case 16: {
+              Amount = input.ReadUInt64();
+              break;
+            }
+            case 24: {
+              Balance = input.ReadUInt64();
+              break;
+            }
+          }
+        }
+      #endif
+      }
+
+      #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0) {
+          switch(tag) {
+            default:
+              _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+              break;
+            case 10: {
+              Asset = input.ReadString();
+              break;
+            }
+            case 16: {
+              Amount = input.ReadUInt64();
+              break;
+            }
+            case 24: {
+              Balance = input.ReadUInt64();
+              break;
+            }
+          }
+        }
+      }
+      #endif
+
+    }
+
+  }
+  #endregion
 
 }
 

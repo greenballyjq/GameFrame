@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Pool;
@@ -221,7 +221,6 @@ namespace GameFramework.Manager
                 pool.Clear();
 
             _pools.Clear();
-            _instancePrefabs.Clear();
         }
         #endregion
 
