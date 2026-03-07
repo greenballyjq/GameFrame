@@ -16,7 +16,10 @@ public class HttpManager : IManager
     private const float DEFAULT_TIMEOUT = 10f;
     
     // 默认重试次数
-    private const int DEFAULT_RETRY_COUNT = 1;
+    private const int DEFAULT_RETRY_COUNT = 10;
+
+    // 重试间隔（毫秒）
+    private const int RETRY_DELAY_MS = 1000;
     
     // HTTP请求头
     private Dictionary<string, string> _defaultHeaders = new Dictionary<string, string>();
@@ -230,86 +233,89 @@ public class HttpManager : IManager
     }
     
     /// <summary>
-    /// 发送HTTP请求
+    /// 发送HTTP请求（带重试）
     /// </summary>
     private async UniTask<HttpResponse> SendRequestAsync(UnityWebRequest request, Dictionary<string, string> headers, float timeout, int retryCount)
     {
-        var response = new HttpResponse();
-        
-        //try
-        //{
-            // 设置超时
-            request.timeout = (int)timeout;
-            
-            
-            // 设置请求头
-            foreach (var header in _defaultHeaders)
+        // 保存请求信息用于重试（UnityWebRequest 用完即废，重试需要重建）
+        string url = request.url;
+        string method = request.method;
+        byte[] uploadData = request.uploadHandler?.data;
+        string contentType = request.uploadHandler?.contentType;
+
+        var response = await DoSendRequest(request, headers, timeout);
+
+        // 失败时重试
+        int attempt = 0;
+        while (!response.Success && attempt < retryCount)
+        {
+            attempt++;
+            Debug.LogWarning($"[HttpManager] Request failed, retry {attempt}/{retryCount} after {RETRY_DELAY_MS}ms - {url}");
+            await UniTask.Delay(RETRY_DELAY_MS, ignoreTimeScale: true);
+
+            // 重建 UnityWebRequest
+            var retryRequest = new UnityWebRequest(url, method);
+            if (uploadData != null)
             {
-                Debug.Log($"[HttpManager] 添加请求头 {header.Key}:{header.Value}");
+                retryRequest.uploadHandler = new UploadHandlerRaw(uploadData);
+                retryRequest.uploadHandler.contentType = contentType ?? "application/x-protobuf";
+            }
+            retryRequest.downloadHandler = new DownloadHandlerBuffer();
+
+            response = await DoSendRequest(retryRequest, headers, timeout);
+        }
+
+        return response;
+    }
+
+    /// <summary>
+    /// 执行单次HTTP请求
+    /// </summary>
+    private async UniTask<HttpResponse> DoSendRequest(UnityWebRequest request, Dictionary<string, string> headers, float timeout)
+    {
+        var response = new HttpResponse();
+
+        request.timeout = (int)timeout;
+
+        // 设置请求头
+        foreach (var header in _defaultHeaders)
+        {
+            request.SetRequestHeader(header.Key, header.Value);
+        }
+
+        if (headers != null)
+        {
+            foreach (var header in headers)
+            {
                 request.SetRequestHeader(header.Key, header.Value);
             }
-            
-            if (headers != null)
-            {
-                foreach (var header in headers)
-                {
-                    request.SetRequestHeader(header.Key, header.Value);
-                }
-            }
-            
-            // 发送请求
-            var operation = request.SendWebRequest();
-            
-            // 等待完成
-            while (!operation.isDone)
-            {
-                await UniTask.Yield();
-            }
-            
-            // 处理响应
-            response.StatusCode = (int)request.responseCode;
-            
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                response.Success = true;
-                response.Data = request.downloadHandler?.text ?? "";
-                response.Bytes = request.downloadHandler?.data;
-            }
-            else
-            {
-                response.Success = false;
-                response.Error = $"{request.error} (状态码: {request.responseCode})";
-                
-                // 如果有重试次数，尝试重试
-                //if (retryCount > 0)
-                //{
-                //    Debug.LogWarning($"[HttpManager] 请求失败，尝试重试。剩余重试次数: {retryCount}");
-                //    request.Dispose();
-                    
-                //    // 重新创建请求并重试
-                //    return await SendRequestAsync(
-                //        request, 
-                //        headers, 
-                //        timeout, 
-                //        retryCount - 1
-                //    );
-                //}
-            }
-            
-            
-            Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
-            
-        //}
-        //catch (Exception e)
-        //{
-        //    response.Success = false;
-        //    response.Error = $"网络请求异常: {e.Message}";
-        //    Debug.LogError($"[HttpManager] 网络请求异常: {e.Message}");
-        //}
-        // finally
-        // {
-            request?.Dispose();
-        // }
+        }
+
+        // 发送请求
+        var operation = request.SendWebRequest();
+
+        while (!operation.isDone)
+        {
+            await UniTask.Yield();
+        }
+
+        // 处理响应
+        response.StatusCode = (int)request.responseCode;
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            response.Success = true;
+            response.Data = request.downloadHandler?.text ?? "";
+            response.Bytes = request.downloadHandler?.data;
+        }
+        else
+        {
+            response.Success = false;
+            response.Error = $"{request.error} (状态码: {request.responseCode})";
+        }
+
+        Debug.Log($"[HTTP] {request.url} done: {request.responseCode}");
+        request?.Dispose();
 
         return response;
     }
