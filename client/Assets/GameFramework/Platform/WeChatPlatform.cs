@@ -222,7 +222,8 @@ public class WeChatPlatform : IPlatform
             return;
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if true
+// #if UNITY_WEBGL && !UNITY_EDITOR
         try
         {
             WXShare(
