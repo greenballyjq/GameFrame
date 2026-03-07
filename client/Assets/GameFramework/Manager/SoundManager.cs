@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GameFramework.Core;
 using GameFramework.Core.Audio;
 using UnityEngine;
@@ -47,6 +47,11 @@ namespace GameFramework.Manager
         /// 音频通道的音量倍数
         /// </summary>
         private readonly Dictionary<AudioChannel, float> _channelVolumeMultiplier = new Dictionary<AudioChannel, float>();
+
+        /// <summary>
+        /// 过场景不移除的音效播放器
+        /// </summary>
+        private readonly HashSet<AudioPlayer> _persistPlayers = new HashSet<AudioPlayer>();
 
         /// <summary>
         /// 对象池管理器
@@ -105,8 +110,8 @@ namespace GameFramework.Manager
 
         public void Release()
         {
-            // 停止所有正在播放的音效
-            StopAll();
+            // 停止所有正在播放的音效（含过场景不移除的）
+            ClearAllSounds(forceRemoveAll: true);
 
             // 清理缓存
             _activePlayers.Clear();
@@ -123,8 +128,9 @@ namespace GameFramework.Manager
         /// <param name="channel">音频通道，默认为Sound</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <param name="volume">音量（0-1），默认为1</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns></returns>
-        public AudioCallback PlaySound2D(AudioClip audioClip, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        public AudioCallback PlaySound2D(AudioClip audioClip, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f, bool dontDestroyOnLoad = false)
         {
             if (audioClip == null)
             {
@@ -139,7 +145,7 @@ namespace GameFramework.Manager
                 volume = volume,
             };
 
-            return PlaySound2DInternal(audioData, loop);
+            return PlaySound2DInternal(audioData, loop, dontDestroyOnLoad);
         }
 
         /// <summary>
@@ -149,8 +155,9 @@ namespace GameFramework.Manager
         /// <param name="channel">音频通道，默认为Sound</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
         /// <param name="volume">音量（0-1），默认为1</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns>音效播放器实例，可用于链式调用添加回调</returns>
-        public async UniTask<AudioCallback> PlaySound2DAsync(string resourcePath, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+        public async UniTask<AudioCallback> PlaySound2DAsync(string resourcePath, AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f, bool dontDestroyOnLoad = false)
         {
             var audioClip = await GetAudioClipAsync(resourcePath);
             if (audioClip == null)
@@ -160,7 +167,7 @@ namespace GameFramework.Manager
             
             var audioData = new AudioData(audioClip, volume);
             audioData.audioChannel = channel;
-            return PlaySound2DInternal(audioData, loop);
+            return PlaySound2DInternal(audioData, loop, dontDestroyOnLoad);
         }
 
         /// <summary>
@@ -171,9 +178,10 @@ namespace GameFramework.Manager
         /// <param name="channel">音频通道，默认为Sound</param>
         /// <param name="loop">循环播放次数</param>
         /// <param name="volume">音量（0-1），默认为1</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns></returns>
         public async UniTask<AudioCallback> PlaySound3DWorldAsync(string resourcePath, Vector3 position = default
-            , AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f)
+            , AudioChannel channel = AudioChannel.Sound, int loop = 1, float volume = 1f, bool dontDestroyOnLoad = false)
         {
             var audioClip = await GetAudioClipAsync(resourcePath);
             if (audioClip == null)
@@ -184,7 +192,7 @@ namespace GameFramework.Manager
             var audioData = new AudioData(audioClip, volume);
             audioData.audioChannel = channel;
 
-            return PlaySound3DWorldInternal(audioData, loop, position);
+            return PlaySound3DWorldInternal(audioData, loop, position, dontDestroyOnLoad);
         }
 
         /// <summary>
@@ -250,34 +258,29 @@ namespace GameFramework.Manager
         /// <summary>
         /// 清理所有音效（强制停止并回收）
         /// </summary>
-        public void ClearAllSounds()
+        /// <param name="forceRemoveAll">为 true 时，即使过场景不移除的音效也会被强制移除</param>
+        public void ClearAllSounds(bool forceRemoveAll = false)
         {
-            for (int i = _activePlayers.Count - 1; i >= 0; i--)
+            var toDespawn = new List<AudioPlayer>();
+            foreach (var player in _activePlayers)
             {
-                var player = _activePlayers[i];
-                if (player == null)
-                {
+                if (player == null) continue;
+                if (!forceRemoveAll && _persistPlayers.Contains(player))
                     continue;
-                }
-
-                // 取消回调，避免 Stop() 触发回调导致重复回收
-                player.OnPlayComplete -= OnAudioPlayComplete;
-
-                player.Stop();
-
-                if (_activePlayersByChannel.TryGetValue(player.Channel, out var players))
-                {
-                    players.Remove(player);
-                }
-
-                _poolManager.Despawn(player.gameObject);
+                toDespawn.Add(player);
             }
 
-            _activePlayers.Clear();
-
-            foreach (var item in _activePlayersByChannel)
+            foreach (var player in toDespawn)
             {
-                item.Value.Clear();
+                player.OnPlayComplete -= OnAudioPlayComplete;
+                player.Stop();
+                _persistPlayers.Remove(player);
+
+                if (_activePlayersByChannel.TryGetValue(player.Channel, out var players))
+                    players.Remove(player);
+
+                _poolManager.Despawn(player.gameObject);
+                _activePlayers.Remove(player);
             }
         }
 
@@ -355,10 +358,11 @@ namespace GameFramework.Manager
         /// </summary>
         /// <param name="audioData">音效数据</param>
         /// <param name="loop">播放次数（1表示播放一次，2表示播放2次，-1表示无限循环）</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns></returns>
-        private AudioCallback PlaySound2DInternal(AudioData audioData, int loop)
+        private AudioCallback PlaySound2DInternal(AudioData audioData, int loop, bool dontDestroyOnLoad = false)
         {
-            var player = InitAudioPlayer(audioData);
+            var player = InitAudioPlayer(audioData, dontDestroyOnLoad);
 
             var clip = audioData.audioClip;
             if (clip == null)
@@ -380,11 +384,12 @@ namespace GameFramework.Manager
         /// <param name="audioData">音效数据</param>
         /// <param name="loop">循环播放次数</param>
         /// <param name="position">世界位置</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns></returns>
-        private AudioCallback PlaySound3DWorldInternal(AudioData audioData, int loop, Vector3 position)
+        private AudioCallback PlaySound3DWorldInternal(AudioData audioData, int loop, Vector3 position, bool dontDestroyOnLoad = false)
         {
-            var player = InitAudioPlayer(audioData);
-            
+            var player = InitAudioPlayer(audioData, dontDestroyOnLoad);
+
             var clip = audioData.audioClip;
             if (clip == null)
             {
@@ -421,9 +426,10 @@ namespace GameFramework.Manager
         /// <summary>
         /// 根据AudioData生成并初始化AudioPlayer
         /// </summary>
-        /// <param name="audioData"></param>
+        /// <param name="audioData">音效数据</param>
+        /// <param name="dontDestroyOnLoad">过场景不移除</param>
         /// <returns></returns>
-        private AudioPlayer InitAudioPlayer(AudioData audioData)
+        private AudioPlayer InitAudioPlayer(AudioData audioData, bool dontDestroyOnLoad = false)
         {
             // 从对象池获取音效播放器
             var player = SpawnAudioPlayer();
@@ -431,6 +437,12 @@ namespace GameFramework.Manager
             {
                 Debug.LogError("[SoundManager] 获取音效播放器失败");
                 return null;
+            }
+            
+            if (dontDestroyOnLoad)
+            {
+                Object.DontDestroyOnLoad(player.gameObject);
+                _persistPlayers.Add(player);
             }
             
             // 注册内部回收回调
@@ -466,6 +478,7 @@ namespace GameFramework.Manager
             if (player == null) return;
 
             player.OnPlayComplete -= OnAudioPlayComplete;
+            _persistPlayers.Remove(player);
             
             // 从活动列表移除
             _activePlayers.Remove(player);

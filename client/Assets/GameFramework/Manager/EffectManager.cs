@@ -92,6 +92,11 @@ namespace GameFramework.Manager
         /// 是否处于暂停状态
         /// </summary>
         public bool IsPaused;
+
+        /// <summary>
+        /// 过场景不移除
+        /// </summary>
+        public bool DontDestroyOnLoad;
     }
 
     /// <summary>
@@ -205,7 +210,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -225,7 +230,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -245,7 +250,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -265,7 +270,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -285,7 +290,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -305,7 +310,7 @@ namespace GameFramework.Manager
                 Object.DontDestroyOnLoad(obj);
 
             IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode);
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
 
             effect.Play();
 
@@ -356,12 +361,16 @@ namespace GameFramework.Manager
         /// <summary>
         /// 清理场上所有特效
         /// </summary>
-        public void ClearAllEffects()
+        /// <param name="forceRemoveAll">强制移除所有特效</param>
+        public void ClearAllEffects(bool forceRemoveAll = false)
         {
             _pendingDespawnEffects.Clear();
 
             foreach (var kvp in _activeEffects)
             {
+                if (!forceRemoveAll && kvp.Value.DontDestroyOnLoad)
+                    continue;
+
                 kvp.Value.EffectItem.Stop(EffectStopMode.Immediate);
                 _pendingDespawnEffects.Add(kvp.Key);
             }
@@ -377,7 +386,7 @@ namespace GameFramework.Manager
         /// <summary>
         /// 注册特效
         /// </summary>
-        private EffectRuntime RegisterEffect(GameObject obj, IEffectItem effect, EffectPlayType playType, float duration, EffectStopMode endMode)
+        private EffectRuntime RegisterEffect(GameObject obj, IEffectItem effect, EffectPlayType playType, float duration, EffectStopMode endMode, bool dontDestroyOnLoad = false)
         {
             var instance = new EffectRuntime
             {
@@ -389,7 +398,8 @@ namespace GameFramework.Manager
                 Elapsed = 0f,
                 IsRequestedStop = false,
                 IsStopping = false,
-                IsPaused = false
+                IsPaused = false,
+                DontDestroyOnLoad = dontDestroyOnLoad
             };
 
             _activeEffects[obj] = instance;
