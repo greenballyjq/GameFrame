@@ -100,11 +100,18 @@ namespace GameFramework.Network
         /// <typeparam name="TResponse">域根响应类型（如 S2CAuth、S2CUser 等）</typeparam>
         /// <param name="endpoint">API端点（如 "/auth"、"/user"、"/game"、"/payment"、"/social"）</param>
         /// <param name="rootRequest">已构造好的域根消息（如 C2SAuth、C2SUser 等）</param>
+        /// <param name="delayMs">发送前延迟（毫秒），用于等待广告验证等场景，0=不延迟</param>
         /// <returns>解析后的域根响应</returns>
         public async Task<TResponse> PostDomainAsync<TResponse>(
-            string endpoint, IMessage rootRequest
+            string endpoint, IMessage rootRequest, int delayMs = 0
         ) where TResponse : IMessage<TResponse>, new()
         {
+            if (delayMs > 0)
+            {
+                Debug.Log($"[ServerClient] Delay {delayMs}ms before request -> {endpoint}");
+                await Cysharp.Threading.Tasks.UniTask.Delay(delayMs, ignoreTimeScale: true);
+            }
+
             string requestType = rootRequest.GetType().Name;
 
             // 记录发送的请求信息
