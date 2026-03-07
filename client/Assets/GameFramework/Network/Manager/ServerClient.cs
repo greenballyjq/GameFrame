@@ -13,6 +13,11 @@ namespace GameFramework.Network
     /// </summary>
     public class ServerClient : IManager
     {
+        /// <summary>
+        /// 广告验证请求前的延迟时间（毫秒），确保广告验证数据到达服务端
+        /// </summary>
+        public const int AD_VERIFY_DELAY_MS = 500;
+
         private HttpManager httpManager;
         private string serverUrl = "";
         private bool isConnected = false;
