@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.UI;
 using GameFramework.Manager;
+using GameFramework.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -44,6 +45,10 @@ public class UIManager : IManager
     private Camera _uiCamera;
 
     private EventSystem _uiEventSystem;
+
+    private Canvas _canvas;
+
+    private CanvasScaler _canvasScaler;
     
     public Camera UICamera => _uiCamera;
 
@@ -53,8 +58,8 @@ public class UIManager : IManager
     
     public void Init()
     {
-        // Debug.Log("[UIManager] 初始化UI管理器");
-        
+        Log.Info("[UIManager] 初始化UI管理器");
+
         _resourceManager = GameFrameworkManager.Instance.GetManager<ResourceManager>();
         
         // 创建UI根节点
@@ -77,8 +82,8 @@ public class UIManager : IManager
         
         // 清除缓存
         _uiPrefabCache.Clear();
-        
-        // Debug.Log("[UIManager] 释放UI管理器");
+
+        Log.Info("[UIManager] 释放UI管理器");
     }
     
     /// <summary>
@@ -112,17 +117,15 @@ public class UIManager : IManager
         eventSystemObj.AddComponent<StandaloneInputModule>();
 
         // 添加Canvas和CanvasScaler组件
-        var canvas = _uiRoot.AddComponent<Canvas>();
-        // canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        // UIRoot绑定UI摄像机
-        canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = _uiCamera;
-        canvas.sortingOrder = 100;
-        
-        var scaler = _uiRoot.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        scaler.matchWidthOrHeight = 0.65f;
+        _canvas = _uiRoot.AddComponent<Canvas>();
+        _canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        _canvas.worldCamera = _uiCamera;
+        _canvas.sortingOrder = 100;
+
+        _canvasScaler = _uiRoot.AddComponent<CanvasScaler>();
+        _canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        _canvasScaler.referenceResolution = new Vector2(1920, 1080);
+        _canvasScaler.matchWidthOrHeight = 0.65f;
 
         ScreenAdapter screenAdapter = _uiRoot.AddComponent<ScreenAdapter>();
 
@@ -156,9 +159,18 @@ public class UIManager : IManager
             _layerParents.Add(layer, layerObj.transform);
         }
         
-        // Debug.Log("[UIManager] UI根节点创建完成");
+        Log.Info("[UIManager] UI根节点创建完成");
     }
-    
+
+    /// <summary>设置 CanvasScaler</summary>
+    public void SetCanvasScaler(CanvasScaler.ScaleMode scaleMode, Vector2 referenceResolution, float matchWidthOrHeight)
+    {
+        if (_canvasScaler == null) return;
+        _canvasScaler.uiScaleMode = scaleMode;
+        _canvasScaler.referenceResolution = referenceResolution;
+        _canvasScaler.matchWidthOrHeight = matchWidthOrHeight;
+    }
+
     /// <summary>
     /// 异步打开UI界面
     /// </summary>
@@ -167,7 +179,7 @@ public class UIManager : IManager
         // 检查界面是否已经打开
         if (_openedUIs.TryGetValue(uiName, out var existingUI))
         {
-            Debug.Log($"[UIManager] UI界面 {uiName} 已经打开");
+            Log.Info($"[UIManager] UI界面 {uiName} 已经打开");
             return existingUI as T;
         }
         
@@ -185,7 +197,7 @@ public class UIManager : IManager
             
             if (uiPrefab == null)
             {
-                Debug.LogError($"[UIManager] 加载UI界面 {uiName} 失败");
+                Log.Error($"[UIManager] 加载UI界面 {uiName} 失败");
                 return null;
             }
             
@@ -196,7 +208,7 @@ public class UIManager : IManager
         // 获取层级父节点
         if (!_layerParents.TryGetValue(layer, out var layerParent))
         {
-            Debug.LogError($"[UIManager] 无效的UI层级: {layer}");
+            Log.Error($"[UIManager] 无效的UI层级: {layer}");
             return null;
         }
         
@@ -208,7 +220,7 @@ public class UIManager : IManager
         var uiComponent = uiObj.GetComponent<T>();
         if (uiComponent == null)
         {
-            Debug.LogError($"[UIManager] UI界面 {uiName} 没有 {typeof(T).Name} 组件");
+            Log.Error($"[UIManager] UI界面 {uiName} 没有 {typeof(T).Name} 组件");
             GameObject.Destroy(uiObj);
             return null;
         }
@@ -220,7 +232,7 @@ public class UIManager : IManager
         if(!isActive)
             uiObj.SetActive(false);
 
-        Debug.Log($"[UIManager] 打开UI界面: {uiName}");
+        Log.Info($"[UIManager] 打开UI界面: {uiName}");
         return uiComponent;
     }
     
@@ -231,7 +243,7 @@ public class UIManager : IManager
     {
         if (!_openedUIs.TryGetValue(uiName, out var ui))
         {
-            Debug.LogWarning($"[UIManager] UI界面 {uiName} 未打开");
+            Log.Warning($"[UIManager] UI界面 {uiName} 未打开");
             return;
         }
         
@@ -244,7 +256,7 @@ public class UIManager : IManager
         // 从已打开界面中移除
         _openedUIs.Remove(uiName);
         
-        Debug.Log($"[UIManager] 关闭UI界面: {uiName}");
+        Log.Info($"[UIManager] 关闭UI界面: {uiName}");
     }
     
     /// <summary>
@@ -260,7 +272,7 @@ public class UIManager : IManager
         
         _openedUIs.Clear();
         
-        Debug.Log("[UIManager] 关闭所有UI界面");
+        Log.Info("[UIManager] 关闭所有UI界面");
     }
     
     /// <summary>
@@ -291,7 +303,7 @@ public class UIManager : IManager
     {
         if (_uiPrefabCache.ContainsKey(uiName))
         {
-            Debug.Log($"[UIManager] UI界面 {uiName} 已预加载");
+            Log.Info($"[UIManager] UI界面 {uiName} 已预加载");
             return;
         }
         
@@ -300,14 +312,14 @@ public class UIManager : IManager
         
         if (uiPrefab == null)
         {
-            Debug.LogError($"[UIManager] 预加载UI界面 {uiName} 失败");
+            Log.Error($"[UIManager] 预加载UI界面 {uiName} 失败");
             return;
         }
         
         // 添加到缓存
         _uiPrefabCache.Add(uiName, uiPrefab);
         
-        Debug.Log($"[UIManager] 预加载UI界面 {uiName} 成功");
+        Log.Info($"[UIManager] 预加载UI界面 {uiName} 成功");
     }
     
     /// <summary>
@@ -318,7 +330,7 @@ public class UIManager : IManager
         if (_uiPrefabCache.ContainsKey(uiName) && !_openedUIs.ContainsKey(uiName))
         {
             _uiPrefabCache.Remove(uiName);
-            Debug.Log($"[UIManager] 清除预加载的UI界面: {uiName}");
+            Log.Info($"[UIManager] 清除预加载的UI界面: {uiName}");
         }
     }
 } 

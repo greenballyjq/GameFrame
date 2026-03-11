@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Effect;
+using GameFramework.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -209,9 +210,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -229,9 +230,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.OneShot, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -249,9 +250,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -269,9 +270,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Loop, 0f, EffectStopMode.Graceful, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -289,9 +290,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -309,9 +310,9 @@ namespace GameFramework.Manager
             if (dontDestroyOnLoad)
                 Object.DontDestroyOnLoad(obj);
 
-            IEffectItem effect = obj.GetComponent<IEffectItem>();
-            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
+            if (!TryGetEffectItem(obj, out var effect)) return null;
 
+            var instance = RegisterEffect(obj, effect, EffectPlayType.Duration, Mathf.Max(0f, duration), endMode, dontDestroyOnLoad);
             effect.Play();
 
             return obj;
@@ -383,6 +384,20 @@ namespace GameFramework.Manager
         #endregion
 
         #region 私有方法
+        /// <summary>
+        /// 尝试获取特效对象组件
+        /// </summary>
+        private bool TryGetEffectItem(GameObject obj, out IEffectItem effect)
+        {
+            effect = obj.GetComponent<IEffectItem>();
+            if (effect == null)
+            {
+                Log.Error($"[EffectManager] 预制体缺少 IEffectItem: {obj.name}", obj);
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// 注册特效
         /// </summary>
