@@ -1269,5 +1269,41 @@ public class TikTokPlatform : IPlatform
         // 调用抖音SDK的跳转接口
         TT.NavigateToMiniProgram(param);
     }
-} 
+
+    public void ShowToast(string title, string icon = "none", int duration = 1500, bool mask = false, Action success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[TikTokPlatform] ShowToast: {title}");
+        success?.Invoke();
+    }
+
+    public void HideToast(Action success = null, Action<string> fail = null)
+    {
+        Debug.Log("[TikTokPlatform] HideToast");
+        success?.Invoke();
+    }
+
+    public void ShowModal(string title, string content, bool showCancel = true, string confirmText = "确定", string cancelText = "取消", Action<bool, string> success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[TikTokPlatform] ShowModal: {title} - {content}");
+        success?.Invoke(true, "");
+    }
+
+    public void ShowLoading(string title, bool mask = false, Action success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[TikTokPlatform] ShowLoading: {title}");
+        success?.Invoke();
+    }
+
+    public void HideLoading(Action success = null, Action<string> fail = null)
+    {
+        Debug.Log("[TikTokPlatform] HideLoading");
+        success?.Invoke();
+    }
+
+    public void ShowActionSheet(string[] itemList, string itemColor = "#000000", string alertText = "", Action<int> success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[TikTokPlatform] ShowActionSheet: itemCount:{itemList?.Length}");
+        success?.Invoke(0);
+    }
+}
 #endif

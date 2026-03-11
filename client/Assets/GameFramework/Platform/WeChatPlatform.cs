@@ -1511,6 +1511,216 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
+    #region UI交互相关（Toast/Modal/Loading/ActionSheet）
+
+    /// <summary>
+    /// 显示消息提示框
+    /// </summary>
+    public void ShowToast(string title, string icon = "none", int duration = 1500, bool mask = false, Action success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[WeChatPlatform] ShowToast title:{title} icon:{icon} duration:{duration}");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.ShowToast(new ShowToastOption
+            {
+                title = title,
+                icon = icon,
+                duration = duration,
+                mask = mask,
+                success = (res) =>
+                {
+                    success?.Invoke();
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] ShowToast失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] ShowToast异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log($"[WeChatPlatform] 编辑器模式下模拟ShowToast: {title}");
+        success?.Invoke();
+#endif
+    }
+
+    /// <summary>
+    /// 隐藏消息提示框
+    /// </summary>
+    public void HideToast(Action success = null, Action<string> fail = null)
+    {
+        Debug.Log("[WeChatPlatform] HideToast");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.HideToast(new HideToastOption
+            {
+                success = (res) =>
+                {
+                    success?.Invoke();
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] HideToast失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] HideToast异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log("[WeChatPlatform] 编辑器模式下模拟HideToast");
+        success?.Invoke();
+#endif
+    }
+
+    /// <summary>
+    /// 显示模态对话框
+    /// </summary>
+    public void ShowModal(string title, string content, bool showCancel = true, string confirmText = "确定", string cancelText = "取消", Action<bool, string> success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[WeChatPlatform] ShowModal title:{title} content:{content}");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.ShowModal(new ShowModalOption
+            {
+                title = title,
+                content = content,
+                showCancel = showCancel,
+                confirmText = confirmText,
+                cancelText = cancelText,
+                success = (res) =>
+                {
+                    success?.Invoke(res.confirm, res.content);
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] ShowModal失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] ShowModal异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log($"[WeChatPlatform] 编辑器模式下模拟ShowModal: {title} - {content}");
+        success?.Invoke(true, "");
+#endif
+    }
+
+    /// <summary>
+    /// 显示Loading提示框
+    /// </summary>
+    public void ShowLoading(string title, bool mask = false, Action success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[WeChatPlatform] ShowLoading title:{title}");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.ShowLoading(new ShowLoadingOption
+            {
+                title = title,
+                mask = mask,
+                success = (res) =>
+                {
+                    success?.Invoke();
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] ShowLoading失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] ShowLoading异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log($"[WeChatPlatform] 编辑器模式下模拟ShowLoading: {title}");
+        success?.Invoke();
+#endif
+    }
+
+    /// <summary>
+    /// 隐藏Loading提示框
+    /// </summary>
+    public void HideLoading(Action success = null, Action<string> fail = null)
+    {
+        Debug.Log("[WeChatPlatform] HideLoading");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.HideLoading(new HideLoadingOption
+            {
+                success = (res) =>
+                {
+                    success?.Invoke();
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] HideLoading失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] HideLoading异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log("[WeChatPlatform] 编辑器模式下模拟HideLoading");
+        success?.Invoke();
+#endif
+    }
+
+    /// <summary>
+    /// 显示操作菜单
+    /// </summary>
+    public void ShowActionSheet(string[] itemList, string itemColor = "#000000", string alertText = "", Action<int> success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[WeChatPlatform] ShowActionSheet itemCount:{itemList?.Length}");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        try
+        {
+            WX.ShowActionSheet(new ShowActionSheetOption
+            {
+                itemList = itemList,
+                itemColor = itemColor,
+                alertText = alertText,
+                success = (res) =>
+                {
+                    success?.Invoke(res.tapIndex);
+                },
+                fail = (res) =>
+                {
+                    fail?.Invoke($"[WeChatPlatform] ShowActionSheet失败 errMsg:{res.errMsg}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            fail?.Invoke($"[WeChatPlatform] ShowActionSheet异常 errMsg:{e.Message}");
+        }
+#else
+        Debug.Log("[WeChatPlatform] 编辑器模式下模拟ShowActionSheet");
+        success?.Invoke(0);
+#endif
+    }
+
+    #endregion
+
     [Serializable]
     private class ServerSideVerificationParam
     {

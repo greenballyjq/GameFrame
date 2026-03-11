@@ -127,6 +127,62 @@ public interface IPlatform
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
     void NavigateToMiniGame(string appId, string path, string extraData, Action success, Action<string> fail);
+
+    /// <summary>
+    /// 显示消息提示框
+    /// </summary>
+    /// <param name="title">提示的内容</param>
+    /// <param name="icon">图标（success/error/loading/none）</param>
+    /// <param name="duration">提示的延迟时间（毫秒），默认1500</param>
+    /// <param name="mask">是否显示透明蒙层，防止触摸穿透</param>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void ShowToast(string title, string icon = "none", int duration = 1500, bool mask = false, Action success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 隐藏消息提示框
+    /// </summary>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void HideToast(Action success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 显示模态对话框
+    /// </summary>
+    /// <param name="title">提示的标题</param>
+    /// <param name="content">提示的内容</param>
+    /// <param name="showCancel">是否显示取消按钮，默认true</param>
+    /// <param name="confirmText">确认按钮的文字，默认"确定"</param>
+    /// <param name="cancelText">取消按钮的文字，默认"取消"</param>
+    /// <param name="success">成功回调（confirm: 是否点击确定, content: editable时用户输入内容）</param>
+    /// <param name="fail">失败回调</param>
+    void ShowModal(string title, string content, bool showCancel = true, string confirmText = "确定", string cancelText = "取消", Action<bool, string> success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 显示Loading提示框（需主动调用HideLoading关闭）
+    /// </summary>
+    /// <param name="title">提示的内容</param>
+    /// <param name="mask">是否显示透明蒙层，防止触摸穿透</param>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void ShowLoading(string title, bool mask = false, Action success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 隐藏Loading提示框
+    /// </summary>
+    /// <param name="success">成功回调</param>
+    /// <param name="fail">失败回调</param>
+    void HideLoading(Action success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 显示操作菜单
+    /// </summary>
+    /// <param name="itemList">按钮的文字数组，数组长度最大为6</param>
+    /// <param name="itemColor">按钮的文字颜色</param>
+    /// <param name="alertText">警示文案</param>
+    /// <param name="success">成功回调（tapIndex: 用户点击的按钮序号，从0开始）</param>
+    /// <param name="fail">失败回调</param>
+    void ShowActionSheet(string[] itemList, string itemColor = "#000000", string alertText = "", Action<int> success = null, Action<string> fail = null);
 }
 
 /// <summary>
