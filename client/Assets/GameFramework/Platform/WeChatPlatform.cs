@@ -556,8 +556,8 @@ public class WeChatPlatform : IPlatform
                     success = res => {
                         success(true);
                     },
-                    fail = (_) => {
-                        fail("[WeChatPlatform] 玩家未授权，尝试授权失败");
+                    fail = (result) => {
+                        fail($"[WeChatPlatform] 玩家未授权，尝试授权失败, {result.errMsg}");
                     },
                 });
             }
@@ -615,8 +615,9 @@ public class WeChatPlatform : IPlatform
         });
 
         Debug.Log("[WeChatPlatform] 创建微信用户信息按钮成功");
-
-        return (IUserInfoButton)btn;
+        
+        // return (IUserInfoButton)btn;
+        return null;
     }
 
     /// <summary>
@@ -633,7 +634,8 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
             return;
         }
-#if UNITY_WEBGL && !UNITY_EDITOR
+// #if UNITY_WEBGL && !UNITY_EDITOR
+#if true
     try
     {
         // 调用内部实现的微信用户信息获取方法
