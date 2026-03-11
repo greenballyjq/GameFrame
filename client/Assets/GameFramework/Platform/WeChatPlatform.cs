@@ -1701,7 +1701,7 @@ public class WeChatPlatform : IPlatform
                 alertText = alertText,
                 success = (res) =>
                 {
-                    success?.Invoke(res.tapIndex);
+                    success?.Invoke((int)res.tapIndex);
                 },
                 fail = (res) =>
                 {
