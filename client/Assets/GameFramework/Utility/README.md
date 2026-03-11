@@ -8,6 +8,8 @@
 
 调试日志封装类，对 Unity 的 `Debug.Log` / `Debug.LogWarning` / `Debug.LogError` 进行封装。**仅在编辑器中生效**，打包发布后相关调用会被编译器移除，不影响运行性能。
 
+同时会将 Info / Warning / Error / Exception 全部写入项目根目录的 `Logs` 文件夹，单次 Play 对应一个时间戳命名的文件（如 `20260225_143052.log`），行格式为 `[HH:mm:ss.fff] [Info] 消息内容`。
+
 ### 方法说明
 
 | 方法 | 说明 |
@@ -39,6 +41,12 @@ Log.Exception(ex, this);
 ### 日志格式建议
 
 推荐格式：`[ClassName] 描述性消息`，便于在控制台中快速定位来源。
+
+### 文件输出
+
+- **路径**：项目根目录 `Logs` 文件夹（如 `E:/HuntingClient/Logs`）
+- **文件名**：`yyyyMMdd_HHmmss.log`，单次 Play 一个文件
+- **行格式**：`[HH:mm:ss.fff] [Info] 消息内容`
 
 ---
 
