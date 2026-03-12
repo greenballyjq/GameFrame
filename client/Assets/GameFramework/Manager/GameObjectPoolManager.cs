@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Pool;
@@ -39,9 +39,6 @@ namespace GameFramework.Manager
 
         public void Init()
         {
-            Debug.Log("[GameObjectPoolManager] 初始化GameObject对象池管理器");
-
-            // 创建对象池根节点
             GameObject rootObj = new GameObject("GameObjectPoolRoot");
             _poolRoot = rootObj.transform;
             _poolRoot.position = Vector3.zero;
@@ -54,10 +51,8 @@ namespace GameFramework.Manager
 
         public void Release()
         {
-            // 遍历所有池，销毁池中的对象
             ClearAllPools();
 
-            // 销毁根节点
             Object.Destroy(_poolRoot.gameObject);
             _poolRoot = null;
 
@@ -76,8 +71,6 @@ namespace GameFramework.Manager
             {
                 pool = new GameObjectPool(prefab, _poolRoot);
                 _pools.Add(prefab, pool);
-
-                Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
             }
 
             return pool;
@@ -90,7 +83,6 @@ namespace GameFramework.Manager
         /// <returns>取出的对象</returns>
         public async UniTask<GameObject> SpawnAsync(string prefabPath)
         {
-            // 从缓存获取预制体，如果不存在则加载
             if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
             {
                 prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
@@ -131,7 +123,6 @@ namespace GameFramework.Manager
             }
         }
 
-
         /// <summary>
         /// 预热对象池（路径方式）
         /// </summary>
@@ -157,27 +148,23 @@ namespace GameFramework.Manager
         {
             GetPool(prefab).Prewarm(count);
         }
+
+        /// <summary>
+        /// 回收对象
+        /// </summary>
         public void Despawn(GameObject obj)
         {
-            // 检查对象是否已经被回收
             if (!obj.activeSelf)
             {
                 Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 重复回收");
                 return;
             }
 
-            // fixme 添加安全检测
-            if (_instancePrefabs.TryGetValue(obj, out var prefab))
-            {
-                GetPool(prefab).Despawn(obj);
+            var prefab = _instancePrefabs[obj];
 
-                _instancePrefabs.Remove(obj);
-            }
-            else
-            {
-                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 不在对象池中，无法回收");
-            }
-            
+            GetPool(prefab).Despawn(obj);
+
+            _instancePrefabs.Remove(obj);
         }
 
         /// <summary>
@@ -223,49 +210,5 @@ namespace GameFramework.Manager
             _pools.Clear();
         }
         #endregion
-
-        #region 测试
-        /// <summary>
-        /// 取出对象（路径方式）-需要已缓存
-        /// </summary>
-        /// <param name="prefabPath"></param>
-        /// <returns></returns>
-        public GameObject Spawn(string prefabPath)
-        {
-            if (string.IsNullOrEmpty(prefabPath))
-            {
-                // Debug.LogError("[GameObjectPoolManager] 预制体路径不能为空");
-                return null;
-            }
-
-            // 从缓存获取预制体，如果不存在则返回空
-            if (_prefabCache.TryGetValue(prefabPath, out var prefab))
-            {
-                GameObject obj = GetPool(prefab).Spawn();
-                return obj;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 预加载预制体
-        /// </summary>
-        /// <param name="prefabPaths"></param>
-        public async UniTask PreloadAsync(params string[] prefabPaths)
-        {
-            foreach (var prefabPath in prefabPaths)
-            {
-                if (_prefabCache.ContainsKey(prefabPath)) continue;
-                var prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
-                _prefabCache[prefabPath] = prefab;
-
-                if (_pools.ContainsKey(prefab)) continue;
-                var gameObjectPool = new GameObjectPool(prefab, _poolRoot);
-                _pools[prefab] = gameObjectPool;
-            }
-        }
-        #endregion
-
     }
 }

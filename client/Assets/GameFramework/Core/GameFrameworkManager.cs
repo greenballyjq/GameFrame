@@ -37,7 +37,6 @@ namespace GameFramework.Core
             RegisterManager<UIManager>();
             RegisterManager<TimerManager>();
             RegisterManager<SoundManager>();
-            RegisterManager<ParticleEffectManager>();
             RegisterManager<EffectManager>();
             RegisterManager<Manager.GameSceneManager>();
             // ConfigManager 由业务层独立管理，框架不注册
