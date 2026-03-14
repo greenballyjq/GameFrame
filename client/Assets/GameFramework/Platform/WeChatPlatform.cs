@@ -621,6 +621,62 @@ public class WeChatPlatform : IPlatform
     }
 
     /// <summary>
+    /// 微信平台创建游戏圈按钮
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="top"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public void CreatGameClubButton(int left, int top, int width, int height)
+    {
+        if (!_isInitialized)
+        {
+            return;
+        }
+        
+#if UNITY_WEBGL && !UNITY_EDITOR
+        GameClubButtonStyle style = new GameClubButtonStyle
+        {
+            left = left,
+            top = top,
+            width = width,
+            height = height,
+            // backgroundColor = "#FF2121",
+            // borderWidth = 10,
+            // borderColor = "232123"
+            // color = "#FFFF00"
+        };
+        
+        WXCreateGameClubButtonParam param = new WXCreateGameClubButtonParam
+        {
+            icon = GameClubButtonIcon.light,
+            hasRedDot = true,
+            style = style,
+            // text = "游戏圈",
+            type = GameClubButtonType.text,
+        };
+
+        try
+        {
+            WXGameClubButton wxGameClubButton = WX.CreateGameClubButton(param);
+        
+            wxGameClubButton.OnTap(() =>
+            {
+                Debug.Log($"[WechatPlatform] 点击了游戏圈按钮");
+            });
+            wxGameClubButton.Show();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[WechatPlatform] 创建游戏圈按钮失败: {e.Message}");
+        }
+#else 
+
+#endif
+        
+    }
+
+    /// <summary>
     /// 获取用户信息
     /// </summary>
     /// <param name="success"></param>
@@ -634,8 +690,8 @@ public class WeChatPlatform : IPlatform
             fail?.Invoke("[WeChatPlatform] 微信平台未初始化");
             return;
         }
-// #if UNITY_WEBGL && !UNITY_EDITOR
-#if true
+#if UNITY_WEBGL && !UNITY_EDITOR
+// #if true
     try
     {
         // 调用内部实现的微信用户信息获取方法
@@ -1726,6 +1782,14 @@ public class WeChatPlatform : IPlatform
     {
         public string userId;
         public string customData;
+    }
+    
+    public class WechatPoint
+    {
+        public int x;
+        public int y;
+        public int width;
+        public int height;
     }
 }
 #endif

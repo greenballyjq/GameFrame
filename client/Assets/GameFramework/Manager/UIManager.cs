@@ -127,7 +127,7 @@ public class UIManager : IManager
         _canvasScaler.referenceResolution = new Vector2(1920, 1080);
         _canvasScaler.matchWidthOrHeight = 0.65f;
 
-        ScreenAdapter screenAdapter = _uiRoot.AddComponent<ScreenAdapter>();
+        _uiRoot.AddComponent<ScreenAdapter>();
 
         _uiRoot.AddComponent<GraphicRaycaster>();
         

@@ -39,6 +39,16 @@ public class DefaultPlatform : IPlatform
         success?.Invoke("");
     }
 
+    public void CreatGameClubButton(int left, int top, int width, int height)
+    {
+        
+    }
+
+    public void ShowToast(string title, string icon, double duration, bool mask, string image = "")
+    {
+        
+    }
+
     public void Share(ShareInfo shareInfo, Action success, Action<string> fail)
     {
         Debug.Log("[DefaultPlatform] 默认平台分享: " + shareInfo.Title);

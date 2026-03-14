@@ -54,8 +54,15 @@ public interface IPlatform
     /// <returns>按钮控制器</returns>
     IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap);
 
-    // void VibrateShort();
-
+    /// <summary>
+    /// 创建游戏圈按钮
+    /// </summary>
+    /// <param name="left">左上角横坐标</param>
+    /// <param name="top">左上角纵坐标</param>
+    /// <param name="width">宽度</param>
+    /// <param name="height">高度</param>
+    void CreatGameClubButton(int left, int top, int width, int height);
+    
     /// <summary>
     /// 分享
     /// </summary>
