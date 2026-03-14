@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
+using GameFramework.Utility;
 using Luban;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -41,8 +42,7 @@ namespace GameFramework.Manager
         /// </summary>
         public virtual void Init()
         {
-            // Debug.Log($"[{GetType().Name}] 初始化配置管理器");
-            // 异步初始化配置
+            Log.Info($"[{GetType().Name}] 初始化配置管理器");
             InitializeAsync();
         }
 
@@ -71,14 +71,14 @@ namespace GameFramework.Manager
         {
             try
             {
-                // Debug.Log($"[{GetType().Name}] 开始加载配置表");
+                Log.Info($"[{GetType().Name}] 开始加载配置表");
                 await LoadTablesAsync();
                 Initialized = true;
-                // Debug.Log($"[{GetType().Name}] 配置表加载完成");
+                Log.Info($"[{GetType().Name}] 配置表加载完成");
             }
             catch (Exception ex)
             {
-                // Debug.LogError($"[{GetType().Name}] 配置表加载失败: {ex.Message}");
+                Log.Error($"[{GetType().Name}] 配置表加载失败: {ex.Message}");
             }
         }
 

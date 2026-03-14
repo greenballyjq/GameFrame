@@ -165,7 +165,6 @@ public class UIManager : IManager
     /// <summary>设置 CanvasScaler</summary>
     public void SetCanvasScaler(CanvasScaler.ScaleMode scaleMode, Vector2 referenceResolution, float matchWidthOrHeight)
     {
-        if (_canvasScaler == null) return;
         _canvasScaler.uiScaleMode = scaleMode;
         _canvasScaler.referenceResolution = referenceResolution;
         _canvasScaler.matchWidthOrHeight = matchWidthOrHeight;
