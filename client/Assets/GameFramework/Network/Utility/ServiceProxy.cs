@@ -7,6 +7,12 @@ using UnityEngine;
 
 namespace GameFramework.Network.Utility
 {
+    /// <summary>
+    /// [已废弃] 请使用 GameFramework.Network.Proxy.BaseGameServiceProxy 替代。
+    /// 各游戏应创建自己的 GameServiceProxy 继承 BaseGameServiceProxy。
+    /// 此类保留仅供 HuntingClient 等尚未迁移的项目临时使用。
+    /// </summary>
+    [System.Obsolete("Use BaseGameServiceProxy instead. Each game should create its own GameServiceProxy inheriting BaseGameServiceProxy.")]
     public class ServiceProxy : Singleton<ServiceProxy>, IDisposable
     {
         private ServerClient _serverClient;
