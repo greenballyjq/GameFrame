@@ -12,9 +12,9 @@ namespace GameFramework.Game
     public abstract class GameAppFlow : MonoBehaviour
     {
         /// <summary>
-        /// 游戏应用流程状态枚举
+        /// 游戏应用流程状态
         /// </summary>
-        private enum GameAppFlowState
+        private enum EGameAppFlowState
         {
             /// <summary>
             /// 无状态
@@ -38,9 +38,9 @@ namespace GameFramework.Game
         }
 
         /// <summary>
-        /// 游戏应用流程当前状态
+        /// 当前状态
         /// </summary>
-        private GameAppFlowState _currentState = GameAppFlowState.None;
+        private EGameAppFlowState _currentState = EGameAppFlowState.None;
 
         /// <summary>
         /// 应用级管理器列表
@@ -49,7 +49,7 @@ namespace GameFramework.Game
 
         private void Update()
         {
-            if (_currentState != GameAppFlowState.Running)
+            if (_currentState != EGameAppFlowState.Running)
                 return;
 
             float dt = Time.deltaTime;
@@ -68,7 +68,7 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask StartAppAsync()
         {
-            _currentState = GameAppFlowState.Starting;
+            _currentState = EGameAppFlowState.Starting;
 
             await WaitForGameLauncherAsync();
 
@@ -82,7 +82,7 @@ namespace GameFramework.Game
 
             GetFrameworkManager<EventManager>().Trigger("GameAppStarted");
 
-            _currentState = GameAppFlowState.Running;
+            _currentState = EGameAppFlowState.Running;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask ExitAppAsync()
         {
-            _currentState = GameAppFlowState.Exiting;
+            _currentState = EGameAppFlowState.Exiting;
 
             await OnAppExitAsync();
 
@@ -98,7 +98,7 @@ namespace GameFramework.Game
                 _appManagers[i].Dispose();
             _appManagers.Clear();
 
-            _currentState = GameAppFlowState.None;
+            _currentState = EGameAppFlowState.None;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask WaitForAppStartedAsync()
         {
-            while (_currentState == GameAppFlowState.None || _currentState == GameAppFlowState.Starting)
+            while (_currentState == EGameAppFlowState.None || _currentState == EGameAppFlowState.Starting)
                 await UniTask.Yield();
         }
         #endregion
