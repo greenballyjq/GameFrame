@@ -674,10 +674,49 @@ public class WeChatPlatform : IPlatform
         {
             Debug.LogError($"[WechatPlatform] 创建游戏圈按钮失败: {e.Message}");
         }
-#else 
+#else
 
 #endif
-        
+
+    }
+
+    /// <summary>
+    /// 分享图片到游戏圈
+    /// </summary>
+    public void ShareImageToGameClub(string imageUrl, string title, string content, Action<bool, string> callback = null)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WXMiniGameCommon.Instance.ShareImageToGameClub(imageUrl, title, content, callback);
+#else
+        Debug.Log($"[WeChatPlatform] ShareImageToGameClub - Editor模式不支持");
+        callback?.Invoke(false, "Editor模式不支持");
+#endif
+    }
+
+    /// <summary>
+    /// 分享canvas截图到游戏圈
+    /// </summary>
+    public void ShareCanvasToGameClub(string title, string content, Action<bool, string> callback = null)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WXMiniGameCommon.Instance.ShareCanvasToGameClub(title, content, callback);
+#else
+        Debug.Log($"[WeChatPlatform] ShareCanvasToGameClub - Editor模式不支持");
+        callback?.Invoke(false, "Editor模式不支持");
+#endif
+    }
+
+    /// <summary>
+    /// 推送小游戏动态
+    /// </summary>
+    public void PushGameFeed(int eventId, string query, Action<bool, string> callback = null)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WXMiniGameCommon.Instance.PushFeed(eventId, query, callback);
+#else
+        Debug.Log($"[WeChatPlatform] PushGameFeed - Editor模式不支持");
+        callback?.Invoke(false, "Editor模式不支持");
+#endif
     }
 
     /// <summary>

@@ -1247,6 +1247,31 @@ public class KuaishouPlatform : IPlatform
         KSWASM.KS.NavigateToMiniProgram(navigateOption);
     }
 
+    public void CreatGameClubButton(int left, int top, int width, int height)
+    {
+        Debug.Log("[KuaishouPlatform] 快手平台不支持游戏圈按钮");
+    }
+
+    public void ShareImageToGameClub(string imageUrl, string title, string content, Action<bool, string> callback = null)
+    {
+        callback?.Invoke(false, "快手平台不支持");
+    }
+
+    public void ShareCanvasToGameClub(string title, string content, Action<bool, string> callback = null)
+    {
+        callback?.Invoke(false, "快手平台不支持");
+    }
+
+    public void PushGameFeed(int eventId, string query, Action<bool, string> callback = null)
+    {
+        callback?.Invoke(false, "快手平台不支持");
+    }
+
+    public void GetPhoneNumber(Action<string> success, Action<string> fail)
+    {
+        fail?.Invoke("快手平台不支持");
+    }
+
     public void ShowToast(string title, string icon = "none", int duration = 1500, bool mask = false, Action success = null, Action<string> fail = null)
     {
         Debug.Log($"[KuaishouPlatform] ShowToast: {title}");
