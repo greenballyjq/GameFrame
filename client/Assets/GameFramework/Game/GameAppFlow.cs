@@ -12,9 +12,9 @@ namespace GameFramework.Game
     public abstract class GameAppFlow : MonoBehaviour
     {
         /// <summary>
-        /// 游戏应用流程状态
+        /// 游戏应用流程状态枚举
         /// </summary>
-        private enum EGameAppFlowState
+        private enum GameAppFlowState
         {
             /// <summary>
             /// 无状态
@@ -38,9 +38,14 @@ namespace GameFramework.Game
         }
 
         /// <summary>
-        /// 当前状态
+        /// 游戏应用流程当前状态
         /// </summary>
-        private EGameAppFlowState _currentState = EGameAppFlowState.None;
+        private GameAppFlowState _currentState = GameAppFlowState.None;
+        
+        /// <summary>
+        /// 游戏app是否开始
+        /// </summary>
+        public bool GameAppStarted { get; protected set; }
 
         /// <summary>
         /// 应用级管理器列表
@@ -49,7 +54,7 @@ namespace GameFramework.Game
 
         private void Update()
         {
-            if (_currentState != EGameAppFlowState.Running)
+            if (_currentState != GameAppFlowState.Running)
                 return;
 
             float dt = Time.deltaTime;
@@ -68,21 +73,25 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask StartAppAsync()
         {
-            _currentState = EGameAppFlowState.Starting;
+            _currentState = GameAppFlowState.Starting;
 
             await WaitForGameLauncherAsync();
 
             await WaitForConfigManagerAsync();
 
+            GameLogin();
+            
             RegisterAppManagers();
             foreach (var manager in _appManagers)
                 manager.Init();
-
+            
             await OnAppStartAsync();
 
             GetFrameworkManager<EventManager>().Trigger("GameAppStarted");
 
-            _currentState = EGameAppFlowState.Running;
+            Debug.Log($"[GameAppFlow] 启动应用成功------");
+            GameAppStarted = true;
+            _currentState = GameAppFlowState.Running;
         }
 
         /// <summary>
@@ -90,7 +99,7 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask ExitAppAsync()
         {
-            _currentState = EGameAppFlowState.Exiting;
+            _currentState = GameAppFlowState.Exiting;
 
             await OnAppExitAsync();
 
@@ -98,7 +107,7 @@ namespace GameFramework.Game
                 _appManagers[i].Dispose();
             _appManagers.Clear();
 
-            _currentState = EGameAppFlowState.None;
+            _currentState = GameAppFlowState.None;
         }
 
         /// <summary>
@@ -125,11 +134,29 @@ namespace GameFramework.Game
 
         /// <summary>
         /// 等待应用启动完成
+        /// fixme 一直在等待 ，_currentState = none
         /// </summary>
         public async UniTask WaitForAppStartedAsync()
         {
-            while (_currentState == EGameAppFlowState.None || _currentState == EGameAppFlowState.Starting)
+            // while (_currentState == GameAppFlowState.None || _currentState == GameAppFlowState.Starting)
+            while (_currentState != GameAppFlowState.Running)
+            {
+                // Debug.Log($"[GameAppFlow] 当前状态打印: {_currentState}------");
                 await UniTask.Yield();
+            }
+            Debug.Log($"[GameAppFlow] 等待应用启动完成------------");
+        }
+
+        /// <summary>
+        /// 等待应用启动完成
+        /// </summary>
+        public async UniTask WaitForGameAppStaredAsync()
+        {
+            while (!GameAppStarted)
+            {
+                await UniTask.Yield();
+            }
+            Debug.Log($"[GameAppFlow] 等待应用启动完成------------");
         }
         #endregion
 
@@ -157,6 +184,12 @@ namespace GameFramework.Game
         /// </summary>
         /// <returns>配置管理器</returns>
         protected abstract BaseConfigManager GetConfigManager();
+
+        /// <summary>
+        /// 游戏登录
+        /// </summary>
+        /// <returns></returns>
+        protected abstract void GameLogin();
 
         /// <summary>
         /// 注册单个应用级管理器

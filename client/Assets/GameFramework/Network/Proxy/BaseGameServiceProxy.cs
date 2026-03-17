@@ -52,6 +52,7 @@ namespace GameFramework.Network.Proxy
         /// </summary>
         public void InitNetwork()
         {
+            Debug.Log($"[{GetType().Name}] 开始初始化Network");
             ServerClient = GameFrameworkManager.Instance.GetManager<ServerClient>();
             ServerClient.SetServerUrl(GetServerUrl());
 
