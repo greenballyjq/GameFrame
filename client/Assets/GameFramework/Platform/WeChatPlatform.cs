@@ -537,6 +537,7 @@ public class WeChatPlatform : IPlatform
     /// <param name="fail"></param>
     public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
     {
+        Debug.Log($"[WechatPlatform] 开始检测用户授权");
         GetSettingOption option = new GetSettingOption();
 
         // 检查授权成功
@@ -544,7 +545,7 @@ public class WeChatPlatform : IPlatform
             // 如果已经授权，则直接调用成功回调
             if (res.authSetting.ContainsKey("scope.userInfo") && res.authSetting["scope.userInfo"])
             {
-                // Debug.Log("[WeChatPlatform] 玩家已授权用户信息");
+                Debug.Log("[WeChatPlatform] 玩家已授权用户信息");
                 success(true);
             }
             // 如果未授权，则调用授权API
@@ -554,9 +555,11 @@ public class WeChatPlatform : IPlatform
                 {
                     scope = "scope.userInfo",
                     success = res => {
+                        Debug.Log($"[WechatPlatform] 玩家授权成功");
                         success(true);
                     },
                     fail = (result) => {
+                        Debug.Log($"[WechatPlatform] 玩家未授权，尝试授权失败, {result.errMsg}");
                         fail($"[WeChatPlatform] 玩家未授权，尝试授权失败, {result.errMsg}");
                     },
                 });
@@ -566,6 +569,7 @@ public class WeChatPlatform : IPlatform
         // 检查授权失败
         option.fail = (res) =>
         {
+            Debug.Log($"[WechatPlatform] 检查授权失败 errMsg:{res.errMsg}");
             fail($"[WeChatPlatform] 检查授权失败 errMsg:{res.errMsg}");
         };
 

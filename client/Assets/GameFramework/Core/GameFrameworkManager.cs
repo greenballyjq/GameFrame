@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Manager;
 using GameFramework.Network;
+using GameFramework.Network.Proxy;
 using GameFramework.Network.Utility;
 using UnityEngine;
 
@@ -90,6 +91,8 @@ namespace GameFramework.Core
             {
                 await UniTask.Yield();
             }
+
+            Debug.Log($"[GameFrameworkManager] 等待初始化完成------------");
         }
         
         /// <summary>
