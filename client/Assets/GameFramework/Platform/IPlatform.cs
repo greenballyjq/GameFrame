@@ -63,7 +63,32 @@ public interface IPlatform
     /// <param name="width">宽度</param>
     /// <param name="height">高度</param>
     void CreatGameClubButton(int left, int top, int width, int height);
-    
+
+    /// <summary>
+    /// 分享图片到游戏圈
+    /// </summary>
+    /// <param name="imageUrl">CDN图片地址</param>
+    /// <param name="title">分享标题</param>
+    /// <param name="content">分享文案</param>
+    /// <param name="callback">回调 (success, errMsg)</param>
+    void ShareImageToGameClub(string imageUrl, string title, string content, Action<bool, string> callback = null);
+
+    /// <summary>
+    /// 分享canvas截图到游戏圈
+    /// </summary>
+    /// <param name="title">分享标题</param>
+    /// <param name="content">分享文案</param>
+    /// <param name="callback">回调 (success, errMsg)</param>
+    void ShareCanvasToGameClub(string title, string content, Action<bool, string> callback = null);
+
+    /// <summary>
+    /// 推送小游戏动态
+    /// </summary>
+    /// <param name="eventId">事件ID</param>
+    /// <param name="query">透传信息</param>
+    /// <param name="callback">回调 (success, errMsg)</param>
+    void PushGameFeed(int eventId, string query, Action<bool, string> callback = null);
+
     /// <summary>
     /// 分享
     /// </summary>

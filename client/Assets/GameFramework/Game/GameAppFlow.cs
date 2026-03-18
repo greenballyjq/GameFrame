@@ -12,9 +12,9 @@ namespace GameFramework.Game
     public abstract class GameAppFlow : MonoBehaviour
     {
         /// <summary>
-        /// 游戏应用流程状态枚举
+        /// 游戏应用流程状态
         /// </summary>
-        private enum GameAppFlowState
+        private enum EGameAppFlowState
         {
             /// <summary>
             /// 无状态
@@ -38,14 +38,9 @@ namespace GameFramework.Game
         }
 
         /// <summary>
-        /// 游戏应用流程当前状态
+        /// 当前状态
         /// </summary>
-        private GameAppFlowState _currentState = GameAppFlowState.None;
-        
-        /// <summary>
-        /// 游戏app是否开始
-        /// </summary>
-        public bool GameAppStarted { get; protected set; }
+        private EGameAppFlowState _currentState = EGameAppFlowState.None;
 
         /// <summary>
         /// 应用级管理器列表
@@ -54,7 +49,7 @@ namespace GameFramework.Game
 
         private void Update()
         {
-            if (_currentState != GameAppFlowState.Running)
+            if (_currentState != EGameAppFlowState.Running)
                 return;
 
             float dt = Time.deltaTime;
@@ -73,25 +68,20 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask StartAppAsync()
         {
-            _currentState = GameAppFlowState.Starting;
+            _currentState = EGameAppFlowState.Starting;
 
             await WaitForGameLauncherAsync();
 
             await WaitForConfigManagerAsync();
 
-            GameLogin();
-            
             RegisterAppManagers();
-            foreach (var manager in _appManagers)
-                manager.Init();
-            
+            InitAppManagers();
+
             await OnAppStartAsync();
 
             GetFrameworkManager<EventManager>().Trigger("GameAppStarted");
 
-            Debug.Log($"[GameAppFlow] 启动应用成功------");
-            GameAppStarted = true;
-            _currentState = GameAppFlowState.Running;
+            _currentState = EGameAppFlowState.Running;
         }
 
         /// <summary>
@@ -99,7 +89,7 @@ namespace GameFramework.Game
         /// </summary>
         public async UniTask ExitAppAsync()
         {
-            _currentState = GameAppFlowState.Exiting;
+            _currentState = EGameAppFlowState.Exiting;
 
             await OnAppExitAsync();
 
@@ -107,7 +97,7 @@ namespace GameFramework.Game
                 _appManagers[i].Dispose();
             _appManagers.Clear();
 
-            _currentState = GameAppFlowState.None;
+            _currentState = EGameAppFlowState.None;
         }
 
         /// <summary>
@@ -134,29 +124,11 @@ namespace GameFramework.Game
 
         /// <summary>
         /// 等待应用启动完成
-        /// fixme 一直在等待 ，_currentState = none
         /// </summary>
         public async UniTask WaitForAppStartedAsync()
         {
-            // while (_currentState == GameAppFlowState.None || _currentState == GameAppFlowState.Starting)
-            while (_currentState != GameAppFlowState.Running)
-            {
-                // Debug.Log($"[GameAppFlow] 当前状态打印: {_currentState}------");
+            while (_currentState == EGameAppFlowState.None || _currentState == EGameAppFlowState.Starting)
                 await UniTask.Yield();
-            }
-            Debug.Log($"[GameAppFlow] 等待应用启动完成------------");
-        }
-
-        /// <summary>
-        /// 等待应用启动完成
-        /// </summary>
-        public async UniTask WaitForGameAppStaredAsync()
-        {
-            while (!GameAppStarted)
-            {
-                await UniTask.Yield();
-            }
-            Debug.Log($"[GameAppFlow] 等待应用启动完成------------");
         }
         #endregion
 
@@ -186,12 +158,6 @@ namespace GameFramework.Game
         protected abstract BaseConfigManager GetConfigManager();
 
         /// <summary>
-        /// 游戏登录
-        /// </summary>
-        /// <returns></returns>
-        protected abstract void GameLogin();
-
-        /// <summary>
         /// 注册单个应用级管理器
         /// </summary>
         /// <param name="manager">应用级管理器</param>
@@ -204,6 +170,15 @@ namespace GameFramework.Game
         /// 注册应用级管理器
         /// </summary>
         protected abstract void RegisterAppManagers();
+
+        /// <summary>
+        /// 初始化应用级管理器
+        /// </summary>
+        private void InitAppManagers()
+        {
+            foreach (var manager in _appManagers)
+                manager.Init();
+        }
         #endregion
 
         #region 钩子方法
