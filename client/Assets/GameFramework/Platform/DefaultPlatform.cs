@@ -191,4 +191,10 @@ public class DefaultPlatform : IPlatform
         Debug.Log($"[DefaultPlatform] ShowActionSheet: itemCount:{itemList?.Length}");
         success?.Invoke(0);
     }
+
+    public void SetUserCloudStorage(UserStorageData[] data, Action success = null, Action<string> fail = null)
+    {
+        Debug.Log($"[DefaultPlatform] SetUserCloudStorage: dataCount:{data?.Length}");
+        success?.Invoke();
+    }
 }

@@ -633,6 +633,7 @@ public class WeChatPlatform : IPlatform
     /// <param name="height"></param>
     public void CreatGameClubButton(int left, int top, int width, int height)
     {
+        // WX.SetUserCloudStorage();
         if (!_isInitialized)
         {
             return;
@@ -1568,6 +1569,50 @@ public class WeChatPlatform : IPlatform
 #else
         // 编辑器模式下模拟创建视频成功
         success?.Invoke(WXBase.CreateVideo(new CreateVideoOption()));
+#endif
+    }
+
+    /// <summary>
+    /// 对用户托管数据进行写数据操作。允许同时写多组 KV 数据。
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    public void SetUserCloudStorage(UserStorageData[] data, Action success = null, Action<string> fail = null)
+    {
+        WX.cloud.
+#if UNITY_WEBGL && !UNITY_EDITOR
+// #if true
+        Debug.Log($"[WechatPlatform] 开始对用户托管数据进行写数据操作");
+        KVData[] kvDataArray = new KVData[data.Length];
+        for (int i = 0; i < data.Length; i++)
+        {
+            Debug.Log($"[WechatPlatform] 用户托管数据写入映射: {data[i].Key}:{data[i].Value}");
+            KVData kvData = new KVData
+            {   
+                key = data[i].Key,
+                value = data[i].Value
+            };
+            kvDataArray[i] = kvData;
+        }
+
+        SetUserCloudStorageOption option = new SetUserCloudStorageOption
+        {
+            success = result =>
+            {
+                Debug.Log($"[WechatPlatform] 用户托管数据写入成功");
+                success?.Invoke();
+            },
+            fail = result =>
+            {
+                Debug.Log($"[WechatPlatform] 用户托管数据写入失败");
+                fail?.Invoke(result.errMsg);
+            },
+            KVDataList = kvDataArray,
+        };
+        WX.SetUserCloudStorage(option);
+#else
+        success?.Invoke();
 #endif
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using WeChatWASM;
 
 /// <summary>
 /// 平台接口 - 定义平台通用功能
@@ -190,6 +191,16 @@ public interface IPlatform
     /// <param name="success">成功回调（tapIndex: 用户点击的按钮序号，从0开始）</param>
     /// <param name="fail">失败回调</param>
     void ShowActionSheet(string[] itemList, string itemColor = "#000000", string alertText = "", Action<int> success = null, Action<string> fail = null);
+
+    /// <summary>
+    /// 对用户托管数据进行写数据操作。允许同时写多组 KV 数据。
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="success"></param>
+    /// <param name="fail"></param>
+    void SetUserCloudStorage(UserStorageData[] data, Action success = null, Action<string> fail = null);
+
+    // void GetFriendCloudStorage();
 }
 
 /// <summary>
@@ -350,4 +361,13 @@ public interface IUserInfoButton
     /// 销毁按钮
     /// </summary>
     void Destroy();
+}
+
+/// <summary>
+/// 用户托管数据
+/// </summary>
+public struct UserStorageData
+{
+    public string Key { get; set; }
+    public string Value { get; set; }
 }
