@@ -41,25 +41,7 @@ public class DefaultPlatform : IPlatform
 
     public void CreatGameClubButton(int left, int top, int width, int height)
     {
-
-    }
-
-    public void ShareImageToGameClub(string imageUrl, string title, string content, Action<bool, string> callback = null)
-    {
-        Debug.Log("[DefaultPlatform] ShareImageToGameClub 不支持");
-        callback?.Invoke(false, "默认平台不支持");
-    }
-
-    public void ShareCanvasToGameClub(string title, string content, Action<bool, string> callback = null)
-    {
-        Debug.Log("[DefaultPlatform] ShareCanvasToGameClub 不支持");
-        callback?.Invoke(false, "默认平台不支持");
-    }
-
-    public void PushGameFeed(int eventId, string query, Action<bool, string> callback = null)
-    {
-        Debug.Log("[DefaultPlatform] PushGameFeed 不支持");
-        callback?.Invoke(false, "默认平台不支持");
+        
     }
 
     public void ShowToast(string title, string icon, double duration, bool mask, string image = "")
