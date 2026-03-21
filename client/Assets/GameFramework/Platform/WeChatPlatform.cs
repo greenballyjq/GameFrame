@@ -1822,7 +1822,84 @@ public class WeChatPlatform : IPlatform
 #endif
     }
 
+    /// <summary>
+    /// 上传排行榜数据
+    /// </summary>
+    /// <param name="openDataMessage"></param>
+    public void UploadRankScore(WechatRankOpenDataMessage openDataMessage)
+    {
+        string json = JsonUtility.ToJson(openDataMessage);
+        WX.GetOpenDataContext().PostMessage(json);
+    }
+    
+    /// <summary>
+    /// 显示好友排行榜
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public void ShowFriendsRank(Texture texture, int x, int y, int width, int height)
+    {
+        WX.ShowOpenData(texture, x, y, width, height);
+        WechatOpenDataMessage openDataMessage = new WechatOpenDataMessage
+        {
+            type = "showFriendsRank",
+        };  
+        WX.GetOpenDataContext().PostMessage(JsonUtility.ToJson(openDataMessage));
+    }
+
+    /// <summary>
+    /// 关闭开放数据域
+    /// </summary>
+    public void HideOpenData()
+    {
+        WX.HideOpenData();
+        
+        LaunchOptionsGame launchOptionsSync = WX.GetLaunchOptionsSync();
+    }
+
+    /// <summary>
+    /// 获取进入小游戏情况选项
+    /// </summary>
+    /// <returns></returns>
+    public EnterOptionsGame GetEnterOptionsSync()
+    {
+        return WX.GetEnterOptionsSync();
+    }
+
+    /// <summary>
+    /// 添加微信小游戏回到前台的事件的监听函数
+    /// </summary>
+    /// <param name="onshow"></param>
+    public void OnShow(Action<OnShowListenerResult> onshow)
+    {
+        WX.OnShow(onshow);
+    }
+
+    /// <summary>
+    /// 移除微信小游戏回到前台的事件的监听函数
+    /// </summary>
+    /// <param name="onshow"></param>
+    public void OffShow(Action<OnShowListenerResult> onshow)
+    {
+        WX.OffShow(onshow);
+    }
+
     #endregion
+    
+    [Serializable]
+    public class WechatOpenDataMessage
+    {
+        public string type;
+    }
+    
+    [Serializable]
+    public class WechatRankOpenDataMessage : WechatOpenDataMessage
+    {
+        public int score;
+    }
 
     [Serializable]
     private class ServerSideVerificationParam
