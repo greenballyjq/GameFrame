@@ -1,4 +1,4 @@
-#if WEIXINMINIGAME
+﻿#if WEIXINMINIGAME
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -1580,9 +1580,7 @@ public class WeChatPlatform : IPlatform
     /// <param name="fail"></param>
     public void SetUserCloudStorage(UserStorageData[] data, Action success = null, Action<string> fail = null)
     {
-        WX.cloud.
 #if UNITY_WEBGL && !UNITY_EDITOR
-// #if true
         Debug.Log($"[WechatPlatform] 开始对用户托管数据进行写数据操作");
         KVData[] kvDataArray = new KVData[data.Length];
         for (int i = 0; i < data.Length; i++)

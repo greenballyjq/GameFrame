@@ -65,6 +65,7 @@ namespace GameFramework.Core.Audio
                 return _audioCallback;
             }
 
+            _audioCallback?.SetPlayer(this);
             _volume = Mathf.Clamp01(volume);
 
             _audioSource.clip = clip;
@@ -194,7 +195,8 @@ namespace GameFramework.Core.Audio
             OnPlayComplete = null;
             _audioSource.clip = null;
             gameObject.SetActive(false);
-            _audioCallback.ClearCallback();
+            _audioCallback?.ClearPlayer();
+            _audioCallback?.ClearCallback();
         }
 
         #endregion
