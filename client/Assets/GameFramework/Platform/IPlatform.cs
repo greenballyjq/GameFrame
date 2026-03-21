@@ -199,6 +199,7 @@ public interface IPlatform
     /// <param name="success"></param>
     /// <param name="fail"></param>
     void SetUserCloudStorage(UserStorageData[] data, Action success = null, Action<string> fail = null);
+    
 
     // void GetFriendCloudStorage();
 }

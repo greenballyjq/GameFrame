@@ -43,7 +43,8 @@ namespace GameFramework.Network.Proxy
             if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.GetProfile != null)
             {
                 _userProfile = resp.GetProfile.Profile;
-                Debug.Log($"[UserProxy] 获取用户资料成功 - uuid: {_userProfile.Uuid}, nickname: {_userProfile.Nickname}, platform: {_userProfile.Platform}, gold: {_userProfile.Gold}");
+                Debug.Log($"[UserProxy] 获取用户资料成功 - uuid: {_userProfile.Uuid}, avatar: {_userProfile.Avatar}, " +
+                          $"nickname: {_userProfile.Nickname}, platform: {_userProfile.Platform}, gold: {_userProfile.Gold}");
                 return _userProfile;
             }
 
