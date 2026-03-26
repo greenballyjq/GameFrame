@@ -106,7 +106,7 @@ namespace GameFramework.Manager
             //     byteBuffs.Add(new ByteBuf(request.downloadHandler.data));
             // }
 
-             List<ByteBuf> byteBuffs = new List<ByteBuf>();
+            List<ByteBuf> byteBuffs = new List<ByteBuf>();
 
             foreach (var tableName in TableNames)
             {

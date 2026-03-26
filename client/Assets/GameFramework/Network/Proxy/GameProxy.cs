@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Network;
@@ -307,6 +308,129 @@ namespace GameFramework.Network.Proxy
             return 0;
         }
 
+        #endregion
+
+        #region 排行榜
+
+        /// <summary>
+        /// 查询排行榜 （总榜）
+        /// </summary>
+        /// <returns>（自己的排行信息，和前五十的排行信息）</returns>
+        public async UniTask<(RankEntry, List<RankEntry>)> QueryMonthRank()
+        {
+            var root = new C2SGame
+            {
+                Session = ServerClient.NextSession(),
+                RankQuery = new C2SRankQuery
+                {
+                    Period = "monthly",
+                    TopN = 50,
+                    // 大鹅玩家月榜
+                    Type = "goose_player_month_rank" 
+                }
+            };
+            Debug.Log($"[GameProx] 开始查询排行榜");
+            S2CGame resp = await ServerClient.PostDomainAsync<S2CGame>("/game", root);
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.RankQuery != null)
+            {
+                List<RankEntry> rankEntries = new List<RankEntry>();
+                if (resp.RankQuery.Entries != null)
+                    rankEntries.AddRange(resp.RankQuery.Entries);
+                Debug.Log($"[GameProxy] 排行查询成功");
+                return (resp.RankQuery.Self, rankEntries);
+            }
+            Debug.LogError($"[GameProxy] 排行查询失败, code: {resp?.Code}");
+            return default;
+        }
+        
+        /// <summary>
+        /// 查询排行榜 （总榜）
+        /// </summary>
+        /// <returns>（自己的排行信息，和前五十的排行信息）</returns>
+        public async UniTask<(RankEntry, List<RankEntry>)> QueryWeekRank()
+        {
+            var root = new C2SGame
+            {
+                Session = ServerClient.NextSession(),
+                RankQuery = new C2SRankQuery
+                {
+                    Period = "weekly",
+                    TopN = 50,
+                    // 大鹅玩家月榜
+                    Type = "goose_player_week_rank" 
+                }
+            };
+            Debug.Log($"[GameProx] 开始查询排行榜");
+            S2CGame resp = await ServerClient.PostDomainAsync<S2CGame>("/game", root);
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.RankQuery != null)
+            {
+                List<RankEntry> rankEntries = new List<RankEntry>();
+                if (resp.RankQuery.Entries != null)
+                    rankEntries.AddRange(resp.RankQuery.Entries);
+                
+                Debug.Log($"[GameProxy] 排行查询成功");
+                return (resp.RankQuery.Self, rankEntries);
+            }
+            Debug.LogError($"[GameProxy] 排行查询失败, code: {resp?.Code}");
+            return default;
+        }
+
+        /// <summary>
+        /// 上传排行榜数据 （后端月榜）
+        /// </summary>
+        /// <param name="score">永久最高分</param>
+        /// <returns></returns>
+        public async UniTask<ulong> SubmitMonthRank(ulong score)
+        {
+            var root = new C2SGame
+            {
+                Session = ServerClient.NextSession(),
+                RankSubmit = new C2SRankSubmit
+                {
+                    Score = (ulong)score,
+                    // 大鹅玩家月榜
+                    Type = "goose_player_month_rank",
+                },
+            };
+            Debug.Log($"[GameProx] 开始上传排行榜数据, score: {score}");
+            S2CGame resp = await ServerClient.PostDomainAsync<S2CGame>("/game", root);
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.RankSubmit != null)
+            {
+                Debug.Log($"[GameProxy] 排行数据上传成功, 最高分：{resp.RankSubmit.BestScore}");
+                return resp.RankSubmit.BestScore;
+            }
+            Debug.LogError($"[GameProxy] 排行数据上传失败, code: {resp?.Code}");
+            return 0;
+        }
+        
+        /// <summary>
+        /// 上传排行榜数据 （后端周榜）
+        /// </summary>
+        /// <param name="score">永久最高分</param>
+        /// <returns></returns>
+        public async UniTask<ulong> SubmitWeekRank(ulong score)
+        {
+            var root = new C2SGame
+            {
+                Session = ServerClient.NextSession(),
+                RankSubmit = new C2SRankSubmit
+                {
+                    Score = (ulong)score,
+                    // 大鹅玩家月榜
+                    Type = "goose_player_week_rank",
+                },
+            };
+            Debug.Log($"[GameProx] 开始上传排行榜数据, score: {score}");
+            S2CGame resp = await ServerClient.PostDomainAsync<S2CGame>("/game", root);
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.RankSubmit != null)
+            {
+                Debug.Log($"[GameProxy] 排行数据上传成功, 最高分：{resp.RankSubmit.BestScore}");
+                return resp.RankSubmit.BestScore;
+            }
+            Debug.LogError($"[GameProxy] 排行数据上传失败, code: {resp?.Code}");
+            return 0;
+        }
+        
         #endregion
     }
 }

@@ -1824,14 +1824,34 @@ public class WeChatPlatform : IPlatform
     }
 
     /// <summary>
-    /// 上传排行榜数据
+    /// 上传好友总排行榜数据
     /// </summary>
-    /// <param name="openDataMessage"></param>
-    public void UploadRankScore(WechatRankOpenDataMessage openDataMessage)
+    public void UploadRankScore(ulong score)
     {
+        WechatRankOpenDataMessage openDataMessage = new WechatRankOpenDataMessage
+        {
+            type = "setUserRecord",
+            score = score,
+        };
         string json = JsonUtility.ToJson(openDataMessage);
         WX.GetOpenDataContext().PostMessage(json);
     }
+
+    /// <summary>
+    /// 上传好友周排行榜数据
+    /// </summary>
+    /// <param name="score"></param>
+    public void UploadWeekRankScore(ulong score)
+    {
+        WechatRankOpenDataMessage openDataMessage = new WechatRankOpenDataMessage
+        {
+            type = "setUserWeekRecord",
+            score = score,
+        };
+        string json = JsonUtility.ToJson(openDataMessage);
+        WX.GetOpenDataContext().PostMessage(json);
+    }
+    
     
     /// <summary>
     /// 显示好友排行榜
@@ -1843,10 +1863,30 @@ public class WeChatPlatform : IPlatform
     /// <param name="height"></param>
     public void ShowFriendsRank(Texture texture, int x, int y, int width, int height)
     {
+        Debug.Log($"[WechatPlatform] 显示好友总榜");
         WX.ShowOpenData(texture, x, y, width, height);
         WechatOpenDataMessage openDataMessage = new WechatOpenDataMessage
         {
             type = "showFriendsRank",
+        };  
+        WX.GetOpenDataContext().PostMessage(JsonUtility.ToJson(openDataMessage));
+    }
+    
+    /// <summary>
+    /// 显示好友周排行榜
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public void ShowFriendsWeekRank(Texture texture, int x, int y, int width, int height)
+    {
+        Debug.Log($"[WechatPlatform] 显示好友周榜");
+        WX.ShowOpenData(texture, x, y, width, height);
+        WechatOpenDataMessage openDataMessage = new WechatOpenDataMessage
+        {
+            type = "showFriendsWeekRank",
         };  
         WX.GetOpenDataContext().PostMessage(JsonUtility.ToJson(openDataMessage));
     }
@@ -1899,7 +1939,7 @@ public class WeChatPlatform : IPlatform
     [Serializable]
     public class WechatRankOpenDataMessage : WechatOpenDataMessage
     {
-        public int score;
+        public ulong score;
     }
 
     [Serializable]

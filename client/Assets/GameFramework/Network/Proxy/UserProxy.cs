@@ -52,6 +52,36 @@ namespace GameFramework.Network.Proxy
             return null;
         }
 
+        /// <summary>
+        /// 更新用户资料 - 昵称、头像
+        /// </summary>
+        /// <param name="nickname">昵称</param>
+        /// <param name="avatarUrl">头像</param>
+        /// <returns></returns>
+        public async UniTask<bool> UpdateProfile(string nickname, string avatarUrl)
+        {
+            var root = new C2SUser
+            {
+                Session = ServerClient.NextSession(),
+                UpdateProfile = new C2SUpdateProfile
+                {
+                    Nickname = nickname,
+                    Avatar = avatarUrl
+                }
+            };
+            Debug.Log($"[UserProxy] 开始更新玩家资料");
+            S2CUser resp = await ServerClient.PostDomainAsync<S2CUser>("/user", root);
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.UpdateProfile != null)
+            {
+                _userProfile = resp.GetProfile.Profile;
+                Debug.Log($"[UserProxy] 更新用户资料成功 - uuid: {_userProfile.Uuid}, avatar: {_userProfile.Avatar}, " +
+                          $"nickname: {_userProfile.Nickname}, platform: {_userProfile.Platform}, gold: {_userProfile.Gold}");
+                return true;
+            }
+            Debug.LogError($"[UserProxy] 更新用户资料失败, code: {resp?.Code}");
+            return false;
+        }
+
         #endregion
 
         #region 资产

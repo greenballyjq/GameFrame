@@ -44,25 +44,30 @@ public static partial class UserReflection {
           "dGVBZGRyZXNzEgoKAmlkGAEgASgEImAKEEMyU1VwZGF0ZUFkZHJlc3MSCgoC",
           "aWQYASABKAQSDAoEbmFtZRgCIAEoCRINCgVwaG9uZRgDIAEoCRIPCgdhZGRy",
           "ZXNzGAQgASgJEhIKCmlzX2RlZmF1bHQYBSABKAgiNgoQUzJDVXBkYXRlQWRk",
-          "cmVzcxIiCgxhZGRyZXNzX2luZm8YASABKAsyDC5BZGRyZXNzSW5mbyKAAwoH",
-          "QzJTVXNlchIPCgdzZXNzaW9uGAEgASgEEiUKC2dldF9wcm9maWxlGAIgASgL",
-          "Mg4uQzJTR2V0UHJvZmlsZUgAEiIKCWhlYXJ0YmVhdBgDIAEoCzINLkMyU0hl",
-          "YXJ0YmVhdEgAEiMKCmJpbmRfcGhvbmUYBCABKAsyDS5DMlNCaW5kUGhvbmVI",
-          "ABIjCgpnZXRfYXNzZXRzGAUgASgLMg0uQzJTR2V0QXNzZXRzSAASHAoGbG9n",
-          "b3V0GAYgASgLMgouQzJTTG9nb3V0SAASJQoLYWRkX2FkZHJlc3MYByABKAsy",
-          "Di5DMlNBZGRBZGRyZXNzSAASKQoNZ2V0X2FkZHJlc3NlcxgIIAEoCzIQLkMy",
-          "U0dldEFkZHJlc3Nlc0gAEisKDmRlbGV0ZV9hZGRyZXNzGAkgASgLMhEuQzJT",
-          "RGVsZXRlQWRkcmVzc0gAEisKDnVwZGF0ZV9hZGRyZXNzGAogASgLMhEuQzJT",
-          "VXBkYXRlQWRkcmVzc0gAQgUKA21zZyKTAwoHUzJDVXNlchIPCgdzZXNzaW9u",
-          "GAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSJQoLZ2V0X3Byb2Zp",
-          "bGUYAiABKAsyDi5TMkNHZXRQcm9maWxlSAASIgoJaGVhcnRiZWF0GAMgASgL",
-          "Mg0uUzJDSGVhcnRiZWF0SAASIwoKYmluZF9waG9uZRgEIAEoCzINLlMyQ0Jp",
-          "bmRQaG9uZUgAEiMKCmdldF9hc3NldHMYBSABKAsyDS5TMkNHZXRBc3NldHNI",
-          "ABIcCgZsb2dvdXQYBiABKAsyCi5TMkNMb2dvdXRIABIlCgthZGRfYWRkcmVz",
-          "cxgHIAEoCzIOLlMyQ0FkZEFkZHJlc3NIABIpCg1nZXRfYWRkcmVzc2VzGAgg",
-          "ASgLMhAuUzJDR2V0QWRkcmVzc2VzSAASJAoOZGVsZXRlX2FkZHJlc3MYCSAB",
-          "KAsyCi5TMkNMb2dvdXRIABIrCg51cGRhdGVfYWRkcmVzcxgKIAEoCzIRLlMy",
-          "Q1VwZGF0ZUFkZHJlc3NIAEIFCgNtc2diBnByb3RvMw=="));
+          "cmVzcxIiCgxhZGRyZXNzX2luZm8YASABKAsyDC5BZGRyZXNzSW5mbyI0ChBD",
+          "MlNVcGRhdGVQcm9maWxlEhAKCG5pY2tuYW1lGAEgASgJEg4KBmF2YXRhchgC",
+          "IAEoCSI0ChBTMkNVcGRhdGVQcm9maWxlEhAKCG5pY2tuYW1lGAEgASgJEg4K",
+          "BmF2YXRhchgCIAEoCSKtAwoHQzJTVXNlchIPCgdzZXNzaW9uGAEgASgEEiUK",
+          "C2dldF9wcm9maWxlGAIgASgLMg4uQzJTR2V0UHJvZmlsZUgAEiIKCWhlYXJ0",
+          "YmVhdBgDIAEoCzINLkMyU0hlYXJ0YmVhdEgAEiMKCmJpbmRfcGhvbmUYBCAB",
+          "KAsyDS5DMlNCaW5kUGhvbmVIABIjCgpnZXRfYXNzZXRzGAUgASgLMg0uQzJT",
+          "R2V0QXNzZXRzSAASHAoGbG9nb3V0GAYgASgLMgouQzJTTG9nb3V0SAASJQoL",
+          "YWRkX2FkZHJlc3MYByABKAsyDi5DMlNBZGRBZGRyZXNzSAASKQoNZ2V0X2Fk",
+          "ZHJlc3NlcxgIIAEoCzIQLkMyU0dldEFkZHJlc3Nlc0gAEisKDmRlbGV0ZV9h",
+          "ZGRyZXNzGAkgASgLMhEuQzJTRGVsZXRlQWRkcmVzc0gAEisKDnVwZGF0ZV9h",
+          "ZGRyZXNzGAogASgLMhEuQzJTVXBkYXRlQWRkcmVzc0gAEisKDnVwZGF0ZV9w",
+          "cm9maWxlGAsgASgLMhEuQzJTVXBkYXRlUHJvZmlsZUgAQgUKA21zZyLAAwoH",
+          "UzJDVXNlchIPCgdzZXNzaW9uGAEgASgEEhgKBGNvZGUYYyABKA4yCi5TMkNP",
+          "cGNvZGUSJQoLZ2V0X3Byb2ZpbGUYAiABKAsyDi5TMkNHZXRQcm9maWxlSAAS",
+          "IgoJaGVhcnRiZWF0GAMgASgLMg0uUzJDSGVhcnRiZWF0SAASIwoKYmluZF9w",
+          "aG9uZRgEIAEoCzINLlMyQ0JpbmRQaG9uZUgAEiMKCmdldF9hc3NldHMYBSAB",
+          "KAsyDS5TMkNHZXRBc3NldHNIABIcCgZsb2dvdXQYBiABKAsyCi5TMkNMb2dv",
+          "dXRIABIlCgthZGRfYWRkcmVzcxgHIAEoCzIOLlMyQ0FkZEFkZHJlc3NIABIp",
+          "Cg1nZXRfYWRkcmVzc2VzGAggASgLMhAuUzJDR2V0QWRkcmVzc2VzSAASJAoO",
+          "ZGVsZXRlX2FkZHJlc3MYCSABKAsyCi5TMkNMb2dvdXRIABIrCg51cGRhdGVf",
+          "YWRkcmVzcxgKIAEoCzIRLlMyQ1VwZGF0ZUFkZHJlc3NIABIrCg51cGRhdGVf",
+          "cHJvZmlsZRgLIAEoCzIRLlMyQ1VwZGF0ZVByb2ZpbGVIAEIFCgNtc2diBnBy",
+          "b3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -85,8 +90,10 @@ public static partial class UserReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SDeleteAddress), global::C2SDeleteAddress.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SUpdateAddress), global::C2SUpdateAddress.Parser, new[]{ "Id", "Name", "Phone", "Address", "IsDefault" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CUpdateAddress), global::S2CUpdateAddress.Parser, new[]{ "AddressInfo" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SUser), global::C2SUser.Parser, new[]{ "Session", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress", "UpdateAddress" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2CUser), global::S2CUser.Parser, new[]{ "Session", "Code", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress", "UpdateAddress" }, new[]{ "Msg" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SUpdateProfile), global::C2SUpdateProfile.Parser, new[]{ "Nickname", "Avatar" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CUpdateProfile), global::S2CUpdateProfile.Parser, new[]{ "Nickname", "Avatar" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SUser), global::C2SUser.Parser, new[]{ "Session", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress", "UpdateAddress", "UpdateProfile" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2CUser), global::S2CUser.Parser, new[]{ "Session", "Code", "GetProfile", "Heartbeat", "BindPhone", "GetAssets", "Logout", "AddAddress", "GetAddresses", "DeleteAddress", "UpdateAddress", "UpdateProfile" }, new[]{ "Msg" }, null, null, null)
         }));
   }
   #endregion
@@ -4495,6 +4502,476 @@ public sealed partial class S2CUpdateAddress : pb::IMessage<S2CUpdateAddress>
 }
 
 /// <summary>
+/// 修改用户资料请求。
+/// </summary>
+public sealed partial class C2SUpdateProfile : pb::IMessage<C2SUpdateProfile>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<C2SUpdateProfile> _parser = new pb::MessageParser<C2SUpdateProfile>(() => new C2SUpdateProfile());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<C2SUpdateProfile> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[19]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SUpdateProfile() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SUpdateProfile(C2SUpdateProfile other) : this() {
+    nickname_ = other.nickname_;
+    avatar_ = other.avatar_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public C2SUpdateProfile Clone() {
+    return new C2SUpdateProfile(this);
+  }
+
+  /// <summary>Field number for the "nickname" field.</summary>
+  public const int NicknameFieldNumber = 1;
+  private string nickname_ = "";
+  /// <summary>
+  /// 新昵称（空字符串表示不修改）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Nickname {
+    get { return nickname_; }
+    set {
+      nickname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "avatar" field.</summary>
+  public const int AvatarFieldNumber = 2;
+  private string avatar_ = "";
+  /// <summary>
+  /// 新头像URL（空字符串表示不修改）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Avatar {
+    get { return avatar_; }
+    set {
+      avatar_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as C2SUpdateProfile);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(C2SUpdateProfile other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Nickname != other.Nickname) return false;
+    if (Avatar != other.Avatar) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Nickname.Length != 0) hash ^= Nickname.GetHashCode();
+    if (Avatar.Length != 0) hash ^= Avatar.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Nickname.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Avatar);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(C2SUpdateProfile other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Nickname.Length != 0) {
+      Nickname = other.Nickname;
+    }
+    if (other.Avatar.Length != 0) {
+      Avatar = other.Avatar;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 18: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 18: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 修改用户资料响应。
+/// </summary>
+public sealed partial class S2CUpdateProfile : pb::IMessage<S2CUpdateProfile>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<S2CUpdateProfile> _parser = new pb::MessageParser<S2CUpdateProfile>(() => new S2CUpdateProfile());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<S2CUpdateProfile> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::UserReflection.Descriptor.MessageTypes[20]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CUpdateProfile() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CUpdateProfile(S2CUpdateProfile other) : this() {
+    nickname_ = other.nickname_;
+    avatar_ = other.avatar_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public S2CUpdateProfile Clone() {
+    return new S2CUpdateProfile(this);
+  }
+
+  /// <summary>Field number for the "nickname" field.</summary>
+  public const int NicknameFieldNumber = 1;
+  private string nickname_ = "";
+  /// <summary>
+  /// 修改后的昵称。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Nickname {
+    get { return nickname_; }
+    set {
+      nickname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "avatar" field.</summary>
+  public const int AvatarFieldNumber = 2;
+  private string avatar_ = "";
+  /// <summary>
+  /// 修改后的头像URL。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Avatar {
+    get { return avatar_; }
+    set {
+      avatar_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as S2CUpdateProfile);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(S2CUpdateProfile other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Nickname != other.Nickname) return false;
+    if (Avatar != other.Avatar) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Nickname.Length != 0) hash ^= Nickname.GetHashCode();
+    if (Avatar.Length != 0) hash ^= Avatar.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Nickname.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Avatar);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(S2CUpdateProfile other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Nickname.Length != 0) {
+      Nickname = other.Nickname;
+    }
+    if (other.Avatar.Length != 0) {
+      Avatar = other.Avatar;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 18: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 18: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 用户域根请求（/user）。
 /// </summary>
 public sealed partial class C2SUser : pb::IMessage<C2SUser>
@@ -4511,7 +4988,7 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::UserReflection.Descriptor.MessageTypes[19]; }
+    get { return global::UserReflection.Descriptor.MessageTypes[21]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4559,6 +5036,9 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
         break;
       case MsgOneofCase.UpdateAddress:
         UpdateAddress = other.UpdateAddress.Clone();
+        break;
+      case MsgOneofCase.UpdateProfile:
+        UpdateProfile = other.UpdateProfile.Clone();
         break;
     }
 
@@ -4721,6 +5201,21 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     }
   }
 
+  /// <summary>Field number for the "update_profile" field.</summary>
+  public const int UpdateProfileFieldNumber = 11;
+  /// <summary>
+  /// 修改用户资料。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::C2SUpdateProfile UpdateProfile {
+    get { return msgCase_ == MsgOneofCase.UpdateProfile ? (global::C2SUpdateProfile) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.UpdateProfile;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -4734,6 +5229,7 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     GetAddresses = 8,
     DeleteAddress = 9,
     UpdateAddress = 10,
+    UpdateProfile = 11,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4774,6 +5270,7 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     if (!object.Equals(GetAddresses, other.GetAddresses)) return false;
     if (!object.Equals(DeleteAddress, other.DeleteAddress)) return false;
     if (!object.Equals(UpdateAddress, other.UpdateAddress)) return false;
+    if (!object.Equals(UpdateProfile, other.UpdateProfile)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -4792,6 +5289,7 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     if (msgCase_ == MsgOneofCase.GetAddresses) hash ^= GetAddresses.GetHashCode();
     if (msgCase_ == MsgOneofCase.DeleteAddress) hash ^= DeleteAddress.GetHashCode();
     if (msgCase_ == MsgOneofCase.UpdateAddress) hash ^= UpdateAddress.GetHashCode();
+    if (msgCase_ == MsgOneofCase.UpdateProfile) hash ^= UpdateProfile.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -4851,6 +5349,10 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
       output.WriteRawTag(82);
       output.WriteMessage(UpdateAddress);
     }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      output.WriteRawTag(90);
+      output.WriteMessage(UpdateProfile);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -4901,6 +5403,10 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
       output.WriteRawTag(82);
       output.WriteMessage(UpdateAddress);
     }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      output.WriteRawTag(90);
+      output.WriteMessage(UpdateProfile);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -4940,6 +5446,9 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
     }
     if (msgCase_ == MsgOneofCase.UpdateAddress) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateAddress);
+    }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateProfile);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -5010,6 +5519,12 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           UpdateAddress = new global::C2SUpdateAddress();
         }
         UpdateAddress.MergeFrom(other.UpdateAddress);
+        break;
+      case MsgOneofCase.UpdateProfile:
+        if (UpdateProfile == null) {
+          UpdateProfile = new global::C2SUpdateProfile();
+        }
+        UpdateProfile.MergeFrom(other.UpdateProfile);
         break;
     }
 
@@ -5113,6 +5628,15 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           UpdateAddress = subBuilder;
           break;
         }
+        case 90: {
+          global::C2SUpdateProfile subBuilder = new global::C2SUpdateProfile();
+          if (msgCase_ == MsgOneofCase.UpdateProfile) {
+            subBuilder.MergeFrom(UpdateProfile);
+          }
+          input.ReadMessage(subBuilder);
+          UpdateProfile = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -5213,6 +5737,15 @@ public sealed partial class C2SUser : pb::IMessage<C2SUser>
           UpdateAddress = subBuilder;
           break;
         }
+        case 90: {
+          global::C2SUpdateProfile subBuilder = new global::C2SUpdateProfile();
+          if (msgCase_ == MsgOneofCase.UpdateProfile) {
+            subBuilder.MergeFrom(UpdateProfile);
+          }
+          input.ReadMessage(subBuilder);
+          UpdateProfile = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -5237,7 +5770,7 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::UserReflection.Descriptor.MessageTypes[20]; }
+    get { return global::UserReflection.Descriptor.MessageTypes[22]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5286,6 +5819,9 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
         break;
       case MsgOneofCase.UpdateAddress:
         UpdateAddress = other.UpdateAddress.Clone();
+        break;
+      case MsgOneofCase.UpdateProfile:
+        UpdateProfile = other.UpdateProfile.Clone();
         break;
     }
 
@@ -5463,6 +5999,21 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     }
   }
 
+  /// <summary>Field number for the "update_profile" field.</summary>
+  public const int UpdateProfileFieldNumber = 11;
+  /// <summary>
+  /// 修改用户资料响应。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::S2CUpdateProfile UpdateProfile {
+    get { return msgCase_ == MsgOneofCase.UpdateProfile ? (global::S2CUpdateProfile) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.UpdateProfile;
+    }
+  }
+
   private object msg_;
   /// <summary>Enum of possible cases for the "msg" oneof.</summary>
   public enum MsgOneofCase {
@@ -5476,6 +6027,7 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     GetAddresses = 8,
     DeleteAddress = 9,
     UpdateAddress = 10,
+    UpdateProfile = 11,
   }
   private MsgOneofCase msgCase_ = MsgOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5517,6 +6069,7 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     if (!object.Equals(GetAddresses, other.GetAddresses)) return false;
     if (!object.Equals(DeleteAddress, other.DeleteAddress)) return false;
     if (!object.Equals(UpdateAddress, other.UpdateAddress)) return false;
+    if (!object.Equals(UpdateProfile, other.UpdateProfile)) return false;
     if (MsgCase != other.MsgCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -5536,6 +6089,7 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     if (msgCase_ == MsgOneofCase.GetAddresses) hash ^= GetAddresses.GetHashCode();
     if (msgCase_ == MsgOneofCase.DeleteAddress) hash ^= DeleteAddress.GetHashCode();
     if (msgCase_ == MsgOneofCase.UpdateAddress) hash ^= UpdateAddress.GetHashCode();
+    if (msgCase_ == MsgOneofCase.UpdateProfile) hash ^= UpdateProfile.GetHashCode();
     hash ^= (int) msgCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -5595,6 +6149,10 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
       output.WriteRawTag(82);
       output.WriteMessage(UpdateAddress);
     }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      output.WriteRawTag(90);
+      output.WriteMessage(UpdateProfile);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -5649,6 +6207,10 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
       output.WriteRawTag(82);
       output.WriteMessage(UpdateAddress);
     }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      output.WriteRawTag(90);
+      output.WriteMessage(UpdateProfile);
+    }
     if (Code != global::S2COpcode.OpSuccess) {
       output.WriteRawTag(152, 6);
       output.WriteEnum((int) Code);
@@ -5695,6 +6257,9 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
     }
     if (msgCase_ == MsgOneofCase.UpdateAddress) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateAddress);
+    }
+    if (msgCase_ == MsgOneofCase.UpdateProfile) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UpdateProfile);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -5768,6 +6333,12 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           UpdateAddress = new global::S2CUpdateAddress();
         }
         UpdateAddress.MergeFrom(other.UpdateAddress);
+        break;
+      case MsgOneofCase.UpdateProfile:
+        if (UpdateProfile == null) {
+          UpdateProfile = new global::S2CUpdateProfile();
+        }
+        UpdateProfile.MergeFrom(other.UpdateProfile);
         break;
     }
 
@@ -5869,6 +6440,15 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           }
           input.ReadMessage(subBuilder);
           UpdateAddress = subBuilder;
+          break;
+        }
+        case 90: {
+          global::S2CUpdateProfile subBuilder = new global::S2CUpdateProfile();
+          if (msgCase_ == MsgOneofCase.UpdateProfile) {
+            subBuilder.MergeFrom(UpdateProfile);
+          }
+          input.ReadMessage(subBuilder);
+          UpdateProfile = subBuilder;
           break;
         }
         case 792: {
@@ -5973,6 +6553,15 @@ public sealed partial class S2CUser : pb::IMessage<S2CUser>
           }
           input.ReadMessage(subBuilder);
           UpdateAddress = subBuilder;
+          break;
+        }
+        case 90: {
+          global::S2CUpdateProfile subBuilder = new global::S2CUpdateProfile();
+          if (msgCase_ == MsgOneofCase.UpdateProfile) {
+            subBuilder.MergeFrom(UpdateProfile);
+          }
+          input.ReadMessage(subBuilder);
+          UpdateProfile = subBuilder;
           break;
         }
         case 792: {

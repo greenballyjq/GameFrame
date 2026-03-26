@@ -126,7 +126,7 @@ namespace GameFramework.Network
             Debug.Log(
                 $"[ServerClient] >>> [{session}] {requestType} -> {endpoint} (pending:{pendingRequests.Count})\n" +
                 $"{JsonFormatter.Default.Format(rootRequest)}");
-
+            
             // 序列化并发送
             byte[] bodyRaw = rootRequest.ToByteArray();
             var responseData = await httpManager.PostAsync(endpoint, bodyRaw);

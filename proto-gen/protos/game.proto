@@ -165,6 +165,52 @@ message S2CConfiguration {
   string data = 1;
 }
 
+// 排行榜条目。
+message RankEntry {
+  // 排名（从 1 开始）。
+  uint32 rank = 1;
+  // 用户唯一ID。
+  string uuid = 2;
+  // 昵称。
+  string nickname = 3;
+  // 头像URL。
+  string avatar = 4;
+  // 分数。
+  uint64 score = 5;
+}
+
+// 上传排行榜分数请求。
+message C2SRankSubmit {
+  // 排行榜类型（如 high_score、kills）。
+  string type = 1;
+  // 分数。
+  uint64 score = 2;
+}
+
+// 上传排行榜分数响应。
+message S2CRankSubmit {
+  // 当前最高分（永久榜）。
+  uint64 best_score = 1;
+}
+
+// 查询排行榜请求。
+message C2SRankQuery {
+  // 排行榜类型（如 high_score、kills）。
+  string type = 1;
+  // 周期: "daily" / "weekly" / "all"。
+  string period = 2;
+  // 查询前 N 名（默认 50，上限 100）。
+  uint32 top_n = 3;
+}
+
+// 查询排行榜响应。
+message S2CRankQuery {
+  // Top N 列表。
+  repeated RankEntry entries = 1;
+  // 自己的排名信息（可能不在 Top N 中）。
+  RankEntry self = 2;
+}
+
 // 游戏域根请求（/game）。
 message C2SGame {
   // 请求序号（客户端自增，服务端原样回传）。
@@ -193,6 +239,10 @@ message C2SGame {
     C2SGoldGain gold_gain = 11;
     // 上报道具新增（如广告奖励）。
     C2SItemAdd item_add = 12;
+    // 上传排行榜分数。
+    C2SRankSubmit rank_submit = 13;
+    // 查询排行榜。
+    C2SRankQuery rank_query = 14;
   }
 }
 
@@ -224,5 +274,9 @@ message S2CGame {
     S2CGoldGain gold_gain = 10;
     // 上报道具新增响应。
     S2CItemAdd item_add = 11;
+    // 上传排行榜分数响应。
+    S2CRankSubmit rank_submit = 12;
+    // 查询排行榜响应。
+    S2CRankQuery rank_query = 13;
   }
 }

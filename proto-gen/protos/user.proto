@@ -146,6 +146,22 @@ message S2CUpdateAddress {
   AddressInfo address_info = 1;
 }
 
+// 修改用户资料请求。
+message C2SUpdateProfile {
+  // 新昵称（空字符串表示不修改）。
+  string nickname = 1;
+  // 新头像URL（空字符串表示不修改）。
+  string avatar = 2;
+}
+
+// 修改用户资料响应。
+message S2CUpdateProfile {
+  // 修改后的昵称。
+  string nickname = 1;
+  // 修改后的头像URL。
+  string avatar = 2;
+}
+
 // 用户域根请求（/user）。
 message C2SUser {
   // 请求序号（客户端自增，服务端原样回传）。
@@ -170,6 +186,8 @@ message C2SUser {
     C2SDeleteAddress delete_address = 9;
     // 更新收件地址。
     C2SUpdateAddress update_address = 10;
+    // 修改用户资料。
+    C2SUpdateProfile update_profile = 11;
   }
 }
 
@@ -199,5 +217,7 @@ message S2CUser {
     S2CLogout delete_address = 9;
     // 更新收件地址响应。
     S2CUpdateAddress update_address = 10;
+    // 修改用户资料响应。
+    S2CUpdateProfile update_profile = 11;
   }
 }
