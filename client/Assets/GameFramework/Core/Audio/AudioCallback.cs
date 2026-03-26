@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cysharp.Threading.Tasks;
 
 namespace GameFramework.Core.Audio
@@ -6,7 +6,17 @@ namespace GameFramework.Core.Audio
     public class AudioCallback
     {
         private Action<AudioPlayer> _onCompleteCallback;
-        
+        private AudioPlayer _player;
+
+        /// <summary>
+        /// 关联的AudioPlayer（播放开始时即可获取，用于Stop等操作）
+        /// </summary>
+        public AudioPlayer Player => _player;
+
+        internal void SetPlayer(AudioPlayer player) => _player = player;
+
+        internal void ClearPlayer() => _player = null;
+
         public void AddCallback(Action<AudioPlayer> callback) => _onCompleteCallback += callback;
 
         public AudioCallback WithCallback(Action<AudioPlayer> callback)
