@@ -35,6 +35,9 @@ public class UIManager : IManager
     
     // 所有已打开的界面
     private readonly Dictionary<string, UIBase> _openedUIs = new Dictionary<string, UIBase>();
+
+    // 界面缓存
+    private readonly Dictionary<string, UIBase> _cachedUIs = new Dictionary<string, UIBase>();
     
     // 界面预制体缓存
     private readonly Dictionary<string, GameObject> _uiPrefabCache = new Dictionary<string, GameObject>();
@@ -72,6 +75,19 @@ public class UIManager : IManager
         foreach (var ui in _openedUIs.Values)
         {
             ui.OnUpdate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            foreach (var openedUI in _openedUIs)
+            {
+                Debug.Log($"[UIManager] debug 已打开界面: {openedUI.Key}");
+            }
+
+            foreach (var cachedUI in _cachedUIs)
+            {
+                Debug.Log($"[UIManager] debug 已缓存界面: {cachedUI.Key}");
+            }
         }
     }
 
@@ -119,6 +135,7 @@ public class UIManager : IManager
         // 添加Canvas和CanvasScaler组件
         _canvas = _uiRoot.AddComponent<Canvas>();
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        // _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         _canvas.worldCamera = _uiCamera;
         _canvas.sortingOrder = 100;
 
@@ -181,6 +198,13 @@ public class UIManager : IManager
             Log.Info($"[UIManager] UI界面 {uiName} 已经打开");
             return existingUI as T;
         }
+
+        if (_cachedUIs.TryGetValue(uiName, out var uiBase))
+        {
+            _openedUIs.TryAdd(uiName, uiBase);
+            Log.Info($"[UIManager] UI界面 {uiName} 已有缓存");
+            return uiBase as T;
+        }
         
         // 从缓存获取或加载界面预制体
         GameObject uiPrefab = null;
@@ -225,7 +249,10 @@ public class UIManager : IManager
         }
         
         // 初始化界面
-        _openedUIs.Add(uiName, uiComponent);
+        _openedUIs.TryAdd(uiName, uiComponent);
+        
+        _cachedUIs.TryAdd(uiName, uiComponent);
+        
         uiComponent.OnInit(userData);
 
         if(!isActive)
@@ -233,6 +260,23 @@ public class UIManager : IManager
 
         Log.Info($"[UIManager] 打开UI界面: {uiName}");
         return uiComponent;
+    }
+
+    /// <summary>
+    /// 隐藏UI界面
+    /// </summary>
+    /// <param name="uiName"></param>
+    public void HideUI(string uiName)
+    {
+        if (!_openedUIs.TryGetValue(uiName, out var ui))
+        {
+            Log.Warning($"[UIManager] UI界面 {uiName} 未打开");
+            return;
+        }
+
+        ui.Hide();
+        // 从已打开界面中移除
+        _openedUIs.Remove(uiName);
     }
     
     /// <summary>
@@ -254,6 +298,7 @@ public class UIManager : IManager
         
         // 从已打开界面中移除
         _openedUIs.Remove(uiName);
+        _cachedUIs.Remove(uiName);
         
         Log.Info($"[UIManager] 关闭UI界面: {uiName}");
     }
@@ -273,13 +318,35 @@ public class UIManager : IManager
         
         Log.Info("[UIManager] 关闭所有UI界面");
     }
+
+    /// <summary>
+    /// 隐藏所有UI界面
+    /// </summary>
+    public void HideAllUI()
+    {
+        foreach (var ui in _openedUIs.Values)
+        {
+            Debug.Log($"[UIManager] 隐藏UI界面: {ui.name}");
+            ui.Hide();
+        }
+        
+        _openedUIs.Clear();
+        
+        Log.Info("[UIManager] 隐藏所有UI界面");
+    }
     
     /// <summary>
     /// 获取已打开的UI界面
     /// </summary>
     public T GetUI<T>(string uiName) where T : UIBase
     {
-        if (_openedUIs.TryGetValue(uiName, out var ui))
+        UIBase ui;
+        if (_openedUIs.TryGetValue(uiName, out ui))
+        {
+            return ui as T;
+        }
+
+        if (_cachedUIs.TryGetValue(uiName, out ui))
         {
             return ui as T;
         }

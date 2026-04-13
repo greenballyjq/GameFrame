@@ -11,6 +11,7 @@ namespace GameFramework.Network.Utility
         /// </summary>
         public static async UniTask<Sprite> LoadSpriteFromUrl(string url)
         {
+            Debug.Log($"[NetUtility] 从 URL 加载 Sprite: {url}");
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             await request.SendWebRequest().ToUniTask();
             if (request.result == UnityWebRequest.Result.Success)

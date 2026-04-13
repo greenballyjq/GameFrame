@@ -146,6 +146,13 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
+        /// 是否存在计时器
+        /// </summary>
+        /// <param name="timerId"></param>
+        /// <returns></returns>
+        public bool HasTimer(int timerId) => _activeTimers.ContainsKey(timerId);
+
+        /// <summary>
         /// 重置计时器
         /// </summary>
         /// <param name="timerId">计时器id</param>

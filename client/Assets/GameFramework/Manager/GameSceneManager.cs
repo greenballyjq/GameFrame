@@ -72,6 +72,15 @@ namespace GameFramework.Manager
         /// 当前加载的场景信息
         /// </summary>
         private string _currentSceneName;
+
+        public string CurrentSceneName => SceneManager.GetActiveScene().name; 
+        // {
+        //     get => _currentSceneName;
+        //     set
+        //     {
+        //         _currentSceneName = value;
+        //     }
+        // }
         // private string _currentScenePath;
 
         /// <summary>
@@ -90,6 +99,14 @@ namespace GameFramework.Manager
             Scene currentScene = SceneManager.GetActiveScene();
             _currentSceneName = currentScene.name;
             // _currentScenePath = GetScenePath(currentScene.name);
+
+            // string startScene = SceneManager.GetActiveScene().name;
+            // OnSceneLoadComplete?.Invoke(this, new SceneLoadEventArgs
+            // {
+            //     IsSuccess = true,
+            //     Progress = 1f,
+            //     SceneName = startScene
+            // });
 
             // Debug.Log($"[GameSceneManager] 场景管理器初始化完成，当前场景: {_currentSceneName}");
         }
@@ -487,6 +504,11 @@ namespace GameFramework.Manager
         public int GetLoadedSceneCount()
         {
             return SceneManager.sceneCount;
+        }
+
+        public void SetStartSceneName(string startSceneName)
+        {
+            _currentSceneName = startSceneName;
         }
 
         #endregion

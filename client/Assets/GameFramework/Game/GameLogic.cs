@@ -24,6 +24,14 @@ namespace GameFramework.Game
             Paused,         // 暂停
             GameOver,       // 游戏结束
         }
+        
+        public enum GameScene
+        {
+            StartScene,
+            GooseGame,
+        }
+
+        public GameScene StartScene => GameScene.StartScene;
 
         /// <summary>
         /// 游戏应用当前状态
@@ -40,6 +48,13 @@ namespace GameFramework.Game
         /// 游戏业务管理器字典
         /// </summary>
         protected readonly Dictionary<Type, BaseGameManager> GameManagers = new Dictionary<Type, BaseGameManager>();
+        
+        /// <summary>
+        /// 场景对应的游戏业务管理器集合
+        /// </summary>
+        protected readonly Dictionary<string, List<BaseGameManager>> SceneManagers = new Dictionary<string, List<BaseGameManager>>();
+
+        private readonly Dictionary<string, bool> SceneManagerInitStateMap = new Dictionary<string, bool>();
 
         protected virtual void Update()
         {
@@ -79,7 +94,11 @@ namespace GameFramework.Game
             await WaitForConfigManagerAsync();
             
             // 注册场景存在的游戏业务管理器
-            RegisterSceneGameManagers();
+            RegisterSceneGameManagerTypes();
+            
+            // RegisterSceneGameManagers();
+            
+            // InitializeSceneManagers();
 
             var gameSceneManager = GameFrameworkManager.Instance.GetManager<Manager.GameSceneManager>();
             gameSceneManager.OnSceneChanged += OnSceneChanged;
@@ -116,20 +135,23 @@ namespace GameFramework.Game
         private void OnSceneLoadComplete(object sender, SceneLoadEventArgs e)
         {
             List<Type> managerTypeList;
+            SceneManagers[e.SceneName] = new List<BaseGameManager>();
             if (SceneToGameManagerTypes.TryGetValue(e.SceneName, out managerTypeList))
             {
                 foreach (var type in managerTypeList)
                 {
-                    RegisterGameManager(type);
+                    BaseGameManager manager = RegisterGameManager(type);
+                    SceneManagers[e.SceneName].Add(manager);
                 }
-                InitializeGameManagers();
+                InitializeSceneManagers();
+                // InitializeGameManagers();
             }
         }
 
         /// <summary>
         /// 游戏应用开始
         /// </summary>
-        public virtual void StartGame()
+        public virtual async UniTask StartGameAsync()
         {
             if (CurrentState != GameState.Ready)
             {
@@ -138,7 +160,7 @@ namespace GameFramework.Game
             }
 
             CurrentState = GameState.Playing;
-            OnGameStart();
+            await OnGameStartAsync();
 
             // 触发游戏开始事件
             GetFrameworkManager<EventManager>().Trigger("GameStarted");
@@ -283,12 +305,23 @@ namespace GameFramework.Game
             Debug.Log("[GameLogic] 配置管理器初始化完成");
         }
 
-        /// <summary>
-        /// 注册所有游戏业务管理器（由子类实现）
-        /// </summary>
-        protected abstract void RegisterGameManagers();
+        protected abstract void RegisterSceneGameManagerTypes();
 
-        protected abstract void RegisterSceneGameManagers();
+        private void RegisterSceneGameManagers()
+        {
+            GameSceneManager gameSceneManager = GetFrameworkManager<GameSceneManager>();
+            string currentSceneName = gameSceneManager.CurrentSceneName;
+            List<Type> managerTypes = SceneToGameManagerTypes.GetValueOrDefault(currentSceneName, null);
+            if (managerTypes == null) return;
+            SceneManagers[currentSceneName] = new List<BaseGameManager>();
+            foreach (var managerType in managerTypes)
+            {
+                BaseGameManager manager = RegisterGameManager(managerType);
+                SceneManagers[currentSceneName].Add(manager);
+            }
+        }
+        
+        // protected void Regist
 
         /// <summary>
         /// 注册单个游戏业务管理器
@@ -319,12 +352,12 @@ namespace GameFramework.Game
             Debug.Log($"[GameLogic] 注册管理器: {managerType.Name}");
         }
 
-        protected void RegisterGameManager(Type type)
+        protected BaseGameManager RegisterGameManager(Type type)
         {
             if (GameManagers.ContainsKey(type))                   
             {
                 Debug.LogWarning($"[GameLogic] 管理器 {type.Name} 已注册");
-                return;
+                return GameManagers[type];
             }
 
             var manager = FindObjectOfType(type) as BaseGameManager;
@@ -341,6 +374,7 @@ namespace GameFramework.Game
             
             GameManagers[type] = manager;
             Debug.Log($"[GameLogic] 注册管理器: {type.Name}, {GameManagers.Count}");
+            return manager;
         }
 
         protected void UnregisterGameManager<T>() where T : BaseGameManager
@@ -376,6 +410,23 @@ namespace GameFramework.Game
             Debug.Log("[GameLogic] 初始化游戏业务管理器完成");
         }
 
+        private void InitializeSceneManagers()
+        {
+            GameSceneManager gameSceneManager = GetFrameworkManager<GameSceneManager>();
+            string currentSceneName = gameSceneManager.CurrentSceneName;
+            bool initialized = SceneManagerInitStateMap.GetValueOrDefault(currentSceneName, false);
+            if (initialized) return;
+
+            List<BaseGameManager> baseGameManagers = SceneManagers.GetValueOrDefault(currentSceneName, null);
+            if (baseGameManagers == null) return;
+
+            foreach (var manager in baseGameManagers)
+            {
+                manager.Init();
+            }
+            SceneManagerInitStateMap[currentSceneName] = true;
+        }
+
         /// <summary>
         /// 释放所有游戏业务管理器
         /// </summary>
@@ -404,7 +455,7 @@ namespace GameFramework.Game
         /// <summary>
         /// 游戏应用开始钩子
         /// </summary>
-        protected virtual void OnGameStart() { }
+        protected virtual async UniTask OnGameStartAsync() {}
 
         /// <summary>
         /// 游戏应用暂停钩子

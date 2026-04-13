@@ -132,10 +132,10 @@ namespace GameFramework.Game
             Debug.Log($"[{GetType().Name}] LaunchGameAsync 启动游戏异步花费：{sw.ElapsedMilliseconds / 1000f}");
         }
 
-        public void StartGame()
-        {
-            _gameLogic.StartGame();
-        }
+        // public void StartGame()
+        // {
+        //     _gameLogic.StartGameAsync();
+        // }
 
         /// <summary>
         /// 框架初始化

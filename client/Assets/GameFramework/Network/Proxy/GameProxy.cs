@@ -387,7 +387,7 @@ namespace GameFramework.Network.Proxy
                 Session = ServerClient.NextSession(),
                 RankSubmit = new C2SRankSubmit
                 {
-                    Score = (ulong)score,
+                    Score = score,
                     // 大鹅玩家月榜
                     Type = "goose_player_month_rank",
                 },
@@ -415,7 +415,7 @@ namespace GameFramework.Network.Proxy
                 Session = ServerClient.NextSession(),
                 RankSubmit = new C2SRankSubmit
                 {
-                    Score = (ulong)score,
+                    Score = score,
                     // 大鹅玩家月榜
                     Type = "goose_player_week_rank",
                 },

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
@@ -154,7 +153,14 @@ public class HttpManager : IManager
     /// <returns>HTTP响应</returns>
     public async UniTask<HttpResponse> PostAsync(string endpoint, byte[] data, Dictionary<string, string> headers = null, float timeout = DEFAULT_TIMEOUT, int retryCount = DEFAULT_RETRY_COUNT)
     {
-        string fullUrl = GetFullUrl(endpoint);
+        Debug.Log($"[HttpManager] PostAsync Start");
+        
+        
+        string fullUrl = GetFullUrl02(endpoint);
+        
+        
+        
+        Debug.Log($"[HttpManager] PostAsync -> GetFullUrl");
 
         UnityWebRequest request = new UnityWebRequest(fullUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(data);
@@ -169,6 +175,8 @@ public class HttpManager : IManager
         }
         headers["Content-Type"] = "application/x-protobuf";
         headers["Accept"] = "application/x-protobuf";
+        
+        Debug.Log($"[HttpManager] PostAsync -> End");
 
         return await SendRequestAsync(request, headers, timeout, retryCount);
     }
@@ -212,22 +220,57 @@ public class HttpManager : IManager
     /// </summary>
     private string GetFullUrl(string url)
     {
+        Debug.Log($"[HttpManager] GetFullUrl: {url}, {_baseUrl} Start!!!");
+        
         if (string.IsNullOrEmpty(url))
         {
             return _baseUrl;
         }
+        
         // 如果URL已经是完整的，直接返回
         if (url.StartsWith("http://") || url.StartsWith("https://"))
         {
             return url;
         }
-        
+        Debug.Log($"[HttpManager] GetFullUrl: Middle!!!");
         // 如果设置了基础URL，拼接返回
-        if (!string.IsNullOrEmpty(_baseUrl))
+        // fixme 
+        if (!string.IsNullOrWhiteSpace(_baseUrl))
         {
+            Debug.Log($"[HttpManager] baseUrl: {_baseUrl}");
             return _baseUrl.TrimEnd('/') + "/" + url.TrimStart('/');
         }
+        Debug.Log($"[HttpManager] GetFullUrl: {url} End");
+        // 否则直接返回
+        return url;
+    }
+    
+    /// <summary>
+    /// 获取完整URL
+    /// </summary>
+    private string GetFullUrl02(string url)
+    {
+        Debug.Log($"[HttpManager] GetFullUrl: {url}, {_baseUrl} Start!!!");
         
+        if (string.IsNullOrEmpty(url))
+        {
+            return _baseUrl;
+        }
+        
+        // 如果URL已经是完整的，直接返回
+        if (url.StartsWith("http://") || url.StartsWith("https://"))
+        {
+            return url;
+        }
+        Debug.Log($"[HttpManager] GetFullUrl: Middle!!!");
+        // 如果设置了基础URL，拼接返回
+        // fixme 
+        if (!string.IsNullOrWhiteSpace(_baseUrl))
+        {
+            Debug.Log($"[HttpManager] baseUrl: {_baseUrl}");
+            return _baseUrl.TrimEnd('/') + "/" + url.TrimStart('/');
+        }
+        Debug.Log($"[HttpManager] GetFullUrl: {url} End");
         // 否则直接返回
         return url;
     }

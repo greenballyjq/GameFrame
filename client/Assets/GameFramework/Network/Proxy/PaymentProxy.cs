@@ -47,6 +47,7 @@ namespace GameFramework.Network.Proxy
         /// 购买商城商品（虚拟商品）
         /// </summary>
         /// <param name="itemId">商品ID</param>
+
         /// <param name="count">购买数量</param>
         /// <returns>订单id，失败返回null</returns>
         public async UniTask<string> Buy(string itemId, uint count)

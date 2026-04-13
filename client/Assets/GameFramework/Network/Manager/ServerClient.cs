@@ -129,10 +129,12 @@ namespace GameFramework.Network
             
             // 序列化并发送
             byte[] bodyRaw = rootRequest.ToByteArray();
+            Debug.Log($"[ServerClient] ToByteArray");
             var responseData = await httpManager.PostAsync(endpoint, bodyRaw);
-
+            Debug.Log($"[ServerClient] PostAsync");
             if (responseData != null && responseData.Bytes != null && responseData.Bytes.Length > 0)
             {
+                Debug.Log($"[ServerClient] 开始反序列化响应");
                 // 反序列化响应
                 var parser = new MessageParser<TResponse>(() => new TResponse());
                 TResponse result = parser.ParseFrom(responseData.Bytes);

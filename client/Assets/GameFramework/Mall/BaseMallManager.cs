@@ -117,6 +117,7 @@ namespace GameFramework.Mall
         /// </summary>
         public virtual async UniTask FetchRemoteMallItemData()
         {
+            Debug.Log($"[BaseMallManager] 开始拉取远端商城商品数据");
             await UniTask.WaitUntil(() => IsClientLoggedIn());
 
 #if UNITY_EDITOR
@@ -156,8 +157,13 @@ namespace GameFramework.Mall
 
         private async UniTask FetchFromServer()
         {
+            Debug.Log($"[BaseMallManager] 从服务器获取商城道具列表");
             string json = await PaymentProxy.Instance.RequestMallItems();
-            if (string.IsNullOrEmpty(json)) return;
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.Log($"[BaseMallManager] 从服务器获取商城道具列表失败, json为空");
+                return;
+            }
 
             FetchedMallItemDtoList = DeserializeMallItems(json);
             FetchedMallItemDtoList = FetchedMallItemDtoList.OrderBy(x => x.SortOrder).ToList();
