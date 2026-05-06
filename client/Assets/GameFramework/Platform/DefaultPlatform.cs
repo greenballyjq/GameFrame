@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class DefaultPlatform : IPlatform
 {
+    public PlatformUserInfo UserInfo { get; set; }
+
     public void Init()
     {
         Debug.Log("[DefaultPlatform] 初始化默认平台");
@@ -22,7 +24,7 @@ public class DefaultPlatform : IPlatform
         Debug.Log("[DefaultPlatform] 释放默认平台");
     }
 
-    public void Login(Action<string> success, Action<string> fail)
+    public void Login(Action<string> success, Action<string> fail, Action<ProviderLogin> getProviderLogin = null)
     {
         Debug.Log("[DefaultPlatform] 默认平台登录");
         

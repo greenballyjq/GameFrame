@@ -416,7 +416,7 @@ namespace GameFramework.Network.Proxy
                 RankSubmit = new C2SRankSubmit
                 {
                     Score = score,
-                    // 大鹅玩家月榜
+                    // 大鹅玩家周榜
                     Type = "goose_player_week_rank",
                 },
             };

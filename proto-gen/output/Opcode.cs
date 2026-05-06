@@ -22,20 +22,17 @@ public static partial class OpcodeReflection {
   static OpcodeReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgxvcGNvZGUucHJvdG8quQQKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
+          "CgxvcGNvZGUucHJvdG8qzwMKCVMyQ09wY29kZRIOCgpPUF9TVUNDRVNTEAAS",
           "DQoJT1BfRkFJTEVEEAESFgoST1BfU0VTU0lPTl9FWFBJUkVEEAISHAoYT1Bf",
           "U0VTU0lPTl9UT0tFTl9JTlZBTElEEAMSFwoTT1BfTk9fQ09ORklHVVJBVElP",
           "ThAEEhQKEE9QX1BBUkFNX0lOVkFMSUQQBRIaChZPUF9XWEFEX1ZFUklGWV9Q",
           "RU5ESU5HEAYSIAocT1BfV1hBRF9SRVRSWV9MSU1JVF9FWENFRURFRBAHEh0K",
           "GU9QX1NJR05JTl9SRVNJR05fUkVRVUlSRUQQCBIaChZPUF9TSUdOSU5fQUxS",
-          "RUFEWV9ET05FEAkSFQoRT1BfM0tQX05PVF9FTk9VR0gQZRIZChVPUF9TVEFN",
-          "SU5BX05PVF9FTk9VR0gQZhIWChJPUF9JVEVNX05PVF9FTk9VR0gQZxIaChZP",
-          "UF9NQUxMX0lURU1fTk9UX0VYSVNUEGgSIAocT1BfTUFMTF9JVEVNX0JVWV9D",
-          "T1VOVF9FUlJPUhBpEhkKFU9QX01BTExfSVRFTV9DT09MRE9XThBqEh0KGE9Q",
-          "X0xPR0lOX0lOVkFMSURfQUNDT1VOVBDpBxIZChRPUF9MT0dJTl9BVVRIX0ZB",
-          "SUxFRBDqBxIaChVPUF9MT0dPVVRfT1RIRVJfTE9HSU4QzQgSFgoRT1BfTE9H",
-          "T1VUX1RJTUVPVVQQzggSHgoZT1BfTE9HT1VUX1NFUlZFUl9TSFVURE9XThDP",
-          "CGIGcHJvdG8z"));
+          "RUFEWV9ET05FEAkSFQoRT1BfM0tQX05PVF9FTk9VR0gQZRIWChJPUF9JVEVN",
+          "X05PVF9FTk9VR0gQZxIaChZPUF9NQUxMX0lURU1fTk9UX0VYSVNUEGgSIAoc",
+          "T1BfTUFMTF9JVEVNX0JVWV9DT1VOVF9FUlJPUhBpEhkKFU9QX01BTExfSVRF",
+          "TV9DT09MRE9XThBqEiIKHk9QX01BTExfTU9OVEhMWV9MSU1JVF9FWENFRURF",
+          "RBBrEhkKFE9QX0xPR0lOX0FVVEhfRkFJTEVEEOoHYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::S2COpcode), }, null, null));
@@ -93,10 +90,6 @@ public enum S2COpcode {
   /// </summary>
   [pbr::OriginalName("OP_3KP_NOT_ENOUGH")] Op3KpNotEnough = 101,
   /// <summary>
-  /// 体力不足。
-  /// </summary>
-  [pbr::OriginalName("OP_STAMINA_NOT_ENOUGH")] OpStaminaNotEnough = 102,
-  /// <summary>
   /// 物品不足。
   /// </summary>
   [pbr::OriginalName("OP_ITEM_NOT_ENOUGH")] OpItemNotEnough = 103,
@@ -113,25 +106,13 @@ public enum S2COpcode {
   /// </summary>
   [pbr::OriginalName("OP_MALL_ITEM_COOLDOWN")] OpMallItemCooldown = 106,
   /// <summary>
-  /// 无效账号（手机号登录场景）。
+  /// 该自然月内实物商品免换次数已达上限。
   /// </summary>
-  [pbr::OriginalName("OP_LOGIN_INVALID_ACCOUNT")] OpLoginInvalidAccount = 1001,
+  [pbr::OriginalName("OP_MALL_MONTHLY_LIMIT_EXCEEDED")] OpMallMonthlyLimitExceeded = 107,
   /// <summary>
   /// 平台认证失败。
   /// </summary>
   [pbr::OriginalName("OP_LOGIN_AUTH_FAILED")] OpLoginAuthFailed = 1002,
-  /// <summary>
-  /// 账号在其他设备登录，当前会话被顶下线。
-  /// </summary>
-  [pbr::OriginalName("OP_LOGOUT_OTHER_LOGIN")] OpLogoutOtherLogin = 1101,
-  /// <summary>
-  /// 心跳超时下线。
-  /// </summary>
-  [pbr::OriginalName("OP_LOGOUT_TIMEOUT")] OpLogoutTimeout = 1102,
-  /// <summary>
-  /// 服务器关闭导致下线。
-  /// </summary>
-  [pbr::OriginalName("OP_LOGOUT_SERVER_SHUTDOWN")] OpLogoutServerShutdown = 1103,
 }
 
 #endregion

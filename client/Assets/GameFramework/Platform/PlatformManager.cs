@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GameFramework.Core;
 using UnityEngine;
-using WeChatWASM;
 
 /// <summary>
 /// 平台管理器 - 处理不同平台的接入
@@ -15,7 +14,8 @@ public class PlatformManager : IManager
         Default,    // 默认平台
         WeChat,     // 微信平台
         TikTok,     // 抖音平台
-        Kuaishou    // 快手平台
+        Kuaishou,    // 快手平台
+        QuickGame,    // 快游戏平台
     }
     
     // 当前平台类型
@@ -74,21 +74,26 @@ public class PlatformManager : IManager
     {
 
 #if UNITY_EDITOR
-        RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
-        _currentPlatformType = PlatformType.WeChat;
-        WXBase.CreateVideo(new CreateVideoOption()).OnPlay(() =>
-        {
-
-        });
+        RegisterPlatform(PlatformType.Default, new DefaultPlatform());
+        _currentPlatformType = PlatformType.Default;
+        // RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
+        // _currentPlatformType = PlatformType.WeChat;
 #elif WEIXINMINIGAME
         RegisterPlatform(PlatformType.WeChat, new WeChatPlatform());
         _currentPlatformType = PlatformType.WeChat;
+        // WXBase.CreateVideo(new CreateVideoOption()).OnPlay(() =>
+        // {
+        //
+        // });
 #elif DOUYINMINIGAME
         RegisterPlatform(PlatformType.TikTok, new TikTokPlatform());
         _currentPlatformType = PlatformType.TikTok;
 #elif KUAISHOUMINIGAME
         RegisterPlatform(PlatformType.Kuaishou, new KuaishouPlatform());
         _currentPlatformType = PlatformType.Kuaishou;
+#elif QUICKMINIGAME
+        RegisterPlatform(PlatformType.QuickGame, new QuickPlatform());
+        _currentPlatformType = PlatformType.QuickGame;
 #endif
         Debug.Log($"[PlatformManager] 当前平台: {_currentPlatformType}");
     }

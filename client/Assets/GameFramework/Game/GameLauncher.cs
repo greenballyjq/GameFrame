@@ -71,7 +71,7 @@ namespace GameFramework.Game
         private bool _isInitialized = false;
         public bool IsInitialized => _isInitialized;
 
-        /// <summary>
+        /// <summary>W
         /// 初始化完成事件
         /// </summary>
         public event Action OnInitialized;
@@ -160,12 +160,12 @@ namespace GameFramework.Game
         {
             Debug.Log($"[GameLauncher] 登录");
             var platformManager = _frameworkManager.GetManager<PlatformManager>();
+#if WEIXINMINIGAME
             platformManager.CurrentPlatform.Login(
             async (code) =>
             {
                 Debug.Log($"[{GetType().Name}] 微信登录成功, code:{code}");
-                // await GameServiceProxy.Instance.Login(platformManager.GetCurrentPlatform(), code);
-                await _gameLogic.Login(platformManager.GetCurrentPlatform(), code);
+                await _gameLogic.Login(code);
                 //做点别的 授权等
                 platformManager.CurrentPlatform.CheckUserAuthorization(
                     (any) =>
@@ -193,6 +193,17 @@ namespace GameFramework.Game
             {
                 Debug.LogError($"[GameLauncher] 微信登录失败, msg: {error}");
             });
+#elif QUICKMINIGAME
+            platformManager.CurrentPlatform.Login(null, (error) =>
+                {
+                    Debug.LogError($"[GameLauncher] 快游戏登录失败, msg: {error}");
+                }, async providerLogin =>
+                {
+                    Debug.Log($"[GameLauncher] 快游戏登录成功, providerLogin: {providerLogin.Token}");
+                    await _gameLogic.Login(string.Empty, providerLogin);
+                });
+#endif
+            
         }
 
         /// <summary>

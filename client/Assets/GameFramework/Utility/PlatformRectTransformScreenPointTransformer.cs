@@ -1,5 +1,8 @@
 using System;
 using UnityEngine;
+#if WEIXINMINIGAME
+using WeChatWASM;
+#endif
 
 namespace GameFramework.Utility
 {
@@ -8,6 +11,7 @@ namespace GameFramework.Utility
     /// </summary>
     public static class PlatformRectTransformScreenPointTransformer
     {
+#if WEIXINMINIGAME
         /// <summary>
         /// RectTransform 转换为微信平台创建用户按钮屏幕点
         /// </summary>
@@ -76,11 +80,11 @@ namespace GameFramework.Utility
             // Debug.Log($"[测试微信按钮参数] corners[0]: {corners[0]}, corners[1]: {corners[1]}, corners[2]: {corners[2]}, corners[3]: {corners[3]}");
             // Debug.Log($"[测试微信按钮参数] leftX: {leftX}, topY: {topY}");
 
-            double wRatio = WeChatWASM.WX.GetSystemInfoSync().screenWidth / Screen.width;
-            double hRatio = WeChatWASM.WX.GetSystemInfoSync().screenHeight / Screen.height;
+            double wRatio = WX.GetSystemInfoSync().screenWidth / Screen.width;
+            double hRatio = WX.GetSystemInfoSync().screenHeight / Screen.height;
 
-            float wRatioF = (float)(WeChatWASM.WX.GetSystemInfoSync().screenWidth / Screen.width);
-            float hRatioF = (float)(WeChatWASM.WX.GetSystemInfoSync().screenHeight / Screen.height);
+            float wRatioF = (float)(WX.GetSystemInfoSync().screenWidth / Screen.width);
+            float hRatioF = (float)(WX.GetSystemInfoSync().screenHeight / Screen.height);
 
             Debug.Log($"[测试微信按钮参数] wRadioF: {wRatioF}, hRadioF: {hRatioF}; wRatio: {wRatio}, hRatio: {hRatio}");
 
@@ -91,10 +95,10 @@ namespace GameFramework.Utility
             height += (height / 4);
             
             int left = (int)(leftX * wRatio) + width / 4;
-            int top =  (int)(WeChatWASM.WX.GetSystemInfoSync().screenHeight - topY * hRatio) + height / 8;
+            int top =  (int)(WX.GetSystemInfoSync().screenHeight - topY * hRatio) + height / 8;
     
-            Debug.Log($"[测试微信按钮参数] WX screenWidth: {WeChatWASM.WX.GetSystemInfoSync().screenWidth}, Screen.width: {Screen.width}, " +
-                      $"WX screenHeight: {WeChatWASM.WX.GetSystemInfoSync().screenHeight}, Screen.height: {Screen.height}");
+            Debug.Log($"[测试微信按钮参数] WX screenWidth: {WX.GetSystemInfoSync().screenWidth}, Screen.width: {Screen.width}, " +
+                      $"WX screenHeight: {WX.GetSystemInfoSync().screenHeight}, Screen.height: {Screen.height}");
             
             Debug.Log($"[测试微信按钮参数] x: {left}, y: {top}, width: {width}, height: {height}");
 
@@ -106,5 +110,6 @@ namespace GameFramework.Utility
                 height = height
             };
         }
+#endif
     }
 }

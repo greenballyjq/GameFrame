@@ -10,8 +10,8 @@ namespace GameFramework.Utility
         public void SetRootRect(RectTransform rect)
         {
             CanvasScaler cs = transform.GetComponent<CanvasScaler>();
-#if true
-// #if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
+// #if true
+#if UNITY_WEBGL && WEIXINMINIGAME && !UNITY_EDITOR
             var info = WeChatWASM.WX.GetWindowInfo();
             if (info == null) return;
             // Debug.Log($"WindowInfo, top:{info.safeArea.top}, bottom: {info.safeArea.bottom}, left: {info.safeArea.left}" +

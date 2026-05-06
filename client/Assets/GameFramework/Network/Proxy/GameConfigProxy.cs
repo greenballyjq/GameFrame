@@ -13,8 +13,8 @@ namespace GameFramework.Network.Proxy
     /// </summary>
     public class GameConfigProxy : BaseProxy<GameConfigProxy>
     {
-        private readonly Dictionary<string, JsonData> _configCache = new Dictionary<string, JsonData>();
-        private readonly List<(string name, Action<JsonData> setter)> _registrations = new List<(string, Action<JsonData>)>();
+        private readonly Dictionary<string, LitJson.JsonData> _configCache = new Dictionary<string, LitJson.JsonData>();
+        private readonly List<(string name, Action<LitJson.JsonData> setter)> _registrations = new List<(string, Action<LitJson.JsonData>)>();
 
         /// <summary>
         /// 配置是否拉取完毕
@@ -26,7 +26,7 @@ namespace GameFramework.Network.Proxy
         /// </summary>
         /// <param name="configName">服务器配置名称</param>
         /// <param name="onFetched">拉取成功后的回调，传入解析后的 JsonData</param>
-        public void RegisterConfig(string configName, Action<JsonData> onFetched)
+        public void RegisterConfig(string configName, Action<LitJson.JsonData> onFetched)
         {
             _registrations.Add((configName, onFetched));
         }
@@ -62,7 +62,7 @@ namespace GameFramework.Network.Proxy
         /// <summary>
         /// 获取配置并解析外层JSON，返回 data.content 解析后的 JsonData
         /// </summary>
-        public JsonData ParseConfigContent(string configJson)
+        public LitJson.JsonData ParseConfigContent(string configJson)
         {
             if (string.IsNullOrEmpty(configJson)) return null;
 
@@ -70,7 +70,8 @@ namespace GameFramework.Network.Proxy
             {
                 var jsonData = JsonMapper.ToObject(configJson);
                 string contentJson = (string)jsonData["data"]["content"];
-                return JsonMapper.ToObject(contentJson);
+                return LitJson.JsonMapper.ToObject(contentJson);
+                
             }
             catch (Exception e)
             {
@@ -82,7 +83,7 @@ namespace GameFramework.Network.Proxy
         /// <summary>
         /// 获取缓存的配置数据
         /// </summary>
-        public JsonData GetCachedConfig(string configName)
+        public LitJson.JsonData GetCachedConfig(string configName)
         {
             _configCache.TryGetValue(configName, out var data);
             return data;

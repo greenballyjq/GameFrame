@@ -75,7 +75,7 @@ namespace GameFramework.Network.Proxy
         /// <param name="type">平台类型</param>
         /// <param name="code">平台登录code</param>
         /// <param name="phone">手机号（短信登录时使用）</param>
-        public async UniTask Login(PlatformManager.PlatformType type, string code, string phone = "")
+        public async UniTask Login(string code, string phone = "")
         {
             var loginMsg = new C2SLogin
             {
@@ -110,6 +110,48 @@ namespace GameFramework.Network.Proxy
             else
             {
                 Debug.Log($"[{GetType().Name}] 登录失败, code: {resp?.Code}");
+            }
+        }
+        
+        /// <summary>
+        /// 快应用联盟登录
+        /// </summary>
+        /// <param name="providerLogin">平台登录信息</param>
+        public async UniTask ProviderLogin(ProviderLogin providerLogin)
+        {
+            var loginMsg = new C2SLogin
+            {
+                GameId = GameId,
+                ProviderLogin = providerLogin,
+            };
+
+            var root = new C2SAuth
+            {
+                Session = ServerClient.NextSession(),
+                Login = loginMsg
+            };
+
+            Debug.Log($"[BaseGameServiceProxy] 快应用联盟登录, providerLogin: {JsonUtility.ToJson(providerLogin)}");
+
+            S2CAuth resp = await ServerClient.PostDomainAsync<S2CAuth>("/auth", root);
+
+            if (resp != null && resp.Code == S2COpcode.OpSuccess && resp.Login != null)
+            {
+                _authToken = resp.Login.Token;
+                _uuid = resp.Login.Uuid;
+
+                Debug.Log($"[{GetType().Name}] 快应用联盟登录成功 token: {_authToken.Substring(0, System.Math.Min(8, _authToken.Length))}..., uuid: {_uuid}, isNew: {resp.Login.IsNew}");
+
+                ServerClient.SetHeader("Authorization", _authToken);
+
+                await OnLoginSuccess(resp.Login);
+
+                IsClientLoggedIn = true;
+                OnClientLoggedIn?.Invoke();
+            }
+            else
+            {
+                Debug.Log($"[{GetType().Name}] 快应用联盟登录失败, code: {resp?.Code}");
             }
         }
 

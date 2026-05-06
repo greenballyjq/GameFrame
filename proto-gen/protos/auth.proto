@@ -36,6 +36,46 @@ message SMS {
   string code = 2;
 }
 
+// 第三方厂商小游戏统一登录参数（OPPO / vivo / 小米 / 荣耀）。
+//
+// === 调用方式 ===
+// 走 /auth 接口，C2SAuth.login.platform = provider_login。响应同样走 S2CLogin
+// （会拿到 token / uuid / is_new），后续业务请求把 token 放 Authorization 请求头即可。
+//
+// === provider 字段对应关系 ===
+// 客户端把 qg.getProvider() 的原始返回值原样上传，**不需要客户端做大小写或子品牌归一化**，
+// 服务端统一处理。允许的取值（大小写不敏感）：
+//   "OPPO"                                -> OPPO 渠道
+//   "vivo"                                -> vivo 渠道
+//   "Xiaomi" / "Redmi" / "blackshark"     -> 统一走小米渠道（黑鲨/红米使用 MIUI SDK）
+//   "HONOR"                               -> 荣耀渠道
+// 其他取值会被服务端拒绝，返回 OP_LOGIN_AUTH_FAILED。
+//
+// === 各渠道字段填写要求 ===
+//   渠道       provider             token              uid     nickname/avatar
+//   ---------  -------------------  -----------------  ------  ---------------
+//   OPPO       "OPPO"               qg.login().token   忽略    忽略（接口自带）
+//   vivo       "vivo"               qg.login().token   忽略    忽略（接口自带）
+//   小米       "Xiaomi"/"Redmi"/    qg.login().session 必填    建议透传
+//              "blackshark"                            (qg.    （小米官方接口
+//                                                     getUid)  不返回用户资料）
+//   荣耀       "HONOR"              qg.login().token   忽略    忽略（接口自带）
+//
+// 小米渠道的 nickname/avatar 字段由客户端在调用 qg.getUserInfo 拿到后透传；其它渠道
+// 这两个字段服务端会忽略，以厂商接口返回的资料为准。
+message ProviderLogin {
+  // 厂商标识，原样填 qg.getProvider() 的返回值。
+  string provider = 1;
+  // 凭证：除小米外为 qg.login() 返回的 token；小米渠道传入 qg.login() 返回的 session。
+  string token = 2;
+  // 小米渠道必填：客户端 SDK 登录后获取的 uid；其它渠道留空。
+  string uid = 3;
+  // 仅小米渠道有效：客户端预先调 qg.getUserInfo 拿到后透传的昵称。其它渠道忽略。
+  string nickname = 4;
+  // 仅小米渠道有效：客户端预先调 qg.getUserInfo 拿到后透传的头像 URL。其它渠道忽略。
+  string avatar = 5;
+}
+
 // 可选账号信息（用于多账号场景选择角色）。
 message AccountInfo {
   // 账号唯一 ID。
@@ -64,6 +104,8 @@ message C2SLogin {
     KuaiShou kuaishou = 4;
     // 短信登录。
     SMS sms = 5;
+    // 第三方厂商小游戏统一登录（OPPO / vivo / 小米 / 荣耀）。
+    ProviderLogin provider_login = 10;
   }
   // 目标游戏 ID（服务端写入会话，后续 payment/game 会用到）。
   string game_id = 6;

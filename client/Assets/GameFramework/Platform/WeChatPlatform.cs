@@ -22,6 +22,8 @@ public class WeChatPlatform : IPlatform
 
     private int _rewardAdSeq;
     private bool _isRewardAdShowing;
+    
+    public PlatformUserInfo UserInfo { get; set; }
 
     /// <summary>
     /// Banner广告实例字典
@@ -53,6 +55,7 @@ public class WeChatPlatform : IPlatform
         {
             WXInit();
             InitShareMessage();
+            InitOpenDataContext();
             _isInitialized = true;
             Debug.Log("[WeChatPlatform] 微信平台初始化成功");
         }
@@ -76,7 +79,7 @@ public class WeChatPlatform : IPlatform
     public void Release()
     {
         Debug.Log("[WeChatPlatform] 释放微信平台");
-        _isInitialized = false;
+        _isInitialized = false; 
     }
 
     /// <summary>
@@ -84,7 +87,7 @@ public class WeChatPlatform : IPlatform
     /// </summary>
     /// <param name="success"></param>
     /// <param name="fail"></param>
-    public void Login(Action<string> success, Action<string> fail)
+    public void Login(Action<string> success, Action<string> fail, Action<ProviderLogin> getProviderLogin = null)
     {
         Debug.Log("[WeChatPlatform] 微信平台登录");
 
@@ -611,6 +614,17 @@ public class WeChatPlatform : IPlatform
                     EncryptedData = "",
                     Iv = ""
                 };
+                if (UserInfo == null)
+                {
+                    UserInfo = new PlatformUserInfo
+                    {
+                        NickName = userInfo.NickName,
+                        AvatarUrl = userInfo.AvatarUrl,
+                        Language = userInfo.Language,
+                    };
+                    Debug.Log($"[WechatPlatform] CreateUserInfoButton获取用户信息成功, nickname:{UserInfo.NickName}, avatar:{UserInfo.AvatarUrl}");
+                }
+                
                 onTap?.Invoke(userInfo);
             }
 
@@ -921,6 +935,14 @@ public class WeChatPlatform : IPlatform
         {
             callback.Invoke(param);
             Debug.Log($"[WeChatPlatform] 分享回调: ");
+        });
+    }
+
+    private void InitOpenDataContext()
+    {
+        WXOpenDataContext openDataContext = WX.GetOpenDataContext(new OpenDataContextOption
+        {
+            sharedCanvasMode = CanvasType.ScreenCanvas
         });
     }
 
@@ -1369,6 +1391,17 @@ public class WeChatPlatform : IPlatform
                     EncryptedData = res.encryptedData,
                     Iv = res.iv,
                 };
+
+                if (UserInfo == null)
+                {
+                    UserInfo = new PlatformUserInfo
+                    {
+                        NickName = result.NickName,
+                        AvatarUrl = result.AvatarUrl,
+                        Language = result.Language,
+                    };
+                    Debug.Log($"[WechatPlatform] WXGetUserInfo获取用户信息成功, nickname:{UserInfo.NickName}, avatar:{UserInfo.AvatarUrl}");
+                }
                 
                 success?.Invoke(result);
             },
@@ -1840,11 +1873,11 @@ public class WeChatPlatform : IPlatform
     /// 上传好友周排行榜数据
     /// </summary>
     /// <param name="score"></param>
-    public void UploadWeekRankScore(ulong score)
+    public void UploadDayRankScore(ulong score)
     {
         WechatRankOpenDataMessage openDataMessage = new WechatRankOpenDataMessage
         {
-            type = "setUserWeekRecord",
+            type = "setUserDayRecord",
             score = score,
         };
         string json = JsonUtility.ToJson(openDataMessage);
@@ -1868,7 +1901,10 @@ public class WeChatPlatform : IPlatform
         {
             type = "showFriendsRank",
         };  
-        WX.GetOpenDataContext().PostMessage(JsonUtility.ToJson(openDataMessage));
+        WX.GetOpenDataContext(new OpenDataContextOption
+        {
+            sharedCanvasMode = CanvasType.ScreenCanvas
+        }).PostMessage(JsonUtility.ToJson(openDataMessage));
     }
     
     /// <summary>
@@ -1879,15 +1915,18 @@ public class WeChatPlatform : IPlatform
     /// <param name="y"></param>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void ShowFriendsWeekRank(Texture texture, int x, int y, int width, int height)
+    public void ShowFriendsDayRank(Texture texture, int x, int y, int width, int height)
     {
         Debug.Log($"[WechatPlatform] 显示好友周榜");
         WX.ShowOpenData(texture, x, y, width, height);
         WechatOpenDataMessage openDataMessage = new WechatOpenDataMessage
         {
-            type = "showFriendsWeekRank",
+            type = "showFriendsDayRank",
         };  
-        WX.GetOpenDataContext().PostMessage(JsonUtility.ToJson(openDataMessage));
+        WX.GetOpenDataContext(new OpenDataContextOption
+        {
+            sharedCanvasMode = CanvasType.ScreenCanvas
+        }).PostMessage(JsonUtility.ToJson(openDataMessage));
     }
 
     /// <summary>
@@ -1896,8 +1935,6 @@ public class WeChatPlatform : IPlatform
     public void HideOpenData()
     {
         WX.HideOpenData();
-        
-        LaunchOptionsGame launchOptionsSync = WX.GetLaunchOptionsSync();
     }
 
     /// <summary>

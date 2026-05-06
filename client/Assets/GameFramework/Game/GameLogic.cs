@@ -144,7 +144,6 @@ namespace GameFramework.Game
                     SceneManagers[e.SceneName].Add(manager);
                 }
                 InitializeSceneManagers();
-                // InitializeGameManagers();
             }
         }
 
@@ -491,7 +490,7 @@ namespace GameFramework.Game
         /// 游戏自定义登录
         /// </summary>
         /// <returns></returns>
-        public abstract UniTask Login(PlatformManager.PlatformType platformType, string code);
+        public abstract UniTask Login(string code, ProviderLogin providerLogin = null);
         
         #endregion
     }

@@ -26,27 +26,30 @@ public static partial class AuthReflection {
           "ASABKAkiIQoRV2VDaGF0TWluaVByb2dyYW0SDAoEY29kZRgBIAEoCSIuCgZU",
           "aWtUb2sSDAoEY29kZRgBIAEoCRIWCg5hbm9ueW1vdXNfY29kZRgCIAEoCSIY",
           "CghLdWFpU2hvdRIMCgRjb2RlGAEgASgJIiIKA1NNUxINCgVwaG9uZRgBIAEo",
-          "CRIMCgRjb2RlGAIgASgJImUKC0FjY291bnRJbmZvEgwKBHV1aWQYASABKAkS",
-          "EAoIcGxhdGZvcm0YAiABKAkSEAoIbmlja25hbWUYAyABKAkSDgoGYXZhdGFy",
-          "GAQgASgJEhQKDGNyZWF0ZWRfdGltZRgFIAEoBCK8AQoIQzJTTG9naW4SGQoG",
-          "d2VjaGF0GAEgASgLMgcuV2VDaGF0SAASKQoLd2VjaGF0X21pbmkYAiABKAsy",
-          "Ei5XZUNoYXRNaW5pUHJvZ3JhbUgAEhkKBnRpa3RvaxgDIAEoCzIHLlRpa1Rv",
-          "a0gAEh0KCGt1YWlzaG91GAQgASgLMgkuS3VhaVNob3VIABITCgNzbXMYBSAB",
-          "KAsyBC5TTVNIABIPCgdnYW1lX2lkGAYgASgJQgoKCHBsYXRmb3JtIlcKCFMy",
-          "Q0xvZ2luEg0KBXRva2VuGAEgASgJEgwKBHV1aWQYAiABKAkSDgoGaXNfbmV3",
-          "GAMgASgIEh4KCGFjY291bnRzGAQgAygLMgwuQWNjb3VudEluZm8iKgoKQzJT",
-          "U2VuZFNNUxINCgVwaG9uZRgBIAEoCRINCgV1c2FnZRgCIAEoCSI8CgpTMkNT",
-          "ZW5kU01TEg8KB3N1Y2Nlc3MYASABKAgSDwoHbWVzc2FnZRgCIAEoCRIMCgRj",
-          "b2RlGAMgASgJIiAKEEMyU1NlbGVjdEFjY291bnQSDAoEdXVpZBgBIAEoCSIv",
-          "ChBTMkNTZWxlY3RBY2NvdW50Eg0KBXRva2VuGAEgASgJEgwKBHV1aWQYAiAB",
-          "KAkiiwEKB0MyU0F1dGgSDwoHc2Vzc2lvbhgBIAEoBBIaCgVsb2dpbhgCIAEo",
-          "CzIJLkMyU0xvZ2luSAASHwoIc2VuZF9zbXMYAyABKAsyCy5DMlNTZW5kU01T",
-          "SAASKwoOc2VsZWN0X2FjY291bnQYBCABKAsyES5DMlNTZWxlY3RBY2NvdW50",
-          "SABCBQoDbXNnIqUBCgdTMkNBdXRoEg8KB3Nlc3Npb24YASABKAQSGAoEY29k",
-          "ZRhjIAEoDjIKLlMyQ09wY29kZRIaCgVsb2dpbhgCIAEoCzIJLlMyQ0xvZ2lu",
-          "SAASHwoIc2VuZF9zbXMYAyABKAsyCy5TMkNTZW5kU01TSAASKwoOc2VsZWN0",
-          "X2FjY291bnQYBCABKAsyES5TMkNTZWxlY3RBY2NvdW50SABCBQoDbXNnYgZw",
-          "cm90bzM="));
+          "CRIMCgRjb2RlGAIgASgJIl8KDVByb3ZpZGVyTG9naW4SEAoIcHJvdmlkZXIY",
+          "ASABKAkSDQoFdG9rZW4YAiABKAkSCwoDdWlkGAMgASgJEhAKCG5pY2tuYW1l",
+          "GAQgASgJEg4KBmF2YXRhchgFIAEoCSJlCgtBY2NvdW50SW5mbxIMCgR1dWlk",
+          "GAEgASgJEhAKCHBsYXRmb3JtGAIgASgJEhAKCG5pY2tuYW1lGAMgASgJEg4K",
+          "BmF2YXRhchgEIAEoCRIUCgxjcmVhdGVkX3RpbWUYBSABKAQi5gEKCEMyU0xv",
+          "Z2luEhkKBndlY2hhdBgBIAEoCzIHLldlQ2hhdEgAEikKC3dlY2hhdF9taW5p",
+          "GAIgASgLMhIuV2VDaGF0TWluaVByb2dyYW1IABIZCgZ0aWt0b2sYAyABKAsy",
+          "By5UaWtUb2tIABIdCghrdWFpc2hvdRgEIAEoCzIJLkt1YWlTaG91SAASEwoD",
+          "c21zGAUgASgLMgQuU01TSAASKAoOcHJvdmlkZXJfbG9naW4YCiABKAsyDi5Q",
+          "cm92aWRlckxvZ2luSAASDwoHZ2FtZV9pZBgGIAEoCUIKCghwbGF0Zm9ybSJX",
+          "CghTMkNMb2dpbhINCgV0b2tlbhgBIAEoCRIMCgR1dWlkGAIgASgJEg4KBmlz",
+          "X25ldxgDIAEoCBIeCghhY2NvdW50cxgEIAMoCzIMLkFjY291bnRJbmZvIioK",
+          "CkMyU1NlbmRTTVMSDQoFcGhvbmUYASABKAkSDQoFdXNhZ2UYAiABKAkiPAoK",
+          "UzJDU2VuZFNNUxIPCgdzdWNjZXNzGAEgASgIEg8KB21lc3NhZ2UYAiABKAkS",
+          "DAoEY29kZRgDIAEoCSIgChBDMlNTZWxlY3RBY2NvdW50EgwKBHV1aWQYASAB",
+          "KAkiLwoQUzJDU2VsZWN0QWNjb3VudBINCgV0b2tlbhgBIAEoCRIMCgR1dWlk",
+          "GAIgASgJIosBCgdDMlNBdXRoEg8KB3Nlc3Npb24YASABKAQSGgoFbG9naW4Y",
+          "AiABKAsyCS5DMlNMb2dpbkgAEh8KCHNlbmRfc21zGAMgASgLMgsuQzJTU2Vu",
+          "ZFNNU0gAEisKDnNlbGVjdF9hY2NvdW50GAQgASgLMhEuQzJTU2VsZWN0QWNj",
+          "b3VudEgAQgUKA21zZyKlAQoHUzJDQXV0aBIPCgdzZXNzaW9uGAEgASgEEhgK",
+          "BGNvZGUYYyABKA4yCi5TMkNPcGNvZGUSGgoFbG9naW4YAiABKAsyCS5TMkNM",
+          "b2dpbkgAEh8KCHNlbmRfc21zGAMgASgLMgsuUzJDU2VuZFNNU0gAEisKDnNl",
+          "bGVjdF9hY2NvdW50GAQgASgLMhEuUzJDU2VsZWN0QWNjb3VudEgAQgUKA21z",
+          "Z2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::OpcodeReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -55,8 +58,9 @@ public static partial class AuthReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::TikTok), global::TikTok.Parser, new[]{ "Code", "AnonymousCode" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::KuaiShou), global::KuaiShou.Parser, new[]{ "Code" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SMS), global::SMS.Parser, new[]{ "Phone", "Code" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ProviderLogin), global::ProviderLogin.Parser, new[]{ "Provider", "Token", "Uid", "Nickname", "Avatar" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::AccountInfo), global::AccountInfo.Parser, new[]{ "Uuid", "Platform", "Nickname", "Avatar", "CreatedTime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2SLogin), global::C2SLogin.Parser, new[]{ "Wechat", "WechatMini", "Tiktok", "Kuaishou", "Sms", "GameId" }, new[]{ "Platform" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2SLogin), global::C2SLogin.Parser, new[]{ "Wechat", "WechatMini", "Tiktok", "Kuaishou", "Sms", "ProviderLogin", "GameId" }, new[]{ "Platform" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CLogin), global::S2CLogin.Parser, new[]{ "Token", "Uuid", "IsNew", "Accounts" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2SSendSMS), global::C2SSendSMS.Parser, new[]{ "Phone", "Usage" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2CSendSMS), global::S2CSendSMS.Parser, new[]{ "Success", "Message", "Code" }, null, null, null, null),
@@ -1126,6 +1130,387 @@ public sealed partial class SMS : pb::IMessage<SMS>
 }
 
 /// <summary>
+/// 第三方厂商小游戏统一登录参数（OPPO / vivo / 小米 / 荣耀）。
+///
+/// === 调用方式 ===
+/// 走 /auth 接口，C2SAuth.login.platform = provider_login。响应同样走 S2CLogin
+/// （会拿到 token / uuid / is_new），后续业务请求把 token 放 Authorization 请求头即可。
+///
+/// === provider 字段对应关系 ===
+/// 客户端把 qg.getProvider() 的原始返回值原样上传，**不需要客户端做大小写或子品牌归一化**，
+/// 服务端统一处理。允许的取值（大小写不敏感）：
+///   "OPPO"                                -> OPPO 渠道
+///   "vivo"                                -> vivo 渠道
+///   "Xiaomi" / "Redmi" / "blackshark"     -> 统一走小米渠道（黑鲨/红米使用 MIUI SDK）
+///   "HONOR"                               -> 荣耀渠道
+/// 其他取值会被服务端拒绝，返回 OP_LOGIN_AUTH_FAILED。
+///
+/// === 各渠道字段填写要求 ===
+///   渠道       provider             token              uid     nickname/avatar
+///   ---------  -------------------  -----------------  ------  ---------------
+///   OPPO       "OPPO"               qg.login().token   忽略    忽略（接口自带）
+///   vivo       "vivo"               qg.login().token   忽略    忽略（接口自带）
+///   小米       "Xiaomi"/"Redmi"/    qg.login().session 必填    建议透传
+///              "blackshark"                            (qg.    （小米官方接口
+///                                                     getUid)  不返回用户资料）
+///   荣耀       "HONOR"              qg.login().token   忽略    忽略（接口自带）
+///
+/// 小米渠道的 nickname/avatar 字段由客户端在调用 qg.getUserInfo 拿到后透传；其它渠道
+/// 这两个字段服务端会忽略，以厂商接口返回的资料为准。
+/// </summary>
+public sealed partial class ProviderLogin : pb::IMessage<ProviderLogin>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<ProviderLogin> _parser = new pb::MessageParser<ProviderLogin>(() => new ProviderLogin());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<ProviderLogin> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::AuthReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public ProviderLogin() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public ProviderLogin(ProviderLogin other) : this() {
+    provider_ = other.provider_;
+    token_ = other.token_;
+    uid_ = other.uid_;
+    nickname_ = other.nickname_;
+    avatar_ = other.avatar_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public ProviderLogin Clone() {
+    return new ProviderLogin(this);
+  }
+
+  /// <summary>Field number for the "provider" field.</summary>
+  public const int ProviderFieldNumber = 1;
+  private string provider_ = "";
+  /// <summary>
+  /// 厂商标识，原样填 qg.getProvider() 的返回值。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Provider {
+    get { return provider_; }
+    set {
+      provider_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "token" field.</summary>
+  public const int TokenFieldNumber = 2;
+  private string token_ = "";
+  /// <summary>
+  /// 凭证：除小米外为 qg.login() 返回的 token；小米渠道传入 qg.login() 返回的 session。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Token {
+    get { return token_; }
+    set {
+      token_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "uid" field.</summary>
+  public const int UidFieldNumber = 3;
+  private string uid_ = "";
+  /// <summary>
+  /// 小米渠道必填：客户端 SDK 登录后获取的 uid；其它渠道留空。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Uid {
+    get { return uid_; }
+    set {
+      uid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "nickname" field.</summary>
+  public const int NicknameFieldNumber = 4;
+  private string nickname_ = "";
+  /// <summary>
+  /// 仅小米渠道有效：客户端预先调 qg.getUserInfo 拿到后透传的昵称。其它渠道忽略。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Nickname {
+    get { return nickname_; }
+    set {
+      nickname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "avatar" field.</summary>
+  public const int AvatarFieldNumber = 5;
+  private string avatar_ = "";
+  /// <summary>
+  /// 仅小米渠道有效：客户端预先调 qg.getUserInfo 拿到后透传的头像 URL。其它渠道忽略。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Avatar {
+    get { return avatar_; }
+    set {
+      avatar_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as ProviderLogin);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(ProviderLogin other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Provider != other.Provider) return false;
+    if (Token != other.Token) return false;
+    if (Uid != other.Uid) return false;
+    if (Nickname != other.Nickname) return false;
+    if (Avatar != other.Avatar) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Provider.Length != 0) hash ^= Provider.GetHashCode();
+    if (Token.Length != 0) hash ^= Token.GetHashCode();
+    if (Uid.Length != 0) hash ^= Uid.GetHashCode();
+    if (Nickname.Length != 0) hash ^= Nickname.GetHashCode();
+    if (Avatar.Length != 0) hash ^= Avatar.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Provider.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Provider);
+    }
+    if (Token.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Token);
+    }
+    if (Uid.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Uid);
+    }
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Provider.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(Provider);
+    }
+    if (Token.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Token);
+    }
+    if (Uid.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Uid);
+    }
+    if (Nickname.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(Avatar);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Provider.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Provider);
+    }
+    if (Token.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
+    }
+    if (Uid.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
+    }
+    if (Nickname.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Nickname);
+    }
+    if (Avatar.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Avatar);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(ProviderLogin other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Provider.Length != 0) {
+      Provider = other.Provider;
+    }
+    if (other.Token.Length != 0) {
+      Token = other.Token;
+    }
+    if (other.Uid.Length != 0) {
+      Uid = other.Uid;
+    }
+    if (other.Nickname.Length != 0) {
+      Nickname = other.Nickname;
+    }
+    if (other.Avatar.Length != 0) {
+      Avatar = other.Avatar;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          Provider = input.ReadString();
+          break;
+        }
+        case 18: {
+          Token = input.ReadString();
+          break;
+        }
+        case 26: {
+          Uid = input.ReadString();
+          break;
+        }
+        case 34: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 42: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          Provider = input.ReadString();
+          break;
+        }
+        case 18: {
+          Token = input.ReadString();
+          break;
+        }
+        case 26: {
+          Uid = input.ReadString();
+          break;
+        }
+        case 34: {
+          Nickname = input.ReadString();
+          break;
+        }
+        case 42: {
+          Avatar = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 可选账号信息（用于多账号场景选择角色）。
 /// </summary>
 public sealed partial class AccountInfo : pb::IMessage<AccountInfo>
@@ -1142,7 +1527,7 @@ public sealed partial class AccountInfo : pb::IMessage<AccountInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[5]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1497,7 +1882,7 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[6]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1533,6 +1918,9 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
         break;
       case PlatformOneofCase.Sms:
         Sms = other.Sms.Clone();
+        break;
+      case PlatformOneofCase.ProviderLogin:
+        ProviderLogin = other.ProviderLogin.Clone();
         break;
     }
 
@@ -1620,6 +2008,21 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
     }
   }
 
+  /// <summary>Field number for the "provider_login" field.</summary>
+  public const int ProviderLoginFieldNumber = 10;
+  /// <summary>
+  /// 第三方厂商小游戏统一登录（OPPO / vivo / 小米 / 荣耀）。
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::ProviderLogin ProviderLogin {
+    get { return platformCase_ == PlatformOneofCase.ProviderLogin ? (global::ProviderLogin) platform_ : null; }
+    set {
+      platform_ = value;
+      platformCase_ = value == null ? PlatformOneofCase.None : PlatformOneofCase.ProviderLogin;
+    }
+  }
+
   /// <summary>Field number for the "game_id" field.</summary>
   public const int GameIdFieldNumber = 6;
   private string gameId_ = "";
@@ -1644,6 +2047,7 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
     Tiktok = 3,
     Kuaishou = 4,
     Sms = 5,
+    ProviderLogin = 10,
   }
   private PlatformOneofCase platformCase_ = PlatformOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1679,6 +2083,7 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
     if (!object.Equals(Tiktok, other.Tiktok)) return false;
     if (!object.Equals(Kuaishou, other.Kuaishou)) return false;
     if (!object.Equals(Sms, other.Sms)) return false;
+    if (!object.Equals(ProviderLogin, other.ProviderLogin)) return false;
     if (GameId != other.GameId) return false;
     if (PlatformCase != other.PlatformCase) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -1693,6 +2098,7 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
     if (platformCase_ == PlatformOneofCase.Tiktok) hash ^= Tiktok.GetHashCode();
     if (platformCase_ == PlatformOneofCase.Kuaishou) hash ^= Kuaishou.GetHashCode();
     if (platformCase_ == PlatformOneofCase.Sms) hash ^= Sms.GetHashCode();
+    if (platformCase_ == PlatformOneofCase.ProviderLogin) hash ^= ProviderLogin.GetHashCode();
     if (GameId.Length != 0) hash ^= GameId.GetHashCode();
     hash ^= (int) platformCase_;
     if (_unknownFields != null) {
@@ -1737,6 +2143,10 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
       output.WriteRawTag(50);
       output.WriteString(GameId);
     }
+    if (platformCase_ == PlatformOneofCase.ProviderLogin) {
+      output.WriteRawTag(82);
+      output.WriteMessage(ProviderLogin);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1771,6 +2181,10 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
       output.WriteRawTag(50);
       output.WriteString(GameId);
     }
+    if (platformCase_ == PlatformOneofCase.ProviderLogin) {
+      output.WriteRawTag(82);
+      output.WriteMessage(ProviderLogin);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1795,6 +2209,9 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
     }
     if (platformCase_ == PlatformOneofCase.Sms) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Sms);
+    }
+    if (platformCase_ == PlatformOneofCase.ProviderLogin) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ProviderLogin);
     }
     if (GameId.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(GameId);
@@ -1844,6 +2261,12 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
           Sms = new global::SMS();
         }
         Sms.MergeFrom(other.Sms);
+        break;
+      case PlatformOneofCase.ProviderLogin:
+        if (ProviderLogin == null) {
+          ProviderLogin = new global::ProviderLogin();
+        }
+        ProviderLogin.MergeFrom(other.ProviderLogin);
         break;
     }
 
@@ -1911,6 +2334,15 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
           GameId = input.ReadString();
           break;
         }
+        case 82: {
+          global::ProviderLogin subBuilder = new global::ProviderLogin();
+          if (platformCase_ == PlatformOneofCase.ProviderLogin) {
+            subBuilder.MergeFrom(ProviderLogin);
+          }
+          input.ReadMessage(subBuilder);
+          ProviderLogin = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -1975,6 +2407,15 @@ public sealed partial class C2SLogin : pb::IMessage<C2SLogin>
           GameId = input.ReadString();
           break;
         }
+        case 82: {
+          global::ProviderLogin subBuilder = new global::ProviderLogin();
+          if (platformCase_ == PlatformOneofCase.ProviderLogin) {
+            subBuilder.MergeFrom(ProviderLogin);
+          }
+          input.ReadMessage(subBuilder);
+          ProviderLogin = subBuilder;
+          break;
+        }
       }
     }
   }
@@ -1999,7 +2440,7 @@ public sealed partial class S2CLogin : pb::IMessage<S2CLogin>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[7]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2303,7 +2744,7 @@ public sealed partial class C2SSendSMS : pb::IMessage<C2SSendSMS>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[8]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2538,7 +2979,7 @@ public sealed partial class S2CSendSMS : pb::IMessage<S2CSendSMS>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[9]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2813,7 +3254,7 @@ public sealed partial class C2SSelectAccount : pb::IMessage<C2SSelectAccount>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[10]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[11]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3008,7 +3449,7 @@ public sealed partial class S2CSelectAccount : pb::IMessage<S2CSelectAccount>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[11]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[12]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3243,7 +3684,7 @@ public sealed partial class C2SAuth : pb::IMessage<C2SAuth>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[12]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[13]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3633,7 +4074,7 @@ public sealed partial class S2CAuth : pb::IMessage<S2CAuth>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::AuthReflection.Descriptor.MessageTypes[13]; }
+    get { return global::AuthReflection.Descriptor.MessageTypes[14]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

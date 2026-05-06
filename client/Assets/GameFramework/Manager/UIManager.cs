@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GameFramework.Core;
@@ -8,6 +9,7 @@ using GameFramework.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// UI管理器 - 管理游戏中的UI界面

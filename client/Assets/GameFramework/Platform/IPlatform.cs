@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using WeChatWASM;
 
 /// <summary>
 /// 平台接口 - 定义平台通用功能
 /// </summary>
 public interface IPlatform
 {
+    PlatformUserInfo UserInfo { get; set; }
+    
     /// <summary>
     /// 初始化平台
     /// </summary>
@@ -28,7 +29,8 @@ public interface IPlatform
     /// </summary>
     /// <param name="success">成功回调</param>
     /// <param name="fail">失败回调</param>
-    void Login(Action<string> success, Action<string> fail);
+    /// <param name="getProviderLogin">快联盟登录参数，其他平台忽略该参数</param>
+    void Login(Action<string> success, Action<string> fail, Action<ProviderLogin> getProviderLogin = null);
 
     /// <summary>
     /// 检查用户授权状态

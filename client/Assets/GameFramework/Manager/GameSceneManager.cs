@@ -220,12 +220,14 @@ namespace GameFramework.Manager
                     ErrorMessage = "",
                 });
 
+                Debug.Log($"[GameSceneManager] 加载场景 {sceneName} 完成");
+
                 return true;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[GameSceneManager] 加载场景 {sceneName} 时发生异常: {ex.Message}");
-
+            
                 // 触发加载完成事件（失败）
                 OnSceneLoadComplete?.Invoke(this, new SceneLoadEventArgs
                 {
@@ -235,7 +237,7 @@ namespace GameFramework.Manager
                     IsSuccess = false,
                     ErrorMessage = ex.Message
                 });
-
+            
                 return false;
             }
             finally
