@@ -39,6 +39,7 @@ public class QuickPlatform : IPlatform
                 ProviderLogin providerLogin = new ProviderLogin();
                 MiBridge.GetUserInfoSuccess getUserInfoSuccess = (nickname, avatar, gender) =>
                 {
+                    Debug.Log($"[QuickPlatform] XiaoMi GetUserInfo success, nickname: {nickname}, avatar: {avatar}");
                     providerLogin.Nickname = nickname;
                     providerLogin.Avatar = avatar;
                 };
@@ -84,7 +85,7 @@ public class QuickPlatform : IPlatform
 
     public void CheckUserAuthorization(Action<bool> success, Action<string> fail)
     {
-        
+        success?.Invoke(true);
     }
 
     public IUserInfoButton CreateUserInfoButton(int x, int y, int width, int height, Action<UserInfoResult> onTap)
