@@ -1,23 +1,21 @@
-﻿namespace GameFramework.Core
+using Cysharp.Threading.Tasks;
+
+namespace GameFramework.Core
 {
     /// <summary>
     /// 管理器接口
     /// </summary>
     public interface IManager
     {
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        void Init();
-        
-        /// <summary>
-        /// 更新
-        /// </summary>
-        void DoUpdate(float dt);
-        
-        /// <summary>
-        /// 释放
-        /// </summary>
-        void Release();
+        UniTask InitAsync();
+        void Dispose();
     }
-} 
+
+    /// <summary>
+    /// 需要每帧更新的管理器
+    /// </summary>
+    public interface IManagerUpdatable
+    {
+        void DoUpdate(float dt);
+    }
+}

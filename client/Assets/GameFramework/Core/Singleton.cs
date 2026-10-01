@@ -1,9 +1,9 @@
-﻿namespace GameFramework.Core
+namespace GameFramework.Core
 {
     /// <summary>
     /// 单例基类
     /// </summary>
-    public class Singleton<T> where T :  Singleton<T>, new()
+    public class Singleton<T> where T : Singleton<T>, new()
     {
         private static T _instance;
 
@@ -27,6 +27,13 @@
         protected Singleton()
         {
             _instance = (T)this;
+        }
+
+        public static bool HasInstance => _instance != null;
+
+        public static void ClearInstance()
+        {
+            _instance = null;
         }
     }
 }

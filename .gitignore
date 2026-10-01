@@ -1,0 +1,59 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Bb]undles/
+
+# Packed Addressables
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# IDE and assistant scratch
+.vs/
+.idea/
+.vscode/
+.cursor/
+**/.workbuddy/
+.research/
+
+# Visual Studio / Rider generated
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
+
+# Packages and crash dumps
+*.apk
+*.aab
+*.unitypackage
+*.app
+sysinfo.txt
+crashlytics-build.properties
+
+# Local archives and OS junk
+*.rar
+*.rar.meta
+.DS_Store
+Thumbs.db
+Desktop.ini

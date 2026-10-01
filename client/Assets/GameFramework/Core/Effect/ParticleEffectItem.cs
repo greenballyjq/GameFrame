@@ -1,4 +1,4 @@
-﻿using GameFramework.Manager;
+using GameFramework.Manager;
 using UnityEngine;
 
 namespace GameFramework.Core.Effect
@@ -62,7 +62,11 @@ namespace GameFramework.Core.Effect
         public void Resume()
         {
             for (int i = 0; i < _particleSystems.Length; i++)
-                _particleSystems[i].Play(true);
+            {
+                var ps = _particleSystems[i];
+                if (ps.isPaused)
+                    ps.Play(true);
+            }
         }
 
         #region 私有方法

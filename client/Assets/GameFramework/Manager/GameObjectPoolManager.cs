@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Pool;
+using GameFramework.Utility;
 using UnityEngine;
 
 namespace GameFramework.Manager
@@ -37,22 +38,24 @@ namespace GameFramework.Manager
         private Transform _poolRoot;
         public Transform PoolRoot => _poolRoot;
 
-        public void Init()
+        public UniTask InitAsync()
         {
-            GameObject rootObj = new GameObject("GameObjectPoolRoot");
+            // 创建对象池根节点
+            GameObject rootObj = new GameObject("ObjectPoolRoot");
             _poolRoot = rootObj.transform;
             _poolRoot.position = Vector3.zero;
             Object.DontDestroyOnLoad(rootObj);
 
-            Debug.Log("[GameObjectPoolManager] 初始化完成");
+            Log.Info("[GameObjectPoolManager] 初始化完成");
+            return UniTask.CompletedTask;
         }
 
-        public void DoUpdate(float dt) { }
-
-        public void Release()
+        public void Dispose()
         {
+            // 遍历所有池，销毁池中的对象
             ClearAllPools();
 
+            // 销毁根节点
             Object.Destroy(_poolRoot.gameObject);
             _poolRoot = null;
 
@@ -71,6 +74,8 @@ namespace GameFramework.Manager
             {
                 pool = new GameObjectPool(prefab, _poolRoot);
                 _pools.Add(prefab, pool);
+
+                Debug.Log($"[GameObjectPoolManager] 创建对象池：{prefab.name}");
             }
 
             return pool;
@@ -83,6 +88,7 @@ namespace GameFramework.Manager
         /// <returns>取出的对象</returns>
         public async UniTask<GameObject> SpawnAsync(string prefabPath)
         {
+            // 从缓存获取预制体，如果不存在则加载
             if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
             {
                 prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
@@ -108,19 +114,6 @@ namespace GameFramework.Manager
             _instancePrefabs[obj] = prefab;
 
             return obj;
-        }
-
-        /// <summary>
-        /// 预加载预制体资源
-        /// </summary>
-        /// <param name="prefabPath">预制体资源路径</param>
-        public async UniTask PreloadAsync(string prefabPath)
-        {
-            if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
-            {
-                prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
-                _prefabCache[prefabPath] = prefab;
-            }
         }
 
         /// <summary>
@@ -150,13 +143,28 @@ namespace GameFramework.Manager
         }
 
         /// <summary>
+        /// 预加载预制体资源（仅缓存，不创建对象池）
+        /// </summary>
+        /// <param name="prefabPath">预制体资源路径</param>
+        public async UniTask PreloadAsync(string prefabPath)
+        {
+            if (!_prefabCache.TryGetValue(prefabPath, out var prefab))
+            {
+                prefab = await _resourceManager.LoadAssetAsync<GameObject>(prefabPath);
+                _prefabCache[prefabPath] = prefab;
+            }
+        }
+
+        /// <summary>
         /// 回收对象
         /// </summary>
+        /// <param name="obj">要回收的对象</param>
         public void Despawn(GameObject obj)
         {
+            // 检查对象是否已经被回收
             if (!obj.activeSelf)
             {
-                Debug.LogWarning($"[GameObjectPoolManager] 对象 {obj.name} 重复回收");
+                Debug.LogError($"[GameObjectPoolManager] 对象 {obj.name} 已经被回收，请勿重复回收");
                 return;
             }
 
@@ -208,6 +216,8 @@ namespace GameFramework.Manager
                 pool.Clear();
 
             _pools.Clear();
+            _instancePrefabs.Clear();
+            _prefabCache.Clear();
         }
         #endregion
     }

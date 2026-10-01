@@ -1,5 +1,0 @@
-/Users/yujiani/workspace/3000/GameFrame/proto-gen/obj/Debug/net6.0/test_protobuf_net.csproj.AssemblyReference.cache
-/Users/yujiani/workspace/3000/GameFrame/proto-gen/obj/Debug/net6.0/test_protobuf_net.GeneratedMSBuildEditorConfig.editorconfig
-/Users/yujiani/workspace/3000/GameFrame/proto-gen/obj/Debug/net6.0/test_protobuf_net.AssemblyInfoInputs.cache
-/Users/yujiani/workspace/3000/GameFrame/proto-gen/obj/Debug/net6.0/test_protobuf_net.AssemblyInfo.cs
-/Users/yujiani/workspace/3000/GameFrame/proto-gen/obj/Debug/net6.0/test_protobuf_net.csproj.CoreCompileInputs.cache

@@ -1,28 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using GameFramework.Core;
 using UnityEngine;
+using GameFramework.Utility;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// 事件管理器 - 处理游戏内事件广播
 /// </summary>
 public class EventManager : IManager
 {
-    public void Init()
+    public UniTask InitAsync()
     {
-        // Debug.Log("[EventManager] 初始化事件管理器");
+        return UniTask.CompletedTask;
     }
 
-    public void DoUpdate(float dt)
-    {
-        // 事件管理器无需更新
-    }
-
-    public void Release()
+    public void Dispose()
     {
         _events.Clear();
         _strongEvents.Clear();
-        // Debug.Log("[EventManager] 释放事件管理器");
+        _scopeStack.Clear();
+        _scopeUnsubscribers.Clear();
     }
 
     #region 原有字符串事件方法（保持兼容）
@@ -38,13 +36,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            // Debug.LogError("[EventManager] 事件名称不能为空");
+            // Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            // Debug.LogError("[EventManager] 回调不能为空");
+            // Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -60,9 +58,12 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                return;
             }
         }
+
+        TrackUnsubscribe(() => RemoveListener(eventName, callback));
     }
 
     /// <summary>
@@ -72,13 +73,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -94,9 +95,12 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                return;
             }
         }
+
+        TrackUnsubscribe(() => RemoveListener(eventName, callback));
     }
 
     /// <summary>
@@ -106,13 +110,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -128,9 +132,12 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配，已存在不同参数的事件");
+                return;
             }
         }
+
+        TrackUnsubscribe(() => RemoveListener(eventName, callback));
     }
 
     /// <summary>
@@ -140,13 +147,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -163,7 +170,7 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -175,13 +182,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -198,7 +205,7 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -210,13 +217,13 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -233,7 +240,7 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -245,7 +252,7 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
@@ -259,12 +266,12 @@ public class EventManager : IManager
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
+                    Log.Error($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -276,7 +283,7 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
@@ -290,12 +297,12 @@ public class EventManager : IManager
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
+                    Log.Error($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -307,7 +314,7 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
@@ -321,12 +328,12 @@ public class EventManager : IManager
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
+                    Log.Error($"[EventManager] 触发事件 {eventName} 出错: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件 {eventName} 类型不匹配");
+                Log.Error($"[EventManager] 事件 {eventName} 类型不匹配");
             }
         }
     }
@@ -345,13 +352,13 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -367,9 +374,12 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配，已存在不同参数的事件");
+                Log.Error($"[EventManager] 事件键类型不匹配，已存在不同参数的事件");
+                return;
             }
         }
+
+        TrackUnsubscribe(() => RemoveListener(eventKey, callback));
     }
 
     /// <summary>
@@ -379,13 +389,13 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -401,9 +411,12 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配，已存在不同参数的事件");
+                Log.Error($"[EventManager] 事件键类型不匹配，已存在不同参数的事件");
+                return;
             }
         }
+
+        TrackUnsubscribe(() => RemoveListener(eventKey, callback));
     }
 
     /// <summary>
@@ -413,7 +426,7 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
@@ -427,13 +440,13 @@ public class EventManager : IManager
                 // }
                 // catch (Exception e)
                 // {
-                //     Debug.LogError($"[EventManager] 触发事件出错: {e.Message}");
+                //     Log.Error($"[EventManager] 触发事件出错: {e.Message}");
                 // }
                 action();
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配");
+                Log.Error($"[EventManager] 事件键类型不匹配");
             }
         }
     }
@@ -445,7 +458,7 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
@@ -460,12 +473,12 @@ public class EventManager : IManager
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[EventManager] 触发事件出错: {e.Message}");
+                    Log.Error($"[EventManager] 触发事件出错: {e.Message}");
                 }
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配");
+                Log.Error($"[EventManager] 事件键类型不匹配");
             }
         }
     }
@@ -477,13 +490,13 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -500,7 +513,7 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配");
+                Log.Error($"[EventManager] 事件键类型不匹配");
             }
         }
     }
@@ -512,13 +525,13 @@ public class EventManager : IManager
     {
         if (eventKey == null)
         {
-            Debug.LogError("[EventManager] 事件键不能为空");
+            Log.Error("[EventManager] 事件键不能为空");
             return;
         }
 
         if (callback == null)
         {
-            Debug.LogError("[EventManager] 回调不能为空");
+            Log.Error("[EventManager] 回调不能为空");
             return;
         }
 
@@ -535,7 +548,7 @@ public class EventManager : IManager
             }
             else
             {
-                Debug.LogError($"[EventManager] 事件键类型不匹配");
+                Log.Error($"[EventManager] 事件键类型不匹配");
             }
         }
     }
@@ -548,7 +561,7 @@ public class EventManager : IManager
     {
         _events.Clear();
         _strongEvents.Clear();
-        Debug.Log("[EventManager] 清除所有事件");
+        Log.Info("[EventManager] 清除所有事件");
     }
 
     /// <summary>
@@ -558,14 +571,58 @@ public class EventManager : IManager
     {
         if (string.IsNullOrEmpty(eventName))
         {
-            Debug.LogError("[EventManager] 事件名称不能为空");
+            Log.Error("[EventManager] 事件名称不能为空");
             return;
         }
 
         if (_events.ContainsKey(eventName))
         {
             _events.Remove(eventName);
-            Debug.Log($"[EventManager] 清除事件: {eventName}");
+            Log.Info($"[EventManager] 清除事件: {eventName}");
         }
+    }
+
+    private readonly Stack<string> _scopeStack = new Stack<string>();
+    private readonly Dictionary<string, List<Action>> _scopeUnsubscribers = new Dictionary<string, List<Action>>();
+
+    public void PushScope(string scopeId)
+    {
+        if (string.IsNullOrEmpty(scopeId))
+            return;
+
+        _scopeStack.Push(scopeId);
+        if (!_scopeUnsubscribers.ContainsKey(scopeId))
+            _scopeUnsubscribers[scopeId] = new List<Action>();
+    }
+
+    public void PopScope()
+    {
+        if (_scopeStack.Count == 0)
+            return;
+
+        string scopeId = _scopeStack.Pop();
+        if (!_scopeUnsubscribers.TryGetValue(scopeId, out List<Action> unsubscribers))
+            return;
+
+        for (int i = unsubscribers.Count - 1; i >= 0; i--)
+            unsubscribers[i]?.Invoke();
+
+        unsubscribers.Clear();
+        _scopeUnsubscribers.Remove(scopeId);
+    }
+
+    private void TrackUnsubscribe(Action unsubscribe)
+    {
+        if (_scopeStack.Count == 0 || unsubscribe == null)
+            return;
+
+        string scopeId = _scopeStack.Peek();
+        if (!_scopeUnsubscribers.TryGetValue(scopeId, out List<Action> unsubscribers))
+        {
+            unsubscribers = new List<Action>();
+            _scopeUnsubscribers[scopeId] = unsubscribers;
+        }
+
+        unsubscribers.Add(unsubscribe);
     }
 }

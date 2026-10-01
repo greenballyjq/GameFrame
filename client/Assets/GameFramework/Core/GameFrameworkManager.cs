@@ -1,150 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using GameFramework.Audio;
 using GameFramework.Manager;
-using GameFramework.Network;
-using GameFramework.Network.Proxy;
-using GameFramework.Network.Utility;
+using GameFramework.UI;
+using GameFramework.Utility;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameFramework.Core
 {
     /// <summary>
-    /// 游戏框架管理器 - 框架核心入口 
-    /// @author: Eva
+    /// 游戏框架管理器
     /// </summary>
     public class GameFrameworkManager : MonoSingleton<GameFrameworkManager>
     {
-        // 管理器集合
-        private readonly Dictionary<Type, IManager> _managers = new Dictionary<Type, IManager>();
-
-        // 初始化事件
-        public event Action OnInitialized;
-        
-        // 框架是否已初始化
-        public bool IsInitialized { get; private set; }
-
         /// <summary>
-        /// 初始化框架
+        /// 游戏配置
         /// </summary>
-        public void InitFramework()
+        [Serializable]
+        public class GameConfig
         {
-            // Debug.Log("[GameFramework] 开始初始化框架...");
-            // 注册各个管理器
-            RegisterManager<EventManager>();
-            RegisterManager<ResourceManager>();
-            RegisterManager<GameObjectPoolManager>();
-            RegisterManager<PlatformManager>();
-            RegisterManager<UIManager>();
-            RegisterManager<TimerManager>();
-            RegisterManager<SoundManager>();
-            RegisterManager<EffectManager>();
-            RegisterManager<Manager.GameSceneManager>();
-            // ConfigManager 由业务层独立管理，框架不注册
-#if FRAMEWORK_SERIALIZE
-            RegisterManager<SaveLoadManager>();
-#endif
-            // 注册网络相关管理器
-            RegisterManager<HttpManager>();          // 保留HTTP管理器作为基础网络功能
-            RegisterManager<ServerClient>();         // 注册服务器客户端
-            
-            // 初始化各个管理器
-            foreach (var manager in _managers.Values)
-            {
-                manager.Init();
-            }
+            public ResourceManager.ResourceLoadMode ResourceLoadMode;
+            public GameObject loading;
+            public UISettings UISettings;
+            [FormerlySerializedAs("AudioSettings")]
+            public AudioConfig AudioConfig;
+        }
 
-            // Debug.Log("[GameFramework] 框架初始化完成");
-            IsInitialized = true;
+        [SerializeField] private GameConfig _gameConfig;
+
+        private readonly Dictionary<Type, IManager> _managers = new Dictionary<Type, IManager>();
+        private readonly List<IManager> _managerList = new List<IManager>();
+        private readonly List<IManagerUpdatable> _updatables = new List<IManagerUpdatable>();
+        private readonly UniTaskCompletionSource _initialized = new UniTaskCompletionSource();
+
+        private bool _isInitialized;
+        public bool IsInitialized => _isInitialized;
+
+        public event Action OnInitialized;
+
+        public UniTask WaitForInitializationAsync() => _initialized.Task;
+
+        protected override async void OnSingletonAwake()
+        {
+            await InitFrameworkAsync();
+        }
+
+        private async UniTask InitFrameworkAsync()
+        {
+            Log.Info("[GameFramework] 开始初始化框架...");
+
+            if (_gameConfig.loading)
+                _gameConfig.loading.SetActive(true);
+
+            RegisterManager(new EventManager());
+            RegisterManager(new ResourceManager(_gameConfig.ResourceLoadMode));
+            RegisterManager(new GameObjectPoolManager());
+            RegisterManager(new UIManager(_gameConfig.UISettings));
+            RegisterManager(new AudioManager(_gameConfig.AudioConfig));
+            RegisterManager(new EffectManager());
+
+            for (int i = 0; i < _managerList.Count; i++)
+                await _managerList[i].InitAsync();
+
+            Log.Info("[GameFramework] 框架初始化完成");
+            _isInitialized = true;
+            _initialized.TrySetResult();
             OnInitialized?.Invoke();
         }
 
-        public async UniTask InitNetworkAsync()
+        public void RegisterManager<T>(T manager) where T : class, IManager
         {
-            await ServiceProxy.Instance.InitAsync();
+            _managers.Add(typeof(T), manager);
+            _managerList.Add(manager);
+            if (manager is IManagerUpdatable updatable)
+                _updatables.Add(updatable);
+            Log.Info($"[GameFramework] 注册管理器: {typeof(T).Name}");
         }
 
-        /// <summary>
-        /// 登录 包括平台（微信、抖音等）登录 和 后端登录
-        /// </summary>
-        public void Login()
-        {
-            var platformManager = GetManager<PlatformManager>();
-            // 1. Platform 登录
-            platformManager.CurrentPlatform.Login(async (code) =>
-            {
-                Debug.LogError($"[GameFrameworkManager] Platform 登录成功, code: {code}");
-                // 2.后端登录
-                var serverProxy = ServiceProxy.Instance;
-                await UniTask.WaitUntil(() => serverProxy.IsServerConnected);
-                Debug.Log($"[GameFrameworkManager] 当前平台：{platformManager.GetCurrentPlatform()}");
-                await serverProxy.Login(platformManager.GetCurrentPlatform(), code);
-            }, (msg) =>
-            {
-                Debug.LogError($"[GameFrameworkManager] Platform 登录失败: {msg}");
-            });
-        }
-
-        public async UniTask WaitForInitializationAsync()
-        {
-            while (!IsInitialized)
-            {
-                await UniTask.Yield();
-            }
-
-            Debug.Log($"[GameFrameworkManager] 等待初始化完成------------");
-        }
-        
-        /// <summary>
-        /// 注册管理器
-        /// </summary>
-        public void RegisterManager<T>() where T : IManager, new()
-        {
-            var type = typeof(T);
-            if (_managers.ContainsKey(type))
-            {
-                Debug.LogWarning($"[GameFramework] 管理器 {type.Name} 已经注册");
-                return;
-            }
-
-            var manager = new T();
-            _managers.Add(type, manager);
-            Debug.Log($"[GameFramework] 注册管理器: {type.Name}");
-        }
-
-        /// <summary>
-        /// 获取管理器
-        /// </summary>
         public T GetManager<T>() where T : class, IManager
         {
-            var type = typeof(T);
-            if (_managers.TryGetValue(type, out var manager))
-            {
-                return manager as T;
-            }
-
-            Debug.LogError($"[GameFramework] 管理器 {type.Name} 未注册");
-            return null;
+            return (T)_managers[typeof(T)];
         }
 
         private void Update()
         {
-            // 更新所有管理器
-            foreach (var manager in _managers.Values)
-            {
-                manager.DoUpdate(Time.deltaTime);
-            }
+            if (!_isInitialized)
+                return;
+
+            for (int i = 0; i < _updatables.Count; i++)
+                _updatables[i].DoUpdate(Time.deltaTime);
         }
 
-        private void OnDestroy()
+        protected override void OnSingletonDestroy()
         {
-            // 释放所有管理器
-            foreach (var manager in _managers.Values)
-            {
-                manager.Release();
-            }
-            
+            for (int i = _managerList.Count - 1; i >= 0; i--)
+                _managerList[i].Dispose();
             _managers.Clear();
+            _managerList.Clear();
+            _updatables.Clear();
         }
     }
 }

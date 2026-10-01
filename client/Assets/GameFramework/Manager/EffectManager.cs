@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameFramework.Core;
 using GameFramework.Core.Effect;
 using GameFramework.Utility;
@@ -103,7 +103,7 @@ namespace GameFramework.Manager
     /// <summary>
     /// 特效管理器
     /// </summary>
-    public class EffectManager : IManager
+    public class EffectManager : IManager, IManagerUpdatable
     {
         /// <summary>
         /// 对象池管理器
@@ -120,9 +120,10 @@ namespace GameFramework.Manager
         /// </summary>
         private readonly HashSet<GameObject> _pendingDespawnEffects = new HashSet<GameObject>();
 
-        public void Init()
+        public UniTask InitAsync()
         {
-            Debug.Log("[EffectManager] 初始化完成");
+            Log.Info("[EffectManager] 初始化完成");
+            return UniTask.CompletedTask;
         }
 
         public void DoUpdate(float dt)
@@ -178,6 +179,13 @@ namespace GameFramework.Manager
                     }
                 }
 
+                // 收尾中被 Pause 后 Resume 跳过的，粒子会永久冻结；强制立即清掉
+                if (effectRuntime.IsStopping && effectRuntime.IsPaused)
+                {
+                    effectRuntime.IsPaused = false;
+                    effectItem.Stop(EffectStopMode.Immediate);
+                }
+
                 // 等待特效收尾结束
                 if (effectRuntime.IsStopping && !effectItem.IsAlive)
                     shouldDespawn = true;
@@ -192,9 +200,10 @@ namespace GameFramework.Manager
             _pendingDespawnEffects.Clear();
         }
 
-        public void Release()
+        public void Dispose()
         {
-            Debug.Log("[EffectManager] 已释放");
+            ClearAllEffects(true);
+            Log.Info("[EffectManager] 已释放");
         }
 
         #region 公共方法
@@ -341,6 +350,9 @@ namespace GameFramework.Manager
             if (!_activeEffects.TryGetValue(obj, out var instance))
                 return;
 
+            if (instance.IsStopping)
+                return;
+
             instance.IsPaused = true;
 
             instance.EffectItem.Pause();
@@ -354,9 +366,36 @@ namespace GameFramework.Manager
             if (!_activeEffects.TryGetValue(obj, out var instance))
                 return;
 
+            if (instance.IsStopping)
+                return;
+
             instance.IsPaused = false;
 
             instance.EffectItem.Resume();
+        }
+
+        public void PauseAll()
+        {
+            foreach (var kvp in _activeEffects)
+            {
+                if (kvp.Value.IsStopping)
+                    continue;
+
+                kvp.Value.IsPaused = true;
+                kvp.Value.EffectItem.Pause();
+            }
+        }
+
+        public void ResumeAll()
+        {
+            foreach (var kvp in _activeEffects)
+            {
+                if (kvp.Value.IsStopping)
+                    continue;
+
+                kvp.Value.IsPaused = false;
+                kvp.Value.EffectItem.Resume();
+            }
         }
 
         /// <summary>

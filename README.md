@@ -1,167 +1,206 @@
-# GameFrame 游戏开发入门指南 (小白专用版)
+# GameFramework
 
-## 这是什么？
+Unity 2022.3 下的运行时模块。它负责框架管理器的启动与销毁、事件、资源加载、对象池、界面、音频和特效。玩法规则放在游戏工程里，通过 `GameFrameworkManager.GetManager` 使用这些模块。
 
-- **GameFrame**: 这是一个游戏开发框架，就像游戏的"发动机"
-- **游戏项目**: 使用这个"发动机"开发的具体游戏
+## 功能
 
-## 为什么要用这个框架？
+- 按固定顺序创建并初始化六个管理器，销毁时按相反顺序释放
+- 字符串事件与 `EventKey` 事件，以及按作用域批量退订
+- `Resources` 与 YooAsset 本地包两种资源加载
+- `GameObject` 对象池
+- 按类型打开的界面，带层级、生命周期分组和预制体地址
+- 音效槽位与三声部音乐，播放失败通过返回值表示
+- 一次性、循环和定时特效
 
-想象一下：
-- 你有10辆不同的车，但它们用的都是同一种发动机
-- 如果你升级了发动机，所有车都能变得更好
-- 你不需要为每辆车单独制造一个发动机
+## 环境
 
-## 开始前准备
+在 Unity **2022.3.7f1** 中开发。编译依赖：
 
-你需要：
-- 一台电脑 (Windows/Mac/Linux都可以)
-- 安装好Git (不知道怎么装？[点击这里学习安装Git](https://git-scm.com/book/zh/v2/起步-安装-Git))
-- 安装图形化Git工具: [SourceTree](https://www.sourcetreeapp.com/) 或 [Git GUI](https://git-scm.com/downloads/guis)
-- 安装好Unity (我们的游戏开发软件)
+| 包 | 版本 |
+| --- | --- |
+| `com.cysharp.unitask` | Git URL，见工程 `Packages/manifest.json` |
+| `com.tuyoogame.yooasset` | 2.3.14 |
+| `com.unity.ugui` | 1.0.0 |
+| `com.unity.inputsystem` | 1.6.3 |
 
-## 小白三步走
+YooAsset 加载器只初始化本地包：编辑器为模拟模式，播放器为离线内置文件系统，默认包名 `DefaultPackage`。
 
-### 第一步：获取代码
+## 快速开始
 
-1. 账号申请
-   - 请联系Eva申请Git仓库访问账号
-   - 获取账号和密码后才能访问和下载代码
+1. 在常驻物体上添加 `GameFrameworkManager`。
+2. 指定 `GameConfig`：
+   - `ResourceLoadMode`：`YooAsset` 或 `Resources`
+   - `UISettings`：菜单 **GameFramework / UI Settings**
+   - `AudioConfig`：菜单 **GameFramework / Audio / Audio Config**，需要混音器和默认总线
+   - `loading`：可选，初始化开始时会被激活
+3. 进入播放后，`OnSingletonAwake` 会启动初始化。其它脚本等待完成后再取管理器：
 
-2. 在你的电脑上创建一个名为`workspace`的文件夹
-   - Windows用户：在C盘根目录创建 (C:\workspace)
-   - Mac/Linux用户：在你的用户目录创建 (~/workspace)
+```csharp
+using Cysharp.Threading.Tasks;
+using GameFramework.Core;
 
-3. 下载并安装SourceTree或其他Git GUI工具
-   - SourceTree下载地址: https://www.sourcetreeapp.com/
-   - 其他Git GUI工具: https://git-scm.com/downloads/guis
-
-4. 使用Git工具克隆代码（可选择以下任一方式）
-   - 方式一：使用SourceTree克隆代码
-     - 打开SourceTree，点击"克隆/新建"
-     - 输入项目URL及你的账号密码:
-       - GameFrame框架: http://182.254.155.12:5080/game/GameFrame.git
-       - 游戏项目（抓大鹅）: http://182.254.155.12:5080/game/GooseClient.git
-     - 分别为两个项目设置目标路径（推荐放在你创建的workspace文件夹中）
-     - 点击"克隆"按钮
-   
-   - 方式二：使用Git GUI工具克隆代码
-     - 打开Git GUI，点击"Clone Repository"
-     - 输入项目URL及你的账号密码:
-       - GameFrame框架: http://182.254.155.12:5080/game/GameFrame.git
-       - 游戏项目（抓大鹅）: http://182.254.155.12:5080/game/GooseClient.git
-     - 选择目标文件夹（推荐放在你创建的workspace文件夹中）
-     - 点击"Clone"按钮
-
-5. 确保切换到main分支
-   - 在Git工具中，找到并切换到"main"分支
-   - SourceTree用户：在左侧分支列表中，找到并双击"main"分支
-   - Git GUI用户：在"Branch"菜单中，选择"Checkout"，然后选择"main"分支
-   - 确认当前分支已经是"main"
-
-### 第二步：连接框架和游戏
-
-这一步很重要！我们要让游戏能使用框架，通过创建一个"快捷方式"。连接脚本就在GameFrame框架目录中。
-
-#### Windows用户：
-
-1. 进入你下载的GameFrame框架文件夹
-2. 右键点击`run-symlink-script.bat`文件，选择"以管理员身份运行"
-3. 按照提示输入游戏项目目录路径（不需要精确到Assets文件夹）
-4. 脚本会自动查找Assets目录并创建链接
-
-> **注意**：Windows需要管理员权限才能创建符号链接。如果遇到"拒绝访问"错误，请确保右键选择"以管理员身份运行"。
-
-#### Mac/Linux用户：
-
-1. 打开你下载的GameFrame框架文件夹
-2. 找到`setup-symlink.sh`文件
-3. 右键点击此文件，选择"获取信息"
-4. 在权限选项卡中，勾选"允许作为程序执行"
-5. 打开终端，拖放脚本到终端窗口中运行
-6. 按照脚本提示输入游戏项目目录路径（不需要精确到Assets文件夹）
-
-> **智能功能**: 脚本会自动查找游戏项目中的Assets文件夹，你只需提供游戏项目的根目录即可。
-
-
-### 关于项目打包
-
-当你打包游戏项目时，Unity会自动包含所有游戏资源，包括通过符号链接引用的GameFramework代码。这意味着：
-
-- **开发时**：你修改框架代码，所有游戏项目都能立即看到变化
-- **打包时**：Unity会将框架代码视为项目的一部分，完整地打包进游戏
-- **发布后**：最终用户获得的是包含所有必要框架代码的完整游戏
-
-无需担心打包问题，符号链接在开发阶段提供便利，而在打包阶段Unity会正确处理所有依赖关系，确保你的游戏包含所有必要的代码和资源。
-
-### 第三步：在Unity中打开游戏
-
-1. 打开Unity Hub
-2. 点击"添加"按钮
-3. 找到并选择你的游戏项目文件夹：
-   - Windows: `C:\workspace\goosecatcher\GooseClient\client`
-   - Mac/Linux: `~/workspace/goosecatcher/GooseClient/client`
-4. 点击"打开"
-5. 使用推荐的Unity版本打开项目
-
-## 连接成功后的样子
-
-当你成功连接GameFrame框架和游戏项目后，你会在Unity项目的Assets文件夹中看到GameFrame文件夹。具体结构如下：
-
-```
-游戏项目
-└── client
-    └── Assets
-        ├── GameFrame (这是链接到框架的文件夹)
-        │   ├── Scripts
-        │   ├── Prefabs
-        │   ├── Resources
-        │   └── ...其他框架文件
-        ├── Game (游戏特有的资源)
-        ├── Scenes
-        ├── Resources
-        └── ...其他游戏文件
+public sealed class Boot : UnityEngine.MonoBehaviour
+{
+    private async UniTaskVoid Start()
+    {
+        await GameFrameworkManager.Instance.WaitForInitializationAsync();
+    }
+}
 ```
 
-在Unity编辑器中，GameFrame文件夹会显示在Assets下，你可以像访问普通文件夹一样访问和使用其中的资源。这些文件实际上存储在你的GameFrame框架目录中，修改后会自动影响所有使用该框架的游戏项目。
+初始化顺序为 `EventManager`、`ResourceManager`、`GameObjectPoolManager`、`UIManager`、`AudioManager`、`EffectManager`。某个 `InitAsync` 抛出异常时，后面的管理器不会初始化，`WaitForInitializationAsync` 也不会完成。
 
-## 常见问题
+应用级流程继承 `GameAppFlow<T>`。`Start` 会调用 `StartAppAsync`：先等待框架初始化，再调用 `RegisterAppManagers`，然后逐个 `InitAsync`。
 
-### 问：我在Windows上无法运行脚本
-**答**：右键点击开始菜单，选择"Windows PowerShell (管理员)"，然后将脚本文件拖入窗口中运行。
+```csharp
+using GameFramework.Game;
 
-### 问：我在Mac上无法运行脚本
-**答**：
-1. 打开"终端"应用
-2. 输入 `chmod +x `（注意空格）
-3. 然后将脚本文件拖入终端窗口
-4. 按回车键
-5. 然后将脚本文件再次拖入终端窗口运行
+public sealed class MyApp : GameAppFlow<MyApp>
+{
+    protected override void RegisterAppManagers()
+    {
+        RegisterAppManager(new MyInputManager());
+    }
+}
+```
 
-### 问：我不知道要输入什么路径
-**答**：
-如果你按照上面的步骤创建了workspace文件夹并下载了项目，那么可以使用上面提供的示例命令。脚本会自动处理相对路径。
+`IAppManager` 提供 `InitAsync` 与 `Dispose`。需要每帧逻辑时再实现 `IAppUpdatable`。
 
-### 问：Unity无法找到GameFramework的资源
-**答**：
-1. 关闭Unity
-2. 删除游戏项目中的`Library`文件夹
-3. 重新打开项目
+## 用法
 
-### 问：我修改了框架代码，但游戏中没有更新
-**答**：
-1. 确保连接脚本成功运行了
-2. 在Unity中，按Ctrl+R (Windows) 或 Cmd+R (Mac) 刷新资源
+管理器的取法相同：
 
-### 问：如何验证GameFrame框架连接成功？
-**答**：
-打开Unity编辑器，在Project面板中展开Assets文件夹，你应该能看到一个名为GameFrame的文件夹。如果能看到并能展开它，说明连接成功。
+```csharp
+var ui = GameFrameworkManager.Instance.GetManager<UIManager>();
+```
 
-## 恭喜你！
+`EventManager` 位于全局命名空间，没有 `GameFramework` 前缀。
 
-你已经成功设置了GameFrame框架和游戏项目。现在你可以：
-1. 修改框架代码，所有使用框架的游戏都会自动更新
-2. 开发新的游戏功能
-3. 愉快地玩耍和开发！
+### 事件
 
-记住：框架是工具，游戏是作品。祝你创作顺利！ 
+```csharp
+using GameFramework.Core;
+
+public static class GameEvents
+{
+    public static readonly EventKey<ScoreChanged> Score = new EventKey<ScoreChanged>();
+}
+
+public sealed class ScoreChanged : EventArgs
+{
+    public int Value;
+}
+
+var events = GameFrameworkManager.Instance.GetManager<EventManager>();
+events.AddListener(GameEvents.Score, OnScore);
+events.Trigger(GameEvents.Score, new ScoreChanged { Value = 1 });
+```
+
+`EventArgs` 是 `GameFramework.Core.EventArgs`，带有 `Sender`。同名的字符串重载为 `AddListener` / `Trigger` / `RemoveListener`，参数个数为零个、一个或两个。
+
+`PushScope` 之后登记的监听，会在对应的 `PopScope` 时退订。作用域栈为空时添加的监听不会进入这张退订表。
+
+### 资源
+
+```csharp
+var resources = GameFrameworkManager.Instance.GetManager<ResourceManager>();
+var prefab = await resources.LoadAssetAsync<GameObject>("Prefabs/Enemy");
+resources.ReleaseAsset("Prefabs/Enemy");
+```
+
+`Resources` 模式会去掉开头的 `Assets/`，并去掉最后一个扩展名，再交给 `Resources.LoadAsync`。YooAsset 模式把传入字符串当作包内地址。同一路径在句柄仍然有效时不会再次向包请求。`ReleaseAsset` 会释放该路径上的句柄。
+
+`LoadSceneAsync` 使用路径中的场景名，调用 `SceneManager.LoadSceneAsync`，不经过 `IResourceLoader`。
+
+### 界面
+
+```csharp
+using GameFramework.UI;
+
+[UIForm(UILayer.Popup)]
+public sealed class UIShop : UIForm
+{
+    protected override void OnOpen() { }
+    protected override void OnClose() { }
+}
+```
+
+`UILayer` 为 `Page`、`Hud`、`Fixed`、`Popup`、`Overlay`。未写地址时，预制体路径为 `{UISettings.PrefabRoot}/{类型名}.prefab`。特性里的 `Address` 非空时，使用该字符串本身，不再拼接 `PrefabRoot`。`UILifetime` 为 `App`、`Round`、`Overlay`，默认 `Round`。缺少 `UIFormAttribute` 的界面进入 `Page`，分组为 `Round`。
+
+```csharp
+UIShop shop = await ui.OpenAsync<UIShop>();
+ui.Hide<UIShop>();
+ui.Show<UIShop>();
+ui.Close<UIShop>();
+ui.Close(UILifetime.Round);
+```
+
+带参数的界面继承 `UIForm<TArgs>`，用 `OpenAsync<UIShop, ShopArgs>(args)` 打开，并重写 `OnOpen(TArgs)`。同一具体类型同时只有一个打开实例。实例已经存在时，再次 `OpenAsync` 只保证它处于激活状态，不再次调用 `OnCreate` 和 `OnOpen`。
+
+`UIButton` 在悬停和点击时播放音效。游戏侧实现 `IUIButtonAudioDefaults`，并调用 `UIButton.SetDefaults`。
+
+### 音频
+
+在 **GameFramework / Audio** 下创建 `Audio Bus`、`Sfx Cue` 和 `Music Cue`。音效片段、音量、音高、空间化和溢出策略写在 `SfxCue` 上。音乐片段写在 `MusicCue` 上，播放时循环。
+
+```csharp
+using GameFramework.Audio;
+
+var audio = GameFrameworkManager.Instance.GetManager<AudioManager>();
+PlayResult result = audio.Play(hitCue, hitPoint);
+if (result.TryGetHandle(out PlayHandle handle))
+    audio.Stop(handle);
+
+audio.PlayMusic(bgm, 1f);
+audio.StopMusic(0.5f);
+```
+
+失败写在 `PlayResult.Failure` 里，不抛异常。`PlayHandle.Sequence == 0` 表示无效句柄，对它调用 `Stop` 不会产生效果。音乐使用三个声部，不占用 `AudioConfig.SlotCount` 里的音效槽位。`StopSfx` 不影响音乐，`PauseMusic` 不影响音效。
+
+槽位或单条音效到达上限时，按 `OverflowPolicy` 处理：`RejectNew` 拒绝新播放，`StopOldest` 淘汰优先级数字更大者，优先级相同时淘汰更早开始的实例。配置上的槽位策略为 `RejectNew` 时，单条音效和总线上的 `StopOldest` 不会生效。
+
+### 对象池
+
+```csharp
+var pools = GameFrameworkManager.Instance.GetManager<GameObjectPoolManager>();
+await pools.PrewarmAsync("Prefabs/Bullet", 16);
+GameObject bullet = await pools.SpawnAsync("Prefabs/Bullet");
+pools.Despawn(bullet);
+```
+
+预制体上的组件可以实现 `IPoolItem`。取出后调用 `OnSpawned`，回收前调用 `OnDespawned`。
+
+### 特效
+
+```csharp
+using GameFramework.Manager;
+
+var effects = GameFrameworkManager.Instance.GetManager<EffectManager>();
+GameObject vfx = effects.PlayOneShot(explosionPrefab, position, rotation);
+effects.Stop(vfx, EffectStopMode.Immediate);
+```
+
+`PlayLoop` 保持播放，直到 `Stop`。`PlayForDuration` 在给定秒数后按 `EffectStopMode` 停止，默认 `Graceful`。路径重载为 `PlayOneShotAsync`、`PlayLoopAsync` 和 `PlayForDurationAsync`。
+
+## 目录结构
+
+```
+Assets/GameFramework
+├── Core        单例、管理器接口、事件键、对象池、特效条目
+├── Manager     事件、资源、对象池、特效管理器
+├── UI          界面管理、表单、按钮、层级和动效
+├── Audio       音效、音乐、总线和播放结果
+├── Game        应用启动与退出、阶段切换作业
+└── Utility     编辑器日志、代码计时
+```
+
+`GameFrameworkManager` 在 `Core`。`IResourceLoader` 的命名空间是 `GameFramework.Core`，文件位于 `Manager`。
+
+## 约定
+
+- `GetManager<T>` 的键是注册时的类型参数。六个默认管理器用它们自身的具体类型注册。
+- `Update` 在 `IsInitialized` 为真之后，才把 `Time.deltaTime` 传给实现了 `IManagerUpdatable` 的管理器。音频模块内部使用 `Time.unscaledDeltaTime`。
+- 资源加载器按路径保留一个句柄，没有整数引用计数。`ReleaseAsset` 一次就会移除该路径。
+- `ResourceManager` 在加载器初始化返回 `false` 时写错误日志，框架仍会把整体初始化标为完成。
+- 界面首次打开的顺序是登记实例、`OnCreate`、`OnOpen`。首次打开不调用 `OnShow`。`Hide` 之后 `IsOpen` 仍为真。
+- `Log` 的公开方法带有 `Conditional("UNITY_EDITOR")`，玩家构建里这些调用会被去掉。
